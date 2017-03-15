@@ -1,7 +1,10 @@
 # Project Mensarium #
-Tim: InnoStorm
+
+Tim: **InnoStorm**
+
 Clanovi: 
-	* Dalibor Aleksic 15024
-	* Nikola Savic 15355
-	* Marija Stojkovic 15422
-	* Stefan Stankovic 15382
+
+* Dalibor Aleksic 15024
+* Nikola Savic 15355
+* Marija Stojkovic 15422
+* Stefan Stankovic 15382
