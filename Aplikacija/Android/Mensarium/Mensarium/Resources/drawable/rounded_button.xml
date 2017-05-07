@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item android:state_pressed="true" >
+    <shape android:shape="rectangle"  >
+      <corners android:radius="25dip" />                              <!-- radius dugmeta -->
+      <stroke android:width="1dip" android:color="@color/IvicaButtona" />         <!-- velcina i boja ivice dugmeta -->
+      <gradient android:angle="-90" android:startColor="@color/GradientButtonaPocetni" android:endColor="@color/GradientButtonaKrajnji"  />       <!-- gradient dugmeta -->
+    </shape>
+  </item>
+  <item android:state_focused="true">
+    <shape android:shape="rectangle"  >
+      <corners android:radius="25dip" />                              <!-- radius dugmeta -->
+      <stroke android:width="1dip" android:color="@color/IvicaButtona" />         <!-- velcina i boja ivice dugmeta -->
+      <solid android:color="#58857e"/>
+    </shape>
+  </item>
+  <item >
+    <shape android:shape="rectangle"  >
+      <corners android:radius="25dip" />                              <!-- radius dugmeta -->
+      <stroke android:width="1dip" android:color="@color/IvicaButtona" />         <!-- velcina i boja ivice dugmeta -->
+      <gradient android:angle="-90" android:startColor="@color/GradientButtonaPocetni" android:endColor="@color/GradientButtonaKrajnji" />        <!-- gradient dugmeta -->
+    </shape>
+  </item>
+</selector>

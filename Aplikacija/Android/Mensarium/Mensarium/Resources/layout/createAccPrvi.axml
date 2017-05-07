@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/loginbg"
+    android:gravity="center"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+    <TextView
+        android:id="@+id/unesiteIdText"
+        android:text="Unesite Vas ID i password koji ste dobili od salterskog radnika:"
+        android:textColor="#d0d8dd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="22dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textStyle="bold" />
+    <EditText
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/EditTextID"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:background="@drawable/edittextrounded"
+        android:hint="ID"
+        android:textColorHint="@drawable/text_hint_selector"
+        android:ellipsize="start"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:layout_below="@id/unesiteIdText"
+        android:layout_marginTop="100dp" />
+    <EditText
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/EditTextAutoPassword"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:background="@drawable/edittextrounded"
+        android:hint="password"
+        android:textColorHint="@drawable/text_hint_selector"
+        android:ellipsize="start"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:layout_below="@id/EditTextID"
+        android:layout_marginTop="8dp" />
+    <Button
+        android:text="Next"
+        android:textColor="@color/NaslovIImeButtona"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/nextDugme"
+        android:layout_below="@id/EditTextAutoPassword"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_button"
+        android:textSize="16dp" />
+</RelativeLayout>

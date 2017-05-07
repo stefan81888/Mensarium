@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="NaslovIImeButtona">#c5c9cc</color>
+  <!-- Edit Text Colors -->
+  <color name="EditTextColor">#b6d7cc</color>
+  <color name="IvicaEditTexta">#818487</color>
+  <color name="EditTextHint">#95989A</color>
+  <!-- Separator Line Color-->
+  <color name="SeparatorLine">#b6d7cc</color>
+  <!-- Button Colors -->
+  <color name="IvicaButtona">#4f5256</color>
+  <color name="GradientButtonaPocetni">#2a444c</color>
+  <color name="GradientButtonaKrajnji">#40616b</color>
+
+
+
+
+  <color name="colorPrimary">#34A6AB</color>
+  <color name="colorPrimaryDark">#70ad99</color>
+  <color name="colorAccent">#b6d7cc</color>
+
+  <color name="bb_darkBackgroundColor">#2a590b</color>
+</resources>
