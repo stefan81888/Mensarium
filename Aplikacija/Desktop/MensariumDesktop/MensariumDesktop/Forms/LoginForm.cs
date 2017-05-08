@@ -16,5 +16,21 @@ namespace MensariumDesktop.Forms
         {
             InitializeComponent();
         }
+
+        private void picSettings_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.ShowDialog();
+        }
+
+        private void txtUsername_Enter(object sender, EventArgs e)
+        {
+            txtUsername.SelectAll();
+        }
+
+        private void txtPassword_Enter(object sender, EventArgs e)
+        {
+            txtPassword.SelectAll();
+        }
     }
 }

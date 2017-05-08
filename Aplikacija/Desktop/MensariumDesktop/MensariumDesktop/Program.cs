@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MensariumDesktop.Forms;
 
 namespace MensariumDesktop
 {
@@ -16,7 +17,8 @@ namespace MensariumDesktop
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForma());
+            Application.Run(new MainForm());
+            //Application.Run(new LoginForm());
         }
     }
 }
