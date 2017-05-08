@@ -254,21 +254,3 @@ paket-files/
 .idea/
 *.sln.iml
 
-
-#Xamarin
-Components
-packages
-Resource.designer.cs
-
-bin
-obj
-
-*.pidb
-*.userprefs
-*.swp
-*.DS_Store
-*.nib
-*.suo
-*.user
-*.pfx
-
