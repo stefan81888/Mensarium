@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Mapping;
-using Mensarium_Desktop.Entiteti;
+using MensariumAPI.Podaci.Entiteti;
 
-namespace Mensarium_Desktop.Mapiranja
+namespace MensariumAPI.Podaci.Mapiranja
 {
     class ObjaveMapiranje : ClassMap<Objave>
     {
@@ -24,10 +24,11 @@ namespace Mensarium_Desktop.Mapiranja
 
 
             //Mapiranje veze 1:1
-            HasOne(x => x.IdKorisnik).Column("idKorisnik").Cascade.All();
+            HasOne(x => x.IdKorisnik); 
+            
 
             //Mapiranje veze 1:N
-            References(x => x.Lokacija).Column("idMenza").LazyLoad();
+            References(x => x.Lokacija).Column("idLokacija").LazyLoad();
         }
     }
 }

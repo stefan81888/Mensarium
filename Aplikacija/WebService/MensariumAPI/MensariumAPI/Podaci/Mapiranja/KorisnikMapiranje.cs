@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Mapping;
-using Mensarium_Desktop.Entiteti;
+using MensariumAPI.Podaci.Entiteti;
 
-namespace Mensarium_Desktop.Mapiranja
+namespace MensariumAPI.Podaci.Mapiranja
 {
-    class KorisnikMapiranje : ClassMap<Korisnik>
+    public class KorisnikMapiranje : ClassMap<Korisnik>
     {
         KorisnikMapiranje()
         {
@@ -32,11 +32,11 @@ namespace Mensarium_Desktop.Mapiranja
             Map(x => x.AktivanNalog, "aktivanNalog");
 
             //Mapiranje veze 1:1
-            HasOne( x => x.Id).Column("idKorisnika").LazyLoad();
+            HasOne(x => x.Objava);
 
             //Mapiranje veza N:1
-            References(x => x.PrivilegijeNaloga).Column("idTip").LazyLoad();
-            References(x => x.StudiraFakultet).Column("idFakultet").LazyLoad();
+            References(x => x.PrivilegijeNaloga).Column("tipNaloga").LazyLoad();
+            References(x => x.StudiraFakultet).Column("fakultet").LazyLoad();
 
             //Mapiranje veza 1:N
             HasMany(x => x.Sesije).KeyColumn("idLogin").LazyLoad().Cascade.All().Inverse();
