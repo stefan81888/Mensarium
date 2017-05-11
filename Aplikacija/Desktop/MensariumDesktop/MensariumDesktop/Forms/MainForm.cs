@@ -56,5 +56,47 @@ namespace MensariumDesktop
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.ShowDialog();
         }
+
+        private void btnLoadUser_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void showReclamationFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReclamationForm reclamationForm = new ReclamationForm();
+            reclamationForm.ShowDialog();
+        }
+
+        private void showMensaChangerFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MensaChangerForm mc = new MensaChangerForm();
+            mc.ShowDialog();
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MensaChangerForm mc = new MensaChangerForm();
+            mc.ShowDialog();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ReclamationForm reclamationForm = new ReclamationForm();
+            reclamationForm.ShowDialog();
+        }
+
+        private void promeniLokacijuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MensaChangerForm mc = new MensaChangerForm();
+            mc.ShowDialog();
+        }
+
+        private void showProfileFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProfileForm pf = new ProfileForm();
+            pf.ShowDialog();
+        }
     }
 }
