@@ -1,6 +1,6 @@
 ﻿namespace MensariumDesktop.Forms
 {
-    partial class MensaChangerForm
+    partial class NewUserCreatedForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,29 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MensaChangerForm));
-            this.imageListButtonIconsSettings = new System.Windows.Forms.ImageList(this.components);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewUserCreatedForm));
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.gbxLokacija = new System.Windows.Forms.GroupBox();
-            this.cmbSettingsMenza = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.imageListButtonIconsNewUser = new System.Windows.Forms.ImageList(this.components);
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.gbxLokacija.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // imageListButtonIconsSettings
-            // 
-            this.imageListButtonIconsSettings.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListButtonIconsSettings.ImageStream")));
-            this.imageListButtonIconsSettings.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListButtonIconsSettings.Images.SetKeyName(0, "save.png");
-            this.imageListButtonIconsSettings.Images.SetKeyName(1, "error.png");
-            this.imageListButtonIconsSettings.Images.SetKeyName(2, "stop-1.png");
-            this.imageListButtonIconsSettings.Images.SetKeyName(3, "cloud-computing-15.png");
             // 
             // panel2
             // 
@@ -62,8 +55,8 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(384, 82);
-            this.panel2.TabIndex = 11;
+            this.panel2.Size = new System.Drawing.Size(429, 82);
+            this.panel2.TabIndex = 7;
             // 
             // label3
             // 
@@ -88,6 +81,16 @@
             this.label5.TabIndex = 3;
             this.label5.Text = "Mensarium";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(57, 96);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(315, 25);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Novi korisnik je uspešno napravljen";
+            // 
             // pictureBox2
             // 
             this.pictureBox2.Image = global::MensariumDesktop.Properties.Resources.MensariumIconWhite;
@@ -98,44 +101,58 @@
             this.pictureBox2.TabIndex = 4;
             this.pictureBox2.TabStop = false;
             // 
-            // gbxLokacija
+            // label2
             // 
-            this.gbxLokacija.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbxLokacija.Controls.Add(this.cmbSettingsMenza);
-            this.gbxLokacija.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbxLokacija.Location = new System.Drawing.Point(13, 90);
-            this.gbxLokacija.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.gbxLokacija.Name = "gbxLokacija";
-            this.gbxLokacija.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.gbxLokacija.Size = new System.Drawing.Size(358, 62);
-            this.gbxLokacija.TabIndex = 8;
-            this.gbxLokacija.TabStop = false;
-            this.gbxLokacija.Text = " Menza";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(68, 127);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 32);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "ID:";
             // 
-            // cmbSettingsMenza
+            // label4
             // 
-            this.cmbSettingsMenza.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbSettingsMenza.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSettingsMenza.FormattingEnabled = true;
-            this.cmbSettingsMenza.Location = new System.Drawing.Point(7, 23);
-            this.cmbSettingsMenza.Name = "cmbSettingsMenza";
-            this.cmbSettingsMenza.Size = new System.Drawing.Size(344, 24);
-            this.cmbSettingsMenza.TabIndex = 0;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.label4.Location = new System.Drawing.Point(53, 159);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(64, 32);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "PIN:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(119, 127);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(132, 32);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "813548648";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(119, 159);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(194, 32);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "91564a31dfd987";
             // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.ImageKey = "save.png";
-            this.btnSave.ImageList = this.imageListButtonIconsSettings;
-            this.btnSave.Location = new System.Drawing.Point(139, 163);
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.ImageKey = "print.png";
+            this.btnSave.ImageList = this.imageListButtonIconsNewUser;
+            this.btnSave.Location = new System.Drawing.Point(184, 213);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(112, 35);
-            this.btnSave.TabIndex = 9;
-            this.btnSave.Text = " Sačuvaj";
+            this.btnSave.TabIndex = 13;
+            this.btnSave.Text = " Štampaj";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSave.UseVisualStyleBackColor = true;
@@ -143,54 +160,70 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.ImageKey = "error.png";
-            this.btnCancel.ImageList = this.imageListButtonIconsSettings;
-            this.btnCancel.Location = new System.Drawing.Point(259, 163);
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ImageKey = "success.png";
+            this.btnCancel.ImageList = this.imageListButtonIconsNewUser;
+            this.btnCancel.Location = new System.Drawing.Point(304, 213);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(112, 35);
-            this.btnCancel.TabIndex = 10;
-            this.btnCancel.Text = " Otkaži";
+            this.btnCancel.TabIndex = 14;
+            this.btnCancel.Text = " Završi";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // MensaChangerForm
+            // imageListButtonIconsNewUser
+            // 
+            this.imageListButtonIconsNewUser.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListButtonIconsNewUser.ImageStream")));
+            this.imageListButtonIconsNewUser.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListButtonIconsNewUser.Images.SetKeyName(0, "success.png");
+            this.imageListButtonIconsNewUser.Images.SetKeyName(1, "print.png");
+            // 
+            // NewUserCreatedForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(384, 212);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.gbxLokacija);
+            this.ClientSize = new System.Drawing.Size(429, 262);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(400, 250);
-            this.MinimumSize = new System.Drawing.Size(400, 250);
-            this.Name = "MensaChangerForm";
+            this.MaximumSize = new System.Drawing.Size(445, 300);
+            this.MinimumSize = new System.Drawing.Size(445, 300);
+            this.Name = "NewUserCreatedForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Promeni menzu";
+            this.Text = "Mensarium";
+            this.Load += new System.EventHandler(this.NewUserCreatedForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.gbxLokacija.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ImageList imageListButtonIconsSettings;
+
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.GroupBox gbxLokacija;
-        private System.Windows.Forms.ComboBox cmbSettingsMenza;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.ImageList imageListButtonIconsNewUser;
     }
 }

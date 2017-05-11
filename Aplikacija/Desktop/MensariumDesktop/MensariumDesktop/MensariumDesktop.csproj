@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\FacultyManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FacultyManagerForm.Designer.cs">
+      <DependentUpon>FacultyManagerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MenzaManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MenzaManagerForm.Designer.cs">
+      <DependentUpon>MenzaManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +76,12 @@
     <Compile Include="Forms\MensaChangerForm.Designer.cs">
       <DependentUpon>MensaChangerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\NewUserCreatedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NewUserCreatedForm.Designer.cs">
+      <DependentUpon>NewUserCreatedForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,11 +94,23 @@
     <Compile Include="Forms\ReclamationForm.Designer.cs">
       <DependentUpon>ReclamationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SessionManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SessionManagerForm.Designer.cs">
+      <DependentUpon>SessionManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UserForm.Designer.cs">
+      <DependentUpon>UserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Components\Faculty.cs" />
     <Compile Include="Model\Components\Server.cs" />
@@ -90,6 +120,12 @@
     <Compile Include="Model\Components\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\FacultyManagerForm.resx">
+      <DependentUpon>FacultyManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MenzaManagerForm.resx">
+      <DependentUpon>MenzaManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -99,14 +135,23 @@
     <EmbeddedResource Include="Forms\MensaChangerForm.resx">
       <DependentUpon>MensaChangerForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NewUserCreatedForm.resx">
+      <DependentUpon>NewUserCreatedForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProfileForm.resx">
       <DependentUpon>ProfileForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReclamationForm.resx">
       <DependentUpon>ReclamationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SessionManagerForm.resx">
+      <DependentUpon>SessionManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserForm.resx">
+      <DependentUpon>UserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -197,6 +242,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\success.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search-1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

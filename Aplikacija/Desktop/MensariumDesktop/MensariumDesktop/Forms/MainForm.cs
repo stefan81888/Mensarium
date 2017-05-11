@@ -98,5 +98,23 @@ namespace MensariumDesktop
             ProfileForm pf = new ProfileForm();
             pf.ShowDialog();
         }
+
+        private void showUserFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UserForm uf = new UserForm();
+            uf.ShowDialog();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void showNewUserCreatedFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewUserCreatedForm nu = new NewUserCreatedForm();
+
+            nu.ShowDialog();
+        }
     }
 }

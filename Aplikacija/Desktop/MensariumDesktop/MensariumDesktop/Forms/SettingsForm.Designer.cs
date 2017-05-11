@@ -58,7 +58,7 @@
             this.label1.Location = new System.Drawing.Point(15, 28);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 16);
+            this.label1.Size = new System.Drawing.Size(58, 17);
             this.label1.TabIndex = 7;
             this.label1.Text = "Host / IP";
             // 
@@ -71,7 +71,7 @@
             this.gbxServer.Controls.Add(this.txtmServerIP);
             this.gbxServer.Controls.Add(this.label2);
             this.gbxServer.Controls.Add(this.label1);
-            this.gbxServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbxServer.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxServer.Location = new System.Drawing.Point(13, 90);
             this.gbxServer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gbxServer.Name = "gbxServer";
@@ -99,7 +99,7 @@
             this.txtmServerPort.Mask = "09999";
             this.txtmServerPort.Name = "txtmServerPort";
             this.txtmServerPort.PromptChar = ' ';
-            this.txtmServerPort.Size = new System.Drawing.Size(232, 22);
+            this.txtmServerPort.Size = new System.Drawing.Size(232, 25);
             this.txtmServerPort.TabIndex = 1;
             // 
             // txtmServerIP
@@ -110,7 +110,7 @@
             this.txtmServerIP.Location = new System.Drawing.Point(81, 25);
             this.txtmServerIP.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtmServerIP.Name = "txtmServerIP";
-            this.txtmServerIP.Size = new System.Drawing.Size(232, 22);
+            this.txtmServerIP.Size = new System.Drawing.Size(232, 25);
             this.txtmServerIP.TabIndex = 0;
             // 
             // label2
@@ -119,7 +119,7 @@
             this.label2.Location = new System.Drawing.Point(41, 57);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 16);
+            this.label2.Size = new System.Drawing.Size(32, 17);
             this.label2.TabIndex = 8;
             this.label2.Text = "Port";
             // 
@@ -164,7 +164,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbxLokacija.Controls.Add(this.cmbSettingsMenza);
             this.gbxLokacija.Controls.Add(this.lblMenza);
-            this.gbxLokacija.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbxLokacija.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxLokacija.Location = new System.Drawing.Point(13, 228);
             this.gbxLokacija.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gbxLokacija.Name = "gbxLokacija";
@@ -182,7 +182,7 @@
             this.cmbSettingsMenza.FormattingEnabled = true;
             this.cmbSettingsMenza.Location = new System.Drawing.Point(81, 28);
             this.cmbSettingsMenza.Name = "cmbSettingsMenza";
-            this.cmbSettingsMenza.Size = new System.Drawing.Size(232, 24);
+            this.cmbSettingsMenza.Size = new System.Drawing.Size(232, 25);
             this.cmbSettingsMenza.TabIndex = 0;
             // 
             // lblMenza
@@ -191,7 +191,7 @@
             this.lblMenza.Location = new System.Drawing.Point(25, 31);
             this.lblMenza.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMenza.Name = "lblMenza";
-            this.lblMenza.Size = new System.Drawing.Size(48, 16);
+            this.lblMenza.Size = new System.Drawing.Size(47, 17);
             this.lblMenza.TabIndex = 7;
             this.lblMenza.Text = "Menza";
             // 
@@ -208,7 +208,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ImageKey = "save.png";
             this.btnSave.ImageList = this.imageListButtonIconsSettings;
             this.btnSave.Location = new System.Drawing.Point(102, 312);
@@ -225,7 +225,7 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ImageKey = "error.png";
             this.btnCancel.ImageList = this.imageListButtonIconsSettings;
             this.btnCancel.Location = new System.Drawing.Point(222, 312);
@@ -265,6 +265,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.gbxServer);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SettingsForm";
             this.ShowIcon = false;

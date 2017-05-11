@@ -48,6 +48,7 @@
             this.dgvMeals = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TipObroka = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IDUplatioca = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DatumUplate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LokacijaUplate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnFinish = new System.Windows.Forms.Button();
@@ -267,6 +268,7 @@
             this.dgvMeals.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
             this.TipObroka,
+            this.IDUplatioca,
             this.DatumUplate,
             this.LokacijaUplate});
             this.dgvMeals.Location = new System.Drawing.Point(7, 53);
@@ -293,6 +295,12 @@
             this.TipObroka.Name = "TipObroka";
             this.TipObroka.ReadOnly = true;
             this.TipObroka.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // IDUplatioca
+            // 
+            this.IDUplatioca.HeaderText = "Uplatio";
+            this.IDUplatioca.Name = "IDUplatioca";
+            this.IDUplatioca.ReadOnly = true;
             // 
             // DatumUplate
             // 
@@ -366,6 +374,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(510, 520);
             this.Name = "ReclamationForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Reklamacije";
             this.Load += new System.EventHandler(this.ReclamationForm_Load);
@@ -405,6 +414,7 @@
         private System.Windows.Forms.Button btnExecute;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn TipObroka;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IDUplatioca;
         private System.Windows.Forms.DataGridViewTextBoxColumn DatumUplate;
         private System.Windows.Forms.DataGridViewTextBoxColumn LokacijaUplate;
     }
