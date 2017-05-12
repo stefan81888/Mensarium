@@ -19,7 +19,7 @@ namespace MensariumDesktop.Forms
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-
+            cbxSettingsMenza.SelectedIndex = 0;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -34,5 +34,6 @@ namespace MensariumDesktop.Forms
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
     }
 }

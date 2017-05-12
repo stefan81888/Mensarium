@@ -16,5 +16,11 @@ namespace MensariumDesktop.Forms
         {
             InitializeComponent();
         }
+
+        private void UserForm_Load(object sender, EventArgs e)
+        {
+            cbxStanje.SelectedIndex = 0;
+            cbxTip.SelectedIndex = 0;
+        }
     }
 }

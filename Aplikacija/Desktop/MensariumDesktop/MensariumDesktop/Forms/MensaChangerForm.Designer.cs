@@ -36,7 +36,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.gbxLokacija = new System.Windows.Forms.GroupBox();
-            this.cmbSettingsMenza = new System.Windows.Forms.ComboBox();
+            this.cbxSettingsMenza = new System.Windows.Forms.ComboBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
@@ -80,11 +80,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Humnst777 Blk BT", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(68, 14);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(183, 36);
+            this.label5.Size = new System.Drawing.Size(160, 33);
             this.label5.TabIndex = 3;
             this.label5.Text = "Mensarium";
             // 
@@ -102,7 +102,7 @@
             // 
             this.gbxLokacija.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbxLokacija.Controls.Add(this.cmbSettingsMenza);
+            this.gbxLokacija.Controls.Add(this.cbxSettingsMenza);
             this.gbxLokacija.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxLokacija.Location = new System.Drawing.Point(13, 90);
             this.gbxLokacija.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -113,16 +113,20 @@
             this.gbxLokacija.TabStop = false;
             this.gbxLokacija.Text = " Menza";
             // 
-            // cmbSettingsMenza
+            // cbxSettingsMenza
             // 
-            this.cmbSettingsMenza.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cbxSettingsMenza.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbSettingsMenza.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSettingsMenza.FormattingEnabled = true;
-            this.cmbSettingsMenza.Location = new System.Drawing.Point(7, 23);
-            this.cmbSettingsMenza.Name = "cmbSettingsMenza";
-            this.cmbSettingsMenza.Size = new System.Drawing.Size(344, 24);
-            this.cmbSettingsMenza.TabIndex = 0;
+            this.cbxSettingsMenza.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxSettingsMenza.FormattingEnabled = true;
+            this.cbxSettingsMenza.Items.AddRange(new object[] {
+            "Elektronski fakultet",
+            "Pravni Fakultet",
+            "Medicinski fakultet"});
+            this.cbxSettingsMenza.Location = new System.Drawing.Point(7, 23);
+            this.cbxSettingsMenza.Name = "cbxSettingsMenza";
+            this.cbxSettingsMenza.Size = new System.Drawing.Size(344, 24);
+            this.cbxSettingsMenza.TabIndex = 0;
             // 
             // btnSave
             // 
@@ -174,6 +178,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Promeni menzu";
+            this.Load += new System.EventHandler(this.MensaChangerForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -189,7 +194,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.GroupBox gbxLokacija;
-        private System.Windows.Forms.ComboBox cmbSettingsMenza;
+        private System.Windows.Forms.ComboBox cbxSettingsMenza;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
     }

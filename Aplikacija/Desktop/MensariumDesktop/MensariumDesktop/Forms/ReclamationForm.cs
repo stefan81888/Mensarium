@@ -19,7 +19,7 @@ namespace MensariumDesktop.Forms
 
         private void ReclamationForm_Load(object sender, EventArgs e)
         {
-
+            cmbFilter.SelectedIndex = 0;
         }
 
         private void btnSave_Click(object sender, EventArgs e)

@@ -56,11 +56,7 @@ namespace MensariumDesktop
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.ShowDialog();
         }
-
-        private void btnLoadUser_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void showReclamationFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -107,7 +103,7 @@ namespace MensariumDesktop
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            cbxKriterijum.SelectedIndex = 0;
         }
 
         private void showNewUserCreatedFormToolStripMenuItem_Click(object sender, EventArgs e)
@@ -115,6 +111,36 @@ namespace MensariumDesktop
             NewUserCreatedForm nu = new NewUserCreatedForm();
 
             nu.ShowDialog();
+        }
+
+        private void btnProfile_Click(object sender, EventArgs e)
+        {
+            ProfileForm pf = new ProfileForm();
+            pf.ShowDialog();
+        }
+
+        private void statbarUserProfile_Click(object sender, EventArgs e)
+        {
+           ProfileForm pf = new ProfileForm();
+           pf.ShowDialog();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            ProfileForm pf = new ProfileForm();
+            pf.ShowDialog();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            UserForm uf = new UserForm();
+            uf.ShowDialog();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            UserForm uf = new UserForm();
+            uf.ShowDialog();
         }
     }
 }

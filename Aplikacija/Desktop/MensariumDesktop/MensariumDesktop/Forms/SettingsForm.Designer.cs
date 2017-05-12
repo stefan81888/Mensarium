@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.label1 = new System.Windows.Forms.Label();
             this.gbxServer = new System.Windows.Forms.GroupBox();
+            this.btnTestConnection = new System.Windows.Forms.Button();
             this.imageListButtonIconsSettings = new System.Windows.Forms.ImageList(this.components);
             this.txtmServerPort = new System.Windows.Forms.MaskedTextBox();
             this.txtmServerIP = new System.Windows.Forms.MaskedTextBox();
@@ -39,17 +40,16 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.gbxLokacija = new System.Windows.Forms.GroupBox();
-            this.cmbSettingsMenza = new System.Windows.Forms.ComboBox();
-            this.lblMenza = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.gbxLokacija = new System.Windows.Forms.GroupBox();
+            this.cbxSettingsMenza = new System.Windows.Forms.ComboBox();
+            this.lblMenza = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnTestConnection = new System.Windows.Forms.Button();
             this.gbxServer.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.gbxLokacija.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.gbxLokacija.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -80,6 +80,20 @@
             this.gbxServer.TabIndex = 0;
             this.gbxServer.TabStop = false;
             this.gbxServer.Text = " Server ";
+            // 
+            // btnTestConnection
+            // 
+            this.btnTestConnection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTestConnection.ImageIndex = 3;
+            this.btnTestConnection.ImageList = this.imageListButtonIconsSettings;
+            this.btnTestConnection.Location = new System.Drawing.Point(179, 87);
+            this.btnTestConnection.Name = "btnTestConnection";
+            this.btnTestConnection.Size = new System.Drawing.Size(134, 33);
+            this.btnTestConnection.TabIndex = 9;
+            this.btnTestConnection.Text = "Testiraj vezu";
+            this.btnTestConnection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnTestConnection.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTestConnection.UseVisualStyleBackColor = true;
             // 
             // imageListButtonIconsSettings
             // 
@@ -150,19 +164,29 @@
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Humnst777 Blk BT", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(68, 14);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(183, 36);
+            this.label5.Size = new System.Drawing.Size(160, 33);
             this.label5.TabIndex = 3;
             this.label5.Text = "Mensarium";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::MensariumDesktop.Properties.Resources.MensariumIconWhite;
+            this.pictureBox2.Location = new System.Drawing.Point(12, 14);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 4;
+            this.pictureBox2.TabStop = false;
             // 
             // gbxLokacija
             // 
             this.gbxLokacija.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbxLokacija.Controls.Add(this.cmbSettingsMenza);
+            this.gbxLokacija.Controls.Add(this.cbxSettingsMenza);
             this.gbxLokacija.Controls.Add(this.lblMenza);
             this.gbxLokacija.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxLokacija.Location = new System.Drawing.Point(13, 228);
@@ -174,16 +198,20 @@
             this.gbxLokacija.TabStop = false;
             this.gbxLokacija.Text = " Lokacija aplikacije ";
             // 
-            // cmbSettingsMenza
+            // cbxSettingsMenza
             // 
-            this.cmbSettingsMenza.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cbxSettingsMenza.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbSettingsMenza.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSettingsMenza.FormattingEnabled = true;
-            this.cmbSettingsMenza.Location = new System.Drawing.Point(81, 28);
-            this.cmbSettingsMenza.Name = "cmbSettingsMenza";
-            this.cmbSettingsMenza.Size = new System.Drawing.Size(232, 25);
-            this.cmbSettingsMenza.TabIndex = 0;
+            this.cbxSettingsMenza.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxSettingsMenza.FormattingEnabled = true;
+            this.cbxSettingsMenza.Items.AddRange(new object[] {
+            "Elektronski fakultet",
+            "Pravni Fakultet",
+            "Medicinski fakultet"});
+            this.cbxSettingsMenza.Location = new System.Drawing.Point(81, 28);
+            this.cbxSettingsMenza.Name = "cbxSettingsMenza";
+            this.cbxSettingsMenza.Size = new System.Drawing.Size(232, 25);
+            this.cbxSettingsMenza.TabIndex = 0;
             // 
             // lblMenza
             // 
@@ -194,16 +222,6 @@
             this.lblMenza.Size = new System.Drawing.Size(47, 17);
             this.lblMenza.TabIndex = 7;
             this.lblMenza.Text = "Menza";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::MensariumDesktop.Properties.Resources.MensariumIconWhite;
-            this.pictureBox2.Location = new System.Drawing.Point(12, 14);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(50, 50);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 4;
-            this.pictureBox2.TabStop = false;
             // 
             // btnSave
             // 
@@ -239,20 +257,6 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // btnTestConnection
-            // 
-            this.btnTestConnection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTestConnection.ImageIndex = 3;
-            this.btnTestConnection.ImageList = this.imageListButtonIconsSettings;
-            this.btnTestConnection.Location = new System.Drawing.Point(179, 87);
-            this.btnTestConnection.Name = "btnTestConnection";
-            this.btnTestConnection.Size = new System.Drawing.Size(134, 33);
-            this.btnTestConnection.TabIndex = 9;
-            this.btnTestConnection.Text = "Testiraj vezu";
-            this.btnTestConnection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnTestConnection.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnTestConnection.UseVisualStyleBackColor = true;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -276,9 +280,9 @@
             this.gbxServer.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.gbxLokacija.ResumeLayout(false);
             this.gbxLokacija.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -294,7 +298,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.GroupBox gbxLokacija;
-        private System.Windows.Forms.ComboBox cmbSettingsMenza;
+        private System.Windows.Forms.ComboBox cbxSettingsMenza;
         private System.Windows.Forms.Label lblMenza;
         private System.Windows.Forms.Button btnTestConnection;
         private System.Windows.Forms.ImageList imageListButtonIconsSettings;

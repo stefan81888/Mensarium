@@ -22,5 +22,10 @@ namespace MensariumDesktop.Forms
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
+        private void MensaChangerForm_Load(object sender, EventArgs e)
+        {
+            cbxSettingsMenza.SelectedIndex = 0;
+        }
     }
 }
