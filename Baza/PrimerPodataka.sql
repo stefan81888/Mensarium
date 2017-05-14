@@ -12,12 +12,12 @@ INSERT INTO Menze VALUES (NULL, "Kod pravnog", "Pravni fakultet", "07-13", 0);
 INSERT INTO Menze VALUES (NULL, "Kod medicinskog", "Medicinski fakultet", "08-20", 1);
 
 -- KORISNICI
-INSERT INTO Korisnici VALUES (NULL, "dimipage", 	"dimipage@gmail.com", 			"starwars5", "Dušuan", "Dimitrijević", 	"1995-02-18", "2017-05-12", "064 111 11 11", 1, 15069, "2018-05-12", 5, 1, "dimi.jpg");
-INSERT INTO Korisnici VALUES (NULL, "dacha204", 	"dacha204@gmail.com", 			"starwars5", "Dalibor", "Aleksic", 		"1995-04-20", "2017-6-12", "064 222 11 11",  1, 15024, "2018-05-12", 5, 1, "dacha.jpg");
-INSERT INTO Korisnici VALUES (NULL, "stefan81888", 	"stefan81888@gmail.com", 		"starwars5", "Stefan", "Stankovic", 	"1996-08-18", "2017-05-12", "064 333 11 11", 2, 15069, "2018-05-12", 5, 1, "stef.jpg");
-INSERT INTO Korisnici VALUES (NULL, "marija95", 	"marija.stojkovic@gmail.com", 	"starwars5", "Marija", "Stojkovic", 	"1995-10-18", "2017-05-12", "064 44 11 11",  1, 15569, "2018-05-12", 5, 1, "mar.jpg");
-INSERT INTO Korisnici VALUES (NULL, "savchaa1337", 	"savchaa@gmail.com", 			"starwars5", "Nikola", "Savic", 		"1995-09-18", "2017-05-12", "064 55 11 11",  3, 15869, "2018-05-12", 5, 1, "savaa.jpg");
-INSERT INTO Korisnici VALUES (NULL, "hochopepa", 	"hochopepa@gmail.com", 			"starwars5", "Stevica", "Stojkovic", 	"1995-04-18", "2017-05-12", "064 66 11 11",  3, 15099, "2018-05-12", 5, 1, "root.jpg");
+INSERT INTO Korisnici VALUES (NULL, "dimipage", 	"dimipage@gmail.com", 			"starwars5", "Dušuan", "Dimitrijević", 	"1995-02-18", "2017-05-12", "064 111 11 11", 1, 15069, "2018-05-12", 5, 1, "dimi.jpg", 	false);
+INSERT INTO Korisnici VALUES (NULL, "dacha204", 	"dacha204@gmail.com", 			"starwars5", "Dalibor", "Aleksic", 		"1995-04-20", "2017-6-12", "064 222 11 11",  1, 15024, "2018-05-12", 5, 1, "dacha.jpg", false);
+INSERT INTO Korisnici VALUES (NULL, "stefan81888", 	"stefan81888@gmail.com", 		"starwars5", "Stefan", "Stankovic", 	"1996-08-18", "2017-05-12", "064 333 11 11", 2, 15069, "2018-05-12", 5, 1, "stef.jpg", 	false);
+INSERT INTO Korisnici VALUES (NULL, "marija95", 	"marija.stojkovic@gmail.com", 	"starwars5", "Marija", "Stojkovic", 	"1995-10-18", "2017-05-12", "064 44 11 11",  1, 15569, "2018-05-12", 5, 1, "mar.jpg", 	false);
+INSERT INTO Korisnici VALUES (NULL, "savchaa1337", 	"savchaa@gmail.com", 			"starwars5", "Nikola", "Savic", 		"1995-09-18", "2017-05-12", "064 55 11 11",  3, 15869, "2018-05-12", 5, 1, "savaa.jpg", false);
+INSERT INTO Korisnici VALUES (NULL, "hochopepa", 	"hochopepa@gmail.com", 			"starwars5", "Stevica", "Stojkovic", 	"1995-04-18", "2017-05-12", "064 66 11 11",  3, 15099, "2018-05-12", 5, 1, "root.jpg", 	false);
 
 INSERT INTO Korisnici VALUES (NULL, "violeta", 		"violeta@gmail.com", 			"starwars5", "Violeta", "Pesic", 	"1987-04-18", "2010-01-01", "064 66 11 11",  NULL, NULL, NULL, 4, 1, "viol.jpg");
 INSERT INTO Korisnici VALUES (NULL, "dzoni", 		"dzoni@gmail.com", 				"starwars5", "Dzoni", "Dep", 		"1978-04-18", "2008-05-03", "063 66 11 11",  NULL, NULL, NULL, 2, 1, "dzoni.jpg");
@@ -48,12 +48,12 @@ INSERT INTO Pracenja VALUES (7,5);
 INSERT INTO Pracenja VALUES (7,6);
 
 -- OBJAVE
-INSERT INTO Objave VALUES (1, 1, "2018-05-12 18:15:12", "tekst objave 1");
-INSERT INTO Objave VALUES (3, 1, "2018-05-12 12:25:13", "tekst objave 3");
-INSERT INTO Objave VALUES (4, 3, "2018-05-12 07:37:43", "tekst objave 4");
-INSERT INTO Objave VALUES (5, 2, "2018-05-12 17:49:41", "tekst objave 5");
-INSERT INTO Objave VALUES (6, 2, "2018-05-12 19:22:21", "tekst objave 6");
-INSERT INTO Objave VALUES (7, 1, "2018-05-12 14:43:03", "tekst objave 7");
+INSERT INTO Objave VALUES (1, 1, 1, "2018-05-12 18:15:12", "Objava korisnik 1");
+INSERT INTO Objave VALUES (2, 3, 1, "2018-05-12 12:25:13", "Objava korisnik 3");
+INSERT INTO Objave VALUES (3, 4, 3, "2018-05-12 07:37:43", "Objava korisnik 4");
+INSERT INTO Objave VALUES (4, 5, 2, "2018-05-12 17:49:41", "Objava korisnik 5");
+INSERT INTO Objave VALUES (5, 6, 2, "2018-05-12 19:22:21", "Objava korisnik 6");
+INSERT INTO Objave VALUES (6, 7, 1, "2018-05-12 14:43:03", "Objava korisnik 7");
 
 -- LOGIN SESIJE
 INSERT INTO LoginSesije VALUES (1, 2, "9605cc70-c838-4ba3-a6ac-bd3f461ace9d", "2018-05-12 22:03:08", "2018-06-12 22:03:08");
@@ -70,8 +70,8 @@ INSERT INTO Pozivanja VALUES (3, 5, "2018-05-12 17:02:34", NULL);
 INSERT INTO PozivanjaPozvani VALUES (1, 3, true);
 INSERT INTO PozivanjaPozvani VALUES (1, 6, true);
 INSERT INTO PozivanjaPozvani VALUES (2, 5, null);
-INSERT INTO PozivanjaPozvani VALUES (2, 7, false);
-INSERT INTO PozivanjaPozvani VALUES (3, 7, null);
+INSERT INTO PozivanjaPozvani VALUES (2, 6, false);
+INSERT INTO PozivanjaPozvani VALUES (3, 4, null);
 
 --obroci
 INSERT INTO Obroci VALUES (1, 1, 1, true, "2018-05-10 10:01:13", "2018-05-10 10:22:12", 1, 1);
