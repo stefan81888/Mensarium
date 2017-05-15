@@ -187,7 +187,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\MapiranjeDto.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -222,6 +221,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KorisniciController.cs" />
+    <Compile Include="Controllers\ObjaveController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -231,14 +231,15 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Podaci\DTO\FakultetDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikDto.cs" />
-    <Compile Include="Podaci\DTO\LoginSesijeDto.cs" />
+    <Compile Include="Podaci\DTO\OdjavaDto.cs" />
+    <Compile Include="Podaci\DTO\PrijavaDto.cs" />
     <Compile Include="Podaci\DTO\MenzaDto.cs" />
-    <Compile Include="Podaci\DTO\ObjaveDto.cs" />
+    <Compile Include="Podaci\DTO\ObjavaDto.cs" />
     <Compile Include="Podaci\DTO\ObrokDto.cs" />
-    <Compile Include="Podaci\DTO\PozivanjaDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaPozvaniDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjeDto.cs" />
     <Compile Include="Podaci\DTO\PrivilegijaDto.cs" />
+    <Compile Include="Podaci\DTO\SesijaDto.cs" />
     <Compile Include="Podaci\DTO\TipNalogaDto.cs" />
     <Compile Include="Podaci\DTO\TipObrokaDto.cs" />
     <Compile Include="Podaci\Entiteti\Fakultet.cs" />
@@ -270,7 +271,9 @@
     <Compile Include="Podaci\ProvajderiPodataka\Menze.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\Objave.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\Obroci.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodataka.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\SesijeProvajder.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\Validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -360,7 +363,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63672</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:63672/</IISUrl>
+          <IISUrl>http://localhost:2244/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

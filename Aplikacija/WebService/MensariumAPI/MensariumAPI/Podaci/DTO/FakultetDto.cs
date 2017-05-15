@@ -8,13 +8,7 @@ namespace MensariumAPI.Podaci.DTO
 {
     public class FakultetDto
     {
-        public virtual string Naziv { get; set; }
-
-        public virtual IList<KorisnikDto> Studenti { get; set; }
-
-        public FakultetDto()
-        {
-            Studenti = new List<KorisnikDto>();
-        }
+        public string Naziv { get; set; }
+        public int IdFakultet { get; protected set; }
     }
 }

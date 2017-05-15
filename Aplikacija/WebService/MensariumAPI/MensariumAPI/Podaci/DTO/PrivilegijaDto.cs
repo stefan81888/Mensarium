@@ -9,13 +9,7 @@ namespace MensariumAPI.Podaci.DTO
 {
     public class PrivilegijaDto
     {
-        public virtual string Opis { get; set; }
-
-        public virtual IList<TipNalogaDto> Nalozi { get; set; }
-
-        public PrivilegijaDto()
-        {
-            Nalozi = new List<TipNalogaDto>();
-        }
+        public int IdPrivilegije { get; protected set; }
+        public string Opis { get; set; }
     }
 }

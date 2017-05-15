@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using MensariumAPI.Podaci.Entiteti;
-
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class PozivanjaPozvaniDto
+    public class OdjavaDto
     {
-        public bool OdgovorPozvanog { get; set; } 
+        public int IdKorisnika { get; set; }
+        public string IdSesije { get; set; }
     }
 }

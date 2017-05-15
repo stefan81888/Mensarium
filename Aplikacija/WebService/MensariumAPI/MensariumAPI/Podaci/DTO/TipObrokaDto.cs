@@ -9,13 +9,8 @@ namespace MensariumAPI.Podaci.DTO
 {
     public class TipObrokaDto
     {
-        public virtual string Naziv { get; set; }
+        public int IdTipObroka { get; protected set; }
+        public string Naziv { get; set; }
 
-        public virtual IList<ObrokDto> Obroci { get; set; }
-
-        public TipObrokaDto()
-        {
-            Obroci = new List<ObrokDto>();
-        }
     }
 }
