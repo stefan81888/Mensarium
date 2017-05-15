@@ -8,21 +8,24 @@ namespace MensariumAPI.Podaci.Entiteti
 {
     public class Menza
     {
-        public virtual int IdMenza { get; set; }
+        public virtual int IdMenza { get; protected set; }
         public virtual string Naziv { get; set; }
         public virtual string Lokacija { get; set; }
         public virtual string RadnoVreme { get; set; }
-        public virtual bool VanrednoNeRadi { get; set; } // u bazi je tinyint
+        public virtual bool VanrednoNeRadi { get; set; }
 
-        public virtual IList<Objave> Objava { get; set; }
-        public virtual IList<Menza> Uplaceni { get; set; }
-        public virtual IList<Menza> Iskorisceni { get; set; }
+        //Menze <- Obroci
+        public virtual IList<Objava> ObjaveKorisnika { get; set; }
+        //Menze <- Obroci (lokacijaUplate)
+        public virtual IList<Obrok> Uplaceni { get; set; }
+        //Menze <- Obroci (lokacijaIskoriscenja)
+        public virtual IList<Obrok> Iskorisceni { get; set; }
 
         public Menza()
         {
-            Objava = new List<Objave>();
-            Uplaceni = new List<Menza>();
-            Iskorisceni = new List<Menza>();
+            ObjaveKorisnika = new List<Objava>();
+            Uplaceni = new List<Obrok>();
+            Iskorisceni = new List<Obrok>();
         }
     }
 }

@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace MensariumAPI.Podaci.Entiteti
 {
-    public class Pozivanja
+    public class Pozivanje
     {
-        public virtual int IdPoziva { get; set; }
+        public virtual int IdPoziva { get; protected set; }
         public virtual DateTime DatumPoziva { get; set; }
-        public virtual string VremeTrajanja { get; set; } // u bazi je time
-        public virtual Korisnik Poziva { get; set; } // onaj ko poziva na obrok
+        public virtual DateTime VaziDo { get; set; }
 
+        //Pozivanja -> Korisnici
+        public virtual Korisnik Pozivaoc { get; set; }
+
+        //Pozivanja <- PozivanjePozvani (M:N+atributima)
         public virtual IList<PozivanjaPozvani> Pozvani { get; set; }
 
-        public Pozivanja()
+        public Pozivanje()
         {
             Pozvani = new List<PozivanjaPozvani>();
         }

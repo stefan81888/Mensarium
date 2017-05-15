@@ -8,13 +8,24 @@ namespace MensariumAPI.Podaci.Entiteti
 {
     public class Obrok
     {
-        public virtual int IdObroka { get; set; }
+        public virtual int IdObroka { get; protected set; }
         public virtual bool Iskoriscen { get; set; }
         public virtual DateTime DatumUplacivanja { get; set; }
-        public virtual string DatumIskoriscenja { get; set; }
-        public virtual Korisnik Student { get; set; }
+        public virtual DateTime? DatumIskoriscenja { get; set; }
+        
+        //Obroci -> Korisnici
+        public virtual Korisnik Uplatilac { get; set; }
+        //Obroci -> TipObroka
         public virtual TipObroka Tip { get; set; }
+        //Obroci -> Menze
         public virtual Menza LokacijaUplate { get; set; }
+        //Obroci -> Menze
         public virtual Menza LokacijaIskoriscenja { get; set; }
+
+        public Obrok()
+        {
+            Iskoriscen = false;
+            DatumIskoriscenja = null;
+        }
     }
 }

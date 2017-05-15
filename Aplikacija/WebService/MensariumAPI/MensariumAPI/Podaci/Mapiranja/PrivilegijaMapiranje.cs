@@ -8,25 +8,23 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.Mapiranja
 {
-    class PrivilegijaMapiranje : ClassMap<Privilegija>
+    public class PrivilegijaMapiranje : ClassMap<Privilegija>
     {
         public PrivilegijaMapiranje()
         {
-            //Mapiranje tabele
             Table("Privilegije");
 
-            //Mapiranje primarnog kljuca
-            Id(x => x.IdPrivilegije, "Privilegije.idPrivilegije"); // VAZNO: Proveriti da li dbms sam dodaje kljuc pri ovakvom mapiranju
+            Id(x => x.IdPrivilegije, "idPrivilegije").GeneratedBy.Identity();
 
-            //mapiranje svojstava
             Map(x => x.Opis, "opis");
 
-            //mapiranje veze M:N 
+            //Privilegija <-> TipNaloga M:N
             HasManyToMany(x => x.Nalozi)
-                .Table("PrivilgijeDodeljivanja")
+                .Table("PrivilegijeDodeljivanja")
                 .ParentKeyColumn("idPrivilegije")
                 .ChildKeyColumn("idTipNaloga")
-                .Cascade.All();
+                .Inverse()
+                .Cascade.SaveUpdate();
 
         }
     }

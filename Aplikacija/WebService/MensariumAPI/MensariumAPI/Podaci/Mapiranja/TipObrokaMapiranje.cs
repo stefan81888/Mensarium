@@ -8,21 +8,21 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.Mapiranja
 {
-    class TipObrokaMapiranje : ClassMap<TipObroka>
+    public class TipObrokaMapiranje : ClassMap<TipObroka>
     {
         public TipObrokaMapiranje()
         {
-            //Mapiranje tabele
             Table("TipObroka");
 
-            //Mapiranje primarnog kljuca
-            Id(x => x.IdTipObroka, "idTipObroka"); 
+            Id(x => x.IdTipObroka, "idTipObroka").GeneratedBy.Identity();
 
-            //Mapiranje svojstava
-            Map(x => x.Naziv, "naziv");
-           
-            //Mapiranje veze 1:N
-            HasMany(x => x.Obroci).KeyColumn("idObrok").LazyLoad().Cascade.All().Inverse();
+            Map(x => x.Naziv, "naziv").Not.Nullable();
+
+            //TipObroka <- Obroci
+            HasMany(x => x.Obroci)
+                .KeyColumn("tipObroka")
+                .Cascade.SaveUpdate()
+                .Inverse();
         }
     }
 }

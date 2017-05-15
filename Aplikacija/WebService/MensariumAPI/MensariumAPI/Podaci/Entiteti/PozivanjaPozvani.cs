@@ -8,9 +8,13 @@ namespace MensariumAPI.Podaci.Entiteti
 {
     public class PozivanjaPozvani
     {
-        public virtual int Id { get; set; }
-        public virtual bool OdgovorPozvanog { get; set; } // u bazi tiny int
-        public virtual Korisnik Korisnici { get; set; }
-        public virtual Pozivanja Pozivi { get; set; }
+        public virtual PozivanjaPozvaniID IdPozivanjaPozvani { get; protected set; }
+        public virtual bool? OdgovorPozvanog { get; set; }
+
+        public PozivanjaPozvani()
+        {
+            IdPozivanjaPozvani = new PozivanjaPozvaniID();
+        }
+
     }
 }

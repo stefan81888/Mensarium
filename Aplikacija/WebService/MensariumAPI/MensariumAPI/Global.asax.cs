@@ -15,7 +15,7 @@ namespace MensariumAPI
     {
         protected void Application_Start()
         {
-            Mapper.Initialize(c => c.AddProfile<MapiranjeDto>());
+            //Mapper.Initialize(c => c.AddProfile<MapiranjeDto>());
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

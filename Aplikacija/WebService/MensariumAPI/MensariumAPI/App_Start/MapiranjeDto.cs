@@ -9,45 +9,42 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.App_Start
 {
-    public class MapiranjeDto : Profile
-    {
-        public MapiranjeDto()
-        {
-            Mapper.CreateMap<Fakultet, FakultetDto>();
-            Mapper.CreateMap<FakultetDto, Fakultet>();
+    //public class MapiranjeDto : Profile
+    //{
+    //    public MapiranjeDto()
+    //    {
+    //        Mapper.CreateMap<Fakultet, FakultetDto>();
+    //        Mapper.CreateMap<FakultetDto, Fakultet>();
 
-            Mapper.CreateMap<Korisnik, KorisnikDto>();
-            Mapper.CreateMap<KorisnikDto, Korisnik>();
+    //        Mapper.CreateMap<Korisnik, KorisnikDto>();
+    //        Mapper.CreateMap<KorisnikDto, Korisnik>();
 
-            Mapper.CreateMap<LoginSesije, LoginSesijeDto>();
-            Mapper.CreateMap<LoginSesijeDto, LoginSesije>();
+    //        Mapper.CreateMap<LoginSesija, LoginSesijeDto>();
+    //        Mapper.CreateMap<LoginSesijeDto, LoginSesija>();
 
-            Mapper.CreateMap<Menza, MenzaDto>();
-            Mapper.CreateMap<MenzaDto, Menza>();
+    //        Mapper.CreateMap<Menza, MenzaDto>();
+    //        Mapper.CreateMap<MenzaDto, Menza>();
 
-            Mapper.CreateMap<Objave, ObjaveDto>();
-            Mapper.CreateMap<ObjaveDto, Objave>();
+    //        Mapper.CreateMap<Objava, ObjaveDto>();
+    //        Mapper.CreateMap<ObjaveDto, Objava>();
 
-            Mapper.CreateMap<Obrok, ObrokDto>();
-            Mapper.CreateMap<ObrokDto, Obrok>();
+    //        Mapper.CreateMap<Obrok, ObrokDto>();
+    //        Mapper.CreateMap<ObrokDto, Obrok>();
 
-            Mapper.CreateMap<Pozivanja, PozivanjaDto>();
-            Mapper.CreateMap<PozivanjaDto, Pozivanja>();
+    //        Mapper.CreateMap<Pozivanje, PozivanjaDto>();
+    //        Mapper.CreateMap<PozivanjaDto, Pozivanje>();
 
-            Mapper.CreateMap<PozivanjaPozvani, PozivanjaPozvaniDto>();
-            Mapper.CreateMap<PozivanjaPozvaniDto, PozivanjaPozvani>();
+    //        Mapper.CreateMap<PozivanjaPozvani, PozivanjaPozvaniDto>();
+    //        Mapper.CreateMap<PozivanjaPozvaniDto, PozivanjaPozvani>();
+            
+    //        Mapper.CreateMap<Privilegija, PrivilegijaDto>();
+    //        Mapper.CreateMap<PrivilegijaDto, Privilegija>();
 
-            Mapper.CreateMap<Pracenja, PracenjaDto>();
-            Mapper.CreateMap<PracenjaDto, Pracenja>();
+    //        Mapper.CreateMap<TipNaloga, TipNalogaDto>();
+    //        Mapper.CreateMap<TipNalogaDto, TipNaloga>();
 
-            Mapper.CreateMap<Privilegija, PrivilegijaDto>();
-            Mapper.CreateMap<PrivilegijaDto, Privilegija>();
-
-            Mapper.CreateMap<TipNaloga, TipNalogaDto>();
-            Mapper.CreateMap<TipNalogaDto, TipNaloga>();
-
-            Mapper.CreateMap<TipObroka, TipObrokaDto>();
-            Mapper.CreateMap<TipObrokaDto, TipObroka>();
-        }
-    }
+    //        Mapper.CreateMap<TipObroka, TipObrokaDto>();
+    //        Mapper.CreateMap<TipObrokaDto, TipObroka>();
+    //    }
+    //}
 }

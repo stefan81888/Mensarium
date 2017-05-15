@@ -8,22 +8,22 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.Mapiranja
 {
-    class FakultetMapiranje : ClassMap<Fakultet>
+    public class FakultetMapiranje : ClassMap<Fakultet>
     {
         public FakultetMapiranje()
         {
-            //Mapiranje tabele
             Table("Fakulteti");
 
-            //mapiranje primarnog kljuca
-            Id(x => x.IdFakultet, "idFakultet"); // VAZNO: Proveriti da li dbms sam dodaje kljuc pri ovakvom mapiranju
+            Id(x => x.IdFakultet, "idFakultet").GeneratedBy.Identity();
 
-            //mapiranje svojstava
-            Map(x => x.Naziv, "naziv");
+            Map(x => x.Naziv, "naziv").Not.Nullable().Unique();
 
-            //mapiranje veze 1:N 
-            HasMany(x => x.Studenti).KeyColumn("idKorisnik").LazyLoad().Cascade.All().Inverse();
-
+            //Fakultet -> Korisnici
+            HasMany(x => x.Studenti)
+                .KeyColumn("fakultet")
+                .Cascade.SaveUpdate()
+                .Inverse();
+            
         }
     }
 }

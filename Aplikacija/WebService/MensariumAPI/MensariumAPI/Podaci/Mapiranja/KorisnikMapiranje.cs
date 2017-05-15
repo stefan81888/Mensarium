@@ -12,37 +12,64 @@ namespace MensariumAPI.Podaci.Mapiranja
     {
         KorisnikMapiranje()
         {
-            //Mapiranje tabele
+            
             Table("Korisnici");
+            Id(x => x.IdKorisnika, "idKorisnik").GeneratedBy.Identity();
 
-            //Mapiranje primarnog kljuca
-            Id(x => x.IdKorisnika, "idKorisnik"); // VAZNO: Proveriti da li dbms sam dodaje kljuc pri ovakvom mapiranju
-
-            //Mapiranje svojstava
-            Map(x => x.KorisnickoIme, "korisnickoIme");
-            Map(x => x.Email, "email");
-            Map(x => x.Sifra, "lozinka");
-            Map(x => x.Ime, "ime");
-            Map(x => x.Prezime, "prezime");
-            Map(x => x.DatumRodjenja, "datumRodjenja");
-            Map(x => x.DatumRegistracije, "datumRegistracije");
+            Map(x => x.KorisnickoIme, "korisnickoIme").Unique();
+            Map(x => x.Email, "email").Unique();
+            Map(x => x.Sifra, "lozinka").Not.Nullable();
+            Map(x => x.Ime, "ime").Not.Nullable();
+            Map(x => x.Prezime, "prezime").Not.Nullable();
+            Map(x => x.DatumRodjenja, "datumRodjenja").Not.Nullable();
+            Map(x => x.DatumRegistracije, "datumRegistracije").Not.Nullable();
             Map(x => x.DatumVaziDo, "datumVaziDo");
             Map(x => x.BrojIndeksa, "brojIndeksa");
             Map(x => x.BrojTelefona, "brojTelefona");
-            Map(x => x.AktivanNalog, "aktivanNalog");
-
-            //Mapiranje veze 1:1
-            HasOne(x => x.Objava);
-
-            //Mapiranje veza N:1
-            References(x => x.PrivilegijeNaloga).Column("tipNaloga").LazyLoad();
-            References(x => x.StudiraFakultet).Column("fakultet").LazyLoad();
-
-            //Mapiranje veza 1:N
-            HasMany(x => x.Sesije).KeyColumn("idLogin").LazyLoad().Cascade.All().Inverse();
-            HasMany(x => x.Pozivi).KeyColumn("idPoziva").LazyLoad().Cascade.All().Inverse();
-            HasMany(x => x.Pozvani).KeyColumn("id").LazyLoad().Cascade.All().Inverse();
-            HasMany(x => x.Obroci).KeyColumn("idObrok").LazyLoad().Cascade.All().Inverse();
+            Map(x => x.AktivanNalog, "aktivanNalog").Not.Nullable();
+            Map(x => x.Slika, "slika");
+            Map(x => x.Obrisan, "obrisan").Not.Nullable();
+            
+            //Korisnik <- Objave
+            HasOne(x => x.Objava)
+                .PropertyRef(x=> x.IdKorisnik);
+            //Korisnik -> TipNaloga
+            References(x => x.TipNaloga).Column("tipNaloga");
+            //Korisnik -> Fakulteti
+            References(x => x.StudiraFakultet).Column("fakultet");
+            //Korisnik -> Korisnik
+            HasManyToMany(x => x.Prati)
+                .ParentKeyColumn("idPratilac")
+                .ChildKeyColumn("idPraceni")
+                .Table("Pracenja")
+                .Cascade.SaveUpdate();
+            //Korisnik <- Korisnik
+            HasManyToMany(x => x.PracenOd)
+                .ParentKeyColumn("idPraceni")
+                .ChildKeyColumn("idPratilac")
+                .Table("Pracenja")
+                .Inverse()
+                .Cascade.SaveUpdate();
+            //Korisnik <- LoginSesije
+            HasMany(x => x.Sesije)
+                .KeyColumn("idKorisnika")
+                .Cascade.All() //kad se obrise korisnik -> brisi sve sesije
+                .Inverse();
+            //Korisnik <- Pozivanja
+            HasMany(x => x.Pozivi)
+                .KeyColumn("idPozivaoca")
+                .Cascade.All() //kad se obrise korisnik -> brisi sva pozivanja
+                .Inverse();
+            //Korisnik <-- PozivanjaPozvani
+            HasMany(x => x.PozivanjaOd)
+                .KeyColumn("idPozvanog")
+                .Cascade.SaveUpdate() //TO-DO: PROVERI
+                .Inverse();
+            //Korisnik <- Obroci
+            HasMany(x => x.Obroci)
+                .KeyColumn("idUplatioca")
+                .Cascade.SaveUpdate()
+                .Inverse();
         }
     }
 }

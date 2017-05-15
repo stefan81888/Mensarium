@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -238,34 +239,34 @@
     <Compile Include="Podaci\DTO\TipObrokaDto.cs" />
     <Compile Include="Podaci\Entiteti\Fakultet.cs" />
     <Compile Include="Podaci\Entiteti\Korisnik.cs" />
-    <Compile Include="Podaci\Entiteti\LoginSesije.cs" />
+    <Compile Include="Podaci\Entiteti\LoginSesija.cs" />
     <Compile Include="Podaci\Entiteti\Menza.cs" />
-    <Compile Include="Podaci\Entiteti\Objave.cs" />
+    <Compile Include="Podaci\Entiteti\Objava.cs" />
     <Compile Include="Podaci\Entiteti\Obrok.cs" />
-    <Compile Include="Podaci\Entiteti\Pozivanja.cs" />
     <Compile Include="Podaci\Entiteti\PozivanjaPozvani.cs" />
-    <Compile Include="Podaci\Entiteti\Pracenja.cs" />
+    <Compile Include="Podaci\Entiteti\PozivanjaPozvaniID.cs" />
+    <Compile Include="Podaci\Entiteti\Pozivanje.cs" />
     <Compile Include="Podaci\Entiteti\Privilegija.cs" />
     <Compile Include="Podaci\Entiteti\TipNaloga.cs" />
     <Compile Include="Podaci\Entiteti\TipObroka.cs" />
+    <Compile Include="Podaci\Konfigracija\Konfiguracija.cs" />
     <Compile Include="Podaci\Mapiranja\FakultetMapiranje.cs" />
     <Compile Include="Podaci\Mapiranja\KorisnikMapiranje.cs" />
-    <Compile Include="Podaci\Mapiranja\LoginSesijeMapiranje.cs" />
+    <Compile Include="Podaci\Mapiranja\LoginSesijaMapiranje.cs" />
     <Compile Include="Podaci\Mapiranja\MenzaMapiranje.cs" />
-    <Compile Include="Podaci\Mapiranja\ObjaveMapiranje.cs" />
+    <Compile Include="Podaci\Mapiranja\ObjavaMapiranje.cs" />
     <Compile Include="Podaci\Mapiranja\ObrokMapiranje.cs" />
-    <Compile Include="Podaci\Mapiranja\PozivanjaMapiranja.cs" />
-    <Compile Include="Podaci\Mapiranja\PozivanjaPozvaniMapiranje.cs" />
-    <Compile Include="Podaci\Mapiranja\PracenjaMapiranje.cs" />
+    <Compile Include="Podaci\Mapiranja\PozivanjeMapiranje.cs" />
+    <Compile Include="Podaci\Mapiranja\PozivanjePozvaniMapiranje.cs" />
     <Compile Include="Podaci\Mapiranja\PrivilegijaMapiranje.cs" />
     <Compile Include="Podaci\Mapiranja\TipNalogaMapiranje.cs" />
     <Compile Include="Podaci\Mapiranja\TipObrokaMapiranje.cs" />
-    <Compile Include="Podaci\Sloj podataka\Fakulteti.cs" />
-    <Compile Include="Podaci\Sloj podataka\Korisnici.cs" />
-    <Compile Include="Podaci\Sloj podataka\Menze.cs" />
-    <Compile Include="Podaci\Sloj podataka\Objave.cs" />
-    <Compile Include="Podaci\Sloj podataka\Obroci.cs" />
-    <Compile Include="Podaci\Sloj podataka\Sesija.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\Fakulteti.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\Korisnici.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\Menze.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\Objave.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\Obroci.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\SesijeProvajder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

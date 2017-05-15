@@ -8,26 +8,34 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.Mapiranja
 {
-    class MenzaMapiranje : ClassMap<Menza>
+    public class MenzaMapiranje : ClassMap<Menza>
     {
         public MenzaMapiranje()
         {
-            //Mapiranje tabele
             Table("Menze");
 
-            //Mapiranje primarnog kljuca
-            Id(x => x.IdMenza, "idMenza"); // VAZNO: Proveriti da li dbms sam dodaje kljuc pri ovakvom mapiranju
-
-            //Mapiranje svojstava
-            Map(x => x.Naziv, "naziv");
-            Map(x => x.Lokacija, "lokacija");
+            Id(x => x.IdMenza, "idMenza").GeneratedBy.Identity(); 
+            
+            Map(x => x.Naziv, "naziv").Not.Nullable();
+            Map(x => x.Lokacija, "lokacija").Not.Nullable();
             Map(x => x.RadnoVreme, "radnoVreme");
-            Map(x => x.VanrednoNeRadi, "vanrednoNeRadi");
+            Map(x => x.VanrednoNeRadi, "vanrednoNeRadi").Not.Nullable();
 
-            //Mapiranje veze 1:N 
-            HasMany(x => x.Lokacija).KeyColumn("idKorisnika").LazyLoad().Cascade.All().Inverse();
-            HasMany(x => x.Uplaceni).KeyColumn("idObrok").LazyLoad().Cascade.All().Inverse();
-            HasMany(x => x.Iskorisceni).KeyColumn("idObrok").LazyLoad().Cascade.All().Inverse();
-        }
+            //Menze <- Obroci
+            HasMany(x => x.ObjaveKorisnika)
+                .KeyColumn("idLokacija")
+                .Cascade.SaveUpdate()
+                .Inverse();
+            //Menze <- Obroci (lokacijaUplate)
+            HasMany(x => x.Uplaceni)
+                .KeyColumn("lokacijaUplate")
+                .Cascade.SaveUpdate()
+                .Inverse();
+            //Menze <- Obroci (lokacijaIskoriscenja)
+            HasMany(x => x.Iskorisceni)
+                .KeyColumn("lokacijaIskoriscenja")
+                .Cascade.SaveUpdate()
+                .Inverse();
+            }
     }
 }
