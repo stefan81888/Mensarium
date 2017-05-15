@@ -5,20 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using MensariumAPI.Podaci.Entiteti;
 
-namespace MensariumAPI.Podaci.Sloj_podataka
+namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
-    public sealed class Menze
+    public sealed class Obroci
     {
-        private static volatile Menze instanca;
+        private static volatile Obroci instanca;
         private static object zakljucaj = new Object();
-        public IList<Menza> ListaMenzi { get; set; }
+        public IList<Obrok> ListaObroka { get; set; }
 
-        private Menze()
+        private Obroci()
         {
-            ListaMenzi = new List<Menza>();
+            ListaObroka = new List<Obrok>();
         }
 
-        public static Menze Instanca
+        public static Obroci Instanca
         {
             get
             {
@@ -27,7 +27,7 @@ namespace MensariumAPI.Podaci.Sloj_podataka
                     lock (zakljucaj)
                     {
                         if (instanca == null)
-                            instanca = new Menze();
+                            instanca = new Obroci();
                     }
                 }
 

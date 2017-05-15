@@ -8,9 +8,10 @@ namespace MensariumAPI.Podaci.Entiteti
 {
     public class TipObroka
     {
-        public virtual int IdTipObroka { get; set; }
+        public virtual int IdTipObroka { get; protected set; }
         public virtual string Naziv { get; set; }
 
+        //TipObroka <- Obroci
         public virtual IList<Obrok> Obroci { get; set; }
 
         public TipObroka()
@@ -19,5 +20,3 @@ namespace MensariumAPI.Podaci.Entiteti
         }
     }
 }
-
-

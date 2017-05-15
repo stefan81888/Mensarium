@@ -5,20 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using MensariumAPI.Podaci.Entiteti;
 
-namespace MensariumAPI.Podaci.Sloj_podataka
+namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
-    public sealed class Fakulteti
+    public sealed class Korisnici
     {
-        private static volatile Fakulteti instanca;
+        private static volatile Korisnici instanca;
         private static object zakljucaj = new Object();
-        public IList<Fakultet> ListaFakulteta { get; set; }
+        public IList<Korisnik> ListaKorisnika { get; set; }
 
-        private Fakulteti()
+        private Korisnici()
         {
-            ListaFakulteta = new List<Fakultet>();
+            ListaKorisnika = new List<Korisnik>();
         }
 
-        public static Fakulteti Instanca
+        public static Korisnici Instanca
         {
             get
             {
@@ -27,7 +27,7 @@ namespace MensariumAPI.Podaci.Sloj_podataka
                     lock (zakljucaj)
                     {
                         if (instanca == null)
-                            instanca = new Fakulteti();
+                            instanca = new Korisnici();
                     }
                 }
 
