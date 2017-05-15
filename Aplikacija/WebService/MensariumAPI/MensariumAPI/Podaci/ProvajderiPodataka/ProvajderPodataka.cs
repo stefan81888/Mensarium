@@ -11,9 +11,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
     {
         public static Korisnik VratiKorisnika(int id)
         {
-            ISession s = SesijeProvajder.VratiSesiju();
+            ISession s = SesijeProvajder.Sesija;
             Korisnik k = s.Load<Korisnik>(id);
-            s.Close();
             return k;
         }
     }

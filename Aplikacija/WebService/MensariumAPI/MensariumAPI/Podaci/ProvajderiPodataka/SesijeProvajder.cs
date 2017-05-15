@@ -19,8 +19,26 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
     {
         private static ISessionFactory instanca = null;
         private static object zakljucaj = new object();
-        
+        public static ISession Sesija;
+
         //Funkcija na zahtev otvara sesiju
+        public static void OtvoriSesiju()
+        {
+            if (Sesija != null)
+                Sesija.Close();
+
+            Sesija = VratiSesiju();
+        }
+
+        public static void ZatvoriSesiju()
+        {
+            if (Sesija != null)
+                Sesija.Close();
+
+            Sesija = null;
+        }
+
+
         public static ISession VratiSesiju()
         {
             //Ukoliko instanca nije kreirana
@@ -32,10 +50,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                         instanca = NapraviSesiju();
                 }
             }
-
+            
             return instanca.OpenSession();
         }
 
+        
         //Konfiguracija i kreiranje instance
         private static ISessionFactory NapraviSesiju()
         {

@@ -46,9 +46,11 @@ namespace MensariumAPI.Controllers
 
 
         [HttpGet]
-        public KorisnikDto VratiKorisnika()
+        public KorisnikDto VratiKorisnika(int id)
         {
-            Korisnik k = ProvajderPodataka.VratiKorisnika(1);
+            SesijeProvajder.OtvoriSesiju();
+
+            Korisnik k = ProvajderPodataka.VratiKorisnika(id);
             KorisnikDto korisnik = new KorisnikDto();
             if (Validator.KorisnikPostoji(k))
             {
@@ -57,8 +59,10 @@ namespace MensariumAPI.Controllers
                 korisnik.BrojTelefona = k.BrojTelefona;
                 korisnik.BrojIndeksa = k.BrojIndeksa;
                 korisnik.Email = k.Email;
+                korisnik.DatumRodjenja = k.DatumRodjenja;
             }
 
+            SesijeProvajder.ZatvoriSesiju();
             return korisnik;
         }
        
