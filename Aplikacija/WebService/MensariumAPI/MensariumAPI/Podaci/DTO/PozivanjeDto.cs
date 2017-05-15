@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AutoMapper;
 using MensariumAPI.Podaci.Entiteti;
-
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class PozivanjaDto
+    public class PozivanjeDto
     {
         public virtual DateTime DatumPoziva { get; set; }
-        public virtual string VremeTrajanja { get; set; } // u bazi je time
-        public virtual KorisnikDto Poziva { get; set; } // onaj ko poziva na obrok
+        public virtual DateTime VaziDo { get; set; }
 
+        //Pozivanja -> Korisnici
+        public virtual KorisnikDto Pozivalac { get; set; }
+
+        //Pozivanja <- PozivanjePozvani (M:N+atributima)
         public virtual IList<PozivanjaPozvaniDto> Pozvani { get; set; }
 
-        public PozivanjaDto()
+        public PozivanjeDto()
         {
             Pozvani = new List<PozivanjaPozvaniDto>();
         }

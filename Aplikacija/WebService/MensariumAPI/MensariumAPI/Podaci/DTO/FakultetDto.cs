@@ -6,16 +6,15 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    //public class FakultetDto
-    //{
-    //    public virtual int IdFakultet { get; set; }
-    //    public virtual string Naziv { get; set; }
+    public class FakultetDto
+    {
+        public virtual string Naziv { get; set; }
 
-    //    public virtual IList<Korisnik> Studenti { get; set; }
+        public virtual IList<KorisnikDto> Studenti { get; set; }
 
-    //    public FakultetDto()
-    //    {
-    //        Studenti = new List<Korisnik>();
-    //    }
-    //}
+        public FakultetDto()
+        {
+            Studenti = new List<KorisnikDto>();
+        }
+    }
 }

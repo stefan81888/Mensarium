@@ -7,16 +7,15 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    //public class TipObrokaDto
-    //{
-    //    public virtual int IdTipObroka { get; set; }
-    //    public virtual string Naziv { get; set; }
+    public class TipObrokaDto
+    {
+        public virtual string Naziv { get; set; }
 
-    //    public virtual IList<Obrok> Obroci { get; set; }
+        public virtual IList<ObrokDto> Obroci { get; set; }
 
-    //    public TipObrokaDto()
-    //    {
-    //        Obroci = new List<Obrok>();
-    //    }
-    //}
+        public TipObrokaDto()
+        {
+            Obroci = new List<ObrokDto>();
+        }
+    }
 }
