@@ -45,7 +45,7 @@ namespace MensariumAPI.Controllers
 
 
         [HttpGet]
-        public KorisnikFullDto VratiKorisnika(int id)
+        public KorisnikFullDto VratiKorisnikaFull(int id)
         {
             SesijeProvajder.OtvoriSesiju();
 
@@ -53,17 +53,47 @@ namespace MensariumAPI.Controllers
             KorisnikFullDto korisnik = new KorisnikFullDto();
             if (Validator.KorisnikPostoji(k))
             {
+                korisnik.KorisnickoIme = k.KorisnickoIme;
+                korisnik.Email = k.Email;
                 korisnik.Ime = k.Ime;
                 korisnik.Prezime = k.Prezime;
+                korisnik.DatumRodjenja = k.DatumRodjenja;
+                korisnik.DatumRegistracije = k.DatumRegistracije;
                 korisnik.BrojTelefona = k.BrojTelefona;
                 korisnik.BrojIndeksa = k.BrojIndeksa;
-                korisnik.Email = k.Email;
-                korisnik.DatumRodjenja = k.DatumRodjenja;
+                korisnik.DatumVaziDo = k.DatumVaziDo;
+                korisnik.AktivanNalog = k.AktivanNalog;
+                korisnik.IdTipaNaloga = k.TipNaloga.IdTip;
+                korisnik.IdFakulteta = k.StudiraFakultet.IdFakultet;
+                korisnik.IdObjave = k.Objava.IdObjave;
             }
 
             SesijeProvajder.ZatvoriSesiju();
             return korisnik;
         }
+
+        [HttpGet]
+        public KorisnikFollowDto VratiKorisnikaFollow(int id)
+        {
+            SesijeProvajder.OtvoriSesiju();
+
+            Korisnik k = ProvajderPodataka.VratiKorisnika(id);
+            KorisnikFollowDto korisnik = new KorisnikFollowDto();
+            if (Validator.KorisnikPostoji(k))
+            {
+                //korisnik.IdKorisnika = k.IdKorisnika; ???
+                korisnik.KorisnickoIme = k.KorisnickoIme;
+                korisnik.Ime = k.Ime;
+                korisnik.Prezime = k.Prezime;
+                korisnik.Fakultet = k.StudiraFakultet.Naziv;
+                //korisnik.Zapracen ???
+            }
+
+            SesijeProvajder.ZatvoriSesiju();
+            return korisnik;
+        }
+
+
        
     }
 }
