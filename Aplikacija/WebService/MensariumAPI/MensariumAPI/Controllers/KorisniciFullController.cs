@@ -12,7 +12,7 @@ using MensariumAPI.Podaci.ProvajderiPodataka;
 using MensariumAPI.Podaci.DTO;
 namespace MensariumAPI.Controllers
 {
-    public class KorisniciController : ApiController
+    public class KorisniciFullController : ApiController
     {
         //[HttpGet]
         //public string Korisnik(int id)
@@ -47,6 +47,8 @@ namespace MensariumAPI.Controllers
         [HttpGet]
         public KorisnikFullDto VratiKorisnikaFull(int id)
         {
+            SesijeProvajder.OtvoriSesiju();
+
             Korisnik k = ProvajderPodataka.VratiKorisnika(id);
             KorisnikFullDto korisnik = new KorisnikFullDto();
             if (Validator.KorisnikPostoji(k))
@@ -65,7 +67,7 @@ namespace MensariumAPI.Controllers
                 korisnik.IdFakulteta = k.StudiraFakultet.IdFakultet;
                 korisnik.IdObjave = k.Objava.IdObjave;
             }
-
+            SesijeProvajder.ZatvoriSesiju();
             return korisnik;
         }
 
@@ -89,8 +91,5 @@ namespace MensariumAPI.Controllers
         //    SesijeProvajder.ZatvoriSesiju();
         //    return korisnik;
         //}
-
-
-       
     }
 }
