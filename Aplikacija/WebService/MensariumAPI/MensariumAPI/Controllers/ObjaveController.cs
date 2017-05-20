@@ -11,7 +11,7 @@ namespace MensariumAPI.Controllers
     public class ObjaveController : ApiController
     {
         [HttpGet]
-        public ObjavaDto PrikaziSveObjave()
+        public ObjavaFullDto PrikaziSveObjave()
         {
             return null;
         }

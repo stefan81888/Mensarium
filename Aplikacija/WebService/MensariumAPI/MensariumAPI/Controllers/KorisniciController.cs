@@ -5,12 +5,11 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AutoMapper;
-using MensariumAPI.Podaci.DTO;
 using MensariumAPI.Podaci.Entiteti;
 using MensariumAPI.Podaci.Konfigracija;
 using NHibernate;
 using MensariumAPI.Podaci.ProvajderiPodataka;
-
+using MensariumAPI.Podaci.DTO;
 namespace MensariumAPI.Controllers
 {
     public class KorisniciController : ApiController
@@ -46,12 +45,12 @@ namespace MensariumAPI.Controllers
 
 
         [HttpGet]
-        public KorisnikDto VratiKorisnika(int id)
+        public KorisnikFullDto VratiKorisnika(int id)
         {
             SesijeProvajder.OtvoriSesiju();
 
             Korisnik k = ProvajderPodataka.VratiKorisnika(id);
-            KorisnikDto korisnik = new KorisnikDto();
+            KorisnikFullDto korisnik = new KorisnikFullDto();
             if (Validator.KorisnikPostoji(k))
             {
                 korisnik.Ime = k.Ime;
