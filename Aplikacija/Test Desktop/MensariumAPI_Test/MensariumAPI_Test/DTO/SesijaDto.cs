@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using MensariumAPI.Podaci.Entiteti;
-
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class PrijavaDto //ceo email i pass
+    public class SesijaDto
     {
-        public string KorisnickoIme { get; set; }
+        public string IdSesije { get; set; }
         public string Sifra { get; set; }
     }
 }

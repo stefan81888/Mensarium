@@ -7,15 +7,15 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class ObrokDto
+    public class ObrokFullDto
     {
         public int IdObroka { get; protected set; }
         public bool Iskoriscen { get; set; }
         public DateTime DatumUplacivanja { get; set; }
-        public string DatumIskoriscenja { get; set; }
-        public KorisnikDto Uplatilac { get; set; }
-        public TipObrokaDto Tip { get; set; }
-        public MenzaDto LokacijaUplate { get; set; }
-        public MenzaDto LokacijaIskoriscenja { get; set; }
+        public DateTime? DatumIskoriscenja { get; set; }
+        public int IdUplatioca { get; set; }
+        public int IdTipaObroka { get; set; }
+        public int IdLokacijeUplate { get; set; }
+        public int IdLokacijeIskoriscenja { get; set; }
     }
 }

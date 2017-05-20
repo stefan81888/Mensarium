@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using MensariumAPI.Podaci.Entiteti;
 using NHibernate;
+using NHibernate.Linq;
 
 namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
@@ -14,6 +15,21 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             ISession s = SesijeProvajder.Sesija;
             Korisnik k = s.Load<Korisnik>(id);
             return k;
+        }
+
+        public static IEnumerable<Korisnik> VratiKorisnike()
+        {
+            ISession s = SesijeProvajder.Sesija;
+            IEnumerable<Korisnik> korisnici = s.Query<Korisnik>().Select(k => k);
+            return korisnici;
+        }
+
+        public static void DodajKorisnika(Korisnik k)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            s.Save(k);
+            s.Flush();
+            s.Close();
         }
     }
 }
