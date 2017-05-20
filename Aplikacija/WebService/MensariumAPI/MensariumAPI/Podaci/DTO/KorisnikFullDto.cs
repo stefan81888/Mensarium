@@ -6,7 +6,7 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class KorisnikDto
+    public class KorisnikFullDto
     {
         public int IdKorisnika { get; protected set; }
         public string KorisnsickoIme { get; set; }
@@ -19,9 +19,9 @@ namespace MensariumAPI.Podaci.DTO
         public string BrojIndeksa { get; set; }
         public DateTime DatumVaziDo { get; set; }
         public bool AktivanNalog { get; set; } //VAZNO: u bazi je tiny int
-        public TipNalogaDto TipNaloga { get; set; }
-        public FakultetDto StudiraFakultet { get; set; }
-        public ObjavaDto Objava { get; set; }
+        public int IdTipaNaloga { get; set; }
+        public int IdFakulteta { get; set; }
+        public int IdObjave { get; set; }
    
     }
 }

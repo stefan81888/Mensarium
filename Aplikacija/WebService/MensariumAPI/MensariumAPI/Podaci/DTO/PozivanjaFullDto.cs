@@ -7,14 +7,14 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class PozivanjeDto
+    public class PozivanjaFullDto
     {
         public int IdPoziva { get; protected set; }
         public DateTime DatumPoziva { get; set; }
         public DateTime VaziDo { get; set; }
 
         //Pozivanja -> Korisnici
-        public KorisnikDto Pozivalac { get; set; }
+        public int IdPozivaoca { get; set; }
         
     }
 }

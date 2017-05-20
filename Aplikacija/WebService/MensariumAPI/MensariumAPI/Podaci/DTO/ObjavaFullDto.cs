@@ -7,12 +7,12 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class ObjavaDto
+    public class ObjavaFullDto
     {
         public int IdObjave { get; protected set; }
         public DateTime DatumObjave { get; set; }
         public string TekstObjave { get; set; }
-        public KorisnikDto IdKorisnik { get; set; }
-        public MenzaDto Lokacija { get; set; }
+        public int IdKorisnika { get; set; }
+        public int IdLokacije { get; set; }
     }
 }

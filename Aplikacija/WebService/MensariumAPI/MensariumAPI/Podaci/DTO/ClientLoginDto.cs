@@ -7,7 +7,7 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class PrijavaDto //ceo email i pass
+    public class ClientLoginDto //ceo email i pass
     {
         public string KorisnickoIme { get; set; }
         public string Sifra { get; set; }
