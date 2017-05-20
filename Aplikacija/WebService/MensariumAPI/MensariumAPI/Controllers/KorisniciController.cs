@@ -12,8 +12,13 @@ using MensariumAPI.Podaci.ProvajderiPodataka;
 using MensariumAPI.Podaci.DTO;
 namespace MensariumAPI.Controllers
 {
+    [RoutePrefix("api/korisnici")]
+
+
     public class KorisniciController : ApiController
     {
+
+
         //[HttpGet]
         //public string Korisnik(int id)
         //{
@@ -45,6 +50,7 @@ namespace MensariumAPI.Controllers
 
 
         [HttpGet]
+        [Route("full/{id:int}")]
         public KorisnikFullDto VratiKorisnikaFull(int id)
         {
             SesijeProvajder.OtvoriSesiju();
@@ -67,15 +73,95 @@ namespace MensariumAPI.Controllers
                 korisnik.IdFakulteta = k.StudiraFakultet.IdFakultet;
                 korisnik.IdObjave = k.Objava.IdObjave;
             }
-
             SesijeProvajder.ZatvoriSesiju();
-
-
             return korisnik;
         }
 
-        
+        [HttpGet]
+        public List<KorisnikFullDto> VratiSveKorisnikeFull()
+        {
+            SesijeProvajder.OtvoriSesiju();
 
-       
+            IEnumerable<Korisnik> ienKorisnici = ProvajderPodataka.VratiKorisnike();
+            List<Korisnik> listaKorisnika = ienKorisnici.ToList();
+            List<KorisnikFullDto> listaKorisnikaFull = new List<KorisnikFullDto>(listaKorisnika.Count);
+
+            for (int i = 0; i < listaKorisnika.Count; ++i)
+            {
+                KorisnikFullDto korisnik = new KorisnikFullDto();
+                Korisnik k = listaKorisnika[i];
+
+                korisnik.KorisnickoIme = k.KorisnickoIme;
+                korisnik.Email = k.Email;
+                korisnik.Ime = k.Ime;
+                korisnik.Prezime = k.Prezime;
+                korisnik.DatumRodjenja = k.DatumRodjenja;
+                korisnik.DatumRegistracije = k.DatumRegistracije;
+                korisnik.BrojTelefona = k.BrojTelefona;
+                if (k.BrojIndeksa != null)
+                    korisnik.BrojIndeksa = k.BrojIndeksa;
+                if (k.DatumVaziDo != null)
+                    korisnik.DatumVaziDo = k.DatumVaziDo;
+                korisnik.AktivanNalog = k.AktivanNalog;
+                korisnik.IdTipaNaloga = k.TipNaloga.IdTip;
+                if (k.StudiraFakultet != null)
+                    korisnik.IdFakulteta = k.StudiraFakultet.IdFakultet;
+                if (k.Objava != null)
+                    korisnik.IdObjave = k.Objava.IdObjave;
+
+                
+
+                listaKorisnikaFull.Add(korisnik);
+            }
+            SesijeProvajder.ZatvoriSesiju();
+            return listaKorisnikaFull;
+        }
+
+        [HttpGet]
+        [Route("follow/{id:int}")]
+        public KorisnikFollowDto VratiKorisnikaFollow(int id)
+        {
+            SesijeProvajder.OtvoriSesiju();
+
+            Korisnik k = ProvajderPodataka.VratiKorisnika(id);
+            KorisnikFollowDto korisnik = new KorisnikFollowDto();
+            if (Validator.KorisnikPostoji(k))
+            {
+                //korisnik.IdKorisnika = k.IdKorisnika; ???
+                korisnik.KorisnickoIme = k.KorisnickoIme;
+                korisnik.Ime = k.Ime;
+                korisnik.Prezime = k.Prezime;
+                korisnik.Fakultet = k.StudiraFakultet.Naziv;
+                //korisnik.Zapracen ???
+            }
+
+            SesijeProvajder.ZatvoriSesiju();
+            return korisnik;
+        }
+
+        [HttpPost]
+        [Route("dodaj/{kdto:KorisnikFullDto}")]
+        public void DodajKorisnika(KorisnikFullDto kdto)
+        {
+            SesijeProvajder.OtvoriSesiju();
+
+            Korisnik k = new Korisnik()
+            {
+                KorisnickoIme = kdto.KorisnickoIme,
+                Ime = kdto.Ime,
+                Prezime = kdto.Prezime,
+                DatumRegistracije = kdto.DatumRegistracije,
+                DatumRodjenja = kdto.DatumRodjenja,
+                DatumVaziDo = kdto.DatumVaziDo,
+                Email = kdto.Email,
+                BrojIndeksa = kdto.BrojIndeksa,
+                BrojTelefona = kdto.BrojTelefona
+            };
+
+            ProvajderPodataka.DodajKorisnika(k);
+
+            SesijeProvajder.ZatvoriSesiju();
+
+        }
     }
 }

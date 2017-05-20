@@ -20,8 +20,8 @@ namespace MensariumAPI.Podaci.DTO
         public DateTime? DatumVaziDo { get; set; }
         public bool AktivanNalog { get; set; } //VAZNO: u bazi je tiny int
         public int IdTipaNaloga { get; set; }
-        public int IdFakulteta { get; set; }
-        public int IdObjave { get; set; }
+        public int? IdFakulteta { get; set; }
+        public int? IdObjave { get; set; }
    
     }
 }
