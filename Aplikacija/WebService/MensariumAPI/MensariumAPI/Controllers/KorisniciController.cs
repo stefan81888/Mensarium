@@ -47,8 +47,6 @@ namespace MensariumAPI.Controllers
         [HttpGet]
         public KorisnikFullDto VratiKorisnikaFull(int id)
         {
-            SesijeProvajder.OtvoriSesiju();
-
             Korisnik k = ProvajderPodataka.VratiKorisnika(id);
             KorisnikFullDto korisnik = new KorisnikFullDto();
             if (Validator.KorisnikPostoji(k))
@@ -68,30 +66,29 @@ namespace MensariumAPI.Controllers
                 korisnik.IdObjave = k.Objava.IdObjave;
             }
 
-            SesijeProvajder.ZatvoriSesiju();
             return korisnik;
         }
 
-        [HttpGet]
-        public KorisnikFollowDto VratiKorisnikaFollow(int id)
-        {
-            SesijeProvajder.OtvoriSesiju();
+        //[HttpGet]
+        //public KorisnikFollowDto VratiKorisnikaFollow(int id)
+        //{
+        //    SesijeProvajder.OtvoriSesiju();
 
-            Korisnik k = ProvajderPodataka.VratiKorisnika(id);
-            KorisnikFollowDto korisnik = new KorisnikFollowDto();
-            if (Validator.KorisnikPostoji(k))
-            {
-                //korisnik.IdKorisnika = k.IdKorisnika; ???
-                korisnik.KorisnickoIme = k.KorisnickoIme;
-                korisnik.Ime = k.Ime;
-                korisnik.Prezime = k.Prezime;
-                korisnik.Fakultet = k.StudiraFakultet.Naziv;
-                //korisnik.Zapracen ???
-            }
+        //    Korisnik k = ProvajderPodataka.VratiKorisnika(id);
+        //    KorisnikFollowDto korisnik = new KorisnikFollowDto();
+        //    if (Validator.KorisnikPostoji(k))
+        //    {
+        //        //korisnik.IdKorisnika = k.IdKorisnika; ???
+        //        korisnik.KorisnickoIme = k.KorisnickoIme;
+        //        korisnik.Ime = k.Ime;
+        //        korisnik.Prezime = k.Prezime;
+        //        korisnik.Fakultet = k.StudiraFakultet.Naziv;
+        //        //korisnik.Zapracen ???
+        //    }
 
-            SesijeProvajder.ZatvoriSesiju();
-            return korisnik;
-        }
+        //    SesijeProvajder.ZatvoriSesiju();
+        //    return korisnik;
+        //}
 
 
        
