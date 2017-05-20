@@ -31,5 +31,13 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Flush();
             s.Close();
         }
+
+        public static void UpdateKorisnika(Korisnik k)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            s.Update(k);
+            s.Flush();
+            s.Close();
+        }
     }
 }
