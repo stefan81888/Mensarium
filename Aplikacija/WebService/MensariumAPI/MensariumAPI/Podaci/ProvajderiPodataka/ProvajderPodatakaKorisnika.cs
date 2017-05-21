@@ -105,11 +105,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static List<KorisnikFollowDto> Pretraga(int id, string kriterijum)
         {
-            string a = "aaaaabbba";
-            string b = "abb";
-            string.Compare(a, b);
             return null;
-
         }
     }
 }

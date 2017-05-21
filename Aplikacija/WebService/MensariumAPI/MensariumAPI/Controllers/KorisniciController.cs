@@ -244,14 +244,15 @@ namespace MensariumAPI.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("pretraga/{id:int}/")]
-        public IHttpActionResult Pretraga(int id, string kriterijum)
+        [System.Web.Http.Route("pretraga/{id:int}")]
+        public IHttpActionResult Pretraga(int id,[FromBody] string kriterijum)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
                 KorisnikFollowDto k = new KorisnikFollowDto();
+                ProvajderPodatakaKorisnika.Pretraga(id, "");
 
                 SesijeProvajder.ZatvoriSesiju();
 
