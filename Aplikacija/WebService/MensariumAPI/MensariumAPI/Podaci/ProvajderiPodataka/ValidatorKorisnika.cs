@@ -25,43 +25,43 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return korisnici[0];
         }
 
-        public static LoginSesija ProveriSifru(Korisnik ko)
-        {
-            Korisnik korisnik = PostojiUsername(ko.KorisnickoIme) != null ?
-                PostojiUsername(ko.KorisnickoIme) : PostojiEmail(ko.Email);
+        //public static LoginSesija ProveriSifru(Korisnik ko)
+        //{
+        //    Korisnik korisnik = PostojiUsername(ko.KorisnickoIme) != null ?
+        //        PostojiUsername(ko.KorisnickoIme) : PostojiEmail(ko.Email);
 
-            if (korisnik != null && korisnik.Sifra == ko.Sifra)
-            {
-                ISession s = SesijeProvajder.Sesija;
+        //    if (korisnik != null && korisnik.Sifra == ko.Sifra)
+        //    {
+        //        ISession s = SesijeProvajder.Sesija;
 
-                LoginSesija sesija = new LoginSesija()
-                {
-                    KorisnikSesije = korisnik,
-                    IdSesije = Guid.NewGuid().ToString(),
-                    DatumPrijavljivanja = DateTime.Now,
-                    ValidnaDo = DateTime.Now.AddDays(2)
-                };
-                s.Save(sesija);
-                s.Flush();
-              
+        //        LoginSesija sesija = new LoginSesija()
+        //        {
+        //            KorisnikSesije = korisnik,
+        //            IdSesije = Guid.NewGuid().ToString(),
+        //            DatumPrijavljivanja = DateTime.Now,
+        //            ValidnaDo = DateTime.Now.AddDays(2)
+        //        };
+        //        s.Save(sesija);
+        //        s.Flush();
 
-                return sesija;
-            }
 
-            return null;
+        //        return sesija;
+        //    }
 
-        }
+        //    return null;
 
-        public static Korisnik PostojiEmail(string mail)
-        {
-            ISession s = SesijeProvajder.Sesija;
-            IEnumerable<Korisnik> kor = ProvajderiPodataka.ProvajderPodatakaKorisnika.VratiKorisnike();
+        //}
 
-            List<Korisnik> korisnici = (from k in kor
-                where k.KorisnickoIme == mail
-                select k).ToList();
+        //public static Korisnik PostojiEmail(string mail)
+        //{
+        //    ISession s = SesijeProvajder.Sesija;
+        //    IEnumerable<Korisnik> kor = ProvajderiPodataka.ProvajderPodatakaKorisnika.VratiKorisnike();
 
-            return korisnici[0];
-        }
+        //    List<Korisnik> korisnici = (from k in kor
+        //                                where k.KorisnickoIme == mail
+        //                                select k).ToList();
+
+        //    return korisnici[0];
+        //}
     }
 }
