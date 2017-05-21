@@ -243,5 +243,26 @@ namespace MensariumAPI.Controllers
 
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("pretraga/{id:int}/")]
+        public IHttpActionResult Pretraga(int id, string kriterijum)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                KorisnikFollowDto k = new KorisnikFollowDto();
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.Found, k);
+            }
+            catch (Exception e)
+            {
+            }
+            return Content(HttpStatusCode.BadRequest, "Akcija nije uspela");
+
+        }
+
     }
 }

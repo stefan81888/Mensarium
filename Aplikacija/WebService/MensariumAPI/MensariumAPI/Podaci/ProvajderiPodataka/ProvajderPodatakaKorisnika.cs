@@ -15,7 +15,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
             Korisnik k = s.Load<Korisnik>(id);
-            s.Close();
             return k;
         }
 
@@ -23,7 +22,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
             IEnumerable<Korisnik> korisnici = s.Query<Korisnik>().Select(k => k);
-            s.Close();
             return korisnici.ToList();
         }
 
@@ -32,7 +30,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             ISession s = SesijeProvajder.Sesija;
             s.Save(k);
             s.Flush();
-            s.Close();
         }
 
         public static void UpdateKorisnika(Korisnik k)
@@ -40,7 +37,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             ISession s = SesijeProvajder.Sesija;
             s.Update(k);
             s.Flush();
-            s.Close();
         }
 
         public static SesijaDto PrijavaKorisnika(Korisnik k)
@@ -76,7 +72,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Save(praceni);
             s.Flush();
 
-            s.Close();
 
             return true;
         }
@@ -105,8 +100,16 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 };
 
             }
-            s.Close();
             return praceni;
+        }
+
+        public static List<KorisnikFollowDto> Pretraga(int id, string kriterijum)
+        {
+            string a = "aaaaabbba";
+            string b = "abb";
+            string.Compare(a, b);
+            return null;
+
         }
     }
 }

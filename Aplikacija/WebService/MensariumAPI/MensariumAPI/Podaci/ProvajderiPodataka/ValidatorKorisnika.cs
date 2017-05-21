@@ -22,7 +22,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             List<Korisnik> korisnici = (from k in kor
                                         where k.KorisnickoIme == username
                                         select k).ToList();
-            s.Close();
             return korisnici[0];
         }
 
@@ -44,7 +43,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 };
                 s.Save(sesija);
                 s.Flush();
-                s.Close();
 
                 return sesija;
             }
@@ -61,7 +59,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             List<Korisnik> korisnici = (from k in kor
                 where k.KorisnickoIme == mail
                 select k).ToList();
-            s.Close();
+
             return korisnici[0];
         }
     }
