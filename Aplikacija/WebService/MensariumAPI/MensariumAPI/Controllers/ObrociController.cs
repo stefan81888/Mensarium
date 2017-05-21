@@ -180,37 +180,33 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, "Dodavanje obroka nije uspelo.");
         }
 
-        //[System.Web.Http.HttpPut]
-        //[System.Web.Http.Route("naplati")]
-        //public IHttpActionResult NaplatiObroke([FromBody]ObrokNaplataDto obNapDto)
-        //{
-        //    int i;
-        //    try
-        //    {
-        //        SesijeProvajder.OtvoriSesiju();
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("naplati")]
+        public IHttpActionResult NaplatiObroke([FromBody]ObrokNaplataDto obNapDto)
+        {
+            int i;
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
 
-        //        for (i = 0; i < obNapDto.BrojObroka; ++i)
-        //        {
-        //            Obrok obrokZaSkidanje = ProvajderPodatakaObroka.ObrokZaSkidanjeOvogTipa(obNapDto.IdKorisnika, obNapDto.IdTipa;
-        //            if (obrokZaSkidanje != null)
-        //            {
-        //                Obrok o = ProvajderPodatakaObroka.VratiObrok(obrok)
+                for (i = 0; i < obNapDto.BrojObroka; ++i)
+                {
+                    Obrok obrokZaSkidanje = ProvajderPodatakaObroka.ObrokZaSkidanjeOvogTipa(obNapDto.IdKorisnika, obNapDto.IdTipa);
+                    if (obrokZaSkidanje != null)
+                        ProvajderPodatakaObroka.ObrisiObrok(obrokZaSkidanje.IdObroka, obNapDto.IdLokacijeIskoriscenja);
+                    else
+                        break;
+                }
 
-        //                ProvajderPodatakaObroka.DodajObrok(o);
-        //            }
-        //            else
-        //                break;
-        //        }
+                SesijeProvajder.ZatvoriSesiju();
 
-        //        SesijeProvajder.ZatvoriSesiju();
+                return Content(HttpStatusCode.OK, "Uspesno je skunuto " + (i - 1).ToString() + " obroka.");
+            }
+            catch (Exception e)
+            {
 
-        //        return Content(HttpStatusCode.OK, "Uspesno je dodato " + (i - 1).ToString() + " obroka.");
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //    }
-        //    return Content(HttpStatusCode.BadRequest, "Dodavanje obroka nije uspelo.");
-        //}
+            }
+            return Content(HttpStatusCode.BadRequest, "Skidanje obroka nije uspelo.");
+        }
     }
 }
