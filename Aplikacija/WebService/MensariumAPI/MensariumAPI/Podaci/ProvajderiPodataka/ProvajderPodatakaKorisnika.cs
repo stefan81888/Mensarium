@@ -39,16 +39,40 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Flush();
         }
 
-        public static SesijaDto PrijavaKorisnika(Korisnik k)
+        public static SesijaDto PrijavaKorisnika(ClientLoginDto cdto)
         {
-            LoginSesija sesija = ValidatorKorisnika.ProveriSifru(k);
-            return new SesijaDto()
+            ISession s = SesijeProvajder.Sesija;
+            List<Korisnik> korisnici = s.Query<Korisnik>().Select(k => k).ToList();
+
+            List<Korisnik> ko = (from k in korisnici
+                where k.KorisnickoIme == cdto.KIme_Mail || k.Email == cdto.KIme_Mail
+                select k).ToList();
+
+            if (ko.Count != 1)
+                return null;
+
+            if (ko[0].Sifra != cdto.Sifra)
+                return null;
+            
+            LoginSesija sesija = new LoginSesija()
+            {
+                KorisnikSesije = ko[0],
+                IdSesije = Guid.NewGuid().ToString(),
+                DatumPrijavljivanja = DateTime.Now,
+                ValidnaDo = DateTime.Now.AddYears(1)
+            };
+            s.Save(sesija);
+            s.Flush();
+
+            SesijaDto sdto = new SesijaDto()
             {
                 IdSesije = sesija.IdSesije,
                 IdKorisnika = sesija.KorisnikSesije.IdKorisnika,
                 DatumPrijavljivanja = sesija.DatumPrijavljivanja,
                 ValidnaDo = sesija.ValidnaDo
             };
+
+            return sdto;
         }
 
 
@@ -105,11 +129,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static List<KorisnikFollowDto> Pretraga(int id, string kriterijum)
         {
-            string a = "aaaaabbba";
-            string b = "abb";
-            string.Compare(a, b);
-            return null;
+            ISession s = SesijeProvajder.Sesija;
+            Korisnik pretrazuje = s.Load<Korisnik>(id);
 
+            // prvo vracamo korisnike koje pratimo
+
+            pretrazuje.Prati.ToList();
+            
+            return null;
         }
     }
 }
