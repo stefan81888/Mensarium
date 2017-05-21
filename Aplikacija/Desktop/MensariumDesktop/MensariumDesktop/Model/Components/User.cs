@@ -63,7 +63,7 @@ namespace MensariumDesktop.Model.Components
         public UserAccountType AccountType { get; set; }
         public List<UserPrivileges> UserPrivilegeses { get; set; }
 
-        public string SessionID { get; set; }
+        //public string SessionID { get; set; }
 
         public User()
         {

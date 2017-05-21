@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MensariumDesktop.Model.Controllers;
 
 namespace MensariumDesktop.Forms
 {
@@ -31,6 +32,21 @@ namespace MensariumDesktop.Forms
         private void txtPassword_Enter(object sender, EventArgs e)
         {
             txtPassword.SelectAll();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            if (txtUsername.Text == string.Empty || txtPassword.Text == string.Empty)
+            {
+                MessageBox.Show("Unesite sve podatke");
+                return;
+            }
+
+            bool status = MainController.LogUser(txtUsername.Text, txtPassword.Text);
+            if (status)
+            {
+                MessageBox.Show("Uspesno logovanje");
+            }
         }
     }
 }

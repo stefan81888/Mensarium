@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ using MensariumDesktop.Model;
 using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
 using MensariumDesktop.Model.Controllers;
+using RestSharp;
 
 namespace MensariumDesktop
 {
@@ -149,7 +151,26 @@ namespace MensariumDesktop
 
         private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            FakultetFullDto newFax = new FakultetFullDto()
+            {
+                Naziv = "Sumarski fakultet"
+            };
+
+            HttpStatusCode status = Api.AddNewFaculty(newFax);
+
+            if (status == HttpStatusCode.OK)
+                MessageBox.Show("Uspenso dodat");
+            else
+            {
+                MessageBox.Show(status.ToString());
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            FacultyManagerForm fmf = new FacultyManagerForm();
+            fmf.ShowDialog();
+
         }
     }
 }

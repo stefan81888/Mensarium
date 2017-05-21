@@ -148,6 +148,7 @@
     <Compile Include="Model\Components\User.cs" />
     <Compile Include="Model\Controllers\Api.cs" />
     <Compile Include="Model\Controllers\MainController.cs" />
+    <Compile Include="Model\Controllers\MUtility.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\FacultyManagerForm.resx">
