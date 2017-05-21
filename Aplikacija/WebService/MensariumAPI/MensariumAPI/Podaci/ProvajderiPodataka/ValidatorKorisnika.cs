@@ -7,7 +7,7 @@ using NHibernate;
 
 namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
-    public static class Validator
+    public static class ValidatorKorisnika
     {
         public static bool KorisnikPostoji(Korisnik k)
         {
@@ -17,7 +17,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static Korisnik PostojiUsername(string username)
         {
             ISession s = SesijeProvajder.Sesija;
-            IEnumerable<Korisnik> kor = ProvajderiPodataka.ProvajderPodataka.VratiKorisnike();
+            IEnumerable<Korisnik> kor = ProvajderiPodataka.ProvajderPodatakaKorisnika.VratiKorisnike();
 
             List<Korisnik> korisnici = (from k in kor
                                         where k.KorisnickoIme == username
@@ -56,7 +56,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static Korisnik PostojiEmail(string mail)
         {
             ISession s = SesijeProvajder.Sesija;
-            IEnumerable<Korisnik> kor = ProvajderiPodataka.ProvajderPodataka.VratiKorisnike();
+            IEnumerable<Korisnik> kor = ProvajderiPodataka.ProvajderPodatakaKorisnika.VratiKorisnike();
 
             List<Korisnik> korisnici = (from k in kor
                 where k.KorisnickoIme == mail

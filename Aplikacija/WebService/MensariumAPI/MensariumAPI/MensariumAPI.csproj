@@ -220,6 +220,7 @@
     <Compile Include="Controllers\KorisniciController.cs" />
     <Compile Include="Controllers\MenzeController.cs" />
     <Compile Include="Controllers\ObjaveController.cs" />
+    <Compile Include="Controllers\ObrociController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -239,6 +240,7 @@
     <Compile Include="Podaci\DTO\ObjavaCUDto.cs" />
     <Compile Include="Podaci\DTO\ObjavaFullDto.cs" />
     <Compile Include="Podaci\DTO\ObjavaReadDto.cs" />
+    <Compile Include="Podaci\DTO\ObrociKorisnikaDto.cs" />
     <Compile Include="Podaci\DTO\ObrokFullDto.cs" />
     <Compile Include="Podaci\DTO\ObrokNaplataDto.cs" />
     <Compile Include="Podaci\DTO\ObrokPogresnoSkinutDto.cs" />
@@ -281,11 +283,14 @@
     <Compile Include="Podaci\ProvajderiPodataka\Menze.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\Objave.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\Obroci.cs" />
-    <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodataka.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaFakulteta.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaMenzi.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaObroka.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\SesijeProvajder.cs" />
-    <Compile Include="Podaci\ProvajderiPodataka\Validator.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ValidatorKorisnika.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ValidatorFakulteta.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ValidatorMenze.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
