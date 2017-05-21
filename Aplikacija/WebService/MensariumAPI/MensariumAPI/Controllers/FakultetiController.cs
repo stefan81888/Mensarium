@@ -16,74 +16,114 @@ namespace MensariumAPI.Controllers
     public class FakultetiController : ApiController
     {
         [HttpGet]
-        public FakultetFullDto VratiFakultetFull(int id)
+        public IHttpActionResult VratiFakultetFull(int id)
         {
-            SesijeProvajder.OtvoriSesiju();
-
-            Fakultet f = ProvajderPodatakaFakulteta.VratiFakultet(id);
-            FakultetFullDto fakultet = new FakultetFullDto();
-            if (ValidatorFakulteta.FakultetPostoji(f))
+            try
             {
-                fakultet.IdFakultet = f.IdFakultet;
-                fakultet.Naziv = f.Naziv;
+                SesijeProvajder.OtvoriSesiju();
+
+                Fakultet f = ProvajderPodatakaFakulteta.VratiFakultet(id);
+                FakultetFullDto fakultet = new FakultetFullDto();
+                if (ValidatorFakulteta.FakultetPostoji(f))
+                {
+                    fakultet.IdFakultet = f.IdFakultet;
+                    fakultet.Naziv = f.Naziv;
+                }
+                SesijeProvajder.ZatvoriSesiju();
+
+                if (fakultet != null)
+                    return Content(HttpStatusCode.Found, fakultet);
             }
-            SesijeProvajder.ZatvoriSesiju();
-            return fakultet;
+            catch(Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, "Fakultet nije pronadjen");
         }
 
         [HttpGet]
-        public List<FakultetFullDto> VratiSveFakulteteFull()
+        public IHttpActionResult VratiSveFakulteteFull()
         {
-            SesijeProvajder.OtvoriSesiju();
-
-            IEnumerable<Fakultet> ienFakulteti = ProvajderPodatakaFakulteta.VratiFakultete();
-            List<Fakultet> listaFakulteta = ienFakulteti.ToList();
-            List<FakultetFullDto> listaFakultetaFull = new List<FakultetFullDto>(listaFakulteta.Count);
-
-            for (int i = 0; i < listaFakulteta.Count; ++i)
+            try
             {
-                FakultetFullDto fakultet = new FakultetFullDto();
-                Fakultet f = listaFakulteta[i];
+                SesijeProvajder.OtvoriSesiju();
 
-                fakultet.IdFakultet = f.IdFakultet;
-                fakultet.Naziv = f.Naziv;
+                IEnumerable<Fakultet> ienFakulteti = ProvajderPodatakaFakulteta.VratiFakultete();
+                List<Fakultet> listaFakulteta = ienFakulteti.ToList();
+                List<FakultetFullDto> listaFakultetaFull = new List<FakultetFullDto>(listaFakulteta.Count);
 
-                listaFakultetaFull.Add(fakultet);
+                for (int i = 0; i < listaFakulteta.Count; ++i)
+                {
+                    FakultetFullDto fakultet = new FakultetFullDto();
+                    Fakultet f = listaFakulteta[i];
+
+                    fakultet.IdFakultet = f.IdFakultet;
+                    fakultet.Naziv = f.Naziv;
+
+                    listaFakultetaFull.Add(fakultet);
+                }
+                SesijeProvajder.ZatvoriSesiju();
+
+                if (listaFakultetaFull != null)
+                    return Content(HttpStatusCode.Found, listaFakultetaFull);
             }
-            SesijeProvajder.ZatvoriSesiju();
-            return listaFakultetaFull;
+            catch(Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, "Fakulteti nisu pronadjeni");
         }
 
         [HttpPost]
         [Route("dodaj")]
-        public void DodajFakultet([FromBody]FakultetFullDto fdto)
+        public IHttpActionResult DodajFakultet([FromBody]FakultetFullDto fdto)
         {
-            SesijeProvajder.OtvoriSesiju();
-
-            Fakultet f = new Fakultet()
+            try
             {
-                Naziv = fdto.Naziv
-            };
+                SesijeProvajder.OtvoriSesiju();
 
-            ProvajderPodatakaFakulteta.DodajFakultet(f);
+                Fakultet f = new Fakultet()
+                {
+                    Naziv = fdto.Naziv
+                };
 
-            SesijeProvajder.ZatvoriSesiju();
+                ProvajderPodatakaFakulteta.DodajFakultet(f);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.OK, "");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, "");
         }
 
         [HttpPut]
         [Route("update")]
-        public void UpdateFakultet([FromBody]FakultetFullDto fdto)
+        public IHttpActionResult UpdateFakultet([FromBody]FakultetFullDto fdto)
         {
-            SesijeProvajder.OtvoriSesiju();
-
-            Fakultet f = ProvajderPodatakaFakulteta.VratiFakultet(fdto.IdFakultet);
-            if (ValidatorFakulteta.FakultetPostoji(f))
+            try
             {
-                f.Naziv = fdto.Naziv;
-                ProvajderPodatakaFakulteta.UpdateFakultet(f);
-            }
+                SesijeProvajder.OtvoriSesiju();
 
-            SesijeProvajder.ZatvoriSesiju();
+                Fakultet f = ProvajderPodatakaFakulteta.VratiFakultet(fdto.IdFakultet);
+                if (ValidatorFakulteta.FakultetPostoji(f))
+                {
+                    f.Naziv = fdto.Naziv;
+                    ProvajderPodatakaFakulteta.UpdateFakultet(f);
+                }
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.OK, "");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, "");
         }
     }
 }
