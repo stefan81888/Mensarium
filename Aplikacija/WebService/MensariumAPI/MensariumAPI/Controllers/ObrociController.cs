@@ -280,7 +280,7 @@ namespace MensariumAPI.Controllers
         }
 
         [HttpPut]
-        [Route("vratiPogresnoSkinute/niz:int[]")]
+        [Route("vratiPogresnoSkinute")]
         public IHttpActionResult VratiPogresnoSkinuteObroke([FromBody]int[] niz)
         {
             try
@@ -309,7 +309,7 @@ namespace MensariumAPI.Controllers
         }
 
         [HttpPut]
-        [Route("skiniPogresnoUplacene/niz:int[]")]
+        [Route("skiniPogresnoUplacene")]
         public IHttpActionResult SkiniPogresnoUplaceneObroke([FromBody]int[] niz)
         {
             try

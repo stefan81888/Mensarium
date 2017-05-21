@@ -129,7 +129,7 @@ namespace MensariumAPI.Controllers
         }
 
         [System.Web.Http.HttpDelete]
-        [System.Web.Http.Route("obrisi")]
+        [System.Web.Http.Route("obrisi/{id:int}")]
         public IHttpActionResult ObrisiFakultet(int id)
         {
             try

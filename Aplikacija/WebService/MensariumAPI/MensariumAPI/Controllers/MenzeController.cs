@@ -112,8 +112,8 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, "Dodavanje menze nije uspelo.");
         }
 
-        [HttpPost]
-        [Route("guzvaZaJelo/idMenze:int")]
+        [HttpGet]
+        [Route("guzvaZaJelo/{idMenze:int}")]
         public IHttpActionResult GuzvaZaJelo(int idMenze)
         {
             try
@@ -121,6 +121,8 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.OtvoriSesiju();
 
                 int procenatGuzveZaJelo = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaSkinutihUPoslednjihPetMinuta(idMenze) * 0.3);
+                if (procenatGuzveZaJelo > 100)
+                    procenatGuzveZaJelo = 100;
 
                 SesijeProvajder.ZatvoriSesiju();
 
@@ -133,8 +135,8 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, -1);
         }
 
-        [HttpPost]
-        [Route("guzvaZaUplatu/idMenze:int")]
+        [HttpGet]
+        [Route("guzvaZaUplatu/{idMenze:int}")]
         public IHttpActionResult GuzvaZaUplatu(int idMenze)
         {
             try
@@ -142,6 +144,8 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.OtvoriSesiju();
 
                 int procenatGuzveZaUplatu = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaUplacenihUPoslednjihPetMinuta(idMenze) * 0.1);
+                if (procenatGuzveZaUplatu > 100)
+                    procenatGuzveZaUplatu = 100;
 
                 SesijeProvajder.ZatvoriSesiju();
 
