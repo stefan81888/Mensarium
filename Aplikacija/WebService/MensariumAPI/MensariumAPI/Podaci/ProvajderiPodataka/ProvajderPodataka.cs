@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MensariumAPI.Podaci.DTO;
 using MensariumAPI.Podaci.Entiteti;
 using NHibernate;
 using NHibernate.Linq;
@@ -38,6 +39,18 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Update(k);
             s.Flush();
             s.Close();
+        }
+
+        public static SesijaDto PrijavaKorisnika(Korisnik k)
+        {
+            LoginSesija sesija = Validator.ProveriSifru(k);
+            return new SesijaDto()
+            {
+                IdSesije = sesija.IdSesije,
+                IdKorisnika = sesija.KorisnikSesije.IdKorisnika,
+                DatumPrijavljivanja = sesija.DatumPrijavljivanja,
+                ValidnaDo = sesija.ValidnaDo
+            };
         }
     }
 }

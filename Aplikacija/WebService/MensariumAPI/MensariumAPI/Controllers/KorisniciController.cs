@@ -144,7 +144,7 @@ namespace MensariumAPI.Controllers
 
         [HttpPost]
         [Route("dodaj")]
-        public void DodajKorisnika(KorisnikFullDto kdto)
+        public void DodajKorisnika([FromBody]KorisnikFullDto kdto)
         {
             SesijeProvajder.OtvoriSesiju();
 
@@ -168,27 +168,47 @@ namespace MensariumAPI.Controllers
 
         [HttpPut]
         [Route("update")]
-        public void UpdateKorisnika(ClientZaRegistracijuDto klijentReg)
+        public void UpdateKorisnika([FromBody]ClientZaRegistracijuDto klijentReg)
         {
             SesijeProvajder.OtvoriSesiju();
 
             Korisnik k = ProvajderPodataka.VratiKorisnika(klijentReg.DodeljeniId);
             if (Validator.KorisnikPostoji(k))
             {
-                if (k.Sifra == klijentReg.DodeljenaLozinka)
-                {
-                    if (!Validator.PostojiUsername(klijentReg.NovaLozinka))
-                    {
-                        k.KorisnickoIme = klijentReg.KorisnickoIme;
-                        k.Email = klijentReg.Email;
-                        k.Sifra = klijentReg.NovaLozinka;
-                        k.BrojTelefona = klijentReg.Telefon;
-                    }
-                    ProvajderPodataka.UpdateKorisnika(k);
-                }
+                //if (k.Sifra == klijentReg.DodeljenaLozinka)
+                //{
+                //    if (!Validator.PostojiUsername(klijentReg.NovaLozinka))
+                //    {
+                //        k.KorisnickoIme = klijentReg.KorisnickoIme;
+                //        k.Email = klijentReg.Email;
+                //        k.Sifra = klijentReg.NovaLozinka;
+                //        k.BrojTelefona = klijentReg.Telefon;
+                //    }
+                //    ProvajderPodataka.UpdateKorisnika(k);
+                //}
             }
 
             SesijeProvajder.ZatvoriSesiju();
         }
+
+        [HttpGet]
+        [Route("prijava")]
+        public SesijaDto Prijava([FromBody]ClientLoginDto cdto)
+        {
+            SesijeProvajder.OtvoriSesiju();
+
+            Korisnik k = new Korisnik()
+            {
+                KorisnickoIme = cdto.KorisnickoIme,
+                Email = cdto.Email,
+                Sifra = cdto.Sifra
+            };
+
+            SesijeProvajder.ZatvoriSesiju();
+
+            return null;
+        }
+
+
     }
 }

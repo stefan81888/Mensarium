@@ -7,7 +7,9 @@ namespace MensariumAPI.Podaci.DTO
 {
     public class SesijaDto
     {
-        public string IdSesije { get; set; }
-        public string Sifra { get; set; }
+        public string IdSesije { get; set; }  // guid 
+        public int IdKorisnika { get; set; }
+        public DateTime DatumPrijavljivanja { get; set; }
+        public DateTime ValidnaDo { get; set; }
     }
 }

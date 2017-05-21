@@ -14,16 +14,57 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return k != null;
         }
 
-        public static bool PostojiUsername(string username)
+        public static Korisnik PostojiUsername(string username)
         {
             ISession s = SesijeProvajder.Sesija;
             IEnumerable<Korisnik> kor = ProvajderiPodataka.ProvajderPodataka.VratiKorisnike();
 
-            int br = (from k in kor
-                                        where k.Sifra == username
-                                        select k).ToList().Count;
+            List<Korisnik> korisnici = (from k in kor
+                                        where k.KorisnickoIme == username
+                                        select k).ToList();
             s.Close();
-            return br == 1;
+            return korisnici[0];
+        }
+
+        public static LoginSesija ProveriSifru(Korisnik ko)
+        {
+            Korisnik korisnik = PostojiUsername(ko.KorisnickoIme);
+
+            if (korisnik == null)
+                korisnik = PostojiEmail(ko.Email);
+
+            if (korisnik != null && korisnik.Sifra == ko.Sifra)
+            {
+                ISession s = SesijeProvajder.Sesija;
+
+                LoginSesija sesija = new LoginSesija()
+                {
+                    KorisnikSesije = korisnik,
+                    IdSesije = Guid.NewGuid().ToString(),
+                    DatumPrijavljivanja = DateTime.Now,
+                    ValidnaDo = DateTime.Now.AddDays(2)
+                };
+                s.Save(sesija);
+                s.Flush();
+                s.Close();
+
+                return sesija;
+            }
+
+            return null;
+
+        }
+
+        public static Korisnik PostojiEmail(string mail)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            IEnumerable<Korisnik> kor = ProvajderiPodataka.ProvajderPodataka.VratiKorisnike();
+
+            List<Korisnik> korisnici = (from k in kor
+                where k.KorisnickoIme == mail
+                select k).ToList();
+            s.Close();
+            return korisnici[0];
         }
     }
 }
