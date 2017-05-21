@@ -247,8 +247,7 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                KorisnikFollowDto k = new KorisnikFollowDto();
-                ProvajderPodatakaKorisnika.Pretraga(id, "");
+                List<KorisnikFollowDto> k = ProvajderPodatakaKorisnika.Pretraga(id, kriterijum);
 
                 SesijeProvajder.ZatvoriSesiju();
 
