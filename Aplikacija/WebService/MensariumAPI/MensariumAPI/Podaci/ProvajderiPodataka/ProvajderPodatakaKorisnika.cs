@@ -105,6 +105,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static List<KorisnikFollowDto> Pretraga(int id, string kriterijum)
         {
+            
+            
             return null;
         }
     }

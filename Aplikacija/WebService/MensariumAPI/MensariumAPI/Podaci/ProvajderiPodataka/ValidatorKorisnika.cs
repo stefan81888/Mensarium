@@ -43,6 +43,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 };
                 s.Save(sesija);
                 s.Flush();
+              
 
                 return sesija;
             }

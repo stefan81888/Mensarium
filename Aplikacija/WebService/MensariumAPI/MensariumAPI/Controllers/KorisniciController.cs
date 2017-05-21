@@ -210,9 +210,10 @@ namespace MensariumAPI.Controllers
                     Sifra = cdto.Sifra
                 };
 
+                SesijaDto sdto = ProvajderPodatakaKorisnika.PrijavaKorisnika(k);
+
                 SesijeProvajder.ZatvoriSesiju();
 
-                SesijaDto sdto = ProvajderPodatakaKorisnika.PrijavaKorisnika(k);
                 if(sdto != null)
                     return Content(HttpStatusCode.Found, sdto);
             }
