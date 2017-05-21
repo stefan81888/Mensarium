@@ -1,36 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MensariumDesktop.Model.Components
 {
     public class Server
     {
-        public String serverIP { get; set; }
-        public String serverPort { get; set; }
+        public string IP { get; protected set; }
+        public string Port { get; protected set; }
 
         public Server()
         {
-            serverIP = "127.0.0.1";
-            serverPort = "2244";
+            IP = "127.0.0.1";
+            Port = "2244";
         }
 
-        public Server(string serverIp, string serverPort)
+        public Server(string ip, string port)
         {
-            serverIP = serverIp;
-            this.serverPort = serverPort;
+            IP = ip;
+            this.Port = port;
         }
 
-        public string ServerURL
+        public string ServerURL => string.Format("http://{0}:{1}/",
+            IP,
+            Port);
+
+        public bool ChangeIP(string newIP)
         {
-            get
+            //TO-DO napravi i da moze hostname da se unese
+            IPAddress newAddress;
+            bool isValid = IPAddress.TryParse(newIP, out newAddress);
+
+            if (isValid)
             {
-                return string.Format("http://{0}:{1}/",
-                    serverIP,
-                    serverPort);
+                IP = newAddress.ToString();
+                return true;
             }
+
+            MessageBox.Show("Nevalidna IP adresa");
+            return false;
+        }
+
+        public bool ChangePort(string newPort)
+        {
+            int port;
+            bool isValid = int.TryParse(newPort, out port);
+            if (isValid && port >= 0 && port <= 65535)
+            {
+                Port = newPort;
+                return true;
+            }
+            MessageBox.Show("Nevalidna vrednost porta");
+            return false;
         }
     }
 }
