@@ -153,11 +153,13 @@ namespace MensariumDesktop
         {
             try
             {
-                Model.Components.Faculty.UpdateFacultyList();
-                List<Faculty> flist = Model.Components.Faculty.Faculties;
+                HttpStatusCode status = Api.DeleteFaculty(6);
+                MessageBox.Show(status.ToString());
             }
-            catch(Exception exception)
-            { }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void button10_Click(object sender, EventArgs e)

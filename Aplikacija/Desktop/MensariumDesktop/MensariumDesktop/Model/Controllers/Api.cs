@@ -5,6 +5,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
 using RestSharp;
@@ -39,6 +40,9 @@ namespace MensariumDesktop.Model.Controllers
             RestClient client = new RestClient();
             client.BaseUrl = new Uri(BaseUrl);
             //request.AddParameter("SessionId", SessionID, ParameterType.UrlSegment);
+
+            string fullrul = client.BuildUri(request).ToString();
+
             var response = client.Execute(request);
             
             if (response.ErrorException != null)
@@ -48,6 +52,7 @@ namespace MensariumDesktop.Model.Controllers
                 throw Exception;
             }
 
+            MessageBox.Show(fullrul);
             return response.StatusCode;
         }
 
@@ -111,7 +116,23 @@ namespace MensariumDesktop.Model.Controllers
 
             return Execute(request);
         }
+        public static HttpStatusCode UpdateFaculty(FakultetFullDto fax)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "fakulteti/update";
+            request.AddObject(fax);
 
+            return Execute(request);
+        }
+
+        public static HttpStatusCode DeleteFaculty(int id)
+        {
+            RestRequest request = new RestRequest(Method.DELETE);
+            request.Resource = "fakulteti/obrisi";
+            request.AddParameter("id", id, ParameterType.UrlSegment);
+            
+            return Execute(request);
+        }
         public static List<FakultetFullDto> GetAllFaculties()
         {
             RestRequest request = new RestRequest(Method.GET);
