@@ -9,6 +9,6 @@ namespace MensariumAPI.Podaci.DTO
     public class FakultetFullDto
     {
         public string Naziv { get; set; }
-        public int IdFakultet { get; protected set; }
+        public int IdFakultet { get; set; }
     }
 }

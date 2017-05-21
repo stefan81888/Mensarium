@@ -149,25 +149,39 @@ namespace MensariumDesktop
 
         private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            KorisnikFullDto k = MensariumApi.GetUserFullInfo(2);
+            //KorisnikFullDto k = MensariumApi.GetUserFullInfo(2);
 
-            User u = new User();
-            u.Email = k.Email;
-            u.Birthday = k.DatumRodjenja;
-            u.FirstName = k.Ime;
-            u.LastName = k.Prezime;
-            u.PhoneNumber = k.BrojTelefona;
-            u.UserID = k.IdKorisnika;
-            u.RegistrationDate = k.DatumRegistracije;
-            u.Username = k.KorisnickoIme;
+            //User u = new User();
+            //u.Email = k.Email;
+            //u.Birthday = k.DatumRodjenja;
+            //u.FirstName = k.Ime;
+            //u.LastName = k.Prezime;
+            //u.PhoneNumber = k.BrojTelefona;
+            //u.UserID = k.IdKorisnika;
+            //u.RegistrationDate = k.DatumRegistracije;
+            //u.Username = k.KorisnickoIme;
 
-            MensariumConfig.LoggedUser = u;
+            //MensariumConfig.LoggedUser = u;
 
-            lblCurrentUserFName.Text = u.FirstName;
-            lblCurrentUserLName.Text = u.LastName;
+            //lblCurrentUserFName.Text = u.FirstName;
+            //lblCurrentUserLName.Text = u.LastName;
 
-            List<KorisnikFullDto> korisnici = MensariumApi.GetUsersFullInfo();
+            //List<KorisnikFullDto> korisnici = MensariumApi.GetUsersFullInfo();
 
+            KorisnikFullDto kk = new KorisnikFullDto();
+            kk.DatumRodjenja = DateTime.Now;
+            kk.AktivanNalog = true;
+            kk.BrojIndeksa = "121213";
+            kk.BrojTelefona = "21312312312";
+            kk.DatumRegistracije = DateTime.Now;
+            kk.Email = "oprem@dobro.com";
+            kk.IdKorisnika = 12;
+            kk.IdTipaNaloga = 5;
+            kk.Ime = "Mile";
+            kk.Prezime = "Zilenium";
+            kk.KorisnickoIme = "zix";
+
+            Api.SendUserFull(kk);
 
         }
     }
