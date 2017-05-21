@@ -59,6 +59,9 @@ namespace MensariumAPI.Controllers
             KorisnikFullDto korisnik = new KorisnikFullDto();
             if (Validator.KorisnikPostoji(k))
             {
+                //TO-DO: PUCA ZA NULLABLE
+                //za sve nullable podatke ispitati da li su postavljeni
+                //i ako nije preskoci dodavanje u dto;
                 korisnik.KorisnickoIme = k.KorisnickoIme;
                 korisnik.Email = k.Email;
                 korisnik.Ime = k.Ime;
