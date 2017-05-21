@@ -8,7 +8,7 @@ namespace MensariumDesktop.Model.Components.DTOs
 {
     public class LoginSesijeFullDto
     {
-        public virtual int IdLogin { get; protected set; }
+        public virtual int IdLogin { get; set; }
         public virtual string IdSesije { get; set; }
         public virtual DateTime DatumPrijavljivanja { get; set; }
         public virtual DateTime ValidnaDo { get; set; }
