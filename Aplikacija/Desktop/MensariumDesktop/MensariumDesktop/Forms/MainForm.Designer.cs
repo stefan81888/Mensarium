@@ -47,6 +47,7 @@ namespace MensariumDesktop
             this.showProfileFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showUserFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showNewUserCreatedFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dEBUGMEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statbarOPStatus = new System.Windows.Forms.ToolStripDropDownButton();
             this.tabControls = new System.Windows.Forms.TabControl();
@@ -181,7 +182,6 @@ namespace MensariumDesktop
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.dEBUGMEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.tabControls.SuspendLayout();
             this.tabHome.SuspendLayout();
@@ -367,10 +367,17 @@ namespace MensariumDesktop
             this.showNewUserCreatedFormToolStripMenuItem.Text = "Show New User Created Form";
             this.showNewUserCreatedFormToolStripMenuItem.Click += new System.EventHandler(this.showNewUserCreatedFormToolStripMenuItem_Click);
             // 
+            // dEBUGMEToolStripMenuItem
+            // 
+            this.dEBUGMEToolStripMenuItem.Name = "dEBUGMEToolStripMenuItem";
+            this.dEBUGMEToolStripMenuItem.Size = new System.Drawing.Size(290, 26);
+            this.dEBUGMEToolStripMenuItem.Text = "DEBUG ME";
+            this.dEBUGMEToolStripMenuItem.Click += new System.EventHandler(this.dEBUGMEToolStripMenuItem_Click);
+            // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(700, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(731, 22);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // statbarOPStatus
@@ -2088,6 +2095,7 @@ namespace MensariumDesktop
             this.button10.Text = " Uređivanje";
             this.button10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // label24
             // 
@@ -2226,13 +2234,6 @@ namespace MensariumDesktop
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
-            // 
-            // dEBUGMEToolStripMenuItem
-            // 
-            this.dEBUGMEToolStripMenuItem.Name = "dEBUGMEToolStripMenuItem";
-            this.dEBUGMEToolStripMenuItem.Size = new System.Drawing.Size(290, 26);
-            this.dEBUGMEToolStripMenuItem.Text = "DEBUG ME";
-            this.dEBUGMEToolStripMenuItem.Click += new System.EventHandler(this.dEBUGMEToolStripMenuItem_Click);
             // 
             // MainForm
             // 

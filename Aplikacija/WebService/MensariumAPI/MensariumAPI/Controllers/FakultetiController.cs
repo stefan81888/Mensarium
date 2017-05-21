@@ -76,9 +76,9 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new List<FakultetFullDto>());
         }
 
-        [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("dodaj")]
-        public IHttpActionResult DodajFakultet([FromBody]FakultetFullDto fdto)
+        [HttpPost]
+        [Route("dodaj")]
+        public IHttpActionResult DodajFakultet([FromBody] FakultetFullDto fdto)
         {
             try
             {

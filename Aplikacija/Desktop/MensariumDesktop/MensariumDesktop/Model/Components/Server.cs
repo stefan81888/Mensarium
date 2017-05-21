@@ -15,7 +15,7 @@ namespace MensariumDesktop.Model.Components
 
         public Server()
         {
-            IP = "127.0.0.1";
+            IP = "localhost";
             Port = "2244";
         }
 

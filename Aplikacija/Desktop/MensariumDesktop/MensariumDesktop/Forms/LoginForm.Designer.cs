@@ -64,6 +64,7 @@
             this.txtPassword.Size = new System.Drawing.Size(303, 29);
             this.txtPassword.TabIndex = 1;
             this.txtPassword.Enter += new System.EventHandler(this.txtPassword_Enter);
+            this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
             // 
             // label1
             // 
@@ -101,6 +102,7 @@
             this.btnLogin.TabIndex = 2;
             this.btnLogin.Text = "PRIJAVA";
             this.btnLogin.UseVisualStyleBackColor = false;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // picLogo
             // 
