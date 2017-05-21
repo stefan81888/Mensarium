@@ -44,7 +44,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Menza nije pronadjena.");
+            return Content(HttpStatusCode.BadRequest, new MenzaFullDto());
         }
 
         [System.Web.Http.HttpGet]
@@ -80,7 +80,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Menze nisu pronadjene.");
+            return Content(HttpStatusCode.BadRequest, new List<MenzaFullDto>());
         }
 
     }

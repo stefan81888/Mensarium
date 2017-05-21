@@ -40,7 +40,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Fakultet nije pronadjen.");
+            return Content(HttpStatusCode.BadRequest, new FakultetFullDto());
         }
 
         [System.Web.Http.HttpGet]
@@ -73,7 +73,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Fakulteti nisu pronadjeni.");
+            return Content(HttpStatusCode.BadRequest, new List<FakultetFullDto>());
         }
 
         [System.Web.Http.HttpPost]
