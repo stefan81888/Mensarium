@@ -254,7 +254,3 @@ paket-files/
 .idea/
 *.sln.iml
 
-
-Aplikacija/WebService/MensariumAPI/MensariumAPI/MensariumAPI\.csproj
-
-Aplikacija/Desktop/MensariumDesktop/MensariumDesktop/MensariumDesktop\.csproj
