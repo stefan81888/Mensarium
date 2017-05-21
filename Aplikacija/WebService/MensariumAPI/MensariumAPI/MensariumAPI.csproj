@@ -281,6 +281,7 @@
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaFakulteta.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaMenzi.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaObjava.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaObroka.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaTipovaObroka.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\SesijeProvajder.cs" />
