@@ -195,7 +195,7 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, "");
         }
 
-        [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpPost]
         [System.Web.Http.Route("prijava")]
         public IHttpActionResult Prijava([FromBody]ClientLoginDto cdto)
         {
@@ -203,14 +203,7 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Korisnik k = new Korisnik()
-                {
-                    KorisnickoIme = cdto.KorisnickoIme,
-                    Email = cdto.Email,
-                    Sifra = cdto.Sifra
-                };
-
-                SesijaDto sdto = ProvajderPodatakaKorisnika.PrijavaKorisnika(k);
+                SesijaDto sdto = ProvajderPodatakaKorisnika.PrijavaKorisnika(cdto);
 
                 SesijeProvajder.ZatvoriSesiju();
 
@@ -248,6 +241,7 @@ namespace MensariumAPI.Controllers
         [System.Web.Http.Route("pretraga/{id:int}")]
         public IHttpActionResult Pretraga(int id,[FromBody] string kriterijum)
         {
+            // id korisnika koji pretrazuje
             try
             {
                 SesijeProvajder.OtvoriSesiju();
