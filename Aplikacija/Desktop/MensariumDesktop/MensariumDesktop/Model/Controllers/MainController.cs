@@ -26,10 +26,7 @@ namespace MensariumDesktop.Model.Controllers
             {
                 SesijaDto sesija = Api.LoginUser(clog);
 
-                MSettings.CurrentSession = new Session()
-                {
-                    SessionID = sesija.IdSesije
-                };
+                MSettings.CurrentSession = new Session() { SessionID = sesija.IdSesije };
                 
                 KorisnikFullDto korisnik = Api.GetUserFullInfo(sesija.IdKorisnika);
                 MSettings.CurrentSession.LoggedUser = MUtility.User_From_KorisnikFullDto(korisnik);

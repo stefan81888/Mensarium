@@ -20,8 +20,20 @@ namespace MensariumDesktop
             Application.SetCompatibleTextRenderingDefault(false);
 
             MainController.InitApplication();
+
+            LoginForm fLogin = new LoginForm();
+            if (fLogin.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new MainForm());
+            }
+            else
+            {
+                Application.Exit();
+            }
+
+
             //Application.Run(new MainForm());
-            Application.Run(new LoginForm());
+            //Application.Run(new LoginForm());
         }
     }
 }

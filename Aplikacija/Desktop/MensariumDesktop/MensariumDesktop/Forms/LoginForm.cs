@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Controllers;
 
 namespace MensariumDesktop.Forms
@@ -42,10 +43,25 @@ namespace MensariumDesktop.Forms
                 return;
             }
 
+            Cursor.Current = Cursors.WaitCursor;
             bool status = MainController.LogUser(txtUsername.Text, txtPassword.Text);
+            Cursor.Current = Cursors.Arrow;
+
             if (status)
             {
-                MessageBox.Show("Uspesno logovanje");
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                txtUsername.Focus();
+            }
+        }
+
+        private void txtPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnLogin_Click(this, new EventArgs());
             }
         }
     }
