@@ -28,10 +28,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static LoginSesija ProveriSifru(Korisnik ko)
         {
-            Korisnik korisnik = PostojiUsername(ko.KorisnickoIme);
-
-            if (korisnik == null)
-                korisnik = PostojiEmail(ko.Email);
+            Korisnik korisnik = PostojiUsername(ko.KorisnickoIme) != null ?
+                PostojiUsername(ko.KorisnickoIme) : PostojiEmail(ko.Email);
 
             if (korisnik != null && korisnik.Sifra == ko.Sifra)
             {
