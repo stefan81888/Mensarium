@@ -13,9 +13,11 @@ using MensariumAPI.Podaci.DTO;
 
 namespace MensariumAPI.Controllers
 {
+    [System.Web.Http.RoutePrefix("api/menze")]
     public class MenzeController : ApiController
     {
         [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("full/{id:int}")]
         public IHttpActionResult VratiMenzuFull(int id)
         {
             try
@@ -42,7 +44,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Menza nije pronadjena.");
+            return Content(HttpStatusCode.BadRequest, new MenzaFullDto());
         }
 
         [System.Web.Http.HttpGet]
@@ -78,7 +80,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Menze nisu pronadjene.");
+            return Content(HttpStatusCode.BadRequest, new List<MenzaFullDto>());
         }
 
     }

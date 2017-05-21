@@ -39,12 +39,37 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Flush();
         }
 
-        public static void ObrisiObrok(int id)
+        public static void ObrisiObrok(int id, int idLokacijeIskoriscenja)
         {
             ISession s = SesijeProvajder.Sesija;
             Obrok o = s.Load<Obrok>(id);
-            s.Delete(o);
+            o.Iskoriscen = true;
+            o.DatumIskoriscenja = DateTime.Now;
+            o.LokacijaIskoriscenja = s.Load<Menza>(idLokacijeIskoriscenja);
+            s.Update(o);
             s.Flush();
+        }
+
+        public static bool KorisnikDostigaoLimitZaOvajMesecZaOvajObrok(int idKorisnika, int idTipaObroka)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            IEnumerable<Obrok> obrociOvogKorisnika = s.Query<Obrok>().Select(k => k).Where(k => k.Uplatilac.IdKorisnika == idKorisnika && k.Tip.IdTipObroka == idTipaObroka);
+            List<Obrok> listaObrokaOvogKorisnika = obrociOvogKorisnika.ToList();
+            int br = (from o in listaObrokaOvogKorisnika
+                      where o.DatumUplacivanja.Month == DateTime.Now.Month
+                      select o).Count();
+            return br == 30;
+        }
+
+        public static Obrok ObrokZaSkidanjeOvogTipa(int idKorisnika, int idTipaObroka)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            IEnumerable<Obrok> neiskorisceniObroci = s.Query<Obrok>().Select(k => k).Where(k => k.Uplatilac.IdKorisnika == idKorisnika && k.Tip.IdTipObroka == idTipaObroka && k.Iskoriscen == false);
+            List<Obrok> listaNeiskoriscenihObroka = neiskorisceniObroci.ToList();
+            if (neiskorisceniObroci == null)
+                return null;
+            else
+                return listaNeiskoriscenihObroka[0];
         }
     }
 }

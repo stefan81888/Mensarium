@@ -13,10 +13,11 @@ using MensariumAPI.Podaci.DTO;
 
 namespace MensariumAPI.Controllers
 {
-    [RoutePrefix("api/fakulteti")]
+    [System.Web.Http.RoutePrefix("api/fakulteti")]
     public class FakultetiController : ApiController
     {
         [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("full/{id:int}")]
         public IHttpActionResult VratiFakultetFull(int id)
         {
             try
@@ -39,7 +40,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Fakultet nije pronadjen.");
+            return Content(HttpStatusCode.BadRequest, new FakultetFullDto());
         }
 
         [System.Web.Http.HttpGet]
@@ -72,7 +73,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Fakulteti nisu pronadjeni.");
+            return Content(HttpStatusCode.BadRequest, new List<FakultetFullDto>());
         }
 
         [HttpPost]
