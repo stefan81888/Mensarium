@@ -64,6 +64,7 @@ namespace MensariumDesktop.Model.Components
         public List<UserPrivileges> UserPrivilegeses { get; set; }
 
         public string SessionID { get; set; }
+
         public User()
         {
             UserPrivilegeses = new List<UserPrivileges>();

@@ -13,8 +13,6 @@ namespace MensariumAPI.Podaci.DTO
         public string Lokacija { get; set; }
         public string RadnoVreme { get; set; }
         public bool VanrednoNeRadi { get; set; }
-        
-        public int TrenutnaGuzva {get;set;}
  
     }
 

@@ -9,7 +9,7 @@ namespace MensariumDesktop.Model.Components.DTOs
 {
     public class TipObrokaFullDto
     {
-        public int IdTipaObroka { get; protected set; }
+        public int IdTipaObroka { get; set; }
         public string Naziv { get; set; }
 
     }

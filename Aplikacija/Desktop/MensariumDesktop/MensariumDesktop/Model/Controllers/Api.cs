@@ -5,6 +5,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
 using RestSharp;
 
@@ -12,7 +13,7 @@ namespace MensariumDesktop.Model.Controllers
 {
     public static class Api
     {
-        static string BaseUrl = MSettings.ServerURL + "api/";
+        static string BaseUrl = MSettings.Server.ServerURL + "api/";
         static string SessionID;
         
         private static T Execute<T>(RestRequest request) where T : new()

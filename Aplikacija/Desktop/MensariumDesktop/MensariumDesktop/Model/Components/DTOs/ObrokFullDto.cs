@@ -9,7 +9,7 @@ namespace MensariumDesktop.Model.Components.DTOs
 {
     public class ObrokFullDto
     {
-        public int IdObroka { get; protected set; }
+        public int IdObroka { get; set; }
         public bool Iskoriscen { get; set; }
         public DateTime DatumUplacivanja { get; set; }
         public DateTime? DatumIskoriscenja { get; set; }

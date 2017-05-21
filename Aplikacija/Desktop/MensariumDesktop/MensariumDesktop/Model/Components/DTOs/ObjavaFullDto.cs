@@ -9,7 +9,7 @@ namespace MensariumDesktop.Model.Components.DTOs
 {
     public class ObjavaFullDto
     {
-        public int IdObjave { get; protected set; }
+        public int IdObjave { get; set; }
         public DateTime DatumObjave { get; set; }
         public string TekstObjave { get; set; }
         public int IdKorisnika { get; set; }
