@@ -181,6 +181,7 @@ namespace MensariumDesktop
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.dEBUGMEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.tabControls.SuspendLayout();
             this.tabHome.SuspendLayout();
@@ -310,7 +311,8 @@ namespace MensariumDesktop
             this.showMensaChangerFormToolStripMenuItem,
             this.showProfileFormToolStripMenuItem,
             this.showUserFormToolStripMenuItem,
-            this.showNewUserCreatedFormToolStripMenuItem});
+            this.showNewUserCreatedFormToolStripMenuItem,
+            this.dEBUGMEToolStripMenuItem});
             this.statbarDebug.Image = global::MensariumDesktop.Properties.Resources.next;
             this.statbarDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.statbarDebug.Name = "statbarDebug";
@@ -368,7 +370,7 @@ namespace MensariumDesktop
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(731, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(700, 22);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // statbarOPStatus
@@ -2225,6 +2227,13 @@ namespace MensariumDesktop
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
+            // dEBUGMEToolStripMenuItem
+            // 
+            this.dEBUGMEToolStripMenuItem.Name = "dEBUGMEToolStripMenuItem";
+            this.dEBUGMEToolStripMenuItem.Size = new System.Drawing.Size(290, 26);
+            this.dEBUGMEToolStripMenuItem.Text = "DEBUG ME";
+            this.dEBUGMEToolStripMenuItem.Click += new System.EventHandler(this.dEBUGMEToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2464,6 +2473,7 @@ namespace MensariumDesktop
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.ComboBox cbxAccTypeChooser;
+        private System.Windows.Forms.ToolStripMenuItem dEBUGMEToolStripMenuItem;
     }
 }
 

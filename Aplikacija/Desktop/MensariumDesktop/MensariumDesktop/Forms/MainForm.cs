@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MensariumDesktop.Forms;
+using MensariumDesktop.Model;
+using MensariumDesktop.Model.Components;
+using MensariumDesktop.Model.Components.DTOs;
+using MensariumDesktop.Model.Controllers;
 
 namespace MensariumDesktop
 {
@@ -141,6 +145,30 @@ namespace MensariumDesktop
         {
             UserForm uf = new UserForm();
             uf.ShowDialog();
+        }
+
+        private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            KorisnikFullDto k = MensariumApi.GetUserFullInfo(2);
+
+            User u = new User();
+            u.Email = k.Email;
+            u.Birthday = k.DatumRodjenja;
+            u.FirstName = k.Ime;
+            u.LastName = k.Prezime;
+            u.PhoneNumber = k.BrojTelefona;
+            u.UserID = k.IdKorisnika;
+            u.RegistrationDate = k.DatumRegistracije;
+            u.Username = k.KorisnickoIme;
+
+            MensariumConfig.LoggedUser = u;
+
+            lblCurrentUserFName.Text = u.FirstName;
+            lblCurrentUserLName.Text = u.LastName;
+
+            List<KorisnikFullDto> korisnici = MensariumApi.GetUsersFullInfo();
+
+
         }
     }
 }
