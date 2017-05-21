@@ -8,7 +8,7 @@ namespace MensariumAPI.Podaci.Entiteti
 {
     public class Fakultet
     {
-        public virtual int IdFakultet { get; protected set; }
+        public virtual int IdFakultet { get; set; }
         public virtual string Naziv { get; set; }
 
         //Fakultet <- Korisnici
