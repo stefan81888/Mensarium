@@ -39,7 +39,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Flush();
         }
 
-        public static void ObrisiObrok(int id, int idLokacijeIskoriscenja)
+        public static void PojediObrok(int id, int idLokacijeIskoriscenja)
         {
             ISession s = SesijeProvajder.Sesija;
             Obrok o = s.Load<Obrok>(id);
@@ -47,6 +47,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             o.DatumIskoriscenja = DateTime.Now;
             o.LokacijaIskoriscenja = s.Load<Menza>(idLokacijeIskoriscenja);
             s.Update(o);
+            s.Flush();
+        }
+
+        public static void ObrisiObrok(int id)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Obrok o = s.Load<Obrok>(id);
+            s.Delete(o);
             s.Flush();
         }
 

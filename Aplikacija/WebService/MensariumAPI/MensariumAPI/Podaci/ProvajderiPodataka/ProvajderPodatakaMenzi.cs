@@ -46,5 +46,25 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Delete(m);
             s.Flush();
         }
+
+        public static int BrojObrokaSkinutihUPoslednjihPetMinuta(int idMenze)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            IEnumerable<Obrok> obroci = s.Query<Obrok>().Select(k => k)
+                .Where(k => k.LokacijaIskoriscenja.IdMenza == idMenze)
+                .Where(k => k.Iskoriscen == true)
+                .Where(k => k.DatumIskoriscenja <= DateTime.Now && k.DatumIskoriscenja >= DateTime.Now.AddMinutes(-5));
+            return obroci.Count();
+        }
+
+        public static int BrojObrokaUplacenihUPoslednjihPetMinuta(int idMenze)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            IEnumerable<Obrok> obroci = s.Query<Obrok>().Select(k =>k)
+                .Where(k => k.LokacijaUplate.IdMenza == idMenze)
+                .Where(k => k.Iskoriscen == false)
+                .Where(k => k.DatumUplacivanja <= DateTime.Now && k.DatumIskoriscenja >= DateTime.Now.AddMinutes(-5));
+            return obroci.Count();
+        }
     }
 }

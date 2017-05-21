@@ -11,6 +11,5 @@ namespace MensariumAPI.Podaci.DTO
     {
         public int IdTipaObroka { get; set; }
         public string Naziv { get; set; }
-
     }
 }
