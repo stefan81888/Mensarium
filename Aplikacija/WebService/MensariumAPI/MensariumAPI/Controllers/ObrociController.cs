@@ -49,7 +49,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Obrok nije pronadjen.");
+            return Content(HttpStatusCode.BadRequest, new ObrokFullDto());
         }
 
         [System.Web.Http.HttpGet]
@@ -90,7 +90,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Obroci nisu pronadjeni.");
+            return Content(HttpStatusCode.BadRequest, new List<ObrokFullDto>());
         }
 
         [System.Web.Http.HttpGet]
@@ -136,7 +136,7 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Stanje korisnika nije pronadjeno");
+            return Content(HttpStatusCode.BadRequest, new KorisnikStanjeDto());
         }
 
         [System.Web.Http.HttpPost]
