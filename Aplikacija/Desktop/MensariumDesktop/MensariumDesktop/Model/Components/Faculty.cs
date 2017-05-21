@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MensariumDesktop.Model.Controllers;
 
 namespace MensariumDesktop.Model.Components
 {
     public class Faculty
     {
+        public static List<Faculty> Faculties { get; protected set; }
+
+        public static void UpdateFacultyList()
+        {
+            Faculties = MUtility.FacultyList_FromFakultetiFullDto(Api.GetAllFaculties());
+        }
         public int FacultyID { get; set; }
-        public String Name { get; set; }
+        public string Name { get; set; }
     }
 }

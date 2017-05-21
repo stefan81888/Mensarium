@@ -151,19 +151,13 @@ namespace MensariumDesktop
 
         private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FakultetFullDto newFax = new FakultetFullDto()
+            try
             {
-                Naziv = "Sumarski fakultet"
-            };
-
-            HttpStatusCode status = Api.AddNewFaculty(newFax);
-
-            if (status == HttpStatusCode.OK)
-                MessageBox.Show("Uspenso dodat");
-            else
-            {
-                MessageBox.Show(status.ToString());
+                Model.Components.Faculty.UpdateFacultyList();
+                List<Faculty> flist = Model.Components.Faculty.Faculties;
             }
+            catch(Exception exception)
+            { }
         }
 
         private void button10_Click(object sender, EventArgs e)

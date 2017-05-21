@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MensariumDesktop.Forms;
 using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
 
@@ -16,6 +17,12 @@ namespace MensariumDesktop.Model.Controllers
         {
             //Ucitaj podatke iz fajl
             MSettings.Server = new Server();
+        }
+
+        public static void PostLoginInit()
+        {
+            try{ Faculty.UpdateFacultyList(); } catch (Exception ex) { MessageBox.Show(ex.Message); }
+            try{ Mensa.UpdateMensaList(); } catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         public static bool LogUser(string username, string password)

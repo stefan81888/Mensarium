@@ -24,6 +24,8 @@ namespace MensariumDesktop
             LoginForm fLogin = new LoginForm();
             if (fLogin.ShowDialog() == DialogResult.OK)
             {
+                LoadingForm lf = new LoadingForm();
+                lf.ShowDialog();
                 Application.Run(new MainForm());
             }
             else

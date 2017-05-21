@@ -34,7 +34,6 @@ namespace MensariumDesktop.Model.Controllers
             responseData = response.Data;
             return response.StatusCode;
         }
-
         private static HttpStatusCode Execute(RestRequest request)
         {
             RestClient client = new RestClient();
@@ -112,5 +111,35 @@ namespace MensariumDesktop.Model.Controllers
 
             return Execute(request);
         }
+
+        public static List<FakultetFullDto> GetAllFaculties()
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "fakulteti";
+            
+            List<FakultetFullDto> list;
+            HttpStatusCode status = Execute<List<FakultetFullDto>>(request, out list);
+
+            if(status == HttpStatusCode.BadRequest)
+                throw new Exception("GetAllFaculies: Neuspesno pribavljanje liste fakulteta");
+
+            return list;
+        }
+
+        //MENZE
+        public static List<MenzaFullDto> GetAllMensas()
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "menze";
+
+            List<MenzaFullDto> list;
+            HttpStatusCode status = Execute<List<MenzaFullDto>>(request, out list);
+
+            if (status == HttpStatusCode.BadRequest)
+                throw new Exception("GetAllMensas: Neuspesno pribavljanje liste menza");
+
+            return list;
+        }
+
     }
 }
