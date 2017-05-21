@@ -30,7 +30,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             ISession s = SesijeProvajder.Sesija;
             s.Save(o);
             s.Flush();
-            s.Close();
         }
 
         public static void UpdateObrok(Obrok o)
@@ -38,7 +37,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             ISession s = SesijeProvajder.Sesija;
             s.Update(o);
             s.Flush();
-            s.Close();
         }
 
         public static void ObrisiObrok(int id)
@@ -47,7 +45,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             Obrok o = s.Load<Obrok>(id);
             s.Delete(o);
             s.Flush();
-            s.Close();
         }
     }
 }

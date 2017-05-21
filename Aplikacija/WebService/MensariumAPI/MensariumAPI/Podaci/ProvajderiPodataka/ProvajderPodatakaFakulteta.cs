@@ -30,7 +30,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             ISession s = SesijeProvajder.Sesija;
             s.Save(f);
             s.Flush();
-            s.Close();
         }
 
         public static void UpdateFakultet(Fakultet f)
@@ -38,7 +37,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             ISession s = SesijeProvajder.Sesija;
             s.Update(f);
             s.Flush();
-            s.Close();
         }
 
         public static void ObrisiFakultet(int id)
@@ -47,7 +45,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             Fakultet f = s.Load<Fakultet>(id);
             s.Delete(f);
             s.Flush();
-            s.Close();
         }
     }
 }

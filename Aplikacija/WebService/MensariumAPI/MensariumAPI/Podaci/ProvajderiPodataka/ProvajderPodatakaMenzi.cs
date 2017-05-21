@@ -30,7 +30,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             ISession s = SesijeProvajder.Sesija;
             s.Save(m);
             s.Flush();
-            s.Close();
         }
 
         public static void UpdateMenzu(Menza m)
@@ -38,7 +37,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             ISession s = SesijeProvajder.Sesija;
             s.Update(m);
             s.Flush();
-            s.Close();
         }
 
         public static void ObrisiMenzu(int id)
@@ -47,7 +45,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             Menza m = s.Load<Menza>(id);
             s.Delete(m);
             s.Flush();
-            s.Close();
         }
     }
 }

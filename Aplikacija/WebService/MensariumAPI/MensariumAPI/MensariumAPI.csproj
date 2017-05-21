@@ -291,6 +291,7 @@
     <Compile Include="Podaci\ProvajderiPodataka\ValidatorKorisnika.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ValidatorFakulteta.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ValidatorMenze.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ValidatorObroka.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

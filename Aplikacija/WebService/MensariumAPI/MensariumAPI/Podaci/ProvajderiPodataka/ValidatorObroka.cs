@@ -7,11 +7,11 @@ using NHibernate;
 
 namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
-    public class ValidatorMenze
+    public class ValidatorObroka
     {
-        public static bool MenzaPostoji(Menza m)
+        public static bool ObrokPostoji(Obrok o)
         {
-            return m != null;
+            return o != null;
         }
     }
 }
