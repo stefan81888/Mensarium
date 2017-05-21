@@ -39,7 +39,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Flush();
         }
 
-        public static void ObrisiObrok(int id, int idLokacijeIskoriscenja)
+        public static void PojediObrok(int id, int idLokacijeIskoriscenja)
         {
             ISession s = SesijeProvajder.Sesija;
             Obrok o = s.Load<Obrok>(id);
@@ -47,6 +47,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             o.DatumIskoriscenja = DateTime.Now;
             o.LokacijaIskoriscenja = s.Load<Menza>(idLokacijeIskoriscenja);
             s.Update(o);
+            s.Flush();
+        }
+
+        public static void ObrisiObrok(int id)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Obrok o = s.Load<Obrok>(id);
+            s.Delete(o);
             s.Flush();
         }
 
@@ -70,6 +78,23 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 return null;
             else
                 return listaNeiskoriscenihObroka[0];
+        }
+
+        public static IEnumerable<Obrok> DanasUplaceniNeiskorisceniObrociKorisnika(int idKorisnika)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            IEnumerable<Obrok> danasUplaceni = s.Query<Obrok>().Select(k => k).Where(k => k.Uplatilac.IdKorisnika == idKorisnika && k.DatumUplacivanja.Day == DateTime.Now.Day && k.Iskoriscen == false);
+            return danasUplaceni;
+        }
+
+        public static IEnumerable<Obrok> DanasSkinutiObrociKorisnika(int idKorisnika)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            DateTime danasPonoc = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1);
+            IEnumerable<Obrok> danasSkinuti = s.Query<Obrok>().Select(k => k)
+                .Where(k => k.Iskoriscen == true && k.Uplatilac.IdKorisnika == idKorisnika)
+                .Where(k => k.DatumIskoriscenja <= DateTime.Now && k.DatumIskoriscenja >= danasPonoc);
+            return danasSkinuti;
         }
     }
 }

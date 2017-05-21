@@ -243,8 +243,8 @@
     <Compile Include="Podaci\DTO\ObjavaReadDto.cs" />
     <Compile Include="Podaci\DTO\ObrokFullDto.cs" />
     <Compile Include="Podaci\DTO\ObrokNaplataDto.cs" />
-    <Compile Include="Podaci\DTO\ObrokPogresnoSkinutDto.cs" />
-    <Compile Include="Podaci\DTO\ObrokPogresnoUplacenDto.cs" />
+    <Compile Include="Podaci\DTO\ObrokDanasSkinutDto.cs" />
+    <Compile Include="Podaci\DTO\ObrokDanasUplacenDto.cs" />
     <Compile Include="Podaci\DTO\ObrokUplataDto.cs" />
     <Compile Include="Podaci\DTO\OdjavaDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaFullDto.cs" />
@@ -281,6 +281,7 @@
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaFakulteta.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaMenzi.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaObjava.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaObroka.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaTipovaObroka.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\SesijeProvajder.cs" />

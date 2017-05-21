@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using MensariumAPI.Podaci.DTO;
 using MensariumAPI.Podaci.Entiteti;
+using Microsoft.Ajax.Utilities;
 using NHibernate;
 using NHibernate.Linq;
 
@@ -130,13 +131,33 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static List<KorisnikFollowDto> Pretraga(int id, string kriterijum)
         {
             ISession s = SesijeProvajder.Sesija;
+
             Korisnik pretrazuje = s.Load<Korisnik>(id);
-
-            // prvo vracamo korisnike koje pratimo
-
-            pretrazuje.Prati.ToList();
+            List<KorisnikFollowDto> rezultat = new List<KorisnikFollowDto>();
+            List<Korisnik> korisnici = s.Query<Korisnik>().Select(k => k).ToList();
             
-            return null;
+            List<Korisnik> lista =  (from k in korisnici
+                where k.Ime.StartsWith(kriterijum) || k.Prezime.StartsWith(kriterijum)
+                || k.KorisnickoIme.StartsWith(kriterijum) || k.Email.StartsWith(kriterijum)
+                select k).OrderBy(x => x.Prati).ToList();
+
+            foreach (var v in lista)
+            {
+                KorisnikFollowDto kdto = new KorisnikFollowDto()
+                {
+                    KorisnickoIme = v.KorisnickoIme,
+                    Ime = v.Ime,
+                    Prezime = v.Prezime,
+                    IdKorisnika = v.IdKorisnika,
+                    Fakultet = v.StudiraFakultet.Naziv,
+                    Zapracen = false
+                };
+                if (pretrazuje.PracenOd.ToList().Contains(v))
+                    kdto.Zapracen = true;
+                rezultat.Add(kdto);
+            }
+            rezultat.OrderBy(x => x.Zapracen);
+            return rezultat;
         }
 
         public static KorisnikStanjeDto Stanje(Korisnik korisnik)

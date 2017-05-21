@@ -16,8 +16,8 @@ namespace MensariumAPI.Controllers
     [System.Web.Http.RoutePrefix("api/menze")]
     public class MenzeController : ApiController
     {
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("full/{id:int}")]
+        [HttpGet]
+        [Route("full/{id:int}")]
         public IHttpActionResult VratiMenzuFull(int id)
         {
             try
@@ -47,7 +47,7 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new MenzaFullDto());
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public IHttpActionResult VratiSveMenze()
         {
             try
@@ -83,5 +83,75 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new List<MenzaFullDto>());
         }
 
+        [HttpPost]
+        [Route("dodaj")]
+        public IHttpActionResult DodajMenzu([FromBody]MenzaFullDto mdto)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                Menza m = new Menza()
+                {
+                    Lokacija = mdto.Lokacija,
+                    Naziv = mdto.Naziv,
+                    RadnoVreme = mdto.RadnoVreme,
+                    VanrednoNeRadi = mdto.VanrednoNeRadi
+                };
+
+                ProvajderPodatakaMenzi.DodajMenzu(m);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.OK, "Menza uspesno dodata.");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, "Dodavanje menze nije uspelo.");
+        }
+
+        [HttpPost]
+        [Route("guzvaZaJelo/idMenze:int")]
+        public IHttpActionResult GuzvaZaJelo(int idMenze)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                int procenatGuzveZaJelo = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaSkinutihUPoslednjihPetMinuta(idMenze) * 0.3);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.Found, procenatGuzveZaJelo);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, -1);
+        }
+
+        [HttpPost]
+        [Route("guzvaZaUplatu/idMenze:int")]
+        public IHttpActionResult GuzvaZaUplatu(int idMenze)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                int procenatGuzveZaUplatu = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaUplacenihUPoslednjihPetMinuta(idMenze) * 0.1);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.Found, procenatGuzveZaUplatu);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, -1);
+        }
     }
 }

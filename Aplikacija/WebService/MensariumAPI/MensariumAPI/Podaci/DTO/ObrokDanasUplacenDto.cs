@@ -5,10 +5,10 @@ using System.Web;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class ObrokPogresnoSkinutDto
+    public class ObrokDanasUplacenDto
     {
         public int IdObroka { get; set; }
-        public DateTime DatumIskoriscenja { get; set; }
+        public DateTime DatumUplacivanja { get; set; }
         public int IdTipaObroka { get; set; }
         public int IdLokacijeUplate { get; set; }
     }

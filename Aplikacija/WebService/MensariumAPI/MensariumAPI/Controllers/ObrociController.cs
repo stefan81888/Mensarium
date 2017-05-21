@@ -16,8 +16,8 @@ namespace MensariumAPI.Controllers
     [System.Web.Http.RoutePrefix("api/obroci")]
     public class ObrociController : ApiController
     {
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("full/{id:int}")]
+        [HttpGet]
+        [Route("full/{id:int}")]
         public IHttpActionResult VratiObrokFull(int id)
         {
             try
@@ -52,7 +52,7 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new ObrokFullDto());
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public IHttpActionResult VratiSveObroke()
         {
             try
@@ -93,8 +93,8 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new List<ObrokFullDto>());
         }
 
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("korisnicki/{id:int}")]
+        [HttpGet]
+        [Route("korisnicki/{id:int}")]
         public IHttpActionResult VratiKorisnikovoStanjeObroka(int id)
         {
             try
@@ -139,7 +139,7 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new KorisnikStanjeDto());
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [System.Web.Http.Route("uplati")]
         public IHttpActionResult UplatiObroke([FromBody]ObrokUplataDto obUpDto)
         {
@@ -180,8 +180,8 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, "Dodavanje obroka nije uspelo.");
         }
 
-        [System.Web.Http.HttpPut]
-        [System.Web.Http.Route("naplati")]
+        [HttpPut]
+        [Route("naplati")]
         public IHttpActionResult NaplatiObroke([FromBody]ObrokNaplataDto obNapDto)
         {
             int i;
@@ -193,7 +193,7 @@ namespace MensariumAPI.Controllers
                 {
                     Obrok obrokZaSkidanje = ProvajderPodatakaObroka.ObrokZaSkidanjeOvogTipa(obNapDto.IdKorisnika, obNapDto.IdTipa);
                     if (obrokZaSkidanje != null)
-                        ProvajderPodatakaObroka.ObrisiObrok(obrokZaSkidanje.IdObroka, obNapDto.IdLokacijeIskoriscenja);
+                        ProvajderPodatakaObroka.PojediObrok(obrokZaSkidanje.IdObroka, obNapDto.IdLokacijeIskoriscenja);
                     else
                         break;
                 }
@@ -207,6 +207,127 @@ namespace MensariumAPI.Controllers
 
             }
             return Content(HttpStatusCode.BadRequest, "Skidanje obroka nije uspelo.");
+        }
+
+        [HttpGet]
+        [Route("danasUplaceni/{id:int}")]
+        public IHttpActionResult DanasUplaceniObrociKorisnika(int id)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(id).ToList();
+                List<ObrokDanasUplacenDto> listaDanasUplcenihObroka = new List<ObrokDanasUplacenDto>(danasUplaceniObrociOvogKorisnika.Count);
+
+                for (int i = 0; i < danasUplaceniObrociOvogKorisnika.Count; ++i)
+                {
+                    ObrokDanasUplacenDto obrok = new ObrokDanasUplacenDto();
+                    Obrok o = danasUplaceniObrociOvogKorisnika[i];
+
+                    obrok.DatumUplacivanja = o.DatumUplacivanja;
+                    obrok.IdLokacijeUplate = o.LokacijaUplate.IdMenza;
+                    obrok.IdObroka = o.IdObroka;
+                    obrok.IdTipaObroka = o.Tip.IdTipObroka;
+
+                    listaDanasUplcenihObroka.Add(obrok);
+                }
+                SesijeProvajder.ZatvoriSesiju();
+
+                if (listaDanasUplcenihObroka != null)
+                    return Content(HttpStatusCode.Found, listaDanasUplcenihObroka);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, new List<ObrokDanasUplacenDto>());
+        }
+
+        [HttpGet]
+        [Route("danasSkinuti/{id:int}")]
+        public IHttpActionResult DanasSkinutiObrociKorisnika(int id)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(id).ToList();
+                List<ObrokDanasSkinutDto> listaDanasSkinutihObroka = new List<ObrokDanasSkinutDto>(danasSkinutiObrociOvogKorisnika.Count);
+
+                for (int i = 0; i < danasSkinutiObrociOvogKorisnika.Count; ++i)
+                {
+                    ObrokDanasSkinutDto obrok = new ObrokDanasSkinutDto();
+                    Obrok o = danasSkinutiObrociOvogKorisnika[i];
+
+                    obrok.DatumIskoriscenja = (DateTime) o.DatumIskoriscenja;
+                    obrok.IdLokacijeIskoriscenja = o.LokacijaIskoriscenja.IdMenza;
+                    obrok.IdObroka = o.IdObroka;
+                    obrok.IdTipaObroka = o.Tip.IdTipObroka;
+
+                    listaDanasSkinutihObroka.Add(obrok);
+                }
+                SesijeProvajder.ZatvoriSesiju();
+
+                if (listaDanasSkinutihObroka != null)
+                    return Content(HttpStatusCode.Found, listaDanasSkinutihObroka);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, new List<ObrokDanasSkinutDto>());
+        }
+
+        [HttpPut]
+        [Route("vratiPogresnoSkinute/niz:int[]")]
+        public IHttpActionResult VratiPogresnoSkinuteObroke([FromBody]int[] niz)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                for (int i = 0; i < niz.Count(); ++i)
+                {
+                    Obrok o = ProvajderPodatakaObroka.VratiObrok(niz[i]);
+                    o.DatumIskoriscenja = null;
+                    o.Iskoriscen = false;
+                    o.LokacijaIskoriscenja = null;
+
+                    ProvajderPodatakaObroka.UpdateObrok(o);
+                }
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.OK, "Uspesno vraceni izabrani obroci.");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, "Izabrani obroci nisu vraceni.");
+        }
+
+        [HttpPut]
+        [Route("skiniPogresnoUplacene/niz:int[]")]
+        public IHttpActionResult SkiniPogresnoUplaceneObroke([FromBody]int[] niz)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                for (int i = 0; i < niz.Count(); ++i)
+                    ProvajderPodatakaObroka.ObrisiObrok(niz[i]);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.OK, "Uspesno vraceni izabrani obroci.");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, "Izabrani obroci nisu vraceni.");
         }
     }
 }
