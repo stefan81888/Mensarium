@@ -13,6 +13,7 @@ using MensariumAPI.Podaci.DTO;
 
 namespace MensariumAPI.Controllers
 {
+    [RoutePrefix("api/fakulteti")]
     public class FakultetiController : ApiController
     {
         [System.Web.Http.HttpGet]
@@ -74,9 +75,9 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, "Fakulteti nisu pronadjeni.");
         }
 
-        [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("dodaj")]
-        public IHttpActionResult DodajFakultet([FromBody]FakultetFullDto fdto)
+        [HttpPost]
+        [Route("dodaj")]
+        public IHttpActionResult DodajFakultet([FromBody] FakultetFullDto fdto)
         {
             try
             {
