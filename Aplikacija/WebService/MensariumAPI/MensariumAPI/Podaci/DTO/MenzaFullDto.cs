@@ -16,11 +16,5 @@ namespace MensariumAPI.Podaci.DTO
  
     }
 
-    public class ObrociKorisnika 
-    {
-        public int IDKorisnika;
-        public int Dorucak;
-        public int Rucak;
-        public int Vecere;
-    }
+    
 }

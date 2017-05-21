@@ -9,43 +9,43 @@ using NHibernate.Linq;
 
 namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
-    public class ProvajderPodatakaFakulteta
+    public class ProvajderPodatakaMenzi
     {
-        public static Fakultet VratiFakultet(int id)
+        public static Menza VratiMenzu(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Fakultet f = s.Load<Fakultet>(id);
-            return f;
+            Menza m = s.Load<Menza>(id);
+            return m;
         }
 
-        public static IEnumerable<Fakultet> VratiFakultete()
+        public static IEnumerable<Menza> VratiMenze()
         {
             ISession s = SesijeProvajder.Sesija;
-            IEnumerable<Fakultet> fakulteti = s.Query<Fakultet>().Select(k => k);
-            return fakulteti;
+            IEnumerable<Menza> menze = s.Query<Menza>().Select(k => k);
+            return menze;
         }
 
-        public static void DodajFakultet(Fakultet f)
+        public static void DodajMenzu(Menza m)
         {
             ISession s = SesijeProvajder.Sesija;
-            s.Save(f);
+            s.Save(m);
             s.Flush();
             s.Close();
         }
 
-        public static void UpdateFakultet(Fakultet f)
+        public static void UpdateMenzu(Menza m)
         {
             ISession s = SesijeProvajder.Sesija;
-            s.Update(f);
+            s.Update(m);
             s.Flush();
             s.Close();
         }
 
-        public static void ObrisiFakultet(int id)
+        public static void ObrisiMenzu(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Fakultet f = s.Load<Fakultet>(id);
-            s.Delete(f);
+            Menza m = s.Load<Menza>(id);
+            s.Delete(m);
             s.Flush();
             s.Close();
         }

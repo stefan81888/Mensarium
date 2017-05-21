@@ -15,7 +15,7 @@ namespace MensariumAPI.Controllers
 {
     public class FakultetiController : ApiController
     {
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult VratiFakultetFull(int id)
         {
             try
@@ -38,10 +38,10 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Fakultet nije pronadjen");
+            return Content(HttpStatusCode.BadRequest, "Fakultet nije pronadjen.");
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult VratiSveFakulteteFull()
         {
             try
@@ -71,11 +71,11 @@ namespace MensariumAPI.Controllers
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Fakulteti nisu pronadjeni");
+            return Content(HttpStatusCode.BadRequest, "Fakulteti nisu pronadjeni.");
         }
 
-        [HttpPost]
-        [Route("dodaj")]
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("dodaj")]
         public IHttpActionResult DodajFakultet([FromBody]FakultetFullDto fdto)
         {
             try
@@ -91,17 +91,17 @@ namespace MensariumAPI.Controllers
 
                 SesijeProvajder.ZatvoriSesiju();
 
-                return Content(HttpStatusCode.OK, "");
+                return Content(HttpStatusCode.OK, "Fakultet uspesno dodat.");
             }
             catch (Exception e)
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "");
+            return Content(HttpStatusCode.BadRequest, "Dodavanje fakulteta nije uspelo.");
         }
 
-        [HttpPut]
-        [Route("update")]
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("update")]
         public IHttpActionResult UpdateFakultet([FromBody]FakultetFullDto fdto)
         {
             try
@@ -117,13 +117,35 @@ namespace MensariumAPI.Controllers
 
                 SesijeProvajder.ZatvoriSesiju();
 
-                return Content(HttpStatusCode.OK, "");
+                return Content(HttpStatusCode.OK, "Fakultet uspesno modifikovan.");
             }
             catch (Exception e)
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "");
+            return Content(HttpStatusCode.BadRequest, "Modifikovanje fakulteta nije uspelo.");
+        }
+
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("obrisi")]
+        public IHttpActionResult ObrisiFakultet(int id)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+              
+                ProvajderPodatakaFakulteta.ObrisiFakultet(id);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.OK, "Fakultet uspesno obrisan.");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, "Brisanje fakulteta nije uspelo.");
         }
     }
 }
