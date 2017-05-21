@@ -9,7 +9,7 @@ namespace MensariumAPI.Podaci.DTO
 {
     public class PrivilegijeFullDto
     {
-        public int IdPrivilegije { get; protected set; }
+        public int IdPrivilegije { get; set; }
         public string Opis { get; set; }
     }
 }

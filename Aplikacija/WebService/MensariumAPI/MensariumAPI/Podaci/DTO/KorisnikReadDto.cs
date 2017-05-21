@@ -8,7 +8,7 @@ namespace MensariumAPI.Podaci.DTO
 {
     public class KorisnikReadDto
     {
-        public int IdKorisnika { get; protected set; }
+        public int IdKorisnika { get; set; }
         public string KorisnickoIme { get; set; }
         public string Email { get; set; }
         public string Ime { get; set; }

@@ -32,5 +32,13 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Flush();
             s.Close();
         }
+
+        public static void UpdateFakultet(Fakultet f)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            s.Update(f);
+            s.Flush();
+            s.Close();
+        }
     }
 }

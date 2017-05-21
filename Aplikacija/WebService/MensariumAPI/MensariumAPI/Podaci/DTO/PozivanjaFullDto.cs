@@ -9,7 +9,7 @@ namespace MensariumAPI.Podaci.DTO
 {
     public class PozivanjaFullDto
     {
-        public int IdPoziva { get; protected set; }
+        public int IdPoziva { get; set; }
         public DateTime DatumPoziva { get; set; }
         public DateTime VaziDo { get; set; }
 

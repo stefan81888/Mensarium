@@ -62,7 +62,6 @@ namespace MensariumAPI.Controllers
 
             Fakultet f = new Fakultet()
             {
-                IdFakultet = fdto.IdFakultet,
                 Naziv = fdto.Naziv
             };
 

@@ -8,7 +8,7 @@ namespace MensariumAPI.Podaci.DTO
 {
     public class MenzaFullDto
     {
-        public int IdMenze { get; protected set; }
+        public int IdMenze { get; set; }
         public string Naziv { get; set; }
         public string Lokacija { get; set; }
         public string RadnoVreme { get; set; }
