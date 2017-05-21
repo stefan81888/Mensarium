@@ -83,5 +83,33 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new List<MenzaFullDto>());
         }
 
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("dodaj")]
+        public IHttpActionResult DodajMenzu([FromBody]MenzaFullDto mdto)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                Menza m = new Menza()
+                {
+                    Lokacija = mdto.Lokacija,
+                    Naziv = mdto.Naziv,
+                    RadnoVreme = mdto.RadnoVreme,
+                    VanrednoNeRadi = mdto.VanrednoNeRadi
+                };
+
+                ProvajderPodatakaMenzi.DodajMenzu(m);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.OK, "Menza uspesno dodata.");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, "Dodavanje menze nije uspelo.");
+        }
     }
 }

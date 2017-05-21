@@ -208,5 +208,75 @@ namespace MensariumAPI.Controllers
             }
             return Content(HttpStatusCode.BadRequest, "Skidanje obroka nije uspelo.");
         }
+
+        [HttpGet]
+        [Route("danasUplaceni/{id:int}")]
+        public IHttpActionResult DanasUplaceniObrociKorisnika(int id)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(id).ToList();
+                List<ObrokDanasUplacenDto> listaDanasUplcenihObroka = new List<ObrokDanasUplacenDto>(danasUplaceniObrociOvogKorisnika.Count);
+
+                for (int i = 0; i < danasUplaceniObrociOvogKorisnika.Count; ++i)
+                {
+                    ObrokDanasUplacenDto obrok = new ObrokDanasUplacenDto();
+                    Obrok o = danasUplaceniObrociOvogKorisnika[i];
+
+                    obrok.DatumUplacivanja = o.DatumUplacivanja;
+                    obrok.IdLokacijeUplate = o.LokacijaUplate.IdMenza;
+                    obrok.IdObroka = o.IdObroka;
+                    obrok.IdTipaObroka = o.Tip.IdTipObroka;
+
+                    listaDanasUplcenihObroka.Add(obrok);
+                }
+                SesijeProvajder.ZatvoriSesiju();
+
+                if (listaDanasUplcenihObroka != null)
+                    return Content(HttpStatusCode.Found, listaDanasUplcenihObroka);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, new List<ObrokDanasUplacenDto>());
+        }
+
+        [HttpGet]
+        [Route("danasSkinuti/{id:int}")]
+        public IHttpActionResult DanasSkinutiObrociKorisnika(int id)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(id).ToList();
+                List<ObrokDanasSkinutDto> listaDanasSkinutihObroka = new List<ObrokDanasSkinutDto>(danasSkinutiObrociOvogKorisnika.Count);
+
+                for (int i = 0; i < danasSkinutiObrociOvogKorisnika.Count; ++i)
+                {
+                    ObrokDanasSkinutDto obrok = new ObrokDanasSkinutDto();
+                    Obrok o = danasSkinutiObrociOvogKorisnika[i];
+
+                    obrok.DatumIskoriscenja = (DateTime) o.DatumIskoriscenja;
+                    obrok.IdLokacijeIskoriscenja = o.LokacijaIskoriscenja.IdMenza;
+                    obrok.IdObroka = o.IdObroka;
+                    obrok.IdTipaObroka = o.Tip.IdTipObroka;
+
+                    listaDanasSkinutihObroka.Add(obrok);
+                }
+                SesijeProvajder.ZatvoriSesiju();
+
+                if (listaDanasSkinutihObroka != null)
+                    return Content(HttpStatusCode.Found, listaDanasSkinutihObroka);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Content(HttpStatusCode.BadRequest, new List<ObrokDanasSkinutDto>());
+        }
     }
 }

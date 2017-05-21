@@ -71,5 +71,22 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             else
                 return listaNeiskoriscenihObroka[0];
         }
+
+        public static IEnumerable<Obrok> DanasUplaceniNeiskorisceniObrociKorisnika(int idKorisnika)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            IEnumerable<Obrok> danasUplaceni = s.Query<Obrok>().Select(k => k).Where(k => k.Uplatilac.IdKorisnika == idKorisnika && k.DatumUplacivanja.Day == DateTime.Now.Day && k.Iskoriscen == false);
+            return danasUplaceni;
+        }
+
+        public static IEnumerable<Obrok> DanasSkinutiObrociKorisnika(int idKorisnika)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            DateTime danasPonoc = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1);
+            IEnumerable<Obrok> danasSkinuti = s.Query<Obrok>().Select(k => k)
+                .Where(k => k.Iskoriscen == true && k.Uplatilac.IdKorisnika == idKorisnika)
+                .Where(k => k.DatumIskoriscenja <= DateTime.Now && k.DatumIskoriscenja >= danasPonoc);
+            return danasSkinuti;
+        }
     }
 }
