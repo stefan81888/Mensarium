@@ -13,9 +13,11 @@ using MensariumAPI.Podaci.DTO;
 
 namespace MensariumAPI.Controllers
 {
+    [System.Web.Http.RoutePrefix("api/fakulteti")]
     public class FakultetiController : ApiController
     {
         [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("full/{id:int}")]
         public IHttpActionResult VratiFakultetFull(int id)
         {
             try

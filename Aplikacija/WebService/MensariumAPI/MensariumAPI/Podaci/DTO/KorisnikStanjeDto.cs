@@ -5,9 +5,9 @@ using System.Web;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class ObrociKorisnikaDto
+    public class KorisnikStanjeDto
     {
-        public int IDKorisnika;
+        //public int IDKorisnika;
         public int BrojDorucka;
         public int BrojRuckova;
         public int BrojVecera;
