@@ -24,10 +24,10 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Korisnik k = ProvajderPodataka.VratiKorisnika(id);
+                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
 
                 KorisnikFullDto korisnik = new KorisnikFullDto();
-                if (Validator.KorisnikPostoji(k))
+                if (ValidatorKorisnika.KorisnikPostoji(k))
                 {
                     korisnik.KorisnickoIme = k.KorisnickoIme;
                     korisnik.Email = k.Email;
@@ -67,7 +67,7 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                IEnumerable<Korisnik> ienKorisnici = ProvajderPodataka.VratiKorisnike();
+                IEnumerable<Korisnik> ienKorisnici = ProvajderPodatakaKorisnika.VratiKorisnike();
                 List<Korisnik> listaKorisnika = ienKorisnici.ToList();
                 List<KorisnikFullDto> listaKorisnikaFull = new List<KorisnikFullDto>(listaKorisnika.Count);
 
@@ -117,21 +117,11 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Korisnik k = ProvajderPodataka.VratiKorisnika(pratilac);
-                KorisnikFollowDto korisnik = new KorisnikFollowDto();
-                if (Validator.KorisnikPostoji(k))
-                {
-                    //korisnik.IdKorisnika = k.IdKorisnika; ???
-                    korisnik.KorisnickoIme = k.KorisnickoIme;
-                    korisnik.Ime = k.Ime;
-                    korisnik.Prezime = k.Prezime;
-                    korisnik.Fakultet = k.StudiraFakultet.Naziv;
-                    //korisnik.Zapracen ???
-                }
-
+                bool status = ProvajderPodatakaKorisnika.Zaprati(pratilac, praceni);
+                
                 SesijeProvajder.ZatvoriSesiju();
-                if(korisnik != null)
-                    return Content(HttpStatusCode.Found, korisnik);
+                if(status)
+                    return Content(HttpStatusCode.Found, "Zapraceno");
             }
             catch (Exception e)
             {
@@ -160,7 +150,7 @@ namespace MensariumAPI.Controllers
                     BrojTelefona = kdto.BrojTelefona
                 };
 
-                ProvajderPodataka.DodajKorisnika(k);
+                ProvajderPodatakaKorisnika.DodajKorisnika(k);
                 SesijeProvajder.ZatvoriSesiju();
 
                 return Content(HttpStatusCode.OK, "");
@@ -180,19 +170,19 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Korisnik k = ProvajderPodataka.VratiKorisnika(klijentReg.DodeljeniId);
-                if (Validator.KorisnikPostoji(k))
+                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(klijentReg.DodeljeniId);
+                if (ValidatorKorisnika.KorisnikPostoji(k))
                 {
                     if (k.Sifra == klijentReg.DodeljenaLozinka)
                     {
-                        if (Validator.PostojiUsername(klijentReg.NovaLozinka) == null)
+                        if (ValidatorKorisnika.PostojiUsername(klijentReg.NovaLozinka) == null)
                         {
                             k.KorisnickoIme = klijentReg.KorisnickoIme;
                             k.Email = klijentReg.Email;
                             k.Sifra = klijentReg.NovaLozinka;
                             k.BrojTelefona = klijentReg.Telefon;
                         }
-                        ProvajderPodataka.UpdateKorisnika(k);
+                        ProvajderPodatakaKorisnika.UpdateKorisnika(k);
                     }
                 }
 
@@ -222,7 +212,7 @@ namespace MensariumAPI.Controllers
 
                 SesijeProvajder.ZatvoriSesiju();
 
-                SesijaDto sdto = ProvajderPodataka.PrijavaKorisnika(k);
+                SesijaDto sdto = ProvajderPodatakaKorisnika.PrijavaKorisnika(k);
                 if(sdto != null)
                     return Content(HttpStatusCode.Found, sdto);
             }
@@ -234,6 +224,24 @@ namespace MensariumAPI.Controllers
 
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("pracenja/{id:int}")]
+        public IHttpActionResult Pracenja(int id)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+                List<KorisnikFollowDto> pracenja = ProvajderPodatakaKorisnika.SvaPracenja(id);
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.Found, pracenja);
+            }
+            catch (Exception e)
+            {
+            }
+            return Content(HttpStatusCode.BadRequest, "Akcija nije uspela");
+
+        }
 
     }
 }
