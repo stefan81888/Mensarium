@@ -5,6 +5,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
 using RestSharp;
@@ -34,14 +35,15 @@ namespace MensariumDesktop.Model.Controllers
             responseData = response.Data;
             return response.StatusCode;
         }
-
         private static HttpStatusCode Execute(RestRequest request)
         {
             RestClient client = new RestClient();
             client.BaseUrl = new Uri(BaseUrl);
             //request.AddParameter("SessionId", SessionID, ParameterType.UrlSegment);
+
+            string fullrul = client.BuildUri(request).ToString();
+
             var response = client.Execute(request);
-            
             if (response.ErrorException != null)
             {
                 string message = "Greska u komuniciranju sa serverom. Proveri internet konekciju.\n\n" + response.ErrorMessage;
@@ -49,6 +51,7 @@ namespace MensariumDesktop.Model.Controllers
                 throw Exception;
             }
 
+            MessageBox.Show(fullrul);
             return response.StatusCode;
         }
 
@@ -112,5 +115,51 @@ namespace MensariumDesktop.Model.Controllers
 
             return Execute(request);
         }
+        public static HttpStatusCode UpdateFaculty(FakultetFullDto fax)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "fakulteti/update";
+            request.AddObject(fax);
+
+            return Execute(request);
+        }
+
+        public static HttpStatusCode DeleteFaculty(int id)
+        {
+            RestRequest request = new RestRequest(Method.DELETE);
+            request.Resource = "fakulteti/obrisi/{id}";
+            request.AddParameter("id", id, ParameterType.UrlSegment);
+
+            return Execute(request);
+        }
+        public static List<FakultetFullDto> GetAllFaculties()
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "fakulteti";
+            
+            List<FakultetFullDto> list;
+            HttpStatusCode status = Execute<List<FakultetFullDto>>(request, out list);
+
+            if(status == HttpStatusCode.BadRequest)
+                throw new Exception("GetAllFaculies: Neuspesno pribavljanje liste fakulteta");
+
+            return list;
+        }
+
+        //MENZE
+        public static List<MenzaFullDto> GetAllMensas()
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "menze";
+
+            List<MenzaFullDto> list;
+            HttpStatusCode status = Execute<List<MenzaFullDto>>(request, out list);
+
+            if (status == HttpStatusCode.BadRequest)
+                throw new Exception("GetAllMensas: Neuspesno pribavljanje liste menza");
+
+            return list;
+        }
+
     }
 }

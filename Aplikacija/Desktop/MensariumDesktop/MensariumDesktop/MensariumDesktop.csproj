@@ -56,6 +56,12 @@
     <Compile Include="Forms\FacultyManagerForm.Designer.cs">
       <DependentUpon>FacultyManagerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoadingForm.Designer.cs">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MenzaManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,7 @@
     <Compile Include="Model\Components\DTOs\TipNalogaFullDto.cs" />
     <Compile Include="Model\Components\DTOs\TipObrokaFullDto.cs" />
     <Compile Include="Model\Components\Faculty.cs" />
+    <Compile Include="Model\Components\Mensa.cs" />
     <Compile Include="Model\Components\Server.cs" />
     <Compile Include="Model\Components\Session.cs" />
     <Compile Include="Model\Components\MSettings.cs" />
@@ -153,6 +160,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\FacultyManagerForm.resx">
       <DependentUpon>FacultyManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoadingForm.resx">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MenzaManagerForm.resx">
       <DependentUpon>MenzaManagerForm.cs</DependentUpon>

@@ -151,18 +151,14 @@ namespace MensariumDesktop
 
         private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FakultetFullDto newFax = new FakultetFullDto()
+            try
             {
-                Naziv = "Sumarski fakultet"
-            };
-
-            HttpStatusCode status = Api.AddNewFaculty(newFax);
-
-            if (status == HttpStatusCode.OK)
-                MessageBox.Show("Uspenso dodat");
-            else
-            {
+                HttpStatusCode status = Api.DeleteFaculty(1);
                 MessageBox.Show(status.ToString());
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
             }
         }
 
