@@ -79,6 +79,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static bool Zaprati(int idPratioca, int idPracenog)
         {
+            //Onemoguciti u mobilnoj aplikaciji pracenje vec pracenih
+
             ISession s = SesijeProvajder.Sesija;
 
             Korisnik pratilac = s.Load<Korisnik>(idPratioca);
@@ -88,13 +90,15 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             Korisnik praceni = s.Load<Korisnik>(idPracenog);
 
-            if (ValidatorKorisnika.KorisnikPostoji(praceni))
+            if (!ValidatorKorisnika.KorisnikPostoji(praceni))
                 return false;
 
             praceni.PracenOd.Add(pratilac);
+            pratilac.Prati.Add(praceni);
 
-            s.Save(pratilac);
             s.Save(praceni);
+            s.Save(pratilac);
+
             s.Flush();
 
 
@@ -112,18 +116,20 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             List<KorisnikFollowDto> praceni = new List<KorisnikFollowDto>();
 
-            foreach (var ko in k.Prati)
+            List<Korisnik> lista = k.Prati.ToList();
+
+            foreach (var ko in lista)
             {
                 KorisnikFollowDto kdto = new KorisnikFollowDto()
                 {
-                    IdKorisnika = k.IdKorisnika,
-                    KorisnickoIme = k.KorisnickoIme,
-                    Ime = k.Ime,
-                    Prezime = k.Prezime,
-                    Fakultet = k.StudiraFakultet.Naziv,
+                    IdKorisnika = ko.IdKorisnika,
+                    KorisnickoIme = ko.KorisnickoIme,
+                    Ime = ko.Ime,
+                    Prezime = ko.Prezime,
+                    Fakultet = ko.StudiraFakultet.Naziv,
                     Zapracen = true
                 };
-
+                praceni.Add(kdto);
             }
             return praceni;
         }

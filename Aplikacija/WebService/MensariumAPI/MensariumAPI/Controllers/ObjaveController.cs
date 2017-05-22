@@ -52,7 +52,7 @@ namespace MensariumAPI.Controllers
         }
 
         [HttpGet]
-        [System.Web.Http.Route("objave/{id:int}")]
+        [System.Web.Http.Route("newsfeed/{id:int}")]
         public IHttpActionResult PrikaziSveObjave(int id)
         {
             try

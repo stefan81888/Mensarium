@@ -147,35 +147,6 @@ namespace MensariumAPI.Controllers
 			return Content(HttpStatusCode.BadRequest, "Brisanje fakulteta nije uspelo.");
 		}
 
-		[System.Web.Http.HttpGet]
-		[System.Web.Http.Route("privilegije/{id:int}")]
-		public IHttpActionResult VratiPrivilegijeKorisnika(int id)
-		{
-			try
-			{
-				SesijeProvajder.OtvoriSesiju();
-				List<Privilegija> listaPrivilegija = ProvajderPodatakaTipovaNaloga.VratiPrivilegijeKorisnika(id);
-				List<PrivilegijaFullDto> listaPrivilegijaFull = new List<PrivilegijaFullDto>(listaPrivilegija.Count());
-
-				foreach (Privilegija p in listaPrivilegija)
-				{
-					listaPrivilegijaFull.Add(new PrivilegijaFullDto()
-					{
-						IdPrivilegije = p.IdPrivilegije,
-						Opis = p.Opis
-					});
-				}
-				
-				SesijeProvajder.ZatvoriSesiju();
-
-				if (listaPrivilegija != null)
-					return Content(HttpStatusCode.Found, listaPrivilegijaFull);
-			}
-			catch (Exception e)
-			{
-
-			}
-			return Content(HttpStatusCode.BadRequest, new List<PrivilegijaFullDto>());
-		}
+		
 	}
 }

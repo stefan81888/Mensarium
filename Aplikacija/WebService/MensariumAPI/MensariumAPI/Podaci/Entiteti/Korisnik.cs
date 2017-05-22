@@ -51,7 +51,10 @@ namespace MensariumAPI.Podaci.Entiteti
 
             AktivanNalog = true;
             Obrisan = false;
-            
+
+            //
+            Prati = new List<Korisnik>();
+            PracenOd = new List<Korisnik>();
         }
     }
 }
