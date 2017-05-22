@@ -261,7 +261,7 @@ namespace MensariumAPI.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("korisnicki/{id:int}")]
+        [System.Web.Http.Route("stanje/{id:int}")]
         public IHttpActionResult VratiKorisnikovoStanjeObroka(int id)
         {
             try

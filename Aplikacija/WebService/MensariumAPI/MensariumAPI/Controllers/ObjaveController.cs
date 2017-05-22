@@ -14,7 +14,7 @@ namespace MensariumAPI.Controllers
     {
         [HttpGet]
         [System.Web.Http.Route("prikazi/{id:int}")]
-        public IHttpActionResult PrikaziSveObjave(int id)
+        public IHttpActionResult PrikaziObjavu(int id)
         {
             try
             {
@@ -40,16 +40,35 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                //ObjavaFullDto o = ProvajderPodatakaObjava.VratiObjavu(id);
-
+                ObjavaCUDto o = ProvajderPodatakaObjava.Objavi(id, ocdto);
                 SesijeProvajder.ZatvoriSesiju();
 
-                return Content(HttpStatusCode.Found, "");
+                return Content(HttpStatusCode.Found, o);
             }
             catch (Exception e)
             {
             }
             return Content(HttpStatusCode.BadRequest, new ObjavaFullDto());
+        }
+
+        [HttpGet]
+        [System.Web.Http.Route("objave/{id:int}")]
+        public IHttpActionResult PrikaziSveObjave(int id)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                List<ObjavaReadDto> o = ProvajderPodatakaObjava.SveObjave(id);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.Found, o);
+            }
+            catch (Exception e)
+            {
+            }
+            return Content(HttpStatusCode.BadRequest, new ObjavaReadDto());
         }
     }
 }

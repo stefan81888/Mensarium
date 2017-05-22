@@ -11,5 +11,7 @@ namespace MensariumAPI.Podaci.DTO
         public string TekstObjave { get; set; }
         public int IdKorisnika { get; set; }
         public int IdLokacije { get; set; }
+        public string ImeKorisnika { get; set; }
+        public string PrezimeKorisnika { get; set; }
     }
 }
