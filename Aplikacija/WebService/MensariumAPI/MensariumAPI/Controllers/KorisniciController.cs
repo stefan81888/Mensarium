@@ -16,6 +16,7 @@ namespace MensariumAPI.Controllers
     [System.Web.Http.RoutePrefix("api/korisnici")]
     public class KorisniciController : ApiController
     {
+        //Vraća korisnika po id-ju
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("full/{id:int}")]
         public IHttpActionResult VratiKorisnikaFull(int id)
@@ -60,6 +61,7 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
         }
 
+        //Vraća sve korisnike
         [System.Web.Http.HttpGet]
         public IHttpActionResult VratiSveKorisnikeFull()
         {
@@ -109,6 +111,7 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new List<KorisnikFullDto>());
         }
 
+        //Korisnik pratilac počinje da prati korisnika praceni
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("zaprati/{pratilac:int}/{praceni:int}")]
         public IHttpActionResult Zaprati(int pratilac, int praceni)
@@ -121,14 +124,15 @@ namespace MensariumAPI.Controllers
                 
                 SesijeProvajder.ZatvoriSesiju();
                 if(status)
-                    return Content(HttpStatusCode.Found, "Zapraceno");
+                    return Content(HttpStatusCode.Found, new KorisnikFollowDto());
             }
             catch (Exception e)
             {
             }
-            return Content(HttpStatusCode.BadRequest, "Akcija neuspešna");
+            return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
         }
 
+        //Dodavanje korisnika
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("dodaj")]
         public IHttpActionResult DodajKorisnika([FromBody]KorisnikFullDto kdto)
@@ -162,6 +166,7 @@ namespace MensariumAPI.Controllers
 
         }
 
+        //Ažuriranje korisnika
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("update")]
         public IHttpActionResult UpdateKorisnika([FromBody]ClientZaRegistracijuDto klijentReg)
@@ -195,6 +200,7 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
         }
 
+        //Prijava na sistem
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("prijava")]
         public IHttpActionResult Prijava([FromBody]ClientLoginDto cdto)
@@ -219,6 +225,7 @@ namespace MensariumAPI.Controllers
 
         }
 
+        //Prikaz svih korisnika koje korisnik prati
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("pracenja/{id:int}")]
         public IHttpActionResult Pracenja(int id)
@@ -238,6 +245,7 @@ namespace MensariumAPI.Controllers
 
         }
 
+        //Pretraga po kriterijumu
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("pretraga/{id:int}")]
         public IHttpActionResult Pretraga(int id,[FromBody] string kriterijum)
@@ -260,6 +268,7 @@ namespace MensariumAPI.Controllers
 
         }
 
+        //Broj obroka korisnika
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("stanje/{id:int}")]
         public IHttpActionResult VratiKorisnikovoStanjeObroka(int id)
@@ -286,6 +295,7 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest,new KorisnikFollowDto());
         }
 
+        //Priivlegije naloga
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("privilegije/{id:int}")]
         public IHttpActionResult VratiPrivilegijeKorisnika(int id)
@@ -317,5 +327,26 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new List<PrivilegijaFullDto>());
         }
 
+        //Pozivanje na obrok
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("pozovi")]
+        public IHttpActionResult Pozovi([FromBody] PozivanjaFullDto pfdto, [FromBody] PozvaniDto listaPozvanih)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                PozivanjaFullDto o = ProvajderPodatakaKorisnika.Pozovi(pfdto, listaPozvanih);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.Found, o);
+
+            }
+            catch (Exception e)
+            {
+            }
+            return Content(HttpStatusCode.BadRequest, new List<PrivilegijaFullDto>());
+        }
     }
 }

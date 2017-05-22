@@ -194,5 +194,56 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return k;
         }
+
+        public static PozivanjaFullDto Pozovi(PozivanjaFullDto pfdto, PozvaniDto listaPozvanih)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            
+            Korisnik pozivalac = s.Load<Korisnik>(pfdto.IdPozivaoca);
+            List<Korisnik> pozvani = new List<Korisnik>();
+            Pozivanje poziv = new Pozivanje()
+            {
+                DatumPoziva = pfdto.DatumPoziva,
+                VaziDo = pfdto.VaziDo,
+                Pozivaoc = pozivalac
+            };
+
+            for (int i = 0; i < listaPozvanih.Pozvani.Count; i++)
+            {
+                Korisnik k = s.Load<Korisnik>(i);
+                pozvani.Add(k);
+            }
+
+            foreach (var v in pozvani)
+            {
+                PozivanjaPozvani pp = new PozivanjaPozvani()
+                {
+                    IdPozivanjaPozvani =
+                    {
+                        IdPoziva = poziv,
+                        IdPozvanog = v
+                    },
+                    OdgovorPozvanog = false
+                };
+
+                v.PozivanjaOd.Add(pp);
+            }
+
+            pozivalac.Pozivi.Add(poziv);
+
+            //prebaciti izmedju prethodnih foreach petlji
+
+            s.Save(pozivalac);
+            s.Save(poziv);
+
+            foreach (var v in pozvani)
+            {
+                s.Save(v); 
+            }
+
+            s.Flush();
+
+            return pfdto;  // proveriti da li treba id
+        }
     }
 }

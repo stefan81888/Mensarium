@@ -252,6 +252,7 @@
     <Compile Include="Podaci\DTO\OdjavaDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaFullDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaPozvaniDto.cs" />
+    <Compile Include="Podaci\DTO\PozvaniDto.cs" />
     <Compile Include="Podaci\DTO\PrivilegijaFullDto.cs" />
     <Compile Include="Podaci\DTO\ServerLoginDto.cs" />
     <Compile Include="Podaci\DTO\SesijaDto.cs" />
