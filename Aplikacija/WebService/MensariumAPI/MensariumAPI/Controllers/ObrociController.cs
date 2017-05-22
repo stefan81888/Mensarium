@@ -59,14 +59,12 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                IEnumerable<Obrok> ienObroci = ProvajderPodatakaObroka.VratiObroke();
-                List<Obrok> listaObroka = ienObroci.ToList();
+                List<Obrok> listaObroka = ProvajderPodatakaObroka.VratiObroke();
                 List<ObrokFullDto> listaObrokaFull = new List<ObrokFullDto>(listaObroka.Count);
 
-                for (int i = 0; i < listaObroka.Count; ++i)
+                foreach(Obrok o in listaObroka)
                 {
                     ObrokFullDto obrok = new ObrokFullDto();
-                    Obrok o = listaObroka[i];
 
                     obrok.IdObroka = o.IdObroka;
                     obrok.Iskoriscen = o.Iskoriscen;
@@ -218,24 +216,23 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.OtvoriSesiju();
 
                 List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(id).ToList();
-                List<ObrokDanasUplacenDto> listaDanasUplcenihObroka = new List<ObrokDanasUplacenDto>(danasUplaceniObrociOvogKorisnika.Count);
+                List<ObrokDanasUplacenDto> listaDanasUplacenihObroka = new List<ObrokDanasUplacenDto>(danasUplaceniObrociOvogKorisnika.Count);
 
-                for (int i = 0; i < danasUplaceniObrociOvogKorisnika.Count; ++i)
+                foreach (Obrok o in danasUplaceniObrociOvogKorisnika)
                 {
-                    ObrokDanasUplacenDto obrok = new ObrokDanasUplacenDto();
-                    Obrok o = danasUplaceniObrociOvogKorisnika[i];
-
-                    obrok.DatumUplacivanja = o.DatumUplacivanja;
-                    obrok.IdLokacijeUplate = o.LokacijaUplate.IdMenza;
-                    obrok.IdObroka = o.IdObroka;
-                    obrok.IdTipaObroka = o.Tip.IdTipObroka;
-
-                    listaDanasUplcenihObroka.Add(obrok);
+                    listaDanasUplacenihObroka.Add(new ObrokDanasUplacenDto()
+                    {
+                        DatumUplacivanja = o.DatumUplacivanja,
+                        IdLokacijeUplate = o.LokacijaUplate.IdMenza,
+                        IdObroka = o.IdObroka,
+                        IdTipaObroka = o.Tip.IdTipObroka
+                    });
                 }
+
                 SesijeProvajder.ZatvoriSesiju();
 
-                if (listaDanasUplcenihObroka != null)
-                    return Content(HttpStatusCode.Found, listaDanasUplcenihObroka);
+                if (listaDanasUplacenihObroka != null)
+                    return Content(HttpStatusCode.Found, listaDanasUplacenihObroka);
             }
             catch (Exception e)
             {
@@ -255,18 +252,17 @@ namespace MensariumAPI.Controllers
                 List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(id).ToList();
                 List<ObrokDanasSkinutDto> listaDanasSkinutihObroka = new List<ObrokDanasSkinutDto>(danasSkinutiObrociOvogKorisnika.Count);
 
-                for (int i = 0; i < danasSkinutiObrociOvogKorisnika.Count; ++i)
+                foreach (Obrok o in danasSkinutiObrociOvogKorisnika)
                 {
-                    ObrokDanasSkinutDto obrok = new ObrokDanasSkinutDto();
-                    Obrok o = danasSkinutiObrociOvogKorisnika[i];
-
-                    obrok.DatumIskoriscenja = (DateTime) o.DatumIskoriscenja;
-                    obrok.IdLokacijeIskoriscenja = o.LokacijaIskoriscenja.IdMenza;
-                    obrok.IdObroka = o.IdObroka;
-                    obrok.IdTipaObroka = o.Tip.IdTipObroka;
-
-                    listaDanasSkinutihObroka.Add(obrok);
+                    listaDanasSkinutihObroka.Add(new ObrokDanasSkinutDto()
+                    {
+                        DatumIskoriscenja = (DateTime) o.DatumIskoriscenja,
+                        IdLokacijeIskoriscenja = o.LokacijaIskoriscenja.IdMenza,
+                        IdObroka = o.IdObroka,
+                        IdTipaObroka = o.Tip.IdTipObroka
+                    });
                 }
+
                 SesijeProvajder.ZatvoriSesiju();
 
                 if (listaDanasSkinutihObroka != null)

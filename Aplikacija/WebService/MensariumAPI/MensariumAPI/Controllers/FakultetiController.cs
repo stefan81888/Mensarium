@@ -50,20 +50,18 @@ namespace MensariumAPI.Controllers
 			{
 				SesijeProvajder.OtvoriSesiju();
 
-				IEnumerable<Fakultet> ienFakulteti = ProvajderPodatakaFakulteta.VratiFakultete();
-				List<Fakultet> listaFakulteta = ienFakulteti.ToList();
+				List<Fakultet> listaFakulteta = ProvajderPodatakaFakulteta.VratiFakultete();
 				List<FakultetFullDto> listaFakultetaFull = new List<FakultetFullDto>(listaFakulteta.Count);
 
-				for (int i = 0; i < listaFakulteta.Count; ++i)
+				foreach (Fakultet f in listaFakulteta)
 				{
-					FakultetFullDto fakultet = new FakultetFullDto();
-					Fakultet f = listaFakulteta[i];
-
-					fakultet.IdFakultet = f.IdFakultet;
-					fakultet.Naziv = f.Naziv;
-
-					listaFakultetaFull.Add(fakultet);
+					listaFakultetaFull.Add(new FakultetFullDto()
+					{
+						IdFakultet = f.IdFakultet,
+						Naziv = f.Naziv
+					});
 				}
+
 				SesijeProvajder.ZatvoriSesiju();
 
 				if (listaFakultetaFull != null)

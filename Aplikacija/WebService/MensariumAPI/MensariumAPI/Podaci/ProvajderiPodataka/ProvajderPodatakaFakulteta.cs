@@ -18,11 +18,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return f;
         }
 
-        public static IEnumerable<Fakultet> VratiFakultete()
+        public static List<Fakultet> VratiFakultete()
         {
             ISession s = SesijeProvajder.Sesija;
             IEnumerable<Fakultet> fakulteti = s.Query<Fakultet>().Select(k => k);
-            return fakulteti;
+            return fakulteti.ToList();
         }
 
         public static void DodajFakultet(Fakultet f)

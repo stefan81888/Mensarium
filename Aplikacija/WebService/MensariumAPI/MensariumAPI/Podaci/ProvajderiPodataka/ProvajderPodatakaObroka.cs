@@ -18,11 +18,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return o;
         }
 
-        public static IEnumerable<Obrok> VratiObroke()
+        public static List<Obrok> VratiObroke()
         {
             ISession s = SesijeProvajder.Sesija;
             IEnumerable<Obrok> obroci = s.Query<Obrok>().Select(k => k);
-            return obroci;
+            return obroci.ToList();
         }
 
         public static void DodajObrok(Obrok o)
@@ -61,40 +61,50 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static bool KorisnikDostigaoLimitZaOvajMesecZaOvajObrok(int idKorisnika, int idTipaObroka)
         {
             ISession s = SesijeProvajder.Sesija;
-            IEnumerable<Obrok> obrociOvogKorisnika = s.Query<Obrok>().Select(k => k).Where(k => k.Uplatilac.IdKorisnika == idKorisnika && k.Tip.IdTipObroka == idTipaObroka);
-            List<Obrok> listaObrokaOvogKorisnika = obrociOvogKorisnika.ToList();
-            int br = (from o in listaObrokaOvogKorisnika
-                      where o.DatumUplacivanja.Month == DateTime.Now.Month
-                      select o).Count();
+            List<Obrok> ovomesecniObrociOvogKorisnika = s.Query<Obrok>().Select(k => k)
+                .Where(k => k.Uplatilac.IdKorisnika == idKorisnika)
+                .Where(k => k.Tip.IdTipObroka == idTipaObroka)
+                .Where(k => k.DatumUplacivanja.Month == DateTime.Now.Month)
+                .ToList();
+
+            int br = ovomesecniObrociOvogKorisnika.Count();
             return br == 30;
         }
 
         public static Obrok ObrokZaSkidanjeOvogTipa(int idKorisnika, int idTipaObroka)
         {
+            //prvi obrok koji je neiskoriscen, a uplacen ovog meseca
             ISession s = SesijeProvajder.Sesija;
-            IEnumerable<Obrok> neiskorisceniObroci = s.Query<Obrok>().Select(k => k).Where(k => k.Uplatilac.IdKorisnika == idKorisnika && k.Tip.IdTipObroka == idTipaObroka && k.Iskoriscen == false);
-            List<Obrok> listaNeiskoriscenihObroka = neiskorisceniObroci.ToList();
-            if (neiskorisceniObroci == null)
-                return null;
-            else
+            List<Obrok> listaNeiskoriscenihObroka = s.Query<Obrok>().Select(k => k)
+                .Where(k => k.Uplatilac.IdKorisnika == idKorisnika)
+                .Where(k => k.DatumUplacivanja.Month == DateTime.Now.Month)
+                .Where(k => k.Tip.IdTipObroka == idTipaObroka)
+                .Where(k => k.Iskoriscen == false).ToList();
+
+            if (listaNeiskoriscenihObroka != null)
                 return listaNeiskoriscenihObroka[0];
+            return null;
         }
 
-        public static IEnumerable<Obrok> DanasUplaceniNeiskorisceniObrociKorisnika(int idKorisnika)
+        public static List<Obrok> DanasUplaceniNeiskorisceniObrociKorisnika(int idKorisnika)
         {
             ISession s = SesijeProvajder.Sesija;
-            IEnumerable<Obrok> danasUplaceni = s.Query<Obrok>().Select(k => k).Where(k => k.Uplatilac.IdKorisnika == idKorisnika && k.DatumUplacivanja.Day == DateTime.Now.Day && k.Iskoriscen == false);
-            return danasUplaceni;
+            IEnumerable<Obrok> danasUplaceni = s.Query<Obrok>().Select(k => k).Where(k => k.Uplatilac.IdKorisnika == idKorisnika)
+                .Where(k => k.DatumUplacivanja.Day == DateTime.Now.Day)
+                .Where(k => k.Iskoriscen == false)
+                .Where(k => k.DatumIskoriscenja == null)
+                .Where(k => k.LokacijaIskoriscenja == null);
+            return danasUplaceni.ToList();
         }
 
-        public static IEnumerable<Obrok> DanasSkinutiObrociKorisnika(int idKorisnika)
+        public static List<Obrok> DanasSkinutiObrociKorisnika(int idKorisnika)
         {
             ISession s = SesijeProvajder.Sesija;
             DateTime danasPonoc = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1);
             IEnumerable<Obrok> danasSkinuti = s.Query<Obrok>().Select(k => k)
                 .Where(k => k.Iskoriscen == true && k.Uplatilac.IdKorisnika == idKorisnika)
                 .Where(k => k.DatumIskoriscenja <= DateTime.Now && k.DatumIskoriscenja >= danasPonoc);
-            return danasSkinuti;
+            return danasSkinuti.ToList();
         }
     }
 }

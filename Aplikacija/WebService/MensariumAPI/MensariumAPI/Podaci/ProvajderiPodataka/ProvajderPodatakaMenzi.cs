@@ -18,11 +18,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return m;
         }
 
-        public static IEnumerable<Menza> VratiMenze()
+        public static List<Menza> VratiMenze()
         {
             ISession s = SesijeProvajder.Sesija;
             IEnumerable<Menza> menze = s.Query<Menza>().Select(k => k);
-            return menze;
+            return menze.ToList();
         }
 
         public static void DodajMenzu(Menza m)

@@ -54,23 +54,21 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                IEnumerable<Menza> ienMenze = ProvajderPodatakaMenzi.VratiMenze();
-                List<Menza> listaMenzi = ienMenze.ToList();
+                List<Menza> listaMenzi = ProvajderPodatakaMenzi.VratiMenze();
                 List<MenzaFullDto> listaMenziFull = new List<MenzaFullDto>(listaMenzi.Count);
 
-                for (int i = 0; i < listaMenzi.Count; ++i)
+                foreach (Menza m in listaMenzi)
                 {
-                    MenzaFullDto menza = new MenzaFullDto();
-                    Menza m = listaMenzi[i];
-
-                    menza.IdMenze = m.IdMenza;
-                    menza.Naziv = m.Naziv;
-                    menza.Lokacija = m.Lokacija;
-                    menza.RadnoVreme = m.RadnoVreme;
-                    menza.VanrednoNeRadi = m.VanrednoNeRadi;
-
-                    listaMenziFull.Add(menza);
+                    listaMenziFull.Add(new MenzaFullDto()
+                    {
+                        IdMenze = m.IdMenza,
+                        Naziv = m.Naziv,
+                        Lokacija = m.Lokacija,
+                        RadnoVreme = m.RadnoVreme,
+                        VanrednoNeRadi = m.VanrednoNeRadi
+                    });
                 }
+
                 SesijeProvajder.ZatvoriSesiju();
 
                 if (listaMenziFull != null)
@@ -91,15 +89,13 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Menza m = new Menza()
+                ProvajderPodatakaMenzi.DodajMenzu(new Menza()
                 {
                     Lokacija = mdto.Lokacija,
                     Naziv = mdto.Naziv,
                     RadnoVreme = mdto.RadnoVreme,
                     VanrednoNeRadi = mdto.VanrednoNeRadi
-                };
-
-                ProvajderPodatakaMenzi.DodajMenzu(m);
+                });
 
                 SesijeProvajder.ZatvoriSesiju();
 
