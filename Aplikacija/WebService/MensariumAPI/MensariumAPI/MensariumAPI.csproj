@@ -249,7 +249,7 @@
     <Compile Include="Podaci\DTO\OdjavaDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaFullDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaPozvaniDto.cs" />
-    <Compile Include="Podaci\DTO\PrivilegijeFullDto.cs" />
+    <Compile Include="Podaci\DTO\PrivilegijaFullDto.cs" />
     <Compile Include="Podaci\DTO\ServerLoginDto.cs" />
     <Compile Include="Podaci\DTO\SesijaDto.cs" />
     <Compile Include="Podaci\DTO\TipNalogaFullDto.cs" />
@@ -283,6 +283,7 @@
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaMenzi.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaObjava.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaObroka.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaPrivilegija.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaTipovaNaloga.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaTipovaObroka.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\SesijeProvajder.cs" />

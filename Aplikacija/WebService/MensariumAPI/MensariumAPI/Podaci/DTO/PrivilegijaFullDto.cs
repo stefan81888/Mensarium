@@ -7,7 +7,7 @@ using MensariumAPI.Podaci.Entiteti;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class PrivilegijeFullDto
+    public class PrivilegijaFullDto
     {
         public int IdPrivilegije { get; set; }
         public string Opis { get; set; }
