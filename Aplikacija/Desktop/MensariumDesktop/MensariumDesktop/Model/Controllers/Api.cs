@@ -44,7 +44,6 @@ namespace MensariumDesktop.Model.Controllers
             string fullrul = client.BuildUri(request).ToString();
 
             var response = client.Execute(request);
-            
             if (response.ErrorException != null)
             {
                 string message = "Greska u komuniciranju sa serverom. Proveri internet konekciju.\n\n" + response.ErrorMessage;
@@ -128,9 +127,9 @@ namespace MensariumDesktop.Model.Controllers
         public static HttpStatusCode DeleteFaculty(int id)
         {
             RestRequest request = new RestRequest(Method.DELETE);
-            request.Resource = "fakulteti/obrisi";
+            request.Resource = "fakulteti/obrisi/{id}";
             request.AddParameter("id", id, ParameterType.UrlSegment);
-            
+
             return Execute(request);
         }
         public static List<FakultetFullDto> GetAllFaculties()

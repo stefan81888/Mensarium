@@ -153,7 +153,7 @@ namespace MensariumDesktop
         {
             try
             {
-                HttpStatusCode status = Api.DeleteFaculty(6);
+                HttpStatusCode status = Api.DeleteFaculty(1);
                 MessageBox.Show(status.ToString());
             }
             catch (Exception exception)
