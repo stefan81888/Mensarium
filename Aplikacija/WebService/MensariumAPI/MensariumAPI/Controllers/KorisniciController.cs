@@ -365,13 +365,35 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.ZatvoriSesiju();
 
                 return Content(HttpStatusCode.Found, listaPoziva);
-
-
             }
             catch (Exception e)
             {
             }
             return Content(HttpStatusCode.BadRequest, new PozivanjaNewsFeedItemDto());
+
+        }
+
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("odgovor/pozivi")]
+        public IHttpActionResult OdgovorNaPoziv([FromBody] PozivanjaPozvaniDto poziv)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                PozivanjaPozvaniDto odgovor = ProvajderPodatakaKorisnika.OdogovoriNaPoziv(poziv);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                if(odgovor != null)
+                    return Content(HttpStatusCode.Found, odgovor);
+
+            }
+            catch (Exception e)
+            {
+               
+            }
+            return Content(HttpStatusCode.BadRequest, new PozivanjaPozvaniDto());
 
         }
     }

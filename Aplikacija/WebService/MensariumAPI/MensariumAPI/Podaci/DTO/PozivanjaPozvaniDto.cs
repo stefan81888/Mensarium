@@ -9,6 +9,8 @@ namespace MensariumAPI.Podaci.DTO
 {
     public class PozivanjaPozvaniDto
     {
-        public bool OdgovorPozvanog { get; set; } 
+        public bool OdgovorPozvanog { get; set; }
+        public int IdPozvanog { get; set; }
+        public int IdPoziva { get; set; }
     }
 }

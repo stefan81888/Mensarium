@@ -258,6 +258,13 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             {
                 int idPoziva = v.IdPozivanjaPozvani.IdPoziva.IdPoziva;
                 Pozivanje p = s.Load<Pozivanje>(idPoziva);
+
+                if (DateTime.Compare(p.DatumPoziva, DateTime.Today) < 0)
+                    break;
+
+                if(DateTime.Compare(p.DatumPoziva, p.VaziDo) > 0)
+                    break;
+
                 Korisnik k = s.Load<Korisnik>(p.Pozivaoc.IdKorisnika);
 
                 PozivanjaNewsFeedItemDto pnfidto = new PozivanjaNewsFeedItemDto()
@@ -275,7 +282,33 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             sviPozivi.Sort((x, y) => y.DatumPoziva.CompareTo(x.DatumPoziva));
 
+
+            //TO DO:
+            // Testirati da li lepo brejkuje
+            // Vratiti i odgovor 
             return sviPozivi;
+        }
+
+        public static PozivanjaPozvaniDto OdogovoriNaPoziv(PozivanjaPozvaniDto ppdto)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Korisnik k = s.Load<Korisnik>(ppdto.IdPozvanog);
+            Pozivanje p = s.Load<Pozivanje>(ppdto.IdPoziva);
+
+            PozivanjaPozvani pp = new PozivanjaPozvani()
+            {
+                IdPozivanjaPozvani =
+                {
+                    IdPoziva = p,
+                    IdPozvanog = k
+                },
+                OdgovorPozvanog = ppdto.OdgovorPozvanog
+            };
+
+            s.Save(pp);
+            s.Flush();
+
+            return ppdto;
         }
     }
 }
