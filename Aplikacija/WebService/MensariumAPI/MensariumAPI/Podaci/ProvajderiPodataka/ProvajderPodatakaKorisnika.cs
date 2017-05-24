@@ -245,5 +245,37 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return pfdto;  // proveriti da li treba id
         }
+
+        public static List<PozivanjaNewsFeedItemDto> SviPozivi(int id)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Korisnik pozivalac = s.Load<Korisnik>(id);
+            List<PozivanjaNewsFeedItemDto> sviPozivi = new List<PozivanjaNewsFeedItemDto>();
+
+
+            foreach (var v in pozivalac.PozivanjaOd)
+            {
+                int idPoziva = v.IdPozivanjaPozvani.IdPoziva.IdPoziva;
+                Pozivanje p = s.Load<Pozivanje>(idPoziva);
+                Korisnik k = s.Load<Korisnik>(p.Pozivaoc.IdKorisnika);
+
+                PozivanjaNewsFeedItemDto pnfidto = new PozivanjaNewsFeedItemDto()
+                {
+                    IdPoziva = p.IdPoziva,
+                    DatumPoziva = p.DatumPoziva,
+                    VaziDo = p.VaziDo,
+                    IdPozivaoca = k.IdKorisnika,
+                    KorisnickoImePozivaoca = k.KorisnickoIme,
+                    PrezimePozivaoca = k.Prezime,
+                    ImePozivaoca = k.Ime
+                };
+                sviPozivi.Add(pnfidto);
+            }
+
+            sviPozivi.Sort((x, y) => y.DatumPoziva.CompareTo(x.DatumPoziva));
+
+            return sviPozivi;
+        }
     }
 }

@@ -63,6 +63,7 @@ namespace MensariumAPI.Controllers
 
         //Vraća sve korisnike
         [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("")]
         public IHttpActionResult VratiSveKorisnikeFull()
         {
             try
@@ -340,13 +341,38 @@ namespace MensariumAPI.Controllers
 
                 SesijeProvajder.ZatvoriSesiju();
 
-                return Content(HttpStatusCode.Found, o);
+                if(o != null)
+                    return Content(HttpStatusCode.Found, o);
 
             }
             catch (Exception e)
             {
             }
             return Content(HttpStatusCode.BadRequest, new List<PrivilegijaFullDto>());
+        }
+
+        //Vraca sve pozive upucene jednom korisniku
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("pozivi/{id:int}")]
+        public IHttpActionResult SviPozivi(int id)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                List<PozivanjaNewsFeedItemDto> listaPoziva = ProvajderPodatakaKorisnika.SviPozivi(id);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.Found, listaPoziva);
+
+
+            }
+            catch (Exception e)
+            {
+            }
+            return Content(HttpStatusCode.BadRequest, new PozivanjaNewsFeedItemDto());
+
         }
     }
 }

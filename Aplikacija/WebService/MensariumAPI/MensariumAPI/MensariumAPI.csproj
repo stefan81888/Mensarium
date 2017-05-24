@@ -251,6 +251,7 @@
     <Compile Include="Podaci\DTO\ObrokUplataDto.cs" />
     <Compile Include="Podaci\DTO\OdjavaDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaFullDto.cs" />
+    <Compile Include="Podaci\DTO\PozivanjaNewsFeedItemDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaPozvaniDto.cs" />
     <Compile Include="Podaci\DTO\PozvaniDto.cs" />
     <Compile Include="Podaci\DTO\PrivilegijaFullDto.cs" />
