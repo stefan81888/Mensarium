@@ -133,32 +133,38 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
         }
 
-        //Dodavanje korisnika
+        //Dodavanje korisnika -> registracija studenta
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("dodaj")]
-        public IHttpActionResult DodajKorisnika([FromBody]KorisnikFullDto kdto)
+        public IHttpActionResult DodajKorisnika([FromBody]KorisnikDodavanjeDto kddto)
         {
+          
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
                 Korisnik k = new Korisnik()
                 {
-                    KorisnickoIme = kdto.KorisnickoIme,
-                    Ime = kdto.Ime,
-                    Prezime = kdto.Prezime,
-                    DatumRegistracije = kdto.DatumRegistracije,
-                    DatumRodjenja = kdto.DatumRodjenja,
-                    DatumVaziDo = kdto.DatumVaziDo,
-                    Email = kdto.Email,
-                    BrojIndeksa = kdto.BrojIndeksa,
-                    BrojTelefona = kdto.BrojTelefona
-                };
+                    KorisnickoIme = Guid.NewGuid().ToString().Substring(0,19),
+                    Ime = kddto.Ime,
+                    Prezime = kddto.Prezime,
+                    DatumRegistracije = DateTime.Now,
+                    DatumRodjenja = kddto.DatumRodjenja,
+                    Email = Guid.NewGuid().ToString().Substring(0,19),
+                    BrojIndeksa = kddto.BrojIndeksa,
+                    BrojTelefona = String.Empty,
+                    AktivanNalog = true,
+                    TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(5),
+                    StudiraFakultet = ProvajderPodatakaFakulteta.VratiFakultet(kddto.IdFakulteta),
+                    DatumVaziDo = DateTime.Now.AddYears(1),
+                    Obrisan = false,
+                    Sifra = kddto.Sifra
+            };
 
                 ProvajderPodatakaKorisnika.DodajKorisnika(k);
                 SesijeProvajder.ZatvoriSesiju();
 
-                return Content(HttpStatusCode.Found, kdto);
+                return Content(HttpStatusCode.Found, kddto);
             }
             catch (Exception e)
             {
@@ -396,5 +402,11 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new PozivanjaPozvaniDto());
 
         }
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("pravenja/prestani")]
+        public void PrestaniDaPratis() { }
+
+        // plus funkcija za dodavanje bilo kog tipa naloga
+        // delegirati fje za odredjen tip naloga na osnovu id-ja tipa
     }
 }

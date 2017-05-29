@@ -254,7 +254,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             List<PozivanjaNewsFeedItemDto> sviPozivi = new List<PozivanjaNewsFeedItemDto>();
 
 
-            foreach (var v in pozivalac.PozivanjaOd)
+            foreach (var v in pozivalac.PozivanjaOd.ToList())
             {
                 int idPoziva = v.IdPozivanjaPozvani.IdPoziva.IdPoziva;
                 Pozivanje p = s.Load<Pozivanje>(idPoziva);

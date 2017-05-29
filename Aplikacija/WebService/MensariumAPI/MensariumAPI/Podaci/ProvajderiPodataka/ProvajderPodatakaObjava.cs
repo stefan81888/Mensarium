@@ -11,7 +11,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
     public class ProvajderPodatakaObjava
     {
-        public static ObjavaFullDto VratiObjavu(int id)
+        public static ObjavaFullDto VratiObjavuDto(int id)
         {
             ISession s = SesijeProvajder.Sesija;
             Korisnik k = s.Load<Korisnik>(id);
@@ -30,9 +30,19 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static ObjavaCUDto Objavi(int id , ObjavaCUDto ocudto)
         {
+           
             ISession s = SesijeProvajder.Sesija;
             Korisnik ko = s.Load<Korisnik>(id);
-            Objava o = ko.Objava;
+
+            Objava o;
+            if (ko.Objava != null)
+            {
+                o = ko.Objava;
+            }
+            else
+            {
+                o = NapraviObjavu(ko);
+            }
 
             List<Menza> menze = s.Query<Menza>().Select(k => k).ToList();
 
@@ -81,6 +91,42 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return listaObjava;
         }
+
+        public static Objava NapraviObjavu(Korisnik ko) 
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Objava o = new Objava()
+            {
+                IdKorisnik = ko
+            };
+
+            s.Save(ko);
+            s.Save(o);
+            s.Flush();
+
+            List<Objava> lista = s.Query<Objava>().Select(k => k).ToList();
+
+            Objava ob = (from l in lista
+                where l.IdKorisnik == ko
+                select l) as Objava;
+
+            s.Close();
+
+            return ob;
+        }
+
+        public static Objava VrtatiObjavu(int id)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Objava o = s.Load<Objava>(id);
+
+            s.Close();
+
+            return o;
+        }
+
+        
 
     }
 }

@@ -38,5 +38,12 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             Korisnik kor = s.Load<Korisnik>(id);
             return kor.TipNaloga.Privilegije.ToList<Privilegija>();
         }
+
+        public static void SacuvajTipNaloga(TipNaloga f)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            s.Save(f);
+            s.Flush();
+        }
     }
 }

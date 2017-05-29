@@ -234,6 +234,7 @@
     <Compile Include="Podaci\DTO\ClientLoginDto.cs" />
     <Compile Include="Podaci\DTO\ClientZaRegistracijuDto.cs" />
     <Compile Include="Podaci\DTO\FakultetFullDto.cs" />
+    <Compile Include="Podaci\DTO\KorisnikDodavanjeDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikFollowDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikFullDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikReadDto.cs" />
