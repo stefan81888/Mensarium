@@ -55,6 +55,35 @@ namespace MensariumDesktop.Model.Controllers
             return response.StatusCode;
         }
 
+        //LOGOVANJE KORISNIKA
+        public static SesijaDto LoginUser(ClientLoginDto loginData)
+        {
+            RestRequest request = new RestRequest(Method.POST);
+            request.Resource = "korisnici/prijava";
+            request.AddObject(loginData);
+
+            SesijaDto sesija;
+            HttpStatusCode status = Execute<SesijaDto>(request, out sesija);
+
+            if (status == HttpStatusCode.BadRequest)
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka");
+            return sesija;
+        }
+        public static bool LogoutUser(string sessionId)
+        {
+            MessageBox.Show("NOT IMPLEMENTED YET");
+            return true;
+            RestRequest request = new RestRequest(Method.POST);
+            request.Resource = "korisnici/odjava/{sessionid}";
+            request.AddObject(sessionId);
+
+            HttpStatusCode status = Execute(request);
+            if (status != HttpStatusCode.OK)
+                return false;
+            return true;  
+        }
+
+        //KORISNICI
         public static KorisnikFullDto GetUserFullInfo(int id)
         {
             RestRequest request = new RestRequest();
@@ -64,7 +93,7 @@ namespace MensariumDesktop.Model.Controllers
             KorisnikFullDto response;
             HttpStatusCode status = Execute<KorisnikFullDto>(request, out response);
 
-            if(status == HttpStatusCode.BadRequest)
+            if (status == HttpStatusCode.BadRequest)
                 throw new Exception("GetUserFullInfo: Neuspesno pribavljanje podataka o korisniku!");
             return response;
         }
@@ -81,56 +110,66 @@ namespace MensariumDesktop.Model.Controllers
 
             return response;
         }
-        public static HttpStatusCode SendUserFull(KorisnikFullDto user)
+        public static bool SendUserFull(KorisnikFullDto user)
         {
             RestRequest request = new RestRequest(Method.POST);
             request.Resource = "korisnici/dodaj";
             request.AddObject(user);
 
             HttpStatusCode status = Execute(request);
-            return status;
-        }
 
-        //LOGOVANJE KORISNIKA
-        public static SesijaDto LoginUser(ClientLoginDto loginData)
+            if (status != HttpStatusCode.OK)
+                return false;
+            return true;
+        }
+        public static bool AddNewUser(KorisnikDodavanjeDto u)
         {
             RestRequest request = new RestRequest(Method.POST);
-            request.Resource = "korisnici/prijava";
-            request.AddObject(loginData);
+            request.Resource = "korisnici/dodaj";
+            request.AddObject(u);
 
-            SesijaDto sesija;
-            HttpStatusCode status = Execute<SesijaDto>(request, out sesija);
+            HttpStatusCode status = Execute(request);
 
-            if (status == HttpStatusCode.BadRequest)
-                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka");
-            return sesija;
+            if (status != HttpStatusCode.OK)
+                return false;
+            return true;
         }
-
         //FAKULTETI
-        public static HttpStatusCode AddNewFaculty(FakultetFullDto fax)
+        public static bool AddNewFaculty(FakultetFullDto fax)
         {
             RestRequest request = new RestRequest(Method.POST);
             request.Resource = "fakulteti/dodaj";
             request.AddObject(fax);
 
-            return Execute(request);
+            HttpStatusCode status = Execute(request);
+
+            if (status != HttpStatusCode.OK)
+                return false;
+            return true;
         }
-        public static HttpStatusCode UpdateFaculty(FakultetFullDto fax)
+        public static bool UpdateFaculty(FakultetFullDto fax)
         {
             RestRequest request = new RestRequest(Method.PUT);
             request.Resource = "fakulteti/update";
             request.AddObject(fax);
 
-            return Execute(request);
-        }
+            HttpStatusCode status = Execute(request);
 
-        public static HttpStatusCode DeleteFaculty(int id)
+            if (status != HttpStatusCode.OK)
+                return false;
+            return true;
+        }
+        public static bool DeleteFaculty(int id)
         {
             RestRequest request = new RestRequest(Method.DELETE);
             request.Resource = "fakulteti/obrisi/{id}";
             request.AddParameter("id", id, ParameterType.UrlSegment);
 
-            return Execute(request);
+            HttpStatusCode status = Execute(request);
+
+            if (status != HttpStatusCode.OK)
+                return false;
+            return true;
         }
         public static List<FakultetFullDto> GetAllFaculties()
         {

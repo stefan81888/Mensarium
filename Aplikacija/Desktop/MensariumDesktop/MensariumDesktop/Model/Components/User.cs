@@ -17,7 +17,7 @@ namespace MensariumDesktop.Model.Components
             Menadzer,
             Uplata,
             Naplata,
-            Korisnik
+            Student
         }
         //TO-DO Dinamicki preuzmi iz baze
         public enum UserPrivileges

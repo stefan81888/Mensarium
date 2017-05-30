@@ -44,7 +44,7 @@ namespace MensariumDesktop.Forms
             }
 
             Cursor.Current = Cursors.WaitCursor;
-            bool status = MainController.LogUser(txtUsername.Text, txtPassword.Text);
+            bool status = MainController.LoginUser(txtUsername.Text, txtPassword.Text);
             Cursor.Current = Cursors.Arrow;
 
             if (status)

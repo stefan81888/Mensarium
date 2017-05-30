@@ -25,17 +25,22 @@ namespace MensariumDesktop.Model.Controllers
             try{ Mensa.UpdateMensaList(); } catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
-        public static bool LogUser(string username, string password)
+        public static bool LoginUser(string username, string password)
         {
             ClientLoginDto clog = new ClientLoginDto{ KIme_Mail = username, Sifra = password };
-
             try
             {
                 SesijaDto sesija = Api.LoginUser(clog);
-
                 MSettings.CurrentSession = new Session() { SessionID = sesija.IdSesije };
                 
                 KorisnikFullDto korisnik = Api.GetUserFullInfo(sesija.IdKorisnika);
+                if (korisnik.IdTipaNaloga == (int) User.UserAccountType.Student)
+                {
+                    MessageBox.Show("Prijavljivanje sa studentskog naloga je onemoguceno na ovoj aplikaciji!");
+                    if (!Api.LogoutUser(MSettings.CurrentSession.SessionID))
+                        throw new Exception("Neuspesno ciscenje logovanja");
+                    return false;
+                }
                 MSettings.CurrentSession.LoggedUser = MUtility.User_From_KorisnikFullDto(korisnik);
                 return true;
             }
@@ -46,6 +51,23 @@ namespace MensariumDesktop.Model.Controllers
                 return false;
             }
         }
+        public static bool LogoutUser()
+        {
+            try
+            {
+                if (MSettings.CurrentSession == null)
+                    return true;
+
+                Api.LogoutUser(MSettings.CurrentSession.SessionID);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greska: " + ex.Message);
+                return false;
+            }
+        }
+
 
         public static bool ChangeServerIP(string newIP)
         {

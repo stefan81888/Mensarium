@@ -153,7 +153,7 @@ namespace MensariumDesktop
         {
             try
             {
-                HttpStatusCode status = Api.DeleteFaculty(1);
+                bool status = Api.DeleteFaculty(1);
                 MessageBox.Show(status.ToString());
             }
             catch (Exception exception)
@@ -167,6 +167,11 @@ namespace MensariumDesktop
             FacultyManagerForm fmf = new FacultyManagerForm();
             fmf.ShowDialog();
 
+        }
+
+        private void statbarUserSignOut_Click(object sender, EventArgs e)
+        {
+            MainController.LogoutUser();
         }
     }
 }

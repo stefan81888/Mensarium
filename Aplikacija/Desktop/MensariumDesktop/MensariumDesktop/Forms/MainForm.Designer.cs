@@ -144,6 +144,16 @@ namespace MensariumDesktop
             this.panel8 = new System.Windows.Forms.Panel();
             this.cbxAccTypeChooser = new System.Windows.Forms.ComboBox();
             this.dgvMeals = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Birthdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DReg = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgFaculty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.cbxKriterijum = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
@@ -172,16 +182,6 @@ namespace MensariumDesktop
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Birthdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DReg = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgFaculty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip.SuspendLayout();
             this.tabControls.SuspendLayout();
             this.tabHome.SuspendLayout();
@@ -267,15 +267,16 @@ namespace MensariumDesktop
             // statbarUserProfile
             // 
             this.statbarUserProfile.Name = "statbarUserProfile";
-            this.statbarUserProfile.Size = new System.Drawing.Size(144, 26);
+            this.statbarUserProfile.Size = new System.Drawing.Size(152, 26);
             this.statbarUserProfile.Text = "Profil";
             this.statbarUserProfile.Click += new System.EventHandler(this.statbarUserProfile_Click);
             // 
             // statbarUserSignOut
             // 
             this.statbarUserSignOut.Name = "statbarUserSignOut";
-            this.statbarUserSignOut.Size = new System.Drawing.Size(144, 26);
+            this.statbarUserSignOut.Size = new System.Drawing.Size(152, 26);
             this.statbarUserSignOut.Text = "Odjavi se";
+            this.statbarUserSignOut.Click += new System.EventHandler(this.statbarUserSignOut_Click);
             // 
             // statbarMenza
             // 
@@ -298,7 +299,7 @@ namespace MensariumDesktop
             this.statbarSettings.Image = global::MensariumDesktop.Properties.Resources.switch_5;
             this.statbarSettings.Name = "statbarSettings";
             this.statbarSettings.ShowDropDownArrow = false;
-            this.statbarSettings.Size = new System.Drawing.Size(117, 25);
+            this.statbarSettings.Size = new System.Drawing.Size(116, 25);
             this.statbarSettings.Text = "Podešavanja";
             this.statbarSettings.Click += new System.EventHandler(this.statusBarSettingsBtn_Click);
             // 
@@ -377,7 +378,7 @@ namespace MensariumDesktop
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(731, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(702, 22);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // statbarOPStatus
@@ -385,7 +386,7 @@ namespace MensariumDesktop
             this.statbarOPStatus.Image = global::MensariumDesktop.Properties.Resources.success;
             this.statbarOPStatus.Name = "statbarOPStatus";
             this.statbarOPStatus.ShowDropDownArrow = false;
-            this.statbarOPStatus.Size = new System.Drawing.Size(148, 25);
+            this.statbarOPStatus.Size = new System.Drawing.Size(147, 25);
             this.statbarOPStatus.Text = "StatusOperacije1";
             // 
             // tabControls
@@ -1180,7 +1181,7 @@ namespace MensariumDesktop
             this.lblCardUserFax.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCardUserFax.Location = new System.Drawing.Point(3, 25);
             this.lblCardUserFax.Name = "lblCardUserFax";
-            this.lblCardUserFax.Size = new System.Drawing.Size(78, 25);
+            this.lblCardUserFax.Size = new System.Drawing.Size(77, 25);
             this.lblCardUserFax.TabIndex = 8;
             this.lblCardUserFax.Text = "Fakultet";
             // 
@@ -1210,7 +1211,7 @@ namespace MensariumDesktop
             this.lblCardUserValidUntil.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCardUserValidUntil.Location = new System.Drawing.Point(3, 100);
             this.lblCardUserValidUntil.Name = "lblCardUserValidUntil";
-            this.lblCardUserValidUntil.Size = new System.Drawing.Size(210, 25);
+            this.lblCardUserValidUntil.Size = new System.Drawing.Size(209, 25);
             this.lblCardUserValidUntil.TabIndex = 11;
             this.lblCardUserValidUntil.Text = "Validna do: dd.mm.yyyy";
             // 
@@ -1614,7 +1615,7 @@ namespace MensariumDesktop
             this.label2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(3, 25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 25);
+            this.label2.Size = new System.Drawing.Size(77, 25);
             this.label2.TabIndex = 8;
             this.label2.Text = "Fakultet";
             // 
@@ -1644,7 +1645,7 @@ namespace MensariumDesktop
             this.label10.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(3, 100);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(210, 25);
+            this.label10.Size = new System.Drawing.Size(209, 25);
             this.label10.TabIndex = 11;
             this.label10.Text = "Validna do: dd.mm.yyyy";
             // 
@@ -1751,6 +1752,67 @@ namespace MensariumDesktop
             this.dgvMeals.ShowEditingIcon = false;
             this.dgvMeals.Size = new System.Drawing.Size(1081, 436);
             this.dgvMeals.TabIndex = 28;
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Username
+            // 
+            this.Username.HeaderText = "Korisničko ime";
+            this.Username.Name = "Username";
+            this.Username.ReadOnly = true;
+            // 
+            // FName
+            // 
+            this.FName.HeaderText = "Ime";
+            this.FName.Name = "FName";
+            this.FName.ReadOnly = true;
+            // 
+            // LName
+            // 
+            this.LName.HeaderText = "Prezime";
+            this.LName.Name = "LName";
+            this.LName.ReadOnly = true;
+            // 
+            // Email
+            // 
+            this.Email.HeaderText = "Email";
+            this.Email.Name = "Email";
+            this.Email.ReadOnly = true;
+            // 
+            // Birthdate
+            // 
+            this.Birthdate.HeaderText = "Datum rodjenja";
+            this.Birthdate.Name = "Birthdate";
+            this.Birthdate.ReadOnly = true;
+            // 
+            // DReg
+            // 
+            this.DReg.HeaderText = "Datum registracije";
+            this.DReg.Name = "DReg";
+            this.DReg.ReadOnly = true;
+            // 
+            // Phone
+            // 
+            this.Phone.HeaderText = "Telefon";
+            this.Phone.Name = "Phone";
+            this.Phone.ReadOnly = true;
+            // 
+            // dgFaculty
+            // 
+            this.dgFaculty.HeaderText = "Fakultet";
+            this.dgFaculty.Name = "dgFaculty";
+            this.dgFaculty.ReadOnly = true;
+            // 
+            // Index
+            // 
+            this.Index.HeaderText = "Indeks";
+            this.Index.Name = "Index";
+            this.Index.ReadOnly = true;
             // 
             // textBox1
             // 
@@ -1970,7 +2032,7 @@ namespace MensariumDesktop
             this.label27.AutoSize = true;
             this.label27.Location = new System.Drawing.Point(15, 15);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(236, 32);
+            this.label27.Size = new System.Drawing.Size(234, 32);
             this.label27.TabIndex = 0;
             this.label27.Text = "PRO VERSION ONLY";
             // 
@@ -2010,7 +2072,7 @@ namespace MensariumDesktop
             this.label23.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
             this.label23.Location = new System.Drawing.Point(3, 15);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(87, 25);
+            this.label23.Size = new System.Drawing.Size(86, 25);
             this.label23.TabIndex = 23;
             this.label23.Text = "Fakulteti";
             // 
@@ -2173,67 +2235,6 @@ namespace MensariumDesktop
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Username
-            // 
-            this.Username.HeaderText = "Korisničko ime";
-            this.Username.Name = "Username";
-            this.Username.ReadOnly = true;
-            // 
-            // FName
-            // 
-            this.FName.HeaderText = "Ime";
-            this.FName.Name = "FName";
-            this.FName.ReadOnly = true;
-            // 
-            // LName
-            // 
-            this.LName.HeaderText = "Prezime";
-            this.LName.Name = "LName";
-            this.LName.ReadOnly = true;
-            // 
-            // Email
-            // 
-            this.Email.HeaderText = "Email";
-            this.Email.Name = "Email";
-            this.Email.ReadOnly = true;
-            // 
-            // Birthdate
-            // 
-            this.Birthdate.HeaderText = "Datum rodjenja";
-            this.Birthdate.Name = "Birthdate";
-            this.Birthdate.ReadOnly = true;
-            // 
-            // DReg
-            // 
-            this.DReg.HeaderText = "Datum registracije";
-            this.DReg.Name = "DReg";
-            this.DReg.ReadOnly = true;
-            // 
-            // Phone
-            // 
-            this.Phone.HeaderText = "Telefon";
-            this.Phone.Name = "Phone";
-            this.Phone.ReadOnly = true;
-            // 
-            // dgFaculty
-            // 
-            this.dgFaculty.HeaderText = "Fakultet";
-            this.dgFaculty.Name = "dgFaculty";
-            this.dgFaculty.ReadOnly = true;
-            // 
-            // Index
-            // 
-            this.Index.HeaderText = "Indeks";
-            this.Index.Name = "Index";
-            this.Index.ReadOnly = true;
             // 
             // MainForm
             // 
