@@ -17,7 +17,7 @@ namespace MensariumAPI.Controllers
 	public class FakultetiController : ApiController
 	{
 		[System.Web.Http.HttpGet]
-		[System.Web.Http.Route("full/{id:int}")]
+		//[System.Web.Http.Route("/{id:int}")]
 		public IHttpActionResult VratiFakultetFull(int id)
 		{
 			try
@@ -40,7 +40,7 @@ namespace MensariumAPI.Controllers
 			{
 
 			}
-			return Content(HttpStatusCode.BadRequest, new FakultetFullDto());
+            return Content(HttpStatusCode.BadRequest, new FakultetFullDto());
 		}
 
 		[System.Web.Http.HttpGet]

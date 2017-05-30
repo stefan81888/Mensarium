@@ -17,7 +17,7 @@ namespace MensariumAPI.Controllers
     public class MenzeController : ApiController
     {
         [HttpGet]
-        [Route("full/{id:int}")]
+        //[Route("full/{id:int}")]
         public IHttpActionResult VratiMenzuFull(int id)
         {
             try

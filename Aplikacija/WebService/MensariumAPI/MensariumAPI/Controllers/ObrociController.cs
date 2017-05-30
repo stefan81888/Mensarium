@@ -17,7 +17,7 @@ namespace MensariumAPI.Controllers
     public class ObrociController : ApiController
     {
         [HttpGet]
-        [Route("full/{id:int}")]
+        //[Route("full/{id:int}")]
         public IHttpActionResult VratiObrokFull(int id)
         {
             try
@@ -104,27 +104,10 @@ namespace MensariumAPI.Controllers
                 KorisnikStanjeDto korisnik = new KorisnikStanjeDto();
                 if (ValidatorKorisnika.KorisnikPostoji(k))
                 {
-                    ISession s = SesijeProvajder.Sesija;
-                    List<Obrok> obr = ProvajderPodatakaObroka.VratiObroke().ToList(); 
-
-                    int doruckovi = (from o in obr
-                                               where (o.Uplatilac.IdKorisnika == id && o.Tip.IdTipObroka == 1 )
-                                               select o
-                                               ).Count();
-
-                    int ruckovi = (from o in obr
-                                   where (o.Uplatilac.IdKorisnika == id && o.Tip.IdTipObroka == 2)
-                                   select o
-                                               ).Count();
-
-                    int vecere = (from o in obr
-                                   where (o.Uplatilac.IdKorisnika == id && o.Tip.IdTipObroka == 3)
-                                   select o
-                                               ).Count();
-
-                    korisnik.BrojDorucka = doruckovi;
-                    korisnik.BrojRuckova = ruckovi;
-                    korisnik.BrojVecera = vecere;
+                    List<Obrok> obrociKorisnika = k.Obroci.ToList();
+                    korisnik.BrojDorucka = obrociKorisnika.Count(o => o.Tip.IdTipObroka == 1);
+                    korisnik.BrojRuckova = obrociKorisnika.Count(o => o.Tip.IdTipObroka == 2);
+                    korisnik.BrojVecera = obrociKorisnika.Count(o => o.Tip.IdTipObroka == 3);
                 }
                 SesijeProvajder.ZatvoriSesiju();
                 if (korisnik != null)
@@ -277,15 +260,15 @@ namespace MensariumAPI.Controllers
 
         [HttpPut]
         [Route("vratiPogresnoSkinute")]
-        public IHttpActionResult VratiPogresnoSkinuteObroke([FromBody]int[] niz)
+        public IHttpActionResult VratiPogresnoSkinuteObroke([FromUri]int[] obrokId)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                for (int i = 0; i < niz.Count(); ++i)
+                for (int i = 0; i < obrokId.Count(); ++i)
                 {
-                    Obrok o = ProvajderPodatakaObroka.VratiObrok(niz[i]);
+                    Obrok o = ProvajderPodatakaObroka.VratiObrok(obrokId[i]);
                     o.DatumIskoriscenja = null;
                     o.Iskoriscen = false;
                     o.LokacijaIskoriscenja = null;
@@ -295,35 +278,35 @@ namespace MensariumAPI.Controllers
 
                 SesijeProvajder.ZatvoriSesiju();
 
-                return Content(HttpStatusCode.OK, "Uspesno vraceni izabrani obroci.");
+                return Content(HttpStatusCode.OK, "Korekcija uspesno obavljena.");
             }
             catch (Exception e)
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Izabrani obroci nisu vraceni.");
+            return Content(HttpStatusCode.BadRequest, "Korekcija obroka nije uspela.");
         }
 
         [HttpPut]
         [Route("skiniPogresnoUplacene")]
-        public IHttpActionResult SkiniPogresnoUplaceneObroke([FromBody]int[] niz)
+        public IHttpActionResult SkiniPogresnoUplaceneObroke([FromUri]int[] obrokId)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                for (int i = 0; i < niz.Count(); ++i)
-                    ProvajderPodatakaObroka.ObrisiObrok(niz[i]);
+                for (int i = 0; i < obrokId.Count(); ++i)
+                    ProvajderPodatakaObroka.ObrisiObrok(obrokId[i]);
 
                 SesijeProvajder.ZatvoriSesiju();
 
-                return Content(HttpStatusCode.OK, "Uspesno vraceni izabrani obroci.");
+                return Content(HttpStatusCode.OK, "Korekcija uspesno obavljena.");
             }
             catch (Exception e)
             {
 
             }
-            return Content(HttpStatusCode.BadRequest, "Izabrani obroci nisu vraceni.");
+            return Content(HttpStatusCode.BadRequest, "Korekcija obroka nije uspela.");
         }
     }
 }
