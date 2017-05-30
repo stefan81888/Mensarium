@@ -134,18 +134,24 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return praceni;
         }
 
-        public static List<KorisnikFollowDto> Pretraga(int id, string kriterijum)
+        public static List<KorisnikFollowDto> Pretraga(PretragaKriterijumDto pkdto)
         {
             ISession s = SesijeProvajder.Sesija;
 
-            Korisnik pretrazuje = s.Load<Korisnik>(id);
+            Korisnik pretrazuje = s.Load<Korisnik>(pkdto.IdKorisnika);
             List<KorisnikFollowDto> rezultat = new List<KorisnikFollowDto>();
-            List<Korisnik> korisnici = s.Query<Korisnik>().Select(k => k).ToList();
-            
-            List<Korisnik> lista =  (from k in korisnici
-                where k.Ime.StartsWith(kriterijum) || k.Prezime.StartsWith(kriterijum)
-                || k.KorisnickoIme.StartsWith(kriterijum) || k.Email.StartsWith(kriterijum)
-                select k).OrderBy(x => x.Prati).ToList();
+            List<Korisnik> korisnici = s.Query<Korisnik>().Select(k => k).Where(x => x.KorisnickoIme != null).ToList();
+
+            List<Korisnik> lista = (from k in korisnici
+                                    where k.Ime.StartsWith(pkdto.Kriterijum)
+                                    || k.Prezime.StartsWith(pkdto.Kriterijum)
+                                    || k.KorisnickoIme.StartsWith(pkdto.Kriterijum)
+                                    || k.Email.StartsWith(pkdto.Kriterijum)
+                                    || k.Ime.StartsWith(pkdto.Kriterijum.ToUpper())
+                                    || k.Prezime.StartsWith(pkdto.Kriterijum.ToUpper())
+                                    || k.KorisnickoIme.StartsWith(pkdto.Kriterijum.ToLower())
+                                    || k.Email.StartsWith(pkdto.Kriterijum.ToLower())
+                                    select k).ToList();
 
             foreach (var v in lista)
             {
@@ -155,14 +161,16 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                     Ime = v.Ime,
                     Prezime = v.Prezime,
                     IdKorisnika = v.IdKorisnika,
-                    Fakultet = v.StudiraFakultet.Naziv,
                     Zapracen = false
                 };
                 if (pretrazuje.PracenOd.ToList().Contains(v))
                     kdto.Zapracen = true;
+                if (v.StudiraFakultet != null)
+                    kdto.Fakultet = v.StudiraFakultet.Naziv;
                 rezultat.Add(kdto);
             }
-            rezultat.OrderBy(x => x.Zapracen);
+
+            // TO DO: prebaciti zapracene na pocetak
             return rezultat;
         }
 
@@ -195,7 +203,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return k;
         }
 
-        public static PozivanjaFullDto Pozovi(PozivanjaFullDto pfdto, PozvaniDto listaPozvanih)
+        public static PozivanjaFullDto Pozovi(PozivanjaFullDto pfdto)
         {
             ISession s = SesijeProvajder.Sesija;
             
@@ -208,9 +216,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 Pozivaoc = pozivalac
             };
 
-            for (int i = 0; i < listaPozvanih.Pozvani.Count; i++)
+            for (int i = 0; i < pfdto.Pozvani.Count; i++)
             {
-                Korisnik k = s.Load<Korisnik>(i);
+                Korisnik k = s.Load<Korisnik>(pfdto.Pozvani[i]);
                 pozvani.Add(k);
             }
 
@@ -243,7 +251,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             s.Flush();
 
-            return pfdto;  // proveriti da li treba id
+            List<Pozivanje> p = s.Query<Pozivanje>().Select(x => x).OrderBy(x => x.IdPoziva).ToList(); // TO DO : svuda primeniti ovo
+
+            pfdto.IdPoziva = p[p.Count - 1].IdPoziva;
+
+            return pfdto;  
         }
 
         public static List<PozivanjaNewsFeedItemDto> SviPozivi(int id)
@@ -282,10 +294,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             sviPozivi.Sort((x, y) => y.DatumPoziva.CompareTo(x.DatumPoziva));
 
-
-            //TO DO:
-            // Testirati da li lepo brejkuje
-            // Vratiti i odgovor 
             return sviPozivi;
         }
 

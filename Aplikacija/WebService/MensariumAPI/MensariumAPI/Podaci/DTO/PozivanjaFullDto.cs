@@ -15,6 +15,13 @@ namespace MensariumAPI.Podaci.DTO
 
         //Pozivanja -> Korisnici
         public int IdPozivaoca { get; set; }
-        
+
+        public List<int> Pozvani { get; set; }
+
+        public PozivanjaFullDto()
+        {
+            Pozvani = new List<int>();
+        }
+
     }
 }

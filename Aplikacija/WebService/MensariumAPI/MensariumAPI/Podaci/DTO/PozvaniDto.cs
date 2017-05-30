@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class PozvaniDto
+    public class PozvaniDto // // ne koristi se
     {
         public List<int> Pozvani { get; set; }
 
