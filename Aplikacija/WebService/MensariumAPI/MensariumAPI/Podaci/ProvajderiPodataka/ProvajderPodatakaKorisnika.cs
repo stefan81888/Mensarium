@@ -170,7 +170,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 rezultat.Add(kdto);
             }
 
-            // TO DO: prebaciti zapracene na pocetak
+            rezultat.Sort((y, x) => x.Zapracen.CompareTo(y.Zapracen));
             return rezultat;
         }
 
@@ -313,10 +313,35 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 OdgovorPozvanog = ppdto.OdgovorPozvanog
             };
 
-            s.Save(pp);
+            s.Update(pp);
             s.Flush();
 
             return ppdto;
+        }
+
+        public static bool PrestaniDaPratis(int idPratilac, int idPraceni)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Korisnik pratilac = s.Load<Korisnik>(idPratilac);
+
+            if (!ValidatorKorisnika.KorisnikPostoji(pratilac))
+                return false;
+
+            Korisnik praceni = s.Load<Korisnik>(idPraceni);
+
+            if (!ValidatorKorisnika.KorisnikPostoji(praceni))
+                return false;
+
+            praceni.PracenOd.Remove(pratilac);
+            pratilac.Prati.Remove(praceni);
+
+            s.Save(praceni);
+            s.Save(pratilac);
+
+            s.Flush();
+
+            return true;
         }
     }
 }

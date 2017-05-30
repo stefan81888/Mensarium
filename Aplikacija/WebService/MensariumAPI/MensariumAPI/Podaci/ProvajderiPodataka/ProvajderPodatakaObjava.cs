@@ -45,17 +45,12 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             }
 
             List<Menza> menze = s.Query<Menza>().Select(k => k).ToList();
-
-
-            Menza m = (from k in menze
-                where k.IdMenza == ocudto.IdLokacije
-                select k) as Menza;
-
+            Menza m = menze.Find(x => x.IdMenza == ocudto.IdLokacije);
 
             o.TekstObjave = ocudto.TekstObjave;
             o.Lokacija = m;
 
-            s.Save(m);
+            s.Save(o);
             s.Flush();
 
             return ocudto;

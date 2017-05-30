@@ -401,11 +401,37 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new PozivanjaPozvaniDto());
 
         }
+
+        //Korisnik pratilac prestaje da prati korisnika praceni
         [System.Web.Http.HttpPut]
-        [System.Web.Http.Route("pravenja/prestani")]
-        public void PrestaniDaPratis() { }
+        [System.Web.Http.Route("pracenja/prestani/{pratilac:int}/{praceni:int}")]
+        public IHttpActionResult PrestaniDaPratis(int pratilac, int praceni)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                bool status = ProvajderPodatakaKorisnika.PrestaniDaPratis(pratilac, praceni);
+
+                SesijeProvajder.ZatvoriSesiju();
+                if (status)
+                    return Content(HttpStatusCode.Found, new KorisnikFollowDto());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
+
+        }
 
         // plus funkcija za dodavanje bilo kog tipa naloga
         // delegirati fje za odredjen tip naloga na osnovu id-ja tipa
+
+        //// todo
+        //"korisnici/odjava/{sessionid}"
+        //funkcija za odjavljivanje
+
     }
 }
