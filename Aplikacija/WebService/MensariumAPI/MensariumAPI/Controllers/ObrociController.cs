@@ -92,14 +92,16 @@ namespace MensariumAPI.Controllers
         }
 
         [HttpGet]
-        [Route("korisnicki/{id:int}")]
-        public IHttpActionResult VratiKorisnikovoStanjeObroka(int id)
+        [Route("korisnicki/{idSesije:guid}/{idKorisnika:int}/")]
+        public IHttpActionResult VratiKorisnikovoStanjeObroka(string idSesije, int idKorisnika)
         {
+            if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                return Content(HttpStatusCode.BadRequest, "Korisnik nema dozvolu za ovu radnju.");
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(idKorisnika);
 
                 KorisnikStanjeDto korisnik = new KorisnikStanjeDto();
                 if (ValidatorKorisnika.KorisnikPostoji(k))

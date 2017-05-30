@@ -24,7 +24,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             IEnumerable<Privilegija> privilegije = s.Query<Privilegija>().Select(k => k);
             return privilegije;
         }
-
         
     }
 }
