@@ -253,16 +253,16 @@ namespace MensariumAPI.Controllers
         }
 
         //Pretraga po kriterijumu
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("pretraga/{id:int}")]
-        public IHttpActionResult Pretraga(int id,[FromBody] string kriterijum)
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("pretraga")]
+        public IHttpActionResult Pretraga([FromBody] PretragaKriterijumDto pkdto)
         {
             // id korisnika koji pretrazuje
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                List<KorisnikFollowDto> k = ProvajderPodatakaKorisnika.Pretraga(id, kriterijum);
+                List<KorisnikFollowDto> k = ProvajderPodatakaKorisnika.Pretraga(pkdto);
 
                 SesijeProvajder.ZatvoriSesiju();
 
@@ -337,13 +337,13 @@ namespace MensariumAPI.Controllers
         //Pozivanje na obrok
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("pozovi")]
-        public IHttpActionResult Pozovi([FromBody] PozivanjaFullDto pfdto, [FromBody] PozvaniDto listaPozvanih)
+        public IHttpActionResult Pozovi([FromBody] PozivanjaFullDto pfdto)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                PozivanjaFullDto o = ProvajderPodatakaKorisnika.Pozovi(pfdto, listaPozvanih);
+                PozivanjaFullDto o = ProvajderPodatakaKorisnika.Pozovi(pfdto);
 
                 SesijeProvajder.ZatvoriSesiju();
 
@@ -376,7 +376,6 @@ namespace MensariumAPI.Controllers
             {
             }
             return Content(HttpStatusCode.BadRequest, new PozivanjaNewsFeedItemDto());
-
         }
 
         [System.Web.Http.HttpPut]

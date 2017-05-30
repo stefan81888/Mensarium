@@ -255,6 +255,7 @@
     <Compile Include="Podaci\DTO\PozivanjaNewsFeedItemDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaPozvaniDto.cs" />
     <Compile Include="Podaci\DTO\PozvaniDto.cs" />
+    <Compile Include="Podaci\DTO\PretragaKriterijumDto.cs" />
     <Compile Include="Podaci\DTO\PrivilegijaFullDto.cs" />
     <Compile Include="Podaci\DTO\ServerLoginDto.cs" />
     <Compile Include="Podaci\DTO\SesijaDto.cs" />
