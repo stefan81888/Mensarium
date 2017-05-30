@@ -5,14 +5,13 @@ using System.Web;
 
 namespace MensariumDesktop.Model.Components.DTOs
 {
-    public class KorisnikFollowDto
+    public class KorisnikDodavanjeDto
     {
-        public int IdKorisnika { get; set; }
-        public string KorisnickoIme { get; set; }
+        public string Sifra { get; set; }
         public string Ime { get; set; }
         public string Prezime { get; set; }
-        public string Fakultet { get; set; }
-        public bool Zapracen {get;set;} 
-        //slika
+        public int IdFakulteta { get; set; }
+        public string BrojIndeksa { get; set; }
+        public DateTime DatumRodjenja { get; set; }
     }
 }

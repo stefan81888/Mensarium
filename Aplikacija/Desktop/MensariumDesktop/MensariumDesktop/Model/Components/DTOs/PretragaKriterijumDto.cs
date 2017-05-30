@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-
-
 namespace MensariumDesktop.Model.Components.DTOs
 {
-    public class PrivilegijeFullDto
+    public class PretragaKriterijumDto
     {
-        public int IdPrivilegije { get; set; }
-        public string Opis { get; set; }
+        public int IdKorisnika { get; set; }
+        public string Kriterijum { get; set; }
     }
 }

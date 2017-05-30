@@ -7,9 +7,9 @@ using System.Web;
 
 namespace MensariumDesktop.Model.Components.DTOs
 {
-    public class TipObrokaFullDto
+    public class PrivilegijaFullDto
     {
-        public int IdTipaObroka { get; set; }
-        public string Naziv { get; set; }
+        public int IdPrivilegije { get; set; }
+        public string Opis { get; set; }
     }
 }
