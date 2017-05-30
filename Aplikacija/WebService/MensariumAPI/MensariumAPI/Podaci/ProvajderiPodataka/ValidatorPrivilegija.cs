@@ -50,7 +50,16 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             DodavanjeFakultet,
             BrisanjeFakultet,
             ModifikacijaFakultet,
-            CitanjeFakultet
+            CitanjeFakultet,
+
+            DodavanjeMenza,
+            BrisanjeMenza,
+            ModifikacijaMenza,
+            CitanjeMenza,
+            CitanjeGuzvaMenza,
+
+
+
         }
 
         public static bool KorisnikImaPrivilegiju(string idSesije, UserPrivilegies privilegija)

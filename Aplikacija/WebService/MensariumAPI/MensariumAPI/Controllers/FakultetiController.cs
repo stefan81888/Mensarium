@@ -17,7 +17,6 @@ namespace MensariumAPI.Controllers
 	public class FakultetiController : ApiController
 	{
 		[System.Web.Http.HttpGet]
-		//[System.Web.Http.Route("/{id:int}")]
 		public IHttpActionResult VratiFakultetFull([FromUri]int idFakulteta, [FromUri]string idSesije)
 		{
 			try
