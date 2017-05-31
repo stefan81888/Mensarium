@@ -15,7 +15,7 @@ namespace MensariumAPI.Controllers
         //Objava korisnika
         [HttpGet]
         [System.Web.Http.Route("prikazi/{id:int}")]
-        public IHttpActionResult PrikaziObjavu(int id)
+        public IHttpActionResult PrikaziObjavu(int id, [FromUri]string sid)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace MensariumAPI.Controllers
         //Azuriranje objave korisnika
         [HttpPost]
         [System.Web.Http.Route("objavi/{id:int}")]
-        public IHttpActionResult Objavi(int id, [FromBody] ObjavaCUDto ocdto)
+        public IHttpActionResult Objavi(int id, [FromBody] ObjavaCUDto ocdto, [FromUri]string sid)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace MensariumAPI.Controllers
         //Prikaz objava korisnika koje korisnik prati
         [HttpGet]
         [System.Web.Http.Route("newsfeed/{id:int}")]
-        public IHttpActionResult PrikaziSveObjave(int id)
+        public IHttpActionResult PrikaziSveObjave(int id, [FromUri]string sid)
         {
             try
             {
