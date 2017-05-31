@@ -39,6 +39,7 @@ namespace Mensarium
 
         private void LoginButton_Click(object sender, System.EventArgs e)
         {
+            /*
             
             ClientLoginDto clog = new ClientLoginDto
             {
@@ -66,8 +67,12 @@ namespace Mensarium
                 MSettings.CurrentSession = null;
                 Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
             }
- 
+            */
 
+
+            var intent = new Intent(this, typeof(MainSwipePage));
+            StartActivity(intent);
+            
         }
 
         private void CreateAccountButton_Click(object sender, System.EventArgs e)

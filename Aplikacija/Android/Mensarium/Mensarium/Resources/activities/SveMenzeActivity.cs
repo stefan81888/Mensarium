@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Mensarium.Comp;
 
 namespace Mensarium
 {
@@ -16,6 +17,8 @@ namespace Mensarium
     [Activity(Theme = "@android:style/Theme.DeviceDefault", Label = "Lista svih menzi")]
     public class SveMenzeActivity : Activity
     {
+        private ListaMenzi listaMenzi = ListaMenzi.InstancaListaMenzi;
+        private ListView listaView;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -23,15 +26,52 @@ namespace Mensarium
 
             ActionBar.SetDisplayHomeAsUpEnabled(true);
 
-            List<MenzaItem> lista = new List<MenzaItem>();
-
-            lista.Add(new MenzaItem() { Ime = "Kod elektronski", Lokacija = "Medvedeva 14", Radi = true, Popunjenost = 35 });
-            lista.Add(new MenzaItem() { Ime = "Kod pravni", Lokacija = "Neka ulica 23", Radi = true, Popunjenost = 67 });
-
-            var listaView = FindViewById<Android.Widget.ListView>(Resource.Id.SveMenzeListView);
+            listaView = FindViewById<ListView>(Resource.Id.SveMenzeListView);
             //listaView.SetScrollContainer(false);
 
-            listaView.Adapter = new MenzeListAdapter(this, lista);
+            listaView.Adapter = new MenzeListAdapter(this, listaMenzi.Lista);
+
+            //event long click
+            listaView.ItemLongClick += ListaViewOnItemLongClick;
+
+            //refresh
+            //listaView.i
+        }
+
+        private void ListaViewOnItemLongClick(object sender, AdapterView.ItemLongClickEventArgs itemLongClickEventArgs)
+        {
+            /*
+            PopupMenu popup = new PopupMenu(this, listaView, GravityFlags.Center);
+
+            popup.MenuInflater.Inflate(Resource.Menu.popup_menu, popup.Menu);
+
+            popup.MenuItemClick += PopupOnMenuItemClick;
+
+            popup.Show();
+            */
+
+            var alert = new AlertDialog.Builder(this);
+            //alert.SetTitle("Odaberi akciju");
+
+            var items = new string[]
+            {
+                "Postavi kao moju menzu",
+                "Prikazi menzu na mapi"
+            };
+
+            alert.SetItems(items, Handler);
+
+            alert.Show();
+        }
+
+        private void Handler(object sender, DialogClickEventArgs dialogClickEventArgs)
+        {
+            var selectedItem = dialogClickEventArgs.Which;
+        }
+
+        private void PopupOnMenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs menuItemClickEventArgs)
+        {
+            
         }
 
         public override bool OnNavigateUp()

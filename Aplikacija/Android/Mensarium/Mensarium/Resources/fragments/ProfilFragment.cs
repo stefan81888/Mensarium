@@ -9,24 +9,49 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Mensarium.Comp;
 using Xamarin.Forms;
 using View = Android.Views.View;
+using Mensarium.Components;
 
 namespace Mensarium
 {
     class ProfilFragment : Android.Support.V4.App.Fragment
     {
         private Android.Widget.Button sveMenze;
+        public int omiljenaMenza = 0; //index u listi menzi
+        private ListaMenzi listaMenzi = ListaMenzi.InstancaListaMenzi;
+
+        private View view;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.ProfilFragment, container, false);
+            view = inflater.Inflate(Resource.Layout.ProfilFragment, container, false);
 
+            //dugme sve menze.. Dodat click
             sveMenze = view.FindViewById<Android.Widget.Button>(Resource.Id.sveMenzeDugme);
-
             sveMenze.Click += SveMenzeOnClick;
 
+            //napunimo omiljenu menzu.. Po defaultu index 0
+            SetujOmiljenuMenzu(omiljenaMenza);
+
             return view;
+        }
+
+        public void SetujOmiljenuMenzu(int indexOmiljene)
+        {
+            MenzaItem item = listaMenzi.Lista[indexOmiljene];
+            view.FindViewById<TextView>(Resource.Id.ImeMojeMenze).Text = item.Ime;
+            view.FindViewById<TextView>(Resource.Id.LokacijaMojeMenze).Text = item.Lokacija;
+            if (item.Radi)
+                view.FindViewById<TextView>(Resource.Id.DaLiRadiMojaMenza).Text = "Trenutno otvorena!";
+            else
+                view.FindViewById<TextView>(Resource.Id.DaLiRadiMojaMenza).Text = "Trenutno ne radi!";
+            view.FindViewById<TextView>(Resource.Id.GuzvaMojeMenzeText).Text = "Guzva u menzi: " + item.Popunjenost.ToString() + "%";
+
+            Android.Widget.ProgressBar bar = view.FindViewById<Android.Widget.ProgressBar>(Resource.Id.ProfilMojaMenzaBar);
+            bar.Max = 100;
+            bar.Progress = item.Popunjenost;
         }
 
         private void SveMenzeOnClick(object sender, EventArgs eventArgs)

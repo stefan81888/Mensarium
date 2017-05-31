@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item
+      android:id="@+id/popupIzaberiOmiljenu"
+      android:title="Postavi kao moju menzu"/>
+  <item
+      android:id="@+id/popupPrikaziMapu"
+      android:title="Prikazi menzu na mapi"/>
+</menu>
