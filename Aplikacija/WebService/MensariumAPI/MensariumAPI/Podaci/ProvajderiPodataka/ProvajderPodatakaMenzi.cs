@@ -14,7 +14,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static Menza VratiMenzu(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Menza m = s.Load<Menza>(id);
+            Menza m = s.Get<Menza>(id);
             return m;
         }
 

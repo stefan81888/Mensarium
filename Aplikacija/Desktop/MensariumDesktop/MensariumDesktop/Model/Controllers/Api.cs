@@ -13,26 +13,50 @@ using RestSharp;
 
 namespace MensariumDesktop.Model.Controllers
 {
+    public class ApiResponse<T> where T: new()
+    {
+        public HttpStatusCode HttpStatusCode { get; set; }
+        public string ErrorResponse { get; set; }
+        public T ResponseObject { get; set; }
+    }
+
+
     public static class Api
     {
         static string BaseUrl = MSettings.Server.ServerURL + "api/";
         static string SessionID;
         
-        private static HttpStatusCode Execute<T>(RestRequest request, out T responseData) where T : new()
+        private static ApiResponse<T> Execute<T>(RestRequest request, out T responseData, out string ServerErrorResponse) where T : new()
         {
             RestClient client = new RestClient();
             client.BaseUrl = new Uri(BaseUrl);
             //request.AddParameter("SessionId", SessionID, ParameterType.UrlSegment);
-            var response = client.Execute<T>(request);
-            
-            if (response.ErrorException != null)
+            var response = client.Execute(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed) //nastala greska na mreznom nivou
             {
-                string message = "Greska u komuniciranju sa serverom. Proveri internet konekciju.\n\n" + response.ErrorMessage;
-                var Exception = new ApplicationException(message, response.ErrorException);
-                throw Exception;
+                string message = "Greska u komuniciranju sa serverom.\nProveri internet konekciju.\n\n" +
+                    "ErrorReason: " + response.ErrorMessage;
+                throw new ApplicationException(message, response.ErrorException);
             }
 
-            responseData = response.Data;
+            //deserializacija
+            try
+            {
+                RestSharp.Deserializers.IDeserializer deser;
+                if (response.ContentType.ToLower().Contains("json"))
+                    deser = new RestSharp.Deserializers.JsonDeserializer();
+                else
+                    deser = new RestSharp.Deserializers.XmlDeserializer();
+
+                responseData = deser.Deserialize<T>(response);
+                ServerErrorResponse = string.Empty;
+            }
+            catch (Exception ex) //server nije vratio trazeni objekat
+            {
+                responseData = default(T);
+                ServerErrorResponse = response.Content;
+            }
             return response.StatusCode;
         }
         private static HttpStatusCode Execute(RestRequest request)
@@ -41,17 +65,17 @@ namespace MensariumDesktop.Model.Controllers
             client.BaseUrl = new Uri(BaseUrl);
             //request.AddParameter("SessionId", SessionID, ParameterType.UrlSegment);
 
-            string fullrul = client.BuildUri(request).ToString();
+            //debug
+            //string fullrul = client.BuildUri(request).ToString();
 
             var response = client.Execute(request);
-            if (response.ErrorException != null)
+            if (response.ResponseStatus != ResponseStatus.Completed) //nastala greska na mreznom nivou
             {
-                string message = "Greska u komuniciranju sa serverom. Proveri internet konekciju.\n\n" + response.ErrorMessage;
-                var Exception = new ApplicationException(message, response.ErrorException);
-                throw Exception;
+                string message = "Greska u komuniciranju sa serverom.\nProveri internet konekciju.\n\n" +
+                    "ErrorReason: " + response.ErrorMessage;
+                throw new ApplicationException(message, response.ErrorException);
             }
 
-            MessageBox.Show(fullrul);
             return response.StatusCode;
         }
 

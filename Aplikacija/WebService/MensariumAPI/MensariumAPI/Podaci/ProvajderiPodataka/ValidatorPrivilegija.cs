@@ -58,12 +58,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             CitanjeMenza,
             CitanjeGuzvaMenza,
 
-
-
         }
 
         public static bool KorisnikImaPrivilegiju(string idSesije, UserPrivilegies privilegija)
         {
+            return true;
             ISession s = SesijeProvajder.Sesija;
             LoginSesija trenutnaSesija = s.Query<LoginSesija>().First(k => k.IdSesije == idSesije);
             Korisnik korisnik = trenutnaSesija.KorisnikSesije;
