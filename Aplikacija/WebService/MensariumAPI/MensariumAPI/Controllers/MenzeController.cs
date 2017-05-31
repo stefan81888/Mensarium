@@ -10,6 +10,7 @@ using MensariumAPI.Podaci.Konfigracija;
 using NHibernate;
 using MensariumAPI.Podaci.ProvajderiPodataka;
 using MensariumAPI.Podaci.DTO;
+using MensariumAPI.Podaci;
 
 namespace MensariumAPI.Controllers
 {
@@ -19,57 +20,61 @@ namespace MensariumAPI.Controllers
         [HttpGet]
         //[Route("{idMenze:int}")] //alternativa: .../1/Session?idSesije=555
         // Ovako je: .../?idMenze=1&idSesije=55
-        public IHttpActionResult VratiMenzuFull([FromUri]int idMenze, [FromUri]string idSesije)
+        public MenzaFullDto VratiMenzuFull([FromUri]int id, [FromUri]string sid)
         {
 
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeMenza))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeMenza))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
-                Menza m = ProvajderPodatakaMenzi.VratiMenzu(idMenze);
+                Menza m = null;
                 MenzaFullDto menza = new MenzaFullDto();
-                if (ValidatorMenze.MenzaPostoji(m))
-                {
-                    menza.IdMenze = m.IdMenza;
-                    menza.Naziv = m.Naziv;
-                    menza.Lokacija = m.Lokacija;
-                    menza.RadnoVreme = m.RadnoVreme;
-                    menza.VanrednoNeRadi = m.VanrednoNeRadi;
-                }
-                
-                SesijeProvajder.ZatvoriSesiju();
 
-                if (menza != null)
-                    return Content(HttpStatusCode.Found, menza);
+                m = ProvajderPodatakaMenzi.VratiMenzu(id);
+                if (m == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Menza nije pronadjena") });
+
+                menza.IdMenze = m.IdMenza;
+                menza.Naziv = m.Naziv;
+                menza.Lokacija = m.Lokacija;
+                menza.RadnoVreme = m.RadnoVreme;
+                menza.VanrednoNeRadi = m.VanrednoNeRadi;
+                return menza;
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+                
             }
-            return Content(HttpStatusCode.BadRequest, new MenzaFullDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         [HttpGet]
-        public IHttpActionResult VratiSveMenze([FromUri]string idSesije)
+        public List<MenzaFullDto> VratiSveMenze([FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeMenza))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeMenza))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+                
 
                 List<Menza> listaMenzi = ProvajderPodatakaMenzi.VratiMenze();
                 List<MenzaFullDto> listaMenziFull = new List<MenzaFullDto>(listaMenzi.Count);
+
+                if (listaMenzi == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Menze nisu pronadjene") });
+
 
                 foreach (Menza m in listaMenzi)
                 {
@@ -83,32 +88,33 @@ namespace MensariumAPI.Controllers
                     });
                 }
 
-                SesijeProvajder.ZatvoriSesiju();
-
-                if (listaMenziFull != null)
-                    return Content(HttpStatusCode.Found, listaMenziFull);
+                return listaMenziFull;
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+			
             }
-            return Content(HttpStatusCode.BadRequest, new List<MenzaFullDto>());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         [HttpPost]
         [Route("dodaj")]
-        public IHttpActionResult DodajMenzu([FromBody]MenzaFullDto mdto, [FromUri]string idSesije)
+        public IHttpActionResult DodajMenzu([FromBody]MenzaFullDto mdto, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.DodavanjeMenza))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
-
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.DodavanjeMenza))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+                
                 ProvajderPodatakaMenzi.DodajMenzu(new Menza()
                 {
                     Lokacija = mdto.Lokacija,
@@ -117,73 +123,81 @@ namespace MensariumAPI.Controllers
                     VanrednoNeRadi = mdto.VanrednoNeRadi
                 });
 
-                SesijeProvajder.ZatvoriSesiju();
-
-                return Content(HttpStatusCode.OK, "Menza uspesno dodata.");
+                return Ok("Menza uspesno dodata");
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+                
             }
-            return Content(HttpStatusCode.BadRequest, "Dodavanje menze nije uspelo.");
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         [HttpGet]
-        [Route("guzvaZaJelo/{idMenze:int}")]
-        public IHttpActionResult GuzvaZaJelo([FromUri]int idMenze, [FromUri]string idSesije)
+        public int GuzvaZaJelo([FromUri]int id, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeGuzvaMenza))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeGuzvaMenza))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
-                int procenatGuzveZaJelo = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaSkinutihUPoslednjihPetMinuta(idMenze) * 0.3);
+
+                int procenatGuzveZaJelo = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaSkinutihUPoslednjihPetMinuta(id) * 0.3);
                 if (procenatGuzveZaJelo > 100)
                     procenatGuzveZaJelo = 100;
-
-                SesijeProvajder.ZatvoriSesiju();
-
-                return Content(HttpStatusCode.Found, procenatGuzveZaJelo);
+                return procenatGuzveZaJelo;
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+                
             }
-            return Content(HttpStatusCode.BadRequest, -1);
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         [HttpGet]
-        [Route("guzvaZaUplatu/{idMenze:int}")]
-        public IHttpActionResult GuzvaZaUplatu([FromUri]int idMenze, [FromUri]string idSesije)
+        public int GuzvaZaUplatu([FromUri]int id, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeGuzvaMenza))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeGuzvaMenza))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
-                int procenatGuzveZaUplatu = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaUplacenihUPoslednjihPetMinuta(idMenze) * 0.1);
+
+                int procenatGuzveZaUplatu = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaUplacenihUPoslednjihPetMinuta(id) * 0.1);
                 if (procenatGuzveZaUplatu > 100)
                     procenatGuzveZaUplatu = 100;
 
-                SesijeProvajder.ZatvoriSesiju();
-
-                return Content(HttpStatusCode.Found, procenatGuzveZaUplatu);
+                return procenatGuzveZaUplatu;
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
 
             }
-            return Content(HttpStatusCode.BadRequest, -1);
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
     }
 }
