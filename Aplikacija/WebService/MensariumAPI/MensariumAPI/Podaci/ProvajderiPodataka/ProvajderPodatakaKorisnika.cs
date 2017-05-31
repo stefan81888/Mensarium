@@ -12,6 +12,20 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
     public class ProvajderPodatakaKorisnika
     {
+        // TO DO: private delegates
+        public delegate KorisnikKreiranjeDto KreiranjeKorisnika(KorisnikKreiranjeDto kkdto);
+
+        public List<KreiranjeKorisnika> listaDelegataKreiranja = new List<KreiranjeKorisnika>();
+
+        public ProvajderPodatakaKorisnika()
+        {
+            listaDelegataKreiranja.Add(DodajAdministratora);
+            listaDelegataKreiranja.Add(DodajMenadzera);
+            listaDelegataKreiranja.Add(DodajUplatu);
+            listaDelegataKreiranja.Add(DodajNaplatu);
+            listaDelegataKreiranja.Add(DodajStudenta);
+        }
+
         public static Korisnik VratiKorisnika(int id)
         {
             ISession s = SesijeProvajder.Sesija;
@@ -170,7 +184,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 rezultat.Add(kdto);
             }
 
-            // TO DO: prebaciti zapracene na pocetak
+            rezultat.Sort((y, x) => x.Zapracen.CompareTo(y.Zapracen));
             return rezultat;
         }
 
@@ -313,10 +327,148 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 OdgovorPozvanog = ppdto.OdgovorPozvanog
             };
 
-            s.Save(pp);
+            s.Update(pp);
             s.Flush();
 
             return ppdto;
+        }
+
+        public static bool PrestaniDaPratis(int idPratilac, int idPraceni)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Korisnik pratilac = s.Load<Korisnik>(idPratilac);
+
+            if (!ValidatorKorisnika.KorisnikPostoji(pratilac))
+                return false;
+
+            Korisnik praceni = s.Load<Korisnik>(idPraceni);
+
+            if (!ValidatorKorisnika.KorisnikPostoji(praceni))
+                return false;
+
+            praceni.PracenOd.Remove(pratilac);
+            pratilac.Prati.Remove(praceni);
+
+            s.Save(praceni);
+            s.Save(pratilac);
+
+            s.Flush();
+
+            return true;
+        }
+
+        public static KorisnikKreiranjeDto DodajStudenta(KorisnikKreiranjeDto kkdto)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            string sifra = Guid.NewGuid().ToString().Substring(0, 10);
+            Korisnik k = new Korisnik()
+            {
+                Ime = kkdto.Ime,
+                Prezime = kkdto.Prezime,
+                Sifra = sifra,
+                DatumRegistracije = DateTime.Now,
+                DatumRodjenja = kkdto.DatumRodjenja,
+                DatumVaziDo = DateTime.Now.AddYears(1),
+                StudiraFakultet = ProvajderPodatakaFakulteta.VratiFakultet(kkdto.IdFakulteta.Value), //uvek ima value jer kreiramo studenta
+                BrojIndeksa = kkdto.BrojIndeksa,
+                AktivanNalog = true,
+                Obrisan = false,
+                TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(kkdto.IdTipaNaloga)
+            };
+            
+            s.Save(k);
+            s.Flush();
+
+            List<Korisnik> lista = s.Query<Korisnik>()
+                .Select(x => x)
+                .ToList();
+
+            Korisnik kreirani =  lista.Find(x => x.BrojIndeksa == kkdto.BrojIndeksa 
+                && x.StudiraFakultet.IdFakultet == kkdto.IdFakulteta
+                && x.Sifra == sifra);
+
+            kkdto.IdKorisnika = kreirani.IdKorisnika;
+            kkdto.Sifra = sifra;
+            kkdto.DatumRegistracije = kreirani.DatumRegistracije;
+            kkdto.DatumVaziDo = kreirani.DatumVaziDo;
+            kkdto.AktivanNalog = kreirani.AktivanNalog;
+
+            return kkdto;
+        }
+
+        public static KorisnikKreiranjeDto DodajNalog(KorisnikKreiranjeDto kkdto)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            string sifra = Guid.NewGuid().ToString().Substring(0, 10);
+            Korisnik k = new Korisnik()
+            {
+                KorisnickoIme = kkdto.KorisnickoIme,
+                Email = kkdto.Email,
+                BrojTelefona = kkdto.BrojTelefona,
+                Ime = kkdto.Ime,
+                Prezime = kkdto.Prezime,
+                Sifra = sifra,
+                DatumRegistracije = DateTime.Now,
+                DatumRodjenja = kkdto.DatumRodjenja,
+                AktivanNalog = true,
+                Obrisan = false,
+                TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(kkdto.IdTipaNaloga)
+            };
+
+            s.Save(k);
+            s.Flush();
+
+            List<Korisnik> lista = s.Query<Korisnik>()
+                .Select(x => x)
+                .ToList();
+
+            Korisnik kreirani = lista.Find(x => x.KorisnickoIme == kkdto.KorisnickoIme);
+
+            kkdto.IdKorisnika = kreirani.IdKorisnika;
+            kkdto.Sifra = sifra;
+            kkdto.DatumRegistracije = kreirani.DatumRegistracije;
+            kkdto.AktivanNalog = kreirani.AktivanNalog;
+
+            return kkdto;
+        }
+
+        public static KorisnikKreiranjeDto DodajMenadzera(KorisnikKreiranjeDto kkdto)
+        {
+            return DodajNalog(kkdto);
+        }
+
+        public static KorisnikKreiranjeDto DodajUplatu(KorisnikKreiranjeDto kkdto)
+        {
+            return DodajNalog(kkdto);
+        }
+
+        public static KorisnikKreiranjeDto DodajNaplatu(KorisnikKreiranjeDto kkdto)
+        {
+            return DodajNalog(kkdto);
+        }
+
+        public static KorisnikKreiranjeDto DodajAdministratora(KorisnikKreiranjeDto kkdto)
+        {
+            return DodajNalog(kkdto);
+        }
+
+        public static SesijaDto OdjaviSe(SesijaDto sesija)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            List<LoginSesija> sesije = s.Query<LoginSesija>().Select(k => k).ToList();
+
+            LoginSesija login = sesije.Find(x => x.IdSesije == sesija.IdSesije);
+
+            login.ValidnaDo = DateTime.MinValue;
+            sesija.ValidnaDo = DateTime.MinValue;
+
+            s.Save(login);
+            s.Flush();
+
+            return sesija;
         }
     }
 }

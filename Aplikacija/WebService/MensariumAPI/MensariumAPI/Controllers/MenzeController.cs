@@ -17,14 +17,22 @@ namespace MensariumAPI.Controllers
     public class MenzeController : ApiController
     {
         [HttpGet]
-        //[Route("full/{id:int}")]
-        public IHttpActionResult VratiMenzuFull(int id)
+        //[Route("{idMenze:int}/Session")] alternativa: .../1/Session?idSesije=555
+        // Ovako je: .../?idMenze=1&idSesije=555
+        public IHttpActionResult VratiMenzuFull([FromUri]int idMenze, [FromBody]string idSesije)
         {
+
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Menza m = ProvajderPodatakaMenzi.VratiMenzu(id);
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeMenza))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
+
+                Menza m = ProvajderPodatakaMenzi.VratiMenzu(idMenze);
                 MenzaFullDto menza = new MenzaFullDto();
                 if (ValidatorMenze.MenzaPostoji(m))
                 {
@@ -48,11 +56,17 @@ namespace MensariumAPI.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult VratiSveMenze()
+        public IHttpActionResult VratiSveMenze([FromUri]string idSesije)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeMenza))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
                 List<Menza> listaMenzi = ProvajderPodatakaMenzi.VratiMenze();
                 List<MenzaFullDto> listaMenziFull = new List<MenzaFullDto>(listaMenzi.Count);
@@ -83,11 +97,17 @@ namespace MensariumAPI.Controllers
 
         [HttpPost]
         [Route("dodaj")]
-        public IHttpActionResult DodajMenzu([FromBody]MenzaFullDto mdto)
+        public IHttpActionResult DodajMenzu([FromBody]MenzaFullDto mdto, [FromUri]string idSesije)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.DodavanjeMenza))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
                 ProvajderPodatakaMenzi.DodajMenzu(new Menza()
                 {
@@ -110,11 +130,17 @@ namespace MensariumAPI.Controllers
 
         [HttpGet]
         [Route("guzvaZaJelo/{idMenze:int}")]
-        public IHttpActionResult GuzvaZaJelo(int idMenze)
+        public IHttpActionResult GuzvaZaJelo([FromUri]int idMenze, [FromUri]string idSesije)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeGuzvaMenza))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
                 int procenatGuzveZaJelo = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaSkinutihUPoslednjihPetMinuta(idMenze) * 0.3);
                 if (procenatGuzveZaJelo > 100)
@@ -133,11 +159,17 @@ namespace MensariumAPI.Controllers
 
         [HttpGet]
         [Route("guzvaZaUplatu/{idMenze:int}")]
-        public IHttpActionResult GuzvaZaUplatu(int idMenze)
+        public IHttpActionResult GuzvaZaUplatu([FromUri]int idMenze, [FromUri]string idSesije)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeGuzvaMenza))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
                 int procenatGuzveZaUplatu = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaUplacenihUPoslednjihPetMinuta(idMenze) * 0.1);
                 if (procenatGuzveZaUplatu > 100)

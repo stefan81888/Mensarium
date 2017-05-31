@@ -237,6 +237,7 @@
     <Compile Include="Podaci\DTO\KorisnikDodavanjeDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikFollowDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikFullDto.cs" />
+    <Compile Include="Podaci\DTO\KorisnikKreiranjeDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikReadDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikStanjeDto.cs" />
     <Compile Include="Podaci\DTO\LoginSesijeFullDto.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaObjava.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaObroka.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaPrivilegija.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaSesije.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaTipovaNaloga.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ProvajderPodatakaTipovaObroka.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\SesijeProvajder.cs" />
@@ -298,6 +300,7 @@
     <Compile Include="Podaci\ProvajderiPodataka\ValidatorFakulteta.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ValidatorMenze.cs" />
     <Compile Include="Podaci\ProvajderiPodataka\ValidatorObroka.cs" />
+    <Compile Include="Podaci\ProvajderiPodataka\ValidatorPrivilegija.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

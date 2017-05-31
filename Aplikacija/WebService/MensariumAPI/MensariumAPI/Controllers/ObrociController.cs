@@ -17,14 +17,19 @@ namespace MensariumAPI.Controllers
     public class ObrociController : ApiController
     {
         [HttpGet]
-        //[Route("full/{id:int}")]
-        public IHttpActionResult VratiObrokFull(int id)
+        public IHttpActionResult VratiObrokFull([FromUri]int idObroka, [FromUri]string idSesije)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Obrok o = ProvajderPodatakaObroka.VratiObrok(id);
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
+
+                Obrok o = ProvajderPodatakaObroka.VratiObrok(idObroka);
                 ObrokFullDto obrok = new ObrokFullDto();
                 if (ValidatorObroka.ObrokPostoji(o))
                 {
@@ -53,11 +58,17 @@ namespace MensariumAPI.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult VratiSveObroke()
+        public IHttpActionResult VratiSveObroke([FromUri]string idSesije)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
                 List<Obrok> listaObroka = ProvajderPodatakaObroka.VratiObroke();
                 List<ObrokFullDto> listaObrokaFull = new List<ObrokFullDto>(listaObroka.Count);
@@ -91,15 +102,18 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new List<ObrokFullDto>());
         }
 
+        // Kod Stefana
         [HttpGet]
-        [Route("korisnicki/{id:int}")]
-        public IHttpActionResult VratiKorisnikovoStanjeObroka(int id)
+        [Route("korisnicki/{idSesije:guid}/{idKorisnika:int}/")]
+        public IHttpActionResult VratiKorisnikovoStanjeObroka(string idSesije, int idKorisnika)
         {
+            if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                return Content(HttpStatusCode.BadRequest, "Korisnik nema dozvolu za ovu radnju.");
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(idKorisnika);
 
                 KorisnikStanjeDto korisnik = new KorisnikStanjeDto();
                 if (ValidatorKorisnika.KorisnikPostoji(k))
@@ -122,12 +136,18 @@ namespace MensariumAPI.Controllers
 
         [HttpPost]
         [System.Web.Http.Route("uplati")]
-        public IHttpActionResult UplatiObroke([FromBody]ObrokUplataDto obUpDto)
+        public IHttpActionResult UplatiObroke([FromBody]ObrokUplataDto obUpDto, [FromUri]string idSesije)
         {
             int i;
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.DodavanjeObrok))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
                 for (i = 0; i < obUpDto.BrojObroka; ++i)
                 {
@@ -163,12 +183,18 @@ namespace MensariumAPI.Controllers
 
         [HttpPut]
         [Route("naplati")]
-        public IHttpActionResult NaplatiObroke([FromBody]ObrokNaplataDto obNapDto)
+        public IHttpActionResult NaplatiObroke([FromBody]ObrokNaplataDto obNapDto, [FromUri]string idSesije)
         {
             int i;
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.ModifikacijaObrok))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
                 for (i = 0; i < obNapDto.BrojObroka; ++i)
                 {
@@ -191,14 +217,20 @@ namespace MensariumAPI.Controllers
         }
 
         [HttpGet]
-        [Route("danasUplaceni/{id:int}")]
-        public IHttpActionResult DanasUplaceniObrociKorisnika(int id)
+        [Route("danasUplaceni")]
+        public IHttpActionResult DanasUplaceniObrociKorisnika([FromUri]int idKorisnika, [FromUri]string idSesije)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(id).ToList();
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
+
+                List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(idKorisnika).ToList();
                 List<ObrokDanasUplacenDto> listaDanasUplacenihObroka = new List<ObrokDanasUplacenDto>(danasUplaceniObrociOvogKorisnika.Count);
 
                 foreach (Obrok o in danasUplaceniObrociOvogKorisnika)
@@ -225,14 +257,20 @@ namespace MensariumAPI.Controllers
         }
 
         [HttpGet]
-        [Route("danasSkinuti/{id:int}")]
-        public IHttpActionResult DanasSkinutiObrociKorisnika(int id)
+        [Route("danasSkinuti")]
+        public IHttpActionResult DanasSkinutiObrociKorisnika([FromUri]int idKorisnika, [FromUri]string idSesije)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(id).ToList();
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
+
+                List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(idKorisnika).ToList();
                 List<ObrokDanasSkinutDto> listaDanasSkinutihObroka = new List<ObrokDanasSkinutDto>(danasSkinutiObrociOvogKorisnika.Count);
 
                 foreach (Obrok o in danasSkinutiObrociOvogKorisnika)
@@ -260,11 +298,17 @@ namespace MensariumAPI.Controllers
 
         [HttpPut]
         [Route("vratiPogresnoSkinute")]
-        public IHttpActionResult VratiPogresnoSkinuteObroke([FromUri]int[] obrokId)
+        public IHttpActionResult VratiPogresnoSkinuteObroke([FromUri]int[] obrokId, [FromUri]string idSesije)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.ModifikacijaObrok))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
                 for (int i = 0; i < obrokId.Count(); ++i)
                 {
@@ -289,11 +333,17 @@ namespace MensariumAPI.Controllers
 
         [HttpPut]
         [Route("skiniPogresnoUplacene")]
-        public IHttpActionResult SkiniPogresnoUplaceneObroke([FromUri]int[] obrokId)
+        public IHttpActionResult SkiniPogresnoUplaceneObroke([FromUri]int[] obrokId, [FromUri]string idSesije)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.BrisanjeObrok))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
                 for (int i = 0; i < obrokId.Count(); ++i)
                     ProvajderPodatakaObroka.ObrisiObrok(obrokId[i]);

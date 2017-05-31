@@ -17,14 +17,18 @@ namespace MensariumAPI.Controllers
 	public class FakultetiController : ApiController
 	{
 		[System.Web.Http.HttpGet]
-		//[System.Web.Http.Route("/{id:int}")]
-		public IHttpActionResult VratiFakultetFull(int id)
+		public IHttpActionResult VratiFakultetFull([FromUri]int idFakulteta, [FromUri]string idSesije)
 		{
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
+				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+				{
+					SesijeProvajder.ZatvoriSesiju();
+					return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+				}
 
-				Fakultet f = ProvajderPodatakaFakulteta.VratiFakultet(id);
+				Fakultet f = ProvajderPodatakaFakulteta.VratiFakultet(idFakulteta);
 				FakultetFullDto fakultet = new FakultetFullDto();
 				if (ValidatorFakulteta.FakultetPostoji(f))
 				{
@@ -40,15 +44,20 @@ namespace MensariumAPI.Controllers
 			{
 
 			}
-            return Content(HttpStatusCode.BadRequest, new FakultetFullDto());
+			return Content(HttpStatusCode.BadRequest, new FakultetFullDto());
 		}
 
 		[System.Web.Http.HttpGet]
-		public IHttpActionResult VratiSveFakulteteFull()
+		public IHttpActionResult VratiSveFakulteteFull([FromUri]string idSesije)
 		{
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
+				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+				{
+					SesijeProvajder.ZatvoriSesiju();
+					return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+				}
 
 				List<Fakultet> listaFakulteta = ProvajderPodatakaFakulteta.VratiFakultete();
 				List<FakultetFullDto> listaFakultetaFull = new List<FakultetFullDto>(listaFakulteta.Count);
@@ -76,11 +85,16 @@ namespace MensariumAPI.Controllers
 
 		[HttpPost]
 		[Route("dodaj")]
-		public IHttpActionResult DodajFakultet([FromBody] FakultetFullDto fdto)
+		public IHttpActionResult DodajFakultet([FromBody] FakultetFullDto fdto, [FromUri]string idSesije)
 		{
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
 				Fakultet f = new Fakultet()
 				{
@@ -102,11 +116,17 @@ namespace MensariumAPI.Controllers
 
 		[System.Web.Http.HttpPut]
 		[System.Web.Http.Route("update")]
-		public IHttpActionResult UpdateFakultet([FromBody]FakultetFullDto fdto)
+        public IHttpActionResult UpdateFakultet([FromBody]FakultetFullDto fdto, [FromUri]string idSesije)
 		{
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.ModifikacijaFakultet))
+                {
+                    SesijeProvajder.ZatvoriSesiju();
+                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+                }
 
 				Fakultet f = ProvajderPodatakaFakulteta.VratiFakultet(fdto.IdFakultet);
 				if (ValidatorFakulteta.FakultetPostoji(f))
@@ -127,15 +147,20 @@ namespace MensariumAPI.Controllers
 		}
 
 		[System.Web.Http.HttpDelete]
-		[System.Web.Http.Route("obrisi/{id:int}")]
-		public IHttpActionResult ObrisiFakultet(int id)
+		[System.Web.Http.Route("obrisi")]
+		public IHttpActionResult ObrisiFakultet([FromUri]int idFakulteta,  [FromUri]string idSesije)
 		{
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
 
-				ProvajderPodatakaFakulteta.ObrisiFakultet(id);
-
+				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.BrisanjeFakultet))
+				{
+					SesijeProvajder.ZatvoriSesiju();
+					return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
+				}
+				
+				ProvajderPodatakaFakulteta.ObrisiFakultet(idFakulteta);
 				SesijeProvajder.ZatvoriSesiju();
 
 				return Content(HttpStatusCode.OK, "Fakultet uspesno obrisan.");
