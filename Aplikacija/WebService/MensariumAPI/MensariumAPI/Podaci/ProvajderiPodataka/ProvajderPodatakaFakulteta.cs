@@ -14,7 +14,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static Fakultet VratiFakultet(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Fakultet f = s.Load<Fakultet>(id);
+            Fakultet f = s.Get<Fakultet>(id);
             return f;
         }
 

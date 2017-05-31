@@ -17,9 +17,9 @@ namespace MensariumAPI.Controllers
     public class MenzeController : ApiController
     {
         [HttpGet]
-        //[Route("{idMenze:int}/Session")] alternativa: .../1/Session?idSesije=555
-        // Ovako je: .../?idMenze=1&idSesije=555
-        public IHttpActionResult VratiMenzuFull([FromUri]int idMenze, [FromBody]string idSesije)
+        //[Route("{idMenze:int}")] //alternativa: .../1/Session?idSesije=555
+        // Ovako je: .../?idMenze=1&idSesije=55
+        public IHttpActionResult VratiMenzuFull([FromUri]int idMenze, [FromUri]string idSesije)
         {
 
             try

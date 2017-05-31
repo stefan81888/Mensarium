@@ -10,6 +10,7 @@ using MensariumAPI.Podaci.Konfigracija;
 using NHibernate;
 using MensariumAPI.Podaci.ProvajderiPodataka;
 using MensariumAPI.Podaci.DTO;
+using MensariumAPI.Podaci;
 
 namespace MensariumAPI.Controllers
 {
@@ -17,43 +18,46 @@ namespace MensariumAPI.Controllers
 	public class FakultetiController : ApiController
 	{
 		[System.Web.Http.HttpGet]
-		public IHttpActionResult VratiFakultetFull([FromUri]int idFakulteta, [FromUri]string idSesije)
+		public FakultetFullDto VratiFakultetFull([FromUri]int id, [FromUri]string sid)
 		{
-			try
-			{
-				SesijeProvajder.OtvoriSesiju();
-				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
-				{
-					SesijeProvajder.ZatvoriSesiju();
-					return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-				}
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
-				Fakultet f = ProvajderPodatakaFakulteta.VratiFakultet(idFakulteta);
-				FakultetFullDto fakultet = new FakultetFullDto();
-				if (ValidatorFakulteta.FakultetPostoji(f))
-				{
-					fakultet.IdFakultet = f.IdFakultet;
-					fakultet.Naziv = f.Naziv;
-				}
-				SesijeProvajder.ZatvoriSesiju();
+                Fakultet f = null;
+                FakultetFullDto fakultet = new FakultetFullDto();
 
-				if (fakultet != null)
-					return Content(HttpStatusCode.Found, fakultet);
-			}
-			catch(Exception e)
-			{
+                f = ProvajderPodatakaFakulteta.VratiFakultet(id);
+                if (f == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Fakultet nije pronadjen") });
 
-			}
-			return Content(HttpStatusCode.BadRequest, new FakultetFullDto());
+                fakultet.IdFakultet = f.IdFakultet;
+                fakultet.Naziv = f.Naziv;
+                return fakultet;
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+                //throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Fakultet nije napravljen!") });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }  
 		}
 
 		[System.Web.Http.HttpGet]
-		public IHttpActionResult VratiSveFakulteteFull([FromUri]string idSesije)
+		public IHttpActionResult VratiSveFakulteteFull([FromUri]string sid)
 		{
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
-				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
 				{
 					SesijeProvajder.ZatvoriSesiju();
 					return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
@@ -85,44 +89,46 @@ namespace MensariumAPI.Controllers
 
 		[HttpPost]
 		[Route("dodaj")]
-		public IHttpActionResult DodajFakultet([FromBody] FakultetFullDto fdto, [FromUri]string idSesije)
+		public IHttpActionResult DodajFakultet([FromBody] FakultetFullDto fdto, [FromUri]string sid)
 		{
-			try
-			{
-				SesijeProvajder.OtvoriSesiju();
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
 
-				Fakultet f = new Fakultet()
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+                
+                Fakultet f = new Fakultet()
 				{
 					Naziv = fdto.Naziv
 				};
 
-				ProvajderPodatakaFakulteta.DodajFakultet(f);
-
-				SesijeProvajder.ZatvoriSesiju();
-
-				return Content(HttpStatusCode.OK, "Fakultet uspesno dodat.");
+                ProvajderPodatakaFakulteta.DodajFakultet(f);
+                return Ok("Fakutet uspesno dodat");
 			}
 			catch (Exception e)
 			{
-
-			}
-			return Content(HttpStatusCode.BadRequest, "Dodavanje fakulteta nije uspelo.");
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+                //throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Fakultet nije napravljen!") });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
 		}
 
 		[System.Web.Http.HttpPut]
 		[System.Web.Http.Route("update")]
-        public IHttpActionResult UpdateFakultet([FromBody]FakultetFullDto fdto, [FromUri]string idSesije)
+        public IHttpActionResult UpdateFakultet([FromBody]FakultetFullDto fdto, [FromUri]string sid)
 		{
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.ModifikacijaFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaFakultet))
                 {
                     SesijeProvajder.ZatvoriSesiju();
                     return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
@@ -148,13 +154,13 @@ namespace MensariumAPI.Controllers
 
 		[System.Web.Http.HttpDelete]
 		[System.Web.Http.Route("obrisi")]
-		public IHttpActionResult ObrisiFakultet([FromUri]int idFakulteta,  [FromUri]string idSesije)
+		public IHttpActionResult ObrisiFakultet([FromUri]int idFakulteta,  [FromUri]string sid)
 		{
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
 
-				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.BrisanjeFakultet))
+				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.BrisanjeFakultet))
 				{
 					SesijeProvajder.ZatvoriSesiju();
 					return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
