@@ -24,8 +24,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             listaDelegataKreiranja.Add(DodajUplatu);
             listaDelegataKreiranja.Add(DodajNaplatu);
             listaDelegataKreiranja.Add(DodajStudenta);
-        }
 
+            listaDelegataKreiranja.Add(AzurirajAdministratora);
+            listaDelegataKreiranja.Add(AzurirajMenadzera);
+            listaDelegataKreiranja.Add(AzurirajUplatu);
+            listaDelegataKreiranja.Add(AzurirajNaplatu);
+            listaDelegataKreiranja.Add(AzurirajStudenta);
+        }
+        
         public static Korisnik VratiKorisnika(int id)
         {
             ISession s = SesijeProvajder.Sesija;
@@ -469,5 +475,65 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return sesija;
         }
+
+        public static KorisnikKreiranjeDto Azuriraj(KorisnikKreiranjeDto kkdto)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Korisnik korisnik = s.Load<Korisnik>(kkdto.IdKorisnika);
+
+            korisnik.KorisnickoIme = kkdto.KorisnickoIme;
+            korisnik.Ime = kkdto.Ime;
+            korisnik.Prezime = kkdto.Prezime;
+            korisnik.Sifra = kkdto.Sifra;
+            korisnik.BrojTelefona = kkdto.BrojTelefona;
+            korisnik.DatumRodjenja = kkdto.DatumRodjenja;
+            korisnik.Email = kkdto.Email;
+            korisnik.TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(kkdto.IdTipaNaloga);
+            korisnik.AktivanNalog = kkdto.AktivanNalog;
+
+            s.Save(korisnik);
+            s.Flush();
+
+            return kkdto;
+        }
+
+        public static KorisnikKreiranjeDto AzurirajStudenta(KorisnikKreiranjeDto kkdto)
+        {
+            Azuriraj(kkdto);
+
+            ISession s = SesijeProvajder.Sesija;
+            Korisnik korisnik = s.Load<Korisnik>(kkdto.IdKorisnika);
+
+            korisnik.BrojIndeksa = kkdto.BrojIndeksa;
+            korisnik.DatumVaziDo = kkdto.DatumVaziDo;
+            korisnik.StudiraFakultet = ProvajderPodatakaFakulteta.VratiFakultet(kkdto.IdFakulteta.Value);
+
+            s.Save(korisnik);
+            s.Flush();
+
+            return kkdto;
+        }
+
+        public static KorisnikKreiranjeDto AzurirajNaplatu(KorisnikKreiranjeDto kkdto)
+        {
+            return Azuriraj(kkdto);
+        }
+
+        public static KorisnikKreiranjeDto AzurirajUplatu(KorisnikKreiranjeDto kkdto)
+        {
+            return Azuriraj(kkdto);
+        }
+
+        public static KorisnikKreiranjeDto AzurirajAdministratora(KorisnikKreiranjeDto kkdto)
+        {
+            return Azuriraj(kkdto);
+        }
+
+        public static KorisnikKreiranjeDto AzurirajMenadzera(KorisnikKreiranjeDto kkdto)
+        {
+            return Azuriraj(kkdto);
+        }
+
+
     }
 }

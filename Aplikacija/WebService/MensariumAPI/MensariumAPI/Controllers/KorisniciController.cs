@@ -132,7 +132,7 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
         }
 
-        //Kreiranje naloga -> pending edit
+        //Kreiranje naloga
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("dodaj")]
         public IHttpActionResult DodajKorisnika([FromBody]KorisnikKreiranjeDto kddto)
@@ -156,7 +156,7 @@ namespace MensariumAPI.Controllers
 
         }
 
-        //Ažuriranje korisnika
+        //Ažuriranje korisnika -> registracija na android aplikaciju
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("update")]
         public IHttpActionResult UpdateKorisnika([FromBody]ClientZaRegistracijuDto klijentReg)
@@ -426,12 +426,28 @@ namespace MensariumAPI.Controllers
 
         }
 
+        //Azuriranje naloga bilo korisnika
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("azuriraj")]
+        public IHttpActionResult Azuriraj([FromBody] KorisnikKreiranjeDto kddto)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
 
-        //// todo
-        //"korisnici/odjava/{sessionid}"
-        //funkcija za odjavljivanje
-        // omoguciti update svima
+                ProvajderPodatakaKorisnika p = new ProvajderPodatakaKorisnika();
+                KorisnikKreiranjeDto kreirani = p.listaDelegataKreiranja[kddto.IdTipaNaloga + 4].Invoke(kddto);
 
+                SesijeProvajder.ZatvoriSesiju();
+
+                return Content(HttpStatusCode.Created, kreirani);
+
+            }
+            catch (Exception e)
+            {
+            }
+            return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
+        }
 
     }
 }
