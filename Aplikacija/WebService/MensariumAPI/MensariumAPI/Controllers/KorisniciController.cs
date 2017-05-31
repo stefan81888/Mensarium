@@ -244,7 +244,10 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                List<KorisnikFollowDto> k = ProvajderPodatakaKorisnika.Pretraga(pkdto);
+                ProvajderPodatakaKorisnika p = new ProvajderPodatakaKorisnika();
+
+                int idTipaNaloga = ProvajderPodatakaKorisnika.VratiKorisnika(pkdto.IdKorisnika).TipNaloga.IdTip; 
+                List<KorisnikFollowDto> k = p.listaDelegataPretrage[idTipaNaloga - 1].Invoke(pkdto);
 
                 SesijeProvajder.ZatvoriSesiju();
 

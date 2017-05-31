@@ -13,6 +13,7 @@ namespace MensariumAPI.Podaci.DTO
         public string Prezime { get; set; }
         public string Fakultet { get; set; }
         public bool Zapracen {get;set;} 
+        public int IdTipNaloga { get; set; }
         //slika
     }
 }
