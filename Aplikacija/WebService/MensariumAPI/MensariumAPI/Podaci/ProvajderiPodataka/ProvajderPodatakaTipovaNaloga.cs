@@ -14,7 +14,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static TipNaloga VratiTipNaloga(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            TipNaloga t = s.Load<TipNaloga>(id);
+            TipNaloga t = s.Get<TipNaloga>(id);
             return t;
         }
 
@@ -28,14 +28,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static TipNaloga VratiTipNalogaKorisnika(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik kor = s.Load<Korisnik>(id);
+            Korisnik kor = s.Get<Korisnik>(id);
             return kor.TipNaloga;
         }
 
         public static List<Privilegija> VratiPrivilegijeKorisnika(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik kor = s.Load<Korisnik>(id);
+            Korisnik kor = s.Get<Korisnik>(id);
             return kor.TipNaloga.Privilegije.ToList<Privilegija>();
         }
 

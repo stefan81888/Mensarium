@@ -54,7 +54,7 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new ObjavaFullDto());
         }
 
-        //Prikaz objava korisnika koje korisnik prati, hronološki
+        //Prikaz objava korisnika koje korisnik prati
         [HttpGet]
         [System.Web.Http.Route("newsfeed/{id:int}")]
         public IHttpActionResult PrikaziSveObjave(int id)

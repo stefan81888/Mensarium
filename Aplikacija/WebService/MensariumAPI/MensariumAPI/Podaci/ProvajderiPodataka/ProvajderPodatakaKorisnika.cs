@@ -14,8 +14,10 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
     {
         // TO DO: private delegates
         public delegate KorisnikKreiranjeDto KreiranjeKorisnika(KorisnikKreiranjeDto kkdto);
+        public delegate List<KorisnikFollowDto> PretragaKorisnika(PretragaKriterijumDto pkdto);
 
         public List<KreiranjeKorisnika> listaDelegataKreiranja = new List<KreiranjeKorisnika>();
+        public List<PretragaKorisnika> listaDelegataPretrage = new List<PretragaKorisnika>();
 
         public ProvajderPodatakaKorisnika()
         {
@@ -30,8 +32,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             listaDelegataKreiranja.Add(AzurirajUplatu);
             listaDelegataKreiranja.Add(AzurirajNaplatu);
             listaDelegataKreiranja.Add(AzurirajStudenta);
+
+            listaDelegataPretrage.Add(PretraziSveNaloge);
+            listaDelegataPretrage.Add(PretraziSveNaloge);
+            listaDelegataPretrage.Add(PretraziSveNaloge);
+            listaDelegataPretrage.Add(PretraziSveNaloge);
+            listaDelegataPretrage.Add(PretraziStudente);
         }
-        
+
         public static Korisnik VratiKorisnika(int id)
         {
             ISession s = SesijeProvajder.Sesija;
@@ -167,21 +175,24 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                                     || k.Prezime.StartsWith(pkdto.Kriterijum)
                                     || k.KorisnickoIme.StartsWith(pkdto.Kriterijum)
                                     || k.Email.StartsWith(pkdto.Kriterijum)
-                                    || k.Ime.StartsWith(pkdto.Kriterijum.ToUpper())
-                                    || k.Prezime.StartsWith(pkdto.Kriterijum.ToUpper())
-                                    || k.KorisnickoIme.StartsWith(pkdto.Kriterijum.ToLower())
-                                    || k.Email.StartsWith(pkdto.Kriterijum.ToLower())
+                                    || k.Ime.StartsWith(char.ToUpper(pkdto.Kriterijum[0]) + pkdto.Kriterijum.Substring(1))
+                                    || k.Prezime.StartsWith(char.ToUpper(pkdto.Kriterijum[0]) + pkdto.Kriterijum.Substring(1))
+                                    || k.KorisnickoIme.StartsWith(char.ToLower(pkdto.Kriterijum[0]) + pkdto.Kriterijum.Substring(1))
+                                    || k.Email.StartsWith(char.ToLower(pkdto.Kriterijum[0]) + pkdto.Kriterijum.Substring(1))
                                     select k).ToList();
 
             foreach (var v in lista)
             {
+                if(v.IdKorisnika == pkdto.IdKorisnika)
+                    break;
                 KorisnikFollowDto kdto = new KorisnikFollowDto()
                 {
                     KorisnickoIme = v.KorisnickoIme,
                     Ime = v.Ime,
                     Prezime = v.Prezime,
                     IdKorisnika = v.IdKorisnika,
-                    Zapracen = false
+                    Zapracen = false,
+                    IdTipNaloga = v.TipNaloga.IdTip
                 };
                 if (pretrazuje.PracenOd.ToList().Contains(v))
                     kdto.Zapracen = true;
@@ -190,8 +201,26 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 rezultat.Add(kdto);
             }
 
-            rezultat.Sort((y, x) => x.Zapracen.CompareTo(y.Zapracen));
+            rezultat.Sort((y, x) => x.IdTipNaloga.CompareTo(y.IdTipNaloga));
             return rezultat;
+        }
+
+        public static List<KorisnikFollowDto> PretraziStudente(PretragaKriterijumDto pkdto)
+        {
+            List<KorisnikFollowDto> svi = Pretraga(pkdto);
+            return UkloniOstaleNaloge(svi);
+        }
+
+        public static List<KorisnikFollowDto> PretraziSveNaloge(PretragaKriterijumDto pkdto)
+        {
+            return Pretraga(pkdto);
+        }
+
+        public static List<KorisnikFollowDto> UkloniOstaleNaloge(List<KorisnikFollowDto> lista)
+        {
+            lista.RemoveAll(x => x.IdTipNaloga != 5);
+            lista.Sort((y, x) => x.Zapracen.CompareTo(y.Zapracen));
+            return lista;
         }
 
         public static KorisnikStanjeDto Stanje(Korisnik korisnik)
@@ -533,7 +562,5 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             return Azuriraj(kkdto);
         }
-
-
     }
 }

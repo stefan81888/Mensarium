@@ -26,5 +26,6 @@ namespace Mensarium.Components
         public string Location { get; set; }
         public string WorkTime { get; set; }
         public bool CurrentlyClosed { get; set; }
+        public int Guzva { get; set; }
     }
 }

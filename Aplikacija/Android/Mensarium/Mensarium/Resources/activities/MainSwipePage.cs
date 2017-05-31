@@ -41,7 +41,6 @@ namespace Mensarium
                     new ProfilFragment(),
                     new NewsFragment(), 
                     new EventsFragment(), 
-                    new OptionsFragment(), 
                 };
 
             var titles = CharSequence.ArrayFromStringArray(new[]
@@ -49,7 +48,6 @@ namespace Mensarium
                     "Profil",
                     "Novosti",
                     "Pozivanja",
-                    "Opcije"
                 });
 
             var viewPager = FindViewById<Android.Support.V4.View.ViewPager>(Resource.Id.viewPager);
