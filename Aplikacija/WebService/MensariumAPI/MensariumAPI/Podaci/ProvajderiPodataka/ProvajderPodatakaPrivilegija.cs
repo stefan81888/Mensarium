@@ -14,7 +14,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static Privilegija VratiPrivilegiju(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Privilegija p = s.Load<Privilegija>(id);
+            Privilegija p = s.Get<Privilegija>(id);
             return p;
         }
 
