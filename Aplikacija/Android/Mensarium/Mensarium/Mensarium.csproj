@@ -57,6 +57,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\MonoAndroid10\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -129,17 +132,57 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateAccDrugiActivity.cs" />
-    <Compile Include="CreateAccPrviActivity.cs" />
-    <Compile Include="EventsFragment.cs" />
-    <Compile Include="MainActivity.cs" />
-    <Compile Include="MainSwapPageAdapter.cs" />
-    <Compile Include="MainSwipePage.cs" />
-    <Compile Include="NewsFragment.cs" />
-    <Compile Include="OptionsFragment.cs" />
-    <Compile Include="ProfilFragment.cs" />
+    <Compile Include="Api\Api.cs" />
+    <Compile Include="Api\MUtility.cs" />
+    <Compile Include="Components\DTOs\ClientLoginDto.cs" />
+    <Compile Include="Components\DTOs\ClientZaRegistracijuDto.cs" />
+    <Compile Include="Components\DTOs\FakultetFullDto.cs" />
+    <Compile Include="Components\DTOs\KorisnikFollowDto.cs" />
+    <Compile Include="Components\DTOs\KorisnikFullDto.cs" />
+    <Compile Include="Components\DTOs\KorisnikReadDto.cs" />
+    <Compile Include="Components\DTOs\LoginSesijeFullDto.cs" />
+    <Compile Include="Components\DTOs\MenzaFullDto.cs" />
+    <Compile Include="Components\DTOs\MenzaGuzvaDto.cs" />
+    <Compile Include="Components\DTOs\ObjavaCUDto.cs" />
+    <Compile Include="Components\DTOs\ObjavaFullDto.cs" />
+    <Compile Include="Components\DTOs\ObjavaReadDto.cs" />
+    <Compile Include="Components\DTOs\ObrokFullDto.cs" />
+    <Compile Include="Components\DTOs\ObrokNaplataDto.cs" />
+    <Compile Include="Components\DTOs\ObrokPogresnoSkinutDto.cs" />
+    <Compile Include="Components\DTOs\ObrokPogresnoUplacenDto.cs" />
+    <Compile Include="Components\DTOs\ObrokUplataDto.cs" />
+    <Compile Include="Components\DTOs\OdjavaDto.cs" />
+    <Compile Include="Components\DTOs\PozivanjaFullDto.cs" />
+    <Compile Include="Components\DTOs\PozivanjaPozvaniDto.cs" />
+    <Compile Include="Components\DTOs\PrivilegijeFullDto.cs" />
+    <Compile Include="Components\DTOs\ServerLoginDto.cs" />
+    <Compile Include="Components\DTOs\SesijaDto.cs" />
+    <Compile Include="Components\DTOs\TipNalogaFullDto.cs" />
+    <Compile Include="Components\DTOs\TipObrokaFullDto.cs" />
+    <Compile Include="Components\Faculty.cs" />
+    <Compile Include="Components\Mensa.cs" />
+    <Compile Include="Components\MSettings.cs" />
+    <Compile Include="Components\Server.cs" />
+    <Compile Include="Components\Session.cs" />
+    <Compile Include="Components\User.cs" />
+    <Compile Include="Resources\activities\CreateAccDrugiActivity.cs" />
+    <Compile Include="Resources\activities\CreateAccPrviActivity.cs" />
+    <Compile Include="Resources\fragments\EventsFragment.cs" />
+    <Compile Include="Components\FeedItem.cs" />
+    <Compile Include="Resources\adapters\FeedListAdapter.cs" />
+    <Compile Include="Resources\activities\MainActivity.cs" />
+    <Compile Include="Resources\adapters\MainSwipePageAdapter.cs" />
+    <Compile Include="Resources\activities\MainSwipePage.cs" />
+    <Compile Include="Components\MenzaItem.cs" />
+    <Compile Include="Resources\adapters\MenzeListAdapter.cs" />
+    <Compile Include="Resources\fragments\NewsFragment.cs" />
+    <Compile Include="Resources\fragments\OptionsFragment.cs" />
+    <Compile Include="Components\Poziv.cs" />
+    <Compile Include="Resources\activities\PozoviPrijateljaActivity.cs" />
+    <Compile Include="Resources\fragments\ProfilFragment.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\activities\SveMenzeActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\rage.ttf" />
@@ -174,6 +217,18 @@
     <AndroidResource Include="Resources\layout\toolbar.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\ListItemRow.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\MojaMenzaRow.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SveMenze.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PozoviPrijatelja.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">
@@ -181,10 +236,9 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\Strings.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon.png" />
+    <AndroidResource Include="Resources\values\Strings.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
@@ -237,6 +291,24 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\bgproba.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\pasulj.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\pomfrit.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\colorProgress.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\menza.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\search.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

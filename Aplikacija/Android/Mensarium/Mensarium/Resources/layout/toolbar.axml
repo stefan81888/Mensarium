@@ -15,5 +15,5 @@
         android:id="@+id/toolbar_title"
         android:textSize="22dp"
         android:textStyle="bold"
-        android:textColor="@color/NaslovIImeButtona"/>
+        android:textColor="@color/NaslovIImeButtona" />
 </android.support.v7.widget.Toolbar>

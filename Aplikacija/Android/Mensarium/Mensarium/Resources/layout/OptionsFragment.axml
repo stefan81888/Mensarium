@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px"
-    android:gravity="center">
+    android:gravity="center"
+    android:id="@+id/layoutzaprobu">
     <TextView
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -13,4 +14,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/optionsText"
         android:gravity="center" />
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dugmezaprobu" />
 </LinearLayout>

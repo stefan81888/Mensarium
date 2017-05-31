@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#243236">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:background="#395056"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ProfilMenzaSlika"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:src="@drawable/menza"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/SeparatorLine"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp">
+                <TextView
+                    android:id="@+id/ImeMenze"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="19dp"
+                    android:textStyle="bold"
+                    android:text="Ime Menze"
+                    android:textColor="#c5c9cc" />
+                <TextView
+                    android:id="@+id/LokacijaMenze"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#a0a3a7"
+                    android:textSize="15dp"
+                    android:text="Lokacija" />
+                <TextView
+                    android:id="@+id/DaLiRadiMenza"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#a0a3a7"
+                    android:textSize="15dp"
+                    android:text="Radi/Ne radi" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/GuzvaText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#a0a3a7"
+            android:textSize="15dp"
+            android:text="Guzva u menzi:"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp" />
+        <ProgressBar
+            android:id="@+id/ProfilMenzaBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="10dip"
+            android:minHeight="10dip"
+            android:progress="50"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp" />
+    </LinearLayout>
+</LinearLayout>
