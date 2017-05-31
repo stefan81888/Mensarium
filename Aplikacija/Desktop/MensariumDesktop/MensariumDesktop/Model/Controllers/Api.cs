@@ -13,33 +13,38 @@ using RestSharp;
 
 namespace MensariumDesktop.Model.Controllers
 {
-    public class ApiResponse<T> where T: new()
+    public class ApiResponse<T>
     {
         public HttpStatusCode HttpStatusCode { get; set; }
         public string ErrorResponse { get; set; }
         public T ResponseObject { get; set; }
     }
-
-
+    
     public static class Api
     {
         static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        static string SessionID;
+        static string SessionID = "skfd123"; //nebitno za sad
         
-        private static ApiResponse<T> Execute<T>(RestRequest request, out T responseData, out string ServerErrorResponse) where T : new()
+        private static ApiResponse<T> Execute<T>(RestRequest request, bool includeSid = true) where T : new()
         {
             RestClient client = new RestClient();
             client.BaseUrl = new Uri(BaseUrl);
-            //request.AddParameter("SessionId", SessionID, ParameterType.UrlSegment);
+
+            if (includeSid)
+                request.AddQueryParameter("sid", SessionID);
+                
+            MessageBox.Show("RequestedURL: " + client.BuildUri(request).ToString());
+
             var response = client.Execute(request);
 
             if (response.ResponseStatus != ResponseStatus.Completed) //nastala greska na mreznom nivou
             {
                 string message = "Greska u komuniciranju sa serverom.\nProveri internet konekciju.\n\n" +
-                    "ErrorReason: " + response.ErrorMessage;
+                                 "ErrorReason: " + response.ErrorMessage;
                 throw new ApplicationException(message, response.ErrorException);
             }
 
+            ApiResponse<T> executeResut = new ApiResponse<T>();
             //deserializacija
             try
             {
@@ -49,24 +54,27 @@ namespace MensariumDesktop.Model.Controllers
                 else
                     deser = new RestSharp.Deserializers.XmlDeserializer();
 
-                responseData = deser.Deserialize<T>(response);
-                ServerErrorResponse = string.Empty;
+                executeResut.ResponseObject = deser.Deserialize<T>(response);
+                executeResut.ErrorResponse = string.Empty;
+                executeResut.HttpStatusCode = response.StatusCode;
             }
             catch (Exception ex) //server nije vratio trazeni objekat
             {
-                responseData = default(T);
-                ServerErrorResponse = response.Content;
+                executeResut.ResponseObject = default(T);
+                executeResut.ErrorResponse = response.Content;
+                executeResut.HttpStatusCode = response.StatusCode;
             }
-            return response.StatusCode;
+            return executeResut;
         }
-        private static HttpStatusCode Execute(RestRequest request)
+        private static ApiResponse<object> Execute(RestRequest request, bool includeSid = true)
         {
             RestClient client = new RestClient();
             client.BaseUrl = new Uri(BaseUrl);
-            //request.AddParameter("SessionId", SessionID, ParameterType.UrlSegment);
+            if (includeSid)
+                request.AddQueryParameter("sid", SessionID);
 
             //debug
-            //string fullrul = client.BuildUri(request).ToString();
+            MessageBox.Show("ExecuteURL " + client.BuildUri(request).ToString());
 
             var response = client.Execute(request);
             if (response.ResponseStatus != ResponseStatus.Completed) //nastala greska na mreznom nivou
@@ -76,7 +84,12 @@ namespace MensariumDesktop.Model.Controllers
                 throw new ApplicationException(message, response.ErrorException);
             }
 
-            return response.StatusCode;
+            ApiResponse<object> executeResult = new ApiResponse<object>();
+            executeResult.ResponseObject = null;
+            executeResult.HttpStatusCode = response.StatusCode;
+            executeResult.ErrorResponse = response.Content;
+            return executeResult;
+
         }
 
         //LOGOVANJE KORISNIKA
@@ -85,54 +98,51 @@ namespace MensariumDesktop.Model.Controllers
             RestRequest request = new RestRequest(Method.POST);
             request.Resource = "korisnici/prijava";
             request.AddObject(loginData);
+            
+            ApiResponse<SesijaDto> response = Execute<SesijaDto>(request, false);
+            
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
 
-            SesijaDto sesija;
-            HttpStatusCode status = Execute<SesijaDto>(request, out sesija);
-
-            if (status == HttpStatusCode.BadRequest)
-                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka");
-            return sesija;
+            return response.ResponseObject;
         }
         public static bool LogoutUser(string sessionId)
         {
             MessageBox.Show("NOT IMPLEMENTED YET");
             return true;
-            RestRequest request = new RestRequest(Method.POST);
-            request.Resource = "korisnici/odjava/{sessionid}";
-            request.AddObject(sessionId);
 
-            HttpStatusCode status = Execute(request);
-            if (status != HttpStatusCode.OK)
-                return false;
-            return true;  
+            RestRequest request = new RestRequest(Method.POST);
+            request.Resource = "korisnici/odjava";
+            
+            ApiResponse<object> response = Execute(request);
+            return (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect);
         }
 
         //KORISNICI
         public static KorisnikFullDto GetUserFullInfo(int id)
         {
             RestRequest request = new RestRequest();
-            request.Resource = "korisnici/full/{id}";
-            request.AddParameter("id", id, ParameterType.UrlSegment);
+            request.Resource = "korisnici/full";
+            request.AddParameter("id", id, ParameterType.QueryString);
 
-            KorisnikFullDto response;
-            HttpStatusCode status = Execute<KorisnikFullDto>(request, out response);
+            ApiResponse<KorisnikFullDto> response = Execute<KorisnikFullDto>(request);
 
-            if (status == HttpStatusCode.BadRequest)
-                throw new Exception("GetUserFullInfo: Neuspesno pribavljanje podataka o korisniku!");
-            return response;
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("GetUserFullInfo: Neuspesno pribavljanje podataka o korisniku!" +"\n" + response.HttpStatusCode.ToString());
+
+            return response.ResponseObject;
         }
         public static List<KorisnikFullDto> GetUsersFullInfo()
         {
             RestRequest request = new RestRequest();
             request.Resource = "korisnici/full";
 
-            List<KorisnikFullDto> response;
-            HttpStatusCode status = Execute<List<KorisnikFullDto>>(request, out response);
+            ApiResponse<List<KorisnikFullDto>> response = Execute<List<KorisnikFullDto>>(request);
 
-            if (status == HttpStatusCode.BadRequest)
-                throw new Exception("GetUsersFullInfo: Neuspesno pribavljanje podatak o korisnicima!");
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("GetUsersFullInfo: Neuspesno pribavljanje podatak o korisnicima!" + "\n" + response.HttpStatusCode.ToString());
 
-            return response;
+            return response.ResponseObject;
         }
         public static bool SendUserFull(KorisnikFullDto user)
         {
@@ -140,11 +150,8 @@ namespace MensariumDesktop.Model.Controllers
             request.Resource = "korisnici/dodaj";
             request.AddObject(user);
 
-            HttpStatusCode status = Execute(request);
-
-            if (status != HttpStatusCode.OK)
-                return false;
-            return true;
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK);
         }
         public static bool AddNewUser(KorisnikDodavanjeDto u)
         {
@@ -152,11 +159,8 @@ namespace MensariumDesktop.Model.Controllers
             request.Resource = "korisnici/dodaj";
             request.AddObject(u);
 
-            HttpStatusCode status = Execute(request);
-
-            if (status != HttpStatusCode.OK)
-                return false;
-            return true;
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK);
         }
         //FAKULTETI
         public static bool AddNewFaculty(FakultetFullDto fax)
@@ -165,11 +169,9 @@ namespace MensariumDesktop.Model.Controllers
             request.Resource = "fakulteti/dodaj";
             request.AddObject(fax);
 
-            HttpStatusCode status = Execute(request);
-
-            if (status != HttpStatusCode.OK)
-                return false;
-            return true;
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK);
+            
         }
         public static bool UpdateFaculty(FakultetFullDto fax)
         {
@@ -177,36 +179,29 @@ namespace MensariumDesktop.Model.Controllers
             request.Resource = "fakulteti/update";
             request.AddObject(fax);
 
-            HttpStatusCode status = Execute(request);
-
-            if (status != HttpStatusCode.OK)
-                return false;
-            return true;
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK);
         }
         public static bool DeleteFaculty(int id)
         {
             RestRequest request = new RestRequest(Method.DELETE);
-            request.Resource = "fakulteti/obrisi/{id}";
-            request.AddParameter("id", id, ParameterType.UrlSegment);
+            request.Resource = "fakulteti/obrisi";
+            request.AddParameter("id", id, ParameterType.QueryString);
 
-            HttpStatusCode status = Execute(request);
-
-            if (status != HttpStatusCode.OK)
-                return false;
-            return true;
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK);
         }
         public static List<FakultetFullDto> GetAllFaculties()
         {
             RestRequest request = new RestRequest(Method.GET);
             request.Resource = "fakulteti";
             
-            List<FakultetFullDto> list;
-            HttpStatusCode status = Execute<List<FakultetFullDto>>(request, out list);
+            ApiResponse<List<FakultetFullDto>> response = Execute<List<FakultetFullDto>>(request);
 
-            if(status == HttpStatusCode.BadRequest)
+            if(response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
                 throw new Exception("GetAllFaculies: Neuspesno pribavljanje liste fakulteta");
-
-            return list;
+      
+            return response.ResponseObject;
         }
 
         //MENZE
@@ -215,13 +210,12 @@ namespace MensariumDesktop.Model.Controllers
             RestRequest request = new RestRequest(Method.GET);
             request.Resource = "menze";
 
-            List<MenzaFullDto> list;
-            HttpStatusCode status = Execute<List<MenzaFullDto>>(request, out list);
+            ApiResponse<List<MenzaFullDto>> response = Execute<List<MenzaFullDto>>(request);
 
-            if (status == HttpStatusCode.BadRequest)
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
                 throw new Exception("GetAllMensas: Neuspesno pribavljanje liste menza");
 
-            return list;
+            return response.ResponseObject;
         }
 
     }
