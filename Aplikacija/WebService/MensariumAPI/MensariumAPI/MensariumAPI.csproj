@@ -237,6 +237,7 @@
     <Compile Include="Podaci\DTO\KorisnikDodavanjeDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikFollowDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikFullDto.cs" />
+    <Compile Include="Podaci\DTO\KorisnikKreiranjeDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikReadDto.cs" />
     <Compile Include="Podaci\DTO\KorisnikStanjeDto.cs" />
     <Compile Include="Podaci\DTO\LoginSesijeFullDto.cs" />

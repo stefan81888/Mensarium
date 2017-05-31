@@ -12,6 +12,20 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
     public class ProvajderPodatakaKorisnika
     {
+        // TO DO: private delegates
+        public delegate KorisnikKreiranjeDto KreiranjeKorisnika(KorisnikKreiranjeDto kkdto);
+
+        public List<KreiranjeKorisnika> listaDelegataKreiranja = new List<KreiranjeKorisnika>();
+
+        public ProvajderPodatakaKorisnika()
+        {
+            listaDelegataKreiranja.Add(DodajAdministratora);
+            listaDelegataKreiranja.Add(DodajMenadzera);
+            listaDelegataKreiranja.Add(DodajUplatu);
+            listaDelegataKreiranja.Add(DodajNaplatu);
+            listaDelegataKreiranja.Add(DodajStudenta);
+        }
+
         public static Korisnik VratiKorisnika(int id)
         {
             ISession s = SesijeProvajder.Sesija;
@@ -342,6 +356,103 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Flush();
 
             return true;
+        }
+
+        public static KorisnikKreiranjeDto DodajStudenta(KorisnikKreiranjeDto kkdto)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            string sifra = Guid.NewGuid().ToString().Substring(0, 10);
+            Korisnik k = new Korisnik()
+            {
+                Ime = kkdto.Ime,
+                Prezime = kkdto.Prezime,
+                Sifra = sifra,
+                DatumRegistracije = DateTime.Now,
+                DatumRodjenja = kkdto.DatumRodjenja,
+                DatumVaziDo = DateTime.Now.AddYears(1),
+                StudiraFakultet = ProvajderPodatakaFakulteta.VratiFakultet(kkdto.IdFakulteta.Value), //uvek ima value jer kreiramo studenta
+                BrojIndeksa = kkdto.BrojIndeksa,
+                AktivanNalog = true,
+                Obrisan = false,
+                TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(kkdto.IdTipaNaloga)
+            };
+            
+            s.Save(k);
+            s.Flush();
+
+            List<Korisnik> lista = s.Query<Korisnik>()
+                .Select(x => x)
+                .ToList();
+
+            Korisnik kreirani =  lista.Find(x => x.BrojIndeksa == kkdto.BrojIndeksa 
+                && x.StudiraFakultet.IdFakultet == kkdto.IdFakulteta
+                && x.Sifra == sifra);
+
+            kkdto.IdKorisnika = kreirani.IdKorisnika;
+            kkdto.Sifra = sifra;
+            kkdto.DatumRegistracije = kreirani.DatumRegistracije;
+            kkdto.DatumVaziDo = kreirani.DatumVaziDo;
+            kkdto.AktivanNalog = kreirani.AktivanNalog;
+
+            return kkdto;
+        }
+
+        public static KorisnikKreiranjeDto DodajNalog(KorisnikKreiranjeDto kkdto)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            string sifra = Guid.NewGuid().ToString().Substring(0, 10);
+            Korisnik k = new Korisnik()
+            {
+                KorisnickoIme = kkdto.KorisnickoIme,
+                Email = kkdto.Email,
+                BrojTelefona = kkdto.BrojTelefona,
+                Ime = kkdto.Ime,
+                Prezime = kkdto.Prezime,
+                Sifra = sifra,
+                DatumRegistracije = DateTime.Now,
+                DatumRodjenja = kkdto.DatumRodjenja,
+                AktivanNalog = true,
+                Obrisan = false,
+                TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(kkdto.IdTipaNaloga)
+            };
+
+            s.Save(k);
+            s.Flush();
+
+            List<Korisnik> lista = s.Query<Korisnik>()
+                .Select(x => x)
+                .ToList();
+
+            Korisnik kreirani = lista.Find(x => x.KorisnickoIme == kkdto.KorisnickoIme);
+
+            kkdto.IdKorisnika = kreirani.IdKorisnika;
+            kkdto.Sifra = sifra;
+            kkdto.DatumRegistracije = kreirani.DatumRegistracije;
+            kkdto.AktivanNalog = kreirani.AktivanNalog;
+
+            return kkdto;
+        }
+
+        public static KorisnikKreiranjeDto DodajMenadzera(KorisnikKreiranjeDto kkdto)
+        {
+            return DodajNalog(kkdto);
+        }
+
+        private KorisnikKreiranjeDto DodajUplatu(KorisnikKreiranjeDto kkdto)
+        {
+            return DodajNalog(kkdto);
+        }
+
+        private KorisnikKreiranjeDto DodajNaplatu(KorisnikKreiranjeDto kkdto)
+        {
+            return DodajNalog(kkdto);
+        }
+
+        private KorisnikKreiranjeDto DodajAdministratora(KorisnikKreiranjeDto kkdto)
+        {
+            return DodajNalog(kkdto);
         }
     }
 }

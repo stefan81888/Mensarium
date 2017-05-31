@@ -133,43 +133,27 @@ namespace MensariumAPI.Controllers
             return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
         }
 
-        //Dodavanje korisnika -> registracija studenta
+        //Kreiranje naloga -> pending edit
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("dodaj")]
-        public IHttpActionResult DodajKorisnika([FromBody]KorisnikDodavanjeDto kddto)
+        public IHttpActionResult DodajKorisnika([FromBody]KorisnikKreiranjeDto kddto)
         {
           
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Korisnik k = new Korisnik()
-                {
-                    KorisnickoIme = Guid.NewGuid().ToString().Substring(0,19),
-                    Ime = kddto.Ime,
-                    Prezime = kddto.Prezime,
-                    DatumRegistracije = DateTime.Now,
-                    DatumRodjenja = kddto.DatumRodjenja,
-                    Email = Guid.NewGuid().ToString().Substring(0,19),
-                    BrojIndeksa = kddto.BrojIndeksa,
-                    BrojTelefona = String.Empty,
-                    AktivanNalog = true,
-                    TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(5),
-                    StudiraFakultet = ProvajderPodatakaFakulteta.VratiFakultet(kddto.IdFakulteta),
-                    DatumVaziDo = DateTime.Now.AddYears(1),
-                    Obrisan = false,
-                    Sifra = kddto.Sifra
-            };
+                ProvajderPodatakaKorisnika p = new ProvajderPodatakaKorisnika();
+                KorisnikKreiranjeDto kreirani = p.listaDelegataKreiranja[kddto.IdTipaNaloga - 1].Invoke(kddto);
 
-                ProvajderPodatakaKorisnika.DodajKorisnika(k);
                 SesijeProvajder.ZatvoriSesiju();
 
-                return Content(HttpStatusCode.Found, kddto);
+                return Content(HttpStatusCode.Created, kreirani);
             }
             catch (Exception e)
             {
             }
-            return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
+            return Content(HttpStatusCode.BadRequest, new KorisnikKreiranjeDto());
 
         }
 
@@ -178,6 +162,7 @@ namespace MensariumAPI.Controllers
         [System.Web.Http.Route("update")]
         public IHttpActionResult UpdateKorisnika([FromBody]ClientZaRegistracijuDto klijentReg)
         {
+            // kreirati objavu u delu update studenta
             try
             {
                 SesijeProvajder.OtvoriSesiju();
@@ -432,6 +417,7 @@ namespace MensariumAPI.Controllers
         //// todo
         //"korisnici/odjava/{sessionid}"
         //funkcija za odjavljivanje
+
 
     }
 }
