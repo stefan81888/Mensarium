@@ -402,7 +402,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
 
-            string sifra = Guid.NewGuid().ToString().Substring(0, 10);
             Korisnik k = new Korisnik()
             {
                 KorisnickoIme = kkdto.KorisnickoIme,
@@ -410,7 +409,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 BrojTelefona = kkdto.BrojTelefona,
                 Ime = kkdto.Ime,
                 Prezime = kkdto.Prezime,
-                Sifra = sifra,
+                Sifra = kkdto.Sifra,
                 DatumRegistracije = DateTime.Now,
                 DatumRodjenja = kkdto.DatumRodjenja,
                 AktivanNalog = true,
@@ -428,7 +427,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             Korisnik kreirani = lista.Find(x => x.KorisnickoIme == kkdto.KorisnickoIme);
 
             kkdto.IdKorisnika = kreirani.IdKorisnika;
-            kkdto.Sifra = sifra;
+            kkdto.Sifra = kreirani.Sifra;
             kkdto.DatumRegistracije = kreirani.DatumRegistracije;
             kkdto.AktivanNalog = kreirani.AktivanNalog;
 
@@ -462,8 +461,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             LoginSesija login = sesije.Find(x => x.IdSesije == sesija.IdSesije);
 
-            login.ValidnaDo = DateTime.MinValue;
-            sesija.ValidnaDo = DateTime.MinValue;
+            login.ValidnaDo = DateTime.Now;
+            sesija.ValidnaDo = DateTime.Now;
 
             s.Save(login);
             s.Flush();
