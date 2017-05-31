@@ -440,19 +440,35 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return DodajNalog(kkdto);
         }
 
-        private KorisnikKreiranjeDto DodajUplatu(KorisnikKreiranjeDto kkdto)
+        public static KorisnikKreiranjeDto DodajUplatu(KorisnikKreiranjeDto kkdto)
         {
             return DodajNalog(kkdto);
         }
 
-        private KorisnikKreiranjeDto DodajNaplatu(KorisnikKreiranjeDto kkdto)
+        public static KorisnikKreiranjeDto DodajNaplatu(KorisnikKreiranjeDto kkdto)
         {
             return DodajNalog(kkdto);
         }
 
-        private KorisnikKreiranjeDto DodajAdministratora(KorisnikKreiranjeDto kkdto)
+        public static KorisnikKreiranjeDto DodajAdministratora(KorisnikKreiranjeDto kkdto)
         {
             return DodajNalog(kkdto);
+        }
+
+        public static SesijaDto OdjaviSe(SesijaDto sesija)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            List<LoginSesija> sesije = s.Query<LoginSesija>().Select(k => k).ToList();
+
+            LoginSesija login = sesije.Find(x => x.IdSesije == sesija.IdSesije);
+
+            login.ValidnaDo = DateTime.MinValue;
+            sesija.ValidnaDo = DateTime.MinValue;
+
+            s.Save(login);
+            s.Flush();
+
+            return sesija;
         }
     }
 }

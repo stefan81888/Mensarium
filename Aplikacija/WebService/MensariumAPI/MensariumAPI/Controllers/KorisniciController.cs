@@ -56,7 +56,6 @@ namespace MensariumAPI.Controllers
             }
             catch (Exception e)
             {
-                
             }
             return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
         }
@@ -210,8 +209,6 @@ namespace MensariumAPI.Controllers
             }
             catch (Exception e)
             {
-
-
             }
             return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
 
@@ -282,7 +279,6 @@ namespace MensariumAPI.Controllers
             }
             catch (Exception e)
             {
-
             }
             return Content(HttpStatusCode.BadRequest,new KorisnikFollowDto());
         }
@@ -314,7 +310,6 @@ namespace MensariumAPI.Controllers
             }
             catch (Exception e)
             {
-
             }
             return Content(HttpStatusCode.BadRequest, new List<PrivilegijaFullDto>());
         }
@@ -381,7 +376,6 @@ namespace MensariumAPI.Controllers
             }
             catch (Exception e)
             {
-               
             }
             return Content(HttpStatusCode.BadRequest, new PozivanjaPozvaniDto());
 
@@ -404,19 +398,39 @@ namespace MensariumAPI.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
             }
             return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
 
         }
 
-        // plus funkcija za dodavanje bilo kog tipa naloga
-        // delegirati fje za odredjen tip naloga na osnovu id-ja tipa
+        //Odjava korisnika
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("odjava")]
+        public IHttpActionResult Odjava([FromBody] SesijaDto sesija)
+        { 
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                SesijaDto s = ProvajderPodatakaKorisnika.OdjaviSe(sesija);
+
+                SesijeProvajder.ZatvoriSesiju();
+
+                if(s != null)
+                    return Content(HttpStatusCode.Found, s);
+            }
+            catch (Exception e)
+            {
+            }
+            return Content(HttpStatusCode.BadRequest, new SesijaDto());
+
+        }
+
 
         //// todo
         //"korisnici/odjava/{sessionid}"
         //funkcija za odjavljivanje
+        // omoguciti update svima
 
 
     }
