@@ -13,18 +13,17 @@ using RestSharp;
 
 namespace MensariumDesktop.Model.Controllers
 {
-    public class ApiResponse<T>
-    {
-        public HttpStatusCode HttpStatusCode { get; set; }
-        public string ErrorResponse { get; set; }
-        public T ResponseObject { get; set; }
-    }
     
     public static class Api
     {
+        private class ApiResponse<T>
+        {
+            public HttpStatusCode HttpStatusCode { get; set; }
+            public string ErrorResponse { get; set; }
+            public T ResponseObject { get; set; }
+        }
         static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        
-        
+               
         private static ApiResponse<T> Execute<T>(RestRequest request, bool includeSid = true) where T : new()
         {
             RestClient client = new RestClient();
@@ -214,6 +213,62 @@ namespace MensariumDesktop.Model.Controllers
 
             return response.ResponseObject;
         }
+        public static MenzaFullDto GetMensaInfo(int id)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "menze";
+            request.AddParameter("id", id, ParameterType.QueryString);
 
+            ApiResponse<MenzaFullDto> response = Execute<MenzaFullDto>(request);
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("GetMensas: Neuspesno pribavljanje informacije o menzi");
+
+            return response.ResponseObject;
+        }
+        public static bool AddNewMensa(MenzaFullDto m)
+        {
+            RestRequest request = new RestRequest(Method.POST);
+            request.Resource = "menze/dodaj";
+            request.AddObject(m);
+
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+        }
+        public static bool DeleteMensa(int id)
+        {
+            throw new Exception("Not implemented on server");
+            RestRequest request = new RestRequest(Method.DELETE);
+            request.Resource = "menze/obrisi";
+            request.AddParameter("id", id, ParameterType.QueryString);
+
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+        }
+        public static int CrowdInMensa(int id)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "menze/guzvaMenza";
+            request.AddParameter("id", id, ParameterType.QueryString);
+
+            ApiResponse<int> response = Execute<int>(request);
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("CrowdInMensa: Neuspesno pribavljanje informacije o guzvi u menzi");
+
+            return response.ResponseObject;
+
+        }
+        public static int CrowdInPaymentCounter (int id)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "menze/guzvaUplata";
+            request.AddParameter("id", id, ParameterType.QueryString);
+
+            ApiResponse<int> response = Execute<int>(request);
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("CrowdInPaymentCounter: Neuspesno pribavljanje informacije o guzvi na salteru");
+
+            return response.ResponseObject;
+
+        }
     }
 }
