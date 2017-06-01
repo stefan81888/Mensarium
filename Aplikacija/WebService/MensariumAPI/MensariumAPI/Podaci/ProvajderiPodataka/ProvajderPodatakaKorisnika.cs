@@ -489,20 +489,21 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return DodajNalog(kkdto);
         }
 
-        public static SesijaDto OdjaviSe(SesijaDto sesija)
+        public static bool OdjaviSe(string sesija)
         {
             ISession s = SesijeProvajder.Sesija;
             List<LoginSesija> sesije = s.Query<LoginSesija>().Select(k => k).ToList();
 
-            LoginSesija login = sesije.Find(x => x.IdSesije == sesija.IdSesije);
+            LoginSesija login = sesije.Find(x => x.IdSesije == sesija);
+            if (login == null)
+                return false;
 
             login.ValidnaDo = DateTime.Now;
-            sesija.ValidnaDo = DateTime.Now;
-
+            
             s.Save(login);
             s.Flush();
 
-            return sesija;
+            return true;
         }
 
         public static KorisnikKreiranjeDto Azuriraj(KorisnikKreiranjeDto kkdto)
