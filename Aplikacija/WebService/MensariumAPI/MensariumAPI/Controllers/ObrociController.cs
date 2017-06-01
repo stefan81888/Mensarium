@@ -359,7 +359,7 @@ namespace MensariumAPI.Controllers
                 for (int i = 0; i < obrokId.Count(); ++i)
                 {
                     Obrok o = ProvajderPodatakaObroka.VratiObrok(obrokId[i]);
-                    if (o != null)
+                    if (o != null && ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(o.Uplatilac.IdKorisnika).Contains(o))
                     {
                         o.DatumIskoriscenja = null;
                         o.Iskoriscen = false;
@@ -397,7 +397,7 @@ namespace MensariumAPI.Controllers
                 for (int i = 0; i < obrokId.Count(); ++i)
                 {
                     Obrok o = ProvajderPodatakaObroka.VratiObrok(obrokId[i]);
-                    if (o != null)
+                    if (o != null && ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(o.Uplatilac.IdKorisnika).Contains(o))
                         ProvajderPodatakaObroka.ObrisiObrok(obrokId[i]);
                 }
                 return Ok("Korekcija uspesno obavljena.");
