@@ -211,5 +211,76 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.ZatvoriSesiju();
             }
         }
+
+        [HttpPut]
+        [Route("update")]
+        public IHttpActionResult UpdateMenzu([FromBody]MenzaFullDto mdto, [FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaMenza))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+
+                Menza m = ProvajderPodatakaMenzi.VratiMenzu(mdto.IdMenze);
+
+                if (m == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Menza za modifikaciju nije pronadjena") });
+
+                m.Naziv = mdto.Naziv;
+                m.Lokacija = mdto.Lokacija;
+                m.RadnoVreme = mdto.RadnoVreme;
+                m.VanrednoNeRadi = mdto.VanrednoNeRadi;
+                ProvajderPodatakaMenzi.UpdateMenzu(m);
+                return Ok("Menza uspesno modifikovana");
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+			finally
+			{
+				SesijeProvajder.ZatvoriSesiju();
+			}
+            
+        }
+
+        [System.Web.Http.HttpDelete]
+		[System.Web.Http.Route("obrisi")]
+		public IHttpActionResult ObrisiMenzu([FromUri]int id,  [FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.BrisanjeMenza))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+
+                Menza m = null;
+                m = ProvajderPodatakaMenzi.VratiMenzu(id);
+                if (m == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Menza za brisanje nije pronadjena") });
+
+                ProvajderPodatakaMenzi.ObrisiMenzu(id);
+                return Ok("Menza uspesno obrisana");
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+
     }
 }

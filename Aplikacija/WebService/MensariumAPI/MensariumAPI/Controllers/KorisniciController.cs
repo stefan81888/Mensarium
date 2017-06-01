@@ -38,7 +38,7 @@ namespace MensariumAPI.Controllers
 
                 if (k == null)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                        {Content = new StringContent("Fakultet nije pronadjen")});
+                        {Content = new StringContent("Korisnik nije pronadjen")});
 
 
                 KorisnikFullDto korisnik = new KorisnikFullDto();
@@ -105,7 +105,7 @@ namespace MensariumAPI.Controllers
                 if (listaKorisnika.Count == 0)
                 {
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                        {Content = new StringContent("Fakultet nije pronadjen")});
+                        {Content = new StringContent("Nema korisnika")});
                 }
 
                 List<KorisnikFullDto> listaKorisnikaFull = new List<KorisnikFullDto>(listaKorisnika.Count);
@@ -159,58 +159,91 @@ namespace MensariumAPI.Controllers
 
         //Korisnik pratilac počinje da prati korisnika praceni
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("zaprati/{pratilac:int}/{praceni:int}")]
+        //[System.Web.Http.Route("zaprati/{pratilac:int}/{praceni:int}")]
         public IHttpActionResult Zaprati(int pratilac, int praceni, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
+
                 bool status = ProvajderPodatakaKorisnika.Zaprati(pratilac, praceni);
-                
-                SesijeProvajder.ZatvoriSesiju();
+              
                 if(status)
-                    return Content(HttpStatusCode.OK, new KorisnikFollowDto());
+                    return Ok("Korisnik zapracen");
+
+                throw  new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                { Content = new StringContent("Korisnik nije zapracen") });
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         //Kreiranje naloga
         [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("dodaj")]
-        public IHttpActionResult DodajKorisnika([FromBody]KorisnikKreiranjeDto kddto, [FromUri]string sid)
+       // [System.Web.Http.Route("dodaj")]
+        public KorisnikKreiranjeDto DodajKorisnika([FromBody]KorisnikKreiranjeDto kddto, [FromUri]string sid)
         {
-          
+
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid,
+                    ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        {Content = new StringContent("Nemate privilegiju")});
+
                 ProvajderPodatakaKorisnika p = new ProvajderPodatakaKorisnika();
                 KorisnikKreiranjeDto kreirani = p.listaDelegataKreiranja[kddto.IdTipaNaloga - 1].Invoke(kddto);
 
-                SesijeProvajder.ZatvoriSesiju();
+                if (kreirani == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        {Content = new StringContent("Korisnik nije dodat")});
 
-                return Content(HttpStatusCode.Created, kreirani);
+
+                return kreirani;
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new KorisnikKreiranjeDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
 
         }
 
         //Ažuriranje korisnika -> registracija na android aplikaciju
         [System.Web.Http.HttpPut]
-        [System.Web.Http.Route("update")]
+       // [System.Web.Http.Route("update")]
         public IHttpActionResult UpdateKorisnika([FromBody]ClientZaRegistracijuDto klijentReg, [FromUri]string sid)
         {
-            // kreirati objavu u delu update studenta
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid,
+                    ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        {Content = new StringContent("Nemate privilegiju")});
 
                 Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(klijentReg.DodeljeniId);
                 if (ValidatorKorisnika.KorisnikPostoji(k))
@@ -227,93 +260,140 @@ namespace MensariumAPI.Controllers
                         ProvajderPodatakaKorisnika.UpdateKorisnika(k);
                     }
                 }
-
-                SesijeProvajder.ZatvoriSesiju();
-                return Content(HttpStatusCode.OK, new KorisnikFullDto());
+                return Ok("Korisnik je registrovan na aplikaciju");
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         //Prijava na sistem
         [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("prijava")]
-        public IHttpActionResult Prijava([FromBody]ClientLoginDto cdto)
+        //[System.Web.Http.Route("prijava")]
+        public SesijaDto Prijava([FromBody]ClientLoginDto cdto, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
+
                 SesijaDto sdto = ProvajderPodatakaKorisnika.PrijavaKorisnika(cdto);
 
-                SesijeProvajder.ZatvoriSesiju();
+                if(sdto == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                    { Content = new StringContent("Prijava neuspesna") });
 
-                if(sdto != null)
-                    return Content(HttpStatusCode.OK, sdto);
+                return sdto;
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
 
         }
 
         //Prikaz svih korisnika koje korisnik prati
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("pracenja/{id:int}")]
-        public IHttpActionResult Pracenja(int id, [FromUri]string sid)
+        // [System.Web.Http.Route("pracenja/{id:int}")]
+        public List<KorisnikFollowDto> Pracenja(int id, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
-                List<KorisnikFollowDto> pracenja = ProvajderPodatakaKorisnika.SvaPracenja(id);
-                SesijeProvajder.ZatvoriSesiju();
 
-                return Content(HttpStatusCode.OK, pracenja);
+                List<KorisnikFollowDto> pracenja = ProvajderPodatakaKorisnika.SvaPracenja(id);
+
+               if(pracenja.Count == 0)
+                   throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                   { Content = new StringContent("Nisu pronadjeni korisnici") });
+
+                return pracenja;
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
-
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         //Pretraga po kriterijumu
         [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("pretraga")]
-        public IHttpActionResult Pretraga([FromBody] PretragaKriterijumDto pkdto, [FromUri]string sid)
+    //    [System.Web.Http.Route("pretraga")]
+        public List<KorisnikFollowDto> Pretraga([FromBody] PretragaKriterijumDto pkdto, [FromUri]string sid)
         {
             // id korisnika koji pretrazuje
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
+
                 ProvajderPodatakaKorisnika p = new ProvajderPodatakaKorisnika();
 
                 int idTipaNaloga = ProvajderPodatakaKorisnika.VratiKorisnika(pkdto.IdKorisnika).TipNaloga.IdTip; 
                 List<KorisnikFollowDto> k = p.listaDelegataPretrage[idTipaNaloga - 1].Invoke(pkdto);
 
-                SesijeProvajder.ZatvoriSesiju();
+                if(k.Count == 0)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                    { Content = new StringContent("Nema rezultata") });
 
-                return Content(HttpStatusCode.OK, k);
+                return k;
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new KorisnikFollowDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
 
         }
 
         //Broj obroka korisnika
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("stanje/{id:int}")]
-        public IHttpActionResult VratiKorisnikovoStanjeObroka(int id, [FromUri]string sid)
+        [System.Web.Http.Route("stanje")]
+        public KorisnikStanjeDto VratiKorisnikovoStanjeObroka([FromUri] int id, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
 
                 Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
 
@@ -322,26 +402,45 @@ namespace MensariumAPI.Controllers
                 {
                    korisnik = ProvajderPodatakaKorisnika.Stanje(k);
                 }
-                SesijeProvajder.ZatvoriSesiju();
-                if (korisnik != null)
-                    return Content(HttpStatusCode.OK, korisnik);
+                if (korisnik == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                    { Content = new StringContent("Korisnik nije pronadjen") });
+
+                return korisnik;
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest,new KorisnikFollowDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         //Priivlegije naloga
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("privilegije/{id:int}")]
-        public IHttpActionResult VratiPrivilegijeKorisnika(int id, [FromUri]string sid)
+        [System.Web.Http.Route("privilegije")]
+        public List<PrivilegijaFullDto> VratiPrivilegijeKorisnika(int id, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
+
                 List<Privilegija> listaPrivilegija = ProvajderPodatakaTipovaNaloga.VratiPrivilegijeKorisnika(id);
-                List<PrivilegijaFullDto> listaPrivilegijaFull = new List<PrivilegijaFullDto>(listaPrivilegija.Count());
+
+                if (listaPrivilegija.Count == 0)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                    { Content = new StringContent("Korisnik nije") });
+
+                List<PrivilegijaFullDto> listaPrivilegijaFull = new List<PrivilegijaFullDto>(listaPrivilegija.Count);
 
                 foreach (Privilegija p in listaPrivilegija)
                 {
@@ -352,152 +451,234 @@ namespace MensariumAPI.Controllers
                     });
                 }
 
-                SesijeProvajder.ZatvoriSesiju();
+                if (listaPrivilegija.Count != 0)
+                    return listaPrivilegijaFull;
 
-                if (listaPrivilegija != null)
-                    return Content(HttpStatusCode.OK, listaPrivilegijaFull);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nema korisnika") });
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new List<PrivilegijaFullDto>());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         //Pozivanje na obrok
         [System.Web.Http.HttpPut]
-        [System.Web.Http.Route("pozovi")]
-        public IHttpActionResult Pozovi([FromBody] PozivanjaFullDto pfdto, [FromUri]string sid)
+      //  [System.Web.Http.Route("pozovi")]
+        public PozivanjaFullDto Pozovi([FromBody] PozivanjaFullDto pfdto, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
+
                 PozivanjaFullDto o = ProvajderPodatakaKorisnika.Pozovi(pfdto);
 
-                SesijeProvajder.ZatvoriSesiju();
 
-                if(o != null)
-                    return Content(HttpStatusCode.OK, o);
+                if(o == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                    { Content = new StringContent("Poziv nije poslat") });
+
+                return o;
 
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new List<PrivilegijaFullDto>());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         //Vraca sve pozive upucene jednom korisniku
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("pozivi/{id:int}")]
-        public IHttpActionResult SviPozivi(int id, [FromUri]string sid)
+        [System.Web.Http.Route("pozivi")]
+        public List<PozivanjaNewsFeedItemDto> SviPozivi(int id, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
 
                 List<PozivanjaNewsFeedItemDto> listaPoziva = ProvajderPodatakaKorisnika.SviPozivi(id);
 
-                SesijeProvajder.ZatvoriSesiju();
+                if(listaPoziva.Count == 0)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                    { Content = new StringContent("Nema poziva") });
 
-                return Content(HttpStatusCode.OK, listaPoziva);
+                return listaPoziva;
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new PozivanjaNewsFeedItemDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
-
+        
+        //Odgovor na poziv za obrok
         [System.Web.Http.HttpPut]
-        [System.Web.Http.Route("odgovor/pozivi")]
-        public IHttpActionResult OdgovorNaPoziv([FromBody] PozivanjaPozvaniDto poziv, [FromUri]string sid)
+      //  [System.Web.Http.Route("odgovor/pozivi")]
+        public PozivanjaPozvaniDto OdgovorNaPoziv([FromBody] PozivanjaPozvaniDto poziv, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
                 PozivanjaPozvaniDto odgovor = ProvajderPodatakaKorisnika.OdogovoriNaPoziv(poziv);
 
-                SesijeProvajder.ZatvoriSesiju();
+                if(odgovor == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                    { Content = new StringContent("Odgovor nije poslat") });
 
-                if(odgovor != null)
-                    return Content(HttpStatusCode.OK, odgovor);
+                return odgovor;
 
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new PozivanjaPozvaniDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
 
         }
-
+        
         //Korisnik pratilac prestaje da prati korisnika praceni
         [System.Web.Http.HttpPut]
-        [System.Web.Http.Route("pracenja/prestani/{pratilac:int}/{praceni:int}")]
+       // [System.Web.Http.Route("pracenja/prestani/{pratilac:int}/{praceni:int}")]
         public IHttpActionResult PrestaniDaPratis(int pratilac, int praceni, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
                 bool status = ProvajderPodatakaKorisnika.PrestaniDaPratis(pratilac, praceni);
 
-                SesijeProvajder.ZatvoriSesiju();
                 if (status)
-                    return Content(HttpStatusCode.OK, new KorisnikFollowDto());
+                    return Ok("Korisnik prestao sa pracenjem");
+
+               throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                                              { Content = new StringContent("Neuspesno") });
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
-
-        }
-
-        //Odjava korisnika
-        [System.Web.Http.HttpPut]
-        [System.Web.Http.Route("odjava")]
-        public IHttpActionResult Odjava([FromUri]string sid)
-        { 
-            try
-            {
-                SesijeProvajder.OtvoriSesiju();
-                bool uspesno = ProvajderPodatakaKorisnika.OdjaviSe(sid);
-
-                return Ok("Uspena odjava");
-            }
-            catch (Exception e)
-            {
-            }
-
             finally
             {
                 SesijeProvajder.ZatvoriSesiju();
             }
 
-            return Ok("PRPRAVVI OOVVOVKVJ");
+        }
+
+        //Odjava korisnika
+        [System.Web.Http.HttpPut]
+        //[System.Web.Http.Route("odjava")]
+        public IHttpActionResult Odjava([FromUri]string sid)
+        { 
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
+
+                bool uspesno = ProvajderPodatakaKorisnika.OdjaviSe(sid);
+
+                if(uspesno)
+                    return Ok("Uspena odjava");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
 
         }
 
         //Azuriranje naloga bilo korisnika
         [System.Web.Http.HttpPut]
-        [System.Web.Http.Route("azuriraj")]
-        public IHttpActionResult Azuriraj([FromBody] KorisnikKreiranjeDto kddto, [FromUri]string sid)
+    //    [System.Web.Http.Route("azuriraj")]
+        public KorisnikKreiranjeDto Azuriraj([FromBody] KorisnikKreiranjeDto kddto, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
+
                 ProvajderPodatakaKorisnika p = new ProvajderPodatakaKorisnika();
                 KorisnikKreiranjeDto kreirani = p.listaDelegataKreiranja[kddto.IdTipaNaloga + 4].Invoke(kddto);
 
-                SesijeProvajder.ZatvoriSesiju();
-
-                return Content(HttpStatusCode.Created, kreirani);
+               if(kreirani == null)
+                   throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                   { Content = new StringContent("Korisnik azuriran") });
+                return kreirani;
 
             }
             catch (Exception e)
             {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new KorisnikFullDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
     }

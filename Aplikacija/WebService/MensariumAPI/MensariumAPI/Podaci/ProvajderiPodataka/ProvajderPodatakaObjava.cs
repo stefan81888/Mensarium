@@ -14,7 +14,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static ObjavaFullDto VratiObjavuDto(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik k = s.Load<Korisnik>(id);
+            Korisnik k = s.Get<Korisnik>(id);
             Objava o = k.Objava;
             ObjavaFullDto odto = new ObjavaFullDto()
             {
@@ -32,7 +32,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
            
             ISession s = SesijeProvajder.Sesija;
-            Korisnik ko = s.Load<Korisnik>(id);
+            Korisnik ko = s.Get<Korisnik>(id);
 
             Objava o;
             if (ko.Objava != null)
@@ -59,7 +59,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static List<ObjavaReadDto> SveObjave(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik ko = s.Load<Korisnik>(id);
+            Korisnik ko = s.Get<Korisnik>(id);
 
             List<ObjavaReadDto> listaObjava = new List<ObjavaReadDto>();
 
@@ -114,7 +114,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static Objava VrtatiObjavu(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Objava o = s.Load<Objava>(id);
+            Objava o = s.Get<Objava>(id);
 
             s.Close();
 
