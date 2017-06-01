@@ -33,6 +33,8 @@ namespace Mensarium
             sveMenze.Click += SveMenzeOnClick;
 
             //napunimo omiljenu menzu.. Po defaultu index 0
+            var prefs = Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
+            this.omiljenaMenza = prefs.GetInt("OmiljenaMezna", omiljenaMenza);
             SetujOmiljenuMenzu(omiljenaMenza);
 
             return view;
@@ -47,9 +49,11 @@ namespace Mensarium
                 view.FindViewById<TextView>(Resource.Id.DaLiRadiMojaMenza).Text = "Trenutno otvorena!";
             else
                 view.FindViewById<TextView>(Resource.Id.DaLiRadiMojaMenza).Text = "Trenutno ne radi!";
-            view.FindViewById<TextView>(Resource.Id.GuzvaMojeMenzeText).Text = "Guzva u menzi: " + item.Popunjenost.ToString() + "%";
 
-            Android.Widget.ProgressBar bar = view.FindViewById<Android.Widget.ProgressBar>(Resource.Id.ProfilMojaMenzaBar);
+            view.FindViewById<TextView>(Resource.Id.GuzvaMojeMenzeText).Text = "Guzva u menzi: " + item.Popunjenost.ToString() + "%"; ;
+  
+            Android.Widget.ProgressBar bar =
+                view.FindViewById<Android.Widget.ProgressBar>(Resource.Id.ProfilMojaMenzaBar);
             bar.Max = 100;
             bar.Progress = item.Popunjenost;
         }
@@ -57,8 +61,23 @@ namespace Mensarium
         private void SveMenzeOnClick(object sender, EventArgs eventArgs)
         {
             var intent = new Intent(this.Activity, typeof(SveMenzeActivity));
+            StartActivityForResult(intent, 0);
 
-            StartActivity(intent);
+            
+            //var prefs = Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
+            //SetujOmiljenuMenzu(prefs.GetInt("OmiljenaMezna", omiljenaMenza));
+        }
+
+        public override void OnActivityResult(int requestCode, int resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+
+            if (requestCode == 0)
+            {
+                var prefs = Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
+                this.omiljenaMenza = prefs.GetInt("OmiljenaMezna", omiljenaMenza);
+                SetujOmiljenuMenzu(omiljenaMenza);
+            }
         }
     }
 }

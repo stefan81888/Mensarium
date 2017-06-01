@@ -19,6 +19,9 @@ namespace Mensarium
     {
         private ListaMenzi listaMenzi = ListaMenzi.InstancaListaMenzi;
         private ListView listaView;
+
+        private int pos = 0;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -50,6 +53,8 @@ namespace Mensarium
             popup.Show();
             */
 
+            this.pos = itemLongClickEventArgs.Position;
+
             var alert = new AlertDialog.Builder(this);
             //alert.SetTitle("Odaberi akciju");
 
@@ -66,16 +71,23 @@ namespace Mensarium
 
         private void Handler(object sender, DialogClickEventArgs dialogClickEventArgs)
         {
-            var selectedItem = dialogClickEventArgs.Which;
+            if (dialogClickEventArgs.Which == 0)
+            {
+                var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
+                var prefEditor = prefs.Edit();
+
+                prefEditor.PutInt("OmiljenaMezna", this.pos);
+                prefEditor.Commit();
+
+                Toast.MakeText(this, "Omiljena menza postavljena!", ToastLength.Short).Show();
+            };
         }
 
-        private void PopupOnMenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs menuItemClickEventArgs)
-        {
-            
-        }
+        //private void PopupOnMenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs menuItemClickEventArgs)
 
         public override bool OnNavigateUp()
         {
+            SetResult(0);
             Finish();
             return true;
         }
