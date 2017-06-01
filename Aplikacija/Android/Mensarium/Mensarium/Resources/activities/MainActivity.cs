@@ -39,7 +39,7 @@ namespace Mensarium
 
         private void LoginButton_Click(object sender, System.EventArgs e)
         {
-            /*
+            /* STARO
             
             ClientLoginDto clog = new ClientLoginDto
             {
@@ -69,7 +69,36 @@ namespace Mensarium
             }
             */
 
+            /* NOVO
+            ClientLoginDto clog = new ClientLoginDto
+            {
+                KIme_Mail = FindViewById<TextView>(Resource.Id.usernameText).Text,
+                Sifra = FindViewById<TextView>(Resource.Id.passwordText).Text
+            };
 
+            try
+            {
+                SesijaDto sesija = Api.Api.LoginUser(clog);
+                MSettings.CurrentSession = new Session() { SessionID = sesija.IdSesije };
+
+                KorisnikFullDto korisnik = Api.Api.GetUserFullInfo(sesija.IdKorisnika);
+                if (korisnik.IdTipaNaloga == (int)User.UserAccountType.Student)
+                {
+                    //if (!Api.LogoutUser(MSettings.CurrentSession.SessionID))
+                    //    throw new Exception("Neuspesno ciscenje logovanja");
+                    var intent = new Intent(this, typeof(MainSwipePage));
+                    StartActivity(intent);
+
+                    MSettings.CurrentSession.LoggedUser = MUtility.User_From_KorisnikFullDto(korisnik);
+                }
+            }
+            catch (Exception ex)
+            {
+                MSettings.CurrentSession = null;
+                Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
+            }
+            */
+            
             var intent = new Intent(this, typeof(MainSwipePage));
             StartActivity(intent);
             

@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Mensarium.Comp;
+using Mensarium.Resources.activities;
 
 namespace Mensarium
 {
@@ -80,7 +81,13 @@ namespace Mensarium
                 prefEditor.Commit();
 
                 Toast.MakeText(this, "Omiljena menza postavljena!", ToastLength.Short).Show();
-            };
+            }
+            else
+            {
+                var intent = new Intent(this, typeof(MapActivity));
+                intent.PutExtra("MenzaZaPrikaz", this.pos);
+                StartActivity(intent);
+            }
         }
 
         //private void PopupOnMenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs menuItemClickEventArgs)

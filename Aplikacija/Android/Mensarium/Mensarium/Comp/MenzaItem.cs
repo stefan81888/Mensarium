@@ -18,5 +18,7 @@ namespace Mensarium
         public string Lokacija { get; set; }
         public bool Radi { get; set; }
         public int Popunjenost { get; set; }
+        public double latiCoo { get; set; }
+        public double longCoo { get; set; }
     }
 }

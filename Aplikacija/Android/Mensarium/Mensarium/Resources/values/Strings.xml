@@ -11,4 +11,5 @@
   </string-array>
     <string name="Hello">Hello World, Click Me!</string>
     <string name="ApplicationName">Mensarium</string>
+    <string name="mapsApiKey">AIzaSyAsPi99LMpLs8YgV1ee-i1czJsIpLqXJr8</string>
 </resources>
