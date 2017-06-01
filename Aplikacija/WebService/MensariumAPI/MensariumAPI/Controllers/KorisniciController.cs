@@ -334,7 +334,7 @@ namespace MensariumAPI.Controllers
 
         //Priivlegije naloga
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("privilegije/{id:int}")]
+        [System.Web.Http.Route("privilegije")]
         public IHttpActionResult VratiPrivilegijeKorisnika(int id, [FromUri]string sid)
         {
             try
@@ -388,7 +388,7 @@ namespace MensariumAPI.Controllers
 
         //Vraca sve pozive upucene jednom korisniku
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("pozivi/{id:int}")]
+        [System.Web.Http.Route("pozivi")]
         public IHttpActionResult SviPozivi(int id, [FromUri]string sid)
         {
             try
