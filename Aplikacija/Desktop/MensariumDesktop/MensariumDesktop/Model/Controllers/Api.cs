@@ -199,7 +199,18 @@ namespace MensariumDesktop.Model.Controllers
       
             return response.ResponseObject;
         }
+        public static FakultetFullDto GetFacultyInfo(int id)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "fakulteti";
+            request.AddParameter("id", id, ParameterType.QueryString);
 
+            ApiResponse<FakultetFullDto> response = Execute<FakultetFullDto>(request);
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("GetFacultyInfo: Neuspesno pribavljanje informacije o fakultetu");
+
+            return response.ResponseObject;
+        }
         //MENZE
         public static List<MenzaFullDto> GetAllMensas()
         {
@@ -269,6 +280,15 @@ namespace MensariumDesktop.Model.Controllers
 
             return response.ResponseObject;
 
+        }
+        public static bool UpdateMenza(MenzaFullDto m)
+        {
+            throw new Exception("Not implemented on server");
+            RestRequest request = new RestRequest(Method.PUT);
+            request.AddObject(m);
+
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
         }
     }
 }
