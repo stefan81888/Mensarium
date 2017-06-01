@@ -150,6 +150,11 @@ namespace MensariumAPI.Controllers
                 if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeGuzvaMenza))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
+                Menza m = null;
+
+                m = ProvajderPodatakaMenzi.VratiMenzu(id);
+                if (m == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Menza nije pronadjena") });
 
                 int procenatGuzveZaJelo = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaSkinutihUPoslednjihPetMinuta(id) * 0.3);
                 if (procenatGuzveZaJelo > 100)
@@ -181,6 +186,11 @@ namespace MensariumAPI.Controllers
                 if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeGuzvaMenza))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
+                Menza m = null;
+
+                m = ProvajderPodatakaMenzi.VratiMenzu(id);
+                if (m == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Menza nije pronadjena") });
 
                 int procenatGuzveZaUplatu = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaUplacenihUPoslednjihPetMinuta(id) * 0.1);
                 if (procenatGuzveZaUplatu > 100)

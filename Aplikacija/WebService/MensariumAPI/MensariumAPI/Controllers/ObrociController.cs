@@ -182,10 +182,10 @@ namespace MensariumAPI.Controllers
                         break;
                     
                 }
-                if (i == 1)
-                    return Ok("Ne moze se uplatiti, dostignut je limit.");
+                if (i == 0)
+                    return Ok("Ne moze se uopste uplatiti, dostignut je limit.");
                 else
-                    return Ok("Uspesno je dodato " + (i - 1).ToString() + " obroka.");
+                    return Ok("Uspesno je dodato " + i + " obroka.");
                 
             }
             catch (Exception e)
@@ -206,7 +206,7 @@ namespace MensariumAPI.Controllers
         [Route("naplati")]
         public IHttpActionResult NaplatiObroke([FromBody]ObrokNaplataDto obNapDto, [FromUri]string sid)
         {
-            int i;
+            int i = 1;
             try
             {
                 SesijeProvajder.OtvoriSesiju();
@@ -214,7 +214,7 @@ namespace MensariumAPI.Controllers
                 if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaObrok))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
                 
-                for (i = 0; i < obNapDto.BrojObroka; ++i)
+                /*for (i = 0; i < obNapDto.BrojObroka; ++i)
                 {
                     Obrok obrokZaSkidanje = ProvajderPodatakaObroka.ObrokZaSkidanjeOvogTipa(obNapDto.IdKorisnika, obNapDto.IdTipa);
                     if (obrokZaSkidanje != null)
@@ -222,6 +222,19 @@ namespace MensariumAPI.Controllers
                     else
                         break;
                 }
+                */
+                while (i <= obNapDto.BrojObroka )
+                {
+                    Obrok obrokZaSkidanje = ProvajderPodatakaObroka.ObrokZaSkidanjeOvogTipa(obNapDto.IdKorisnika, obNapDto.IdTipa);
+                    if (obrokZaSkidanje != null)
+                    {
+                        ProvajderPodatakaObroka.PojediObrok(obrokZaSkidanje.IdObroka, obNapDto.IdLokacijeIskoriscenja);
+                        ++i;
+                    }
+                    else break;
+                    
+                }
+
                 if (i == 1)
                     return Ok("Ne moze se skunuti, nema obroka");
                 else

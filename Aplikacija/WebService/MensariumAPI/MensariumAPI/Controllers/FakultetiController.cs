@@ -20,35 +20,35 @@ namespace MensariumAPI.Controllers
 		[System.Web.Http.HttpGet]
 		public FakultetFullDto VratiFakultetFull([FromUri]int id, [FromUri]string sid)
 		{
-            try
-            {
-                SesijeProvajder.OtvoriSesiju();
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+			try
+			{
+				SesijeProvajder.OtvoriSesiju();
+				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
-                Fakultet f = null;
-                FakultetFullDto fakultet = new FakultetFullDto();
+				Fakultet f = null;
+				FakultetFullDto fakultet = new FakultetFullDto();
 
-                f = ProvajderPodatakaFakulteta.VratiFakultet(id);
-                if (f == null)
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Fakultet nije pronadjen") });
+				f = ProvajderPodatakaFakulteta.VratiFakultet(id);
+				if (f == null)
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Fakultet nije pronadjen") });
 
-                fakultet.IdFakultet = f.IdFakultet;
-                fakultet.Naziv = f.Naziv;
-                return fakultet;
-            }
-            catch (Exception e)
-            {
-                if (e is HttpResponseException)
-                    throw e;
-                DnevnikIzuzetaka.Zabelezi(e);
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
-                //throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Fakultet nije napravljen!") });
-            }
-            finally
-            {
-                SesijeProvajder.ZatvoriSesiju();
-            }  
+				fakultet.IdFakultet = f.IdFakultet;
+				fakultet.Naziv = f.Naziv;
+				return fakultet;
+			}
+			catch (Exception e)
+			{
+				if (e is HttpResponseException)
+					throw e;
+				DnevnikIzuzetaka.Zabelezi(e);
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+				//throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Fakultet nije napravljen!") });
+			}
+			finally
+			{
+				SesijeProvajder.ZatvoriSesiju();
+			}  
 		}
 
 		[System.Web.Http.HttpGet]
@@ -58,14 +58,14 @@ namespace MensariumAPI.Controllers
 			{
 				SesijeProvajder.OtvoriSesiju();
 				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
-				    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
-                
-                List<Fakultet> listaFakulteta = ProvajderPodatakaFakulteta.VratiFakultete();
-                List<FakultetFullDto> listaFakultetaFull = new List<FakultetFullDto>(listaFakulteta.Count);
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+				
+				List<Fakultet> listaFakulteta = ProvajderPodatakaFakulteta.VratiFakultete();
+				List<FakultetFullDto> listaFakultetaFull = new List<FakultetFullDto>(listaFakulteta.Count);
 
 
-                if (listaFakulteta == null)
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Fakulteti nisu pronadjeni") });
+				if (listaFakulteta == null)
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Fakulteti nisu pronadjeni") });
 
 				foreach (Fakultet f in listaFakulteta)
 				{
@@ -76,89 +76,89 @@ namespace MensariumAPI.Controllers
 					});
 				}
 
-                return listaFakultetaFull;
+				return listaFakultetaFull;
 			}
 			catch(Exception e)
 			{
-                if (e is HttpResponseException)
-                    throw e;
-                DnevnikIzuzetaka.Zabelezi(e);
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+				if (e is HttpResponseException)
+					throw e;
+				DnevnikIzuzetaka.Zabelezi(e);
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
 			}
-            finally
-            {
-                SesijeProvajder.ZatvoriSesiju();
-            }
+			finally
+			{
+				SesijeProvajder.ZatvoriSesiju();
+			}
 		}
 
 		[HttpPost]
 		[Route("dodaj")]
 		public IHttpActionResult DodajFakultet([FromBody] FakultetFullDto fdto, [FromUri]string sid)
 		{
-            try
-            {
-                SesijeProvajder.OtvoriSesiju();
+			try
+			{
+				SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
-                
-                Fakultet f = new Fakultet()
+				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+				
+				Fakultet f = new Fakultet()
 				{
 					Naziv = fdto.Naziv
 				};
 
-                ProvajderPodatakaFakulteta.DodajFakultet(f);
-                return Ok("Fakutet uspesno dodat");
+				ProvajderPodatakaFakulteta.DodajFakultet(f);
+				return Ok("Fakutet uspesno dodat");
 			}
 			catch (Exception e)
 			{
-                if (e is HttpResponseException)
-                    throw e;
-                DnevnikIzuzetaka.Zabelezi(e);
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
-                //throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Fakultet nije napravljen!") });
-            }
-            finally
-            {
-                SesijeProvajder.ZatvoriSesiju();
-            }
+				if (e is HttpResponseException)
+					throw e;
+				DnevnikIzuzetaka.Zabelezi(e);
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+				//throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Fakultet nije napravljen!") });
+			}
+			finally
+			{
+				SesijeProvajder.ZatvoriSesiju();
+			}
 		}
 
 		[System.Web.Http.HttpPut]
 		[System.Web.Http.Route("update")]
-        public IHttpActionResult UpdateFakultet([FromBody]FakultetFullDto fdto, [FromUri]string sid)
+		public IHttpActionResult UpdateFakultet([FromBody]FakultetFullDto fdto, [FromUri]string sid)
 		{
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaFakultet))
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaFakultet))
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
 				Fakultet f = ProvajderPodatakaFakulteta.VratiFakultet(fdto.IdFakultet);
 				
-                if (f == null)
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Fakultet za modifikaciju nije pronadjen") });
+				if (f == null)
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Fakultet za modifikaciju nije pronadjen") });
 				
 
 				f.Naziv = fdto.Naziv;
 				ProvajderPodatakaFakulteta.UpdateFakultet(f);
-                return Ok("Fakutet uspesno modifikovan");
+				return Ok("Fakutet uspesno modifikovan");
 				
 			}
 			catch (Exception e)
 			{
-                if (e is HttpResponseException)
-                    throw e;
-                DnevnikIzuzetaka.Zabelezi(e);
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+				if (e is HttpResponseException)
+					throw e;
+				DnevnikIzuzetaka.Zabelezi(e);
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
 			}
-            finally
-            {
-                SesijeProvajder.ZatvoriSesiju();
-            }
-        }
-        
+			finally
+			{
+				SesijeProvajder.ZatvoriSesiju();
+			}
+		}
+		
 		[System.Web.Http.HttpDelete]
 		[System.Web.Http.Route("obrisi")]
 		public IHttpActionResult ObrisiFakultet([FromUri]int id,  [FromUri]string sid)
@@ -168,30 +168,30 @@ namespace MensariumAPI.Controllers
 				SesijeProvajder.OtvoriSesiju();
 
 				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.BrisanjeFakultet))
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
-                Fakultet f = null;
-                f = ProvajderPodatakaFakulteta.VratiFakultet(id);
-                if (f == null)
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Fakultet za brisanje nije pronadjen") });
+				Fakultet f = null;
+				f = ProvajderPodatakaFakulteta.VratiFakultet(id);
+				if (f == null)
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Fakultet za brisanje nije pronadjen") });
 				
-                ProvajderPodatakaFakulteta.ObrisiFakultet(id);
-                return Ok("Fakutet uspesno obrisan");
-            
-            }
+				ProvajderPodatakaFakulteta.ObrisiFakultet(id);
+				return Ok("Fakutet uspesno obrisan");
+			
+			}
 			catch (Exception e)
 			{
-                if (e is HttpResponseException)
-                    throw e;
-                DnevnikIzuzetaka.Zabelezi(e);
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
-            }
-            finally
-            {
-                SesijeProvajder.ZatvoriSesiju();
-            }
-        }
-        
+				if (e is HttpResponseException)
+					throw e;
+				DnevnikIzuzetaka.Zabelezi(e);
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+			}
+			finally
+			{
+				SesijeProvajder.ZatvoriSesiju();
+			}
+		}
+		
 
 		
 	}
