@@ -14,7 +14,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static Obrok VratiObrok(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Obrok o = s.Load<Obrok>(id);
+            Obrok o = s.Get<Obrok>(id);
             return o;
         }
 
@@ -42,7 +42,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static void PojediObrok(int id, int idLokacijeIskoriscenja)
         {
             ISession s = SesijeProvajder.Sesija;
-            Obrok o = s.Load<Obrok>(id);
+            Obrok o = s.Get<Obrok>(id);
             o.Iskoriscen = true;
             o.DatumIskoriscenja = DateTime.Now;
             o.LokacijaIskoriscenja = s.Load<Menza>(idLokacijeIskoriscenja);
@@ -53,7 +53,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static void ObrisiObrok(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Obrok o = s.Load<Obrok>(id);
+            Obrok o = s.Get<Obrok>(id);
             s.Delete(o);
             s.Flush();
         }
@@ -81,7 +81,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 .Where(k => k.Tip.IdTipObroka == idTipaObroka)
                 .Where(k => k.Iskoriscen == false).ToList();
 
-            if (listaNeiskoriscenihObroka != null)
+            if (listaNeiskoriscenihObroka.Count > 0)
                 return listaNeiskoriscenihObroka[0];
             return null;
         }
@@ -89,22 +89,29 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static List<Obrok> DanasUplaceniNeiskorisceniObrociKorisnika(int idKorisnika)
         {
             ISession s = SesijeProvajder.Sesija;
-            IEnumerable<Obrok> danasUplaceni = s.Query<Obrok>().Select(k => k).Where(k => k.Uplatilac.IdKorisnika == idKorisnika)
+            List<Obrok> danasUplaceni = s.Query<Obrok>().Select(k => k).Where(k => k.Uplatilac.IdKorisnika == idKorisnika)
                 .Where(k => k.DatumUplacivanja.Day == DateTime.Now.Day)
                 .Where(k => k.Iskoriscen == false)
                 .Where(k => k.DatumIskoriscenja == null)
-                .Where(k => k.LokacijaIskoriscenja == null);
-            return danasUplaceni.ToList();
+                .Where(k => k.LokacijaIskoriscenja == null).ToList();
+            if (danasUplaceni.Count > 0)
+                return danasUplaceni.ToList();
+            return null;
         }
 
         public static List<Obrok> DanasSkinutiObrociKorisnika(int idKorisnika)
         {
             ISession s = SesijeProvajder.Sesija;
             DateTime danasPonoc = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1);
-            IEnumerable<Obrok> danasSkinuti = s.Query<Obrok>().Select(k => k)
-                .Where(k => k.Iskoriscen == true && k.Uplatilac.IdKorisnika == idKorisnika)
-                .Where(k => k.DatumIskoriscenja <= DateTime.Now && k.DatumIskoriscenja >= danasPonoc);
-            return danasSkinuti.ToList();
+            List<Obrok> danasSkinuti = s.Query<Obrok>().Select(k => k)
+                .Where(k => k.Iskoriscen == true)
+                .Where(k => k.DatumIskoriscenja != null)
+                .Where(k => k.Uplatilac.IdKorisnika == idKorisnika)
+                .Where(k => k.DatumIskoriscenja <= DateTime.Now)
+                .Where(k => k.DatumIskoriscenja >= danasPonoc).ToList();
+            if (danasSkinuti.Count > 0)
+                return danasSkinuti.ToList();
+            return null;
         }
     }
 }

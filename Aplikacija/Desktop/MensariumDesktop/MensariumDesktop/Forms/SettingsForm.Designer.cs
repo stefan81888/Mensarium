@@ -204,10 +204,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxSettingsMenza.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxSettingsMenza.FormattingEnabled = true;
-            this.cbxSettingsMenza.Items.AddRange(new object[] {
-            "Elektronski fakultet",
-            "Pravni Fakultet",
-            "Medicinski fakultet"});
             this.cbxSettingsMenza.Location = new System.Drawing.Point(81, 28);
             this.cbxSettingsMenza.Name = "cbxSettingsMenza";
             this.cbxSettingsMenza.Size = new System.Drawing.Size(232, 25);

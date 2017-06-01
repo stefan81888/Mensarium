@@ -13,7 +13,15 @@ namespace MensariumAPI.Podaci
         
         public static void Zabelezi(Exception e)
         {
-            string Text = string.Format("[{0}]\t{1}\n", DateTime.Now, e.Message);
+            string eM = "";
+            Exception em = e;
+            while (em.InnerException != null)
+            {
+                eM += "\n" + em.Message;
+                em = em.InnerException;
+            }
+
+            string Text = string.Format("[{0}]\t{1}\n", DateTime.Now, em);
             System.IO.File.AppendAllText(LogPath, Text);
         }
     }

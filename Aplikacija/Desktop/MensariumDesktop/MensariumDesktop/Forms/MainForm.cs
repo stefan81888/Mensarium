@@ -110,6 +110,17 @@ namespace MensariumDesktop
         private void MainForm_Load(object sender, EventArgs e)
         {
             cbxKriterijum.SelectedIndex = 0;
+            lblCurrentUserFName.Text = MSettings.CurrentSession.LoggedUser.FirstName;
+            lblCurrentUserLName.Text = MSettings.CurrentSession.LoggedUser.LastName;
+            lblCurrentUserAccType.Text = MSettings.CurrentSession.LoggedUser.AccountType.ToString();
+
+            statbarUser.Text = MSettings.CurrentSession.LoggedUser.FirstName + " " + MSettings.CurrentSession.LoggedUser.LastName;
+
+            lblCurrentLocation.Text = Mensa.Mensas[0].Name;
+            lblCurrentLocation.Text = Mensa.Mensas[0].Location;
+
+            statbarMenza.Text = Mensa.Mensas[0].Name;
+            
         }
 
         private void showNewUserCreatedFormToolStripMenuItem_Click(object sender, EventArgs e)
@@ -171,7 +182,21 @@ namespace MensariumDesktop
 
         private void statbarUserSignOut_Click(object sender, EventArgs e)
         {
-            MainController.LogoutUser();
+            if (MainController.LogoutUser())
+            {
+                DialogResult = DialogResult.Cancel;
+                Close();
+            };
+        }
+
+        private void btnSignOut_Click(object sender, EventArgs e)
+        {
+            statbarUserSignOut.PerformClick();
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            MainController.Shutdown();
         }
     }
 }

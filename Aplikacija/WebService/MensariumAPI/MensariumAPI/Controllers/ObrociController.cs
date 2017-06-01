@@ -10,6 +10,8 @@ using MensariumAPI.Podaci.Konfigracija;
 using NHibernate;
 using MensariumAPI.Podaci.ProvajderiPodataka;
 using MensariumAPI.Podaci.DTO;
+using MensariumAPI.Podaci;
+
 
 namespace MensariumAPI.Controllers
 {
@@ -17,22 +19,22 @@ namespace MensariumAPI.Controllers
     public class ObrociController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult VratiObrokFull([FromUri]int idObroka, [FromUri]string idSesije)
+        public ObrokFullDto VratiObrokFull([FromUri]int id, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
-                Obrok o = ProvajderPodatakaObroka.VratiObrok(idObroka);
+                Obrok o = null;
                 ObrokFullDto obrok = new ObrokFullDto();
-                if (ValidatorObroka.ObrokPostoji(o))
-                {
+
+                o = ProvajderPodatakaObroka.VratiObrok(id);
+                if (o == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obrok nije pronadjen") });
+                
                     obrok.IdObroka = o.IdObroka;
                     obrok.Iskoriscen = o.Iskoriscen;
                     obrok.DatumUplacivanja = o.DatumUplacivanja;
@@ -43,35 +45,43 @@ namespace MensariumAPI.Controllers
                     obrok.IdLokacijeUplate = o.LokacijaUplate.IdMenza;
                     if (o.LokacijaIskoriscenja != null)
                         obrok.IdLokacijeIskoriscenja = o.LokacijaIskoriscenja.IdMenza;
-                }
+                
 
                 SesijeProvajder.ZatvoriSesiju();
 
-                if (obrok != null)
-                    return Content(HttpStatusCode.Found, obrok);
+                return obrok;
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+                
             }
-            return Content(HttpStatusCode.BadRequest, new ObrokFullDto());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            } 
         }
 
         [HttpGet]
-        public IHttpActionResult VratiSveObroke([FromUri]string idSesije)
+        public List<ObrokFullDto> VratiSveObroke([FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+                
 
                 List<Obrok> listaObroka = ProvajderPodatakaObroka.VratiObroke();
                 List<ObrokFullDto> listaObrokaFull = new List<ObrokFullDto>(listaObroka.Count);
+
+                if (listaObroka == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
+
 
                 foreach(Obrok o in listaObroka)
                 {
@@ -90,30 +100,34 @@ namespace MensariumAPI.Controllers
 
                     listaObrokaFull.Add(obrok);
                 }
-                SesijeProvajder.ZatvoriSesiju();
-
-                if (listaObrokaFull != null)
-                    return Content(HttpStatusCode.Found, listaObrokaFull);
+                return listaObrokaFull;
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+			
             }
-            return Content(HttpStatusCode.BadRequest, new List<ObrokFullDto>());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         // Kod Stefana
         [HttpGet]
         [Route("korisnicki/{idSesije:guid}/{idKorisnika:int}/")]
-        public IHttpActionResult VratiKorisnikovoStanjeObroka(string idSesije, int idKorisnika)
+        public IHttpActionResult VratiKorisnikovoStanjeObroka(string sid, int id)
         {
-            if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+            if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
                 return Content(HttpStatusCode.BadRequest, "Korisnik nema dozvolu za ovu radnju.");
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(idKorisnika);
+                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
 
                 KorisnikStanjeDto korisnik = new KorisnikStanjeDto();
                 if (ValidatorKorisnika.KorisnikPostoji(k))
@@ -136,18 +150,16 @@ namespace MensariumAPI.Controllers
 
         [HttpPost]
         [System.Web.Http.Route("uplati")]
-        public IHttpActionResult UplatiObroke([FromBody]ObrokUplataDto obUpDto, [FromUri]string idSesije)
+        public IHttpActionResult UplatiObroke([FromBody]ObrokUplataDto obUpDto, [FromUri]string sid)
         {
             int i;
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.DodavanjeObrok))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.DodavanjeObrok))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+                
 
                 for (i = 0; i < obUpDto.BrojObroka; ++i)
                 {
@@ -168,35 +180,41 @@ namespace MensariumAPI.Controllers
                     }
                     else
                         break;
+                    
                 }
-
-                SesijeProvajder.ZatvoriSesiju();
-
-                return Content(HttpStatusCode.OK, "Uspesno je dodato " + (i - 1).ToString() + " obroka.");
+                if (i == 0)
+                    return Ok("Ne moze se uopste uplatiti, dostignut je limit.");
+                else
+                    return Ok("Uspesno je dodato " + i + " obroka.");
+                
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+                
             }
-            return Content(HttpStatusCode.BadRequest, "Dodavanje obroka nije uspelo.");
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         [HttpPut]
         [Route("naplati")]
-        public IHttpActionResult NaplatiObroke([FromBody]ObrokNaplataDto obNapDto, [FromUri]string idSesije)
+        public IHttpActionResult NaplatiObroke([FromBody]ObrokNaplataDto obNapDto, [FromUri]string sid)
         {
-            int i;
+            int i = 1;
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.ModifikacijaObrok))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
-
-                for (i = 0; i < obNapDto.BrojObroka; ++i)
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaObrok))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+                
+                /*for (i = 0; i < obNapDto.BrojObroka; ++i)
                 {
                     Obrok obrokZaSkidanje = ProvajderPodatakaObroka.ObrokZaSkidanjeOvogTipa(obNapDto.IdKorisnika, obNapDto.IdTipa);
                     if (obrokZaSkidanje != null)
@@ -204,34 +222,57 @@ namespace MensariumAPI.Controllers
                     else
                         break;
                 }
+                */
+                while (i <= obNapDto.BrojObroka )
+                {
+                    Obrok obrokZaSkidanje = ProvajderPodatakaObroka.ObrokZaSkidanjeOvogTipa(obNapDto.IdKorisnika, obNapDto.IdTipa);
+                    if (obrokZaSkidanje != null)
+                    {
+                        ProvajderPodatakaObroka.PojediObrok(obrokZaSkidanje.IdObroka, obNapDto.IdLokacijeIskoriscenja);
+                        ++i;
+                    }
+                    else break;
+                    
+                }
 
-                SesijeProvajder.ZatvoriSesiju();
-
-                return Content(HttpStatusCode.OK, "Uspesno je skunuto " + (i - 1).ToString() + " obroka.");
+                if (i == 1)
+                    return Ok("Ne moze se skunuti, nema obroka");
+                else
+                    return Ok("Uspesno je skunuto " + (i - 1).ToString() + " obroka.");
+             
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+                
             }
-            return Content(HttpStatusCode.BadRequest, "Skidanje obroka nije uspelo.");
-        }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+         }
 
         [HttpGet]
         [Route("danasUplaceni")]
-        public IHttpActionResult DanasUplaceniObrociKorisnika([FromUri]int idKorisnika, [FromUri]string idSesije)
+        public List<ObrokDanasUplacenDto> DanasUplaceniObrociKorisnika([FromUri]int id, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
-                List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(idKorisnika).ToList();
+
+                List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(id).ToList();
                 List<ObrokDanasUplacenDto> listaDanasUplacenihObroka = new List<ObrokDanasUplacenDto>(danasUplaceniObrociOvogKorisnika.Count);
+
+                if (danasUplaceniObrociOvogKorisnika == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
+
 
                 foreach (Obrok o in danasUplaceniObrociOvogKorisnika)
                 {
@@ -244,34 +285,40 @@ namespace MensariumAPI.Controllers
                     });
                 }
 
-                SesijeProvajder.ZatvoriSesiju();
-
-                if (listaDanasUplacenihObroka != null)
-                    return Content(HttpStatusCode.Found, listaDanasUplacenihObroka);
+                return listaDanasUplacenihObroka;
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+			
             }
-            return Content(HttpStatusCode.BadRequest, new List<ObrokDanasUplacenDto>());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         [HttpGet]
         [Route("danasSkinuti")]
-        public IHttpActionResult DanasSkinutiObrociKorisnika([FromUri]int idKorisnika, [FromUri]string idSesije)
+        public List<ObrokDanasSkinutDto> DanasSkinutiObrociKorisnika([FromUri]int id, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
-                List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(idKorisnika).ToList();
+
+                List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(id).ToList();
                 List<ObrokDanasSkinutDto> listaDanasSkinutihObroka = new List<ObrokDanasSkinutDto>(danasSkinutiObrociOvogKorisnika.Count);
+
+                if (danasSkinutiObrociOvogKorisnika == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
+
 
                 foreach (Obrok o in danasSkinutiObrociOvogKorisnika)
                 {
@@ -283,80 +330,89 @@ namespace MensariumAPI.Controllers
                         IdTipaObroka = o.Tip.IdTipObroka
                     });
                 }
-
-                SesijeProvajder.ZatvoriSesiju();
-
-                if (listaDanasSkinutihObroka != null)
-                    return Content(HttpStatusCode.Found, listaDanasSkinutihObroka);
+                return listaDanasSkinutihObroka;
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, new List<ObrokDanasSkinutDto>());
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         [HttpPut]
         [Route("vratiPogresnoSkinute")]
-        public IHttpActionResult VratiPogresnoSkinuteObroke([FromUri]int[] obrokId, [FromUri]string idSesije)
+        public IHttpActionResult VratiPogresnoSkinuteObroke([FromUri]int[] obrokId, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.ModifikacijaObrok))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
-
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaObrok))
+                   throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+                
                 for (int i = 0; i < obrokId.Count(); ++i)
                 {
                     Obrok o = ProvajderPodatakaObroka.VratiObrok(obrokId[i]);
-                    o.DatumIskoriscenja = null;
-                    o.Iskoriscen = false;
-                    o.LokacijaIskoriscenja = null;
+                    if (o != null && ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(o.Uplatilac.IdKorisnika).Contains(o))
+                    {
+                        o.DatumIskoriscenja = null;
+                        o.Iskoriscen = false;
+                        o.LokacijaIskoriscenja = null;
 
-                    ProvajderPodatakaObroka.UpdateObrok(o);
+                        ProvajderPodatakaObroka.UpdateObrok(o);
+                    }
                 }
-
-                SesijeProvajder.ZatvoriSesiju();
-
-                return Content(HttpStatusCode.OK, "Korekcija uspesno obavljena.");
+                return Ok("Korekcija uspesno obavljena.");
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, "Korekcija obroka nije uspela.");
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
 
         [HttpPut]
         [Route("skiniPogresnoUplacene")]
-        public IHttpActionResult SkiniPogresnoUplaceneObroke([FromUri]int[] obrokId, [FromUri]string idSesije)
+        public IHttpActionResult SkiniPogresnoUplaceneObroke([FromUri]int[] obrokId, [FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(idSesije, ValidatorPrivilegija.UserPrivilegies.BrisanjeObrok))
-                {
-                    SesijeProvajder.ZatvoriSesiju();
-                    return Content(HttpStatusCode.BadRequest, "Nemate dozvolu za ovu radnju.");
-                }
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.BrisanjeObrok))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
                 for (int i = 0; i < obrokId.Count(); ++i)
-                    ProvajderPodatakaObroka.ObrisiObrok(obrokId[i]);
-
-                SesijeProvajder.ZatvoriSesiju();
-
-                return Content(HttpStatusCode.OK, "Korekcija uspesno obavljena.");
+                {
+                    Obrok o = ProvajderPodatakaObroka.VratiObrok(obrokId[i]);
+                    if (o != null && ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(o.Uplatilac.IdKorisnika).Contains(o))
+                        ProvajderPodatakaObroka.ObrisiObrok(obrokId[i]);
+                }
+                return Ok("Korekcija uspesno obavljena.");
             }
             catch (Exception e)
             {
-
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
-            return Content(HttpStatusCode.BadRequest, "Korekcija obroka nije uspela.");
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
     }
 }

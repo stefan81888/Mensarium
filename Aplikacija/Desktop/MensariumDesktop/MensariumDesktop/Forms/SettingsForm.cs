@@ -23,11 +23,15 @@ namespace MensariumDesktop.Forms
         {
             txtmServerIP.Text = MSettings.Server.IP;
             txtmServerPort.Text = MSettings.Server.Port;
+
+            cbxSettingsMenza.DataSource = Mensa.Mensas;
+            cbxSettingsMenza.DisplayMember = "Name";
+            cbxSettingsMenza.ValueMember = "MensaID";
+            cbxSettingsMenza.SelectedItem = MSettings.CurrentMensa;
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            cbxSettingsMenza.SelectedIndex = 0;
             RefreshData();
         }
 
@@ -41,6 +45,7 @@ namespace MensariumDesktop.Forms
         private void btnSave_Click(object sender, EventArgs e)
         {
             bool successful = MainController.ChangeServer(txtmServerIP.Text, txtmServerPort.Text);
+            successful &= MainController.ChangeCurrentMensa((int)cbxSettingsMenza.SelectedValue);
             RefreshData();
 
             if (successful)

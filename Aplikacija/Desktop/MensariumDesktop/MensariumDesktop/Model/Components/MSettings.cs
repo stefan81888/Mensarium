@@ -10,8 +10,13 @@ namespace MensariumDesktop.Model.Components
     {
         public static Session CurrentSession { get; set; }
         public static Server Server { get; set; }
+        public static Mensa CurrentMensa { get; set; }
 
-        public static void LoadSettings() { }
+
+        public static void LoadSettings()
+        {
+            MSettings.CurrentMensa = Mensa.Mensas[0];
+        }
         public static void SaveSettings() { }
     }
 }

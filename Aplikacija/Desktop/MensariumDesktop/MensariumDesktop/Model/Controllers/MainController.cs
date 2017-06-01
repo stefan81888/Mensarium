@@ -23,7 +23,16 @@ namespace MensariumDesktop.Model.Controllers
         {
             try{ Faculty.UpdateFacultyList(); } catch (Exception ex) { MessageBox.Show(ex.Message); }
             try{ Mensa.UpdateMensaList(); } catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+            MSettings.LoadSettings();
         }
+        public static void Shutdown()
+        {
+            LogoutUser();
+            MSettings.SaveSettings();
+            Application.Exit();
+        }
+
 
         public static bool LoginUser(string username, string password)
         {
@@ -55,17 +64,22 @@ namespace MensariumDesktop.Model.Controllers
         {
             try
             {
-                if (MSettings.CurrentSession == null)
-                    return true;
+                bool successfull = false;
 
-                Api.LogoutUser(MSettings.CurrentSession.SessionID);
-                return true;
+                if (MSettings.CurrentSession != null)
+                    successfull = Api.LogoutUser(MSettings.CurrentSession.SessionID);
+
+                if (!successfull)
+                    throw new Exception("Neuspesno odjavljivanje");
+
+                MSettings.CurrentSession = null;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Greska: " + ex.Message);
                 return false;
             }
+            return true;
         }
 
 
@@ -80,6 +94,14 @@ namespace MensariumDesktop.Model.Controllers
         public static bool ChangeServer(string newIP, string newPort)
         {
             return ChangeServerIP(newIP) && ChangeServerPort(newPort);
+        }
+        public static bool ChangeCurrentMensa(int mid)
+        {
+            Mensa m = Mensa.Mensas.First(x => x.MensaID == mid);
+            if (m == null)
+                return false;
+            MSettings.CurrentMensa = m;
+            return true;
         }
 
     }

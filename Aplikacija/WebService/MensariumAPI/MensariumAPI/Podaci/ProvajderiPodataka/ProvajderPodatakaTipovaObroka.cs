@@ -15,7 +15,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static TipObroka VratiTipObroka(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            TipObroka t = s.Load<TipObroka>(id);
+            TipObroka t = s.Get<TipObroka>(id);
             return t;
         }
 
