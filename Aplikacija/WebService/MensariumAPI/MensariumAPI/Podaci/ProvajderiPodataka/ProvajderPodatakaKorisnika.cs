@@ -43,7 +43,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static Korisnik VratiKorisnika(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik k = s.Load<Korisnik>(id);
+            Korisnik k = s.Get<Korisnik>(id);
             return k;
         }
 
@@ -111,12 +111,12 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             ISession s = SesijeProvajder.Sesija;
 
-            Korisnik pratilac = s.Load<Korisnik>(idPratioca);
+            Korisnik pratilac = s.Get<Korisnik>(idPratioca);
 
             if (!ValidatorKorisnika.KorisnikPostoji(pratilac))
                 return false;
 
-            Korisnik praceni = s.Load<Korisnik>(idPracenog);
+            Korisnik praceni = s.Get<Korisnik>(idPracenog);
 
             if (!ValidatorKorisnika.KorisnikPostoji(praceni))
                 return false;
@@ -137,7 +137,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
 
-            Korisnik k = s.Load<Korisnik>(id);
+            Korisnik k = s.Get<Korisnik>(id);
 
             if (!ValidatorKorisnika.KorisnikPostoji(k))
                 return null;
@@ -166,7 +166,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
 
-            Korisnik pretrazuje = s.Load<Korisnik>(pkdto.IdKorisnika);
+            Korisnik pretrazuje = s.Get<Korisnik>(pkdto.IdKorisnika);
             List<KorisnikFollowDto> rezultat = new List<KorisnikFollowDto>();
             List<Korisnik> korisnici = s.Query<Korisnik>().Select(k => k).Where(x => x.KorisnickoIme != null).ToList();
 
@@ -256,7 +256,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
             
-            Korisnik pozivalac = s.Load<Korisnik>(pfdto.IdPozivaoca);
+            Korisnik pozivalac = s.Get<Korisnik>(pfdto.IdPozivaoca);
             List<Korisnik> pozvani = new List<Korisnik>();
             Pozivanje poziv = new Pozivanje()
             {
@@ -267,7 +267,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             for (int i = 0; i < pfdto.Pozvani.Count; i++)
             {
-                Korisnik k = s.Load<Korisnik>(pfdto.Pozvani[i]);
+                Korisnik k = s.Get<Korisnik>(pfdto.Pozvani[i]);
                 pozvani.Add(k);
             }
 
@@ -311,14 +311,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
 
-            Korisnik pozivalac = s.Load<Korisnik>(id);
+            Korisnik pozivalac = s.Get<Korisnik>(id);
             List<PozivanjaNewsFeedItemDto> sviPozivi = new List<PozivanjaNewsFeedItemDto>();
 
 
             foreach (var v in pozivalac.PozivanjaOd.ToList())
             {
                 int idPoziva = v.IdPozivanjaPozvani.IdPoziva.IdPoziva;
-                Pozivanje p = s.Load<Pozivanje>(idPoziva);
+                Pozivanje p = s.Get<Pozivanje>(idPoziva);
 
                 if (DateTime.Compare(p.DatumPoziva, DateTime.Today) < 0)
                     break;
@@ -326,7 +326,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 if(DateTime.Compare(p.DatumPoziva, p.VaziDo) > 0)
                     break;
 
-                Korisnik k = s.Load<Korisnik>(p.Pozivaoc.IdKorisnika);
+                Korisnik k = s.Get<Korisnik>(p.Pozivaoc.IdKorisnika);
 
                 PozivanjaNewsFeedItemDto pnfidto = new PozivanjaNewsFeedItemDto()
                 {
@@ -349,8 +349,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static PozivanjaPozvaniDto OdogovoriNaPoziv(PozivanjaPozvaniDto ppdto)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik k = s.Load<Korisnik>(ppdto.IdPozvanog);
-            Pozivanje p = s.Load<Pozivanje>(ppdto.IdPoziva);
+            Korisnik k = s.Get<Korisnik>(ppdto.IdPozvanog);
+            Pozivanje p = s.Get<Pozivanje>(ppdto.IdPoziva);
 
             PozivanjaPozvani pp = new PozivanjaPozvani()
             {
@@ -372,12 +372,12 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
 
-            Korisnik pratilac = s.Load<Korisnik>(idPratilac);
+            Korisnik pratilac = s.Get<Korisnik>(idPratilac);
 
             if (!ValidatorKorisnika.KorisnikPostoji(pratilac))
                 return false;
 
-            Korisnik praceni = s.Load<Korisnik>(idPraceni);
+            Korisnik praceni = s.Get<Korisnik>(idPraceni);
 
             if (!ValidatorKorisnika.KorisnikPostoji(praceni))
                 return false;
@@ -509,7 +509,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static KorisnikKreiranjeDto Azuriraj(KorisnikKreiranjeDto kkdto)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik korisnik = s.Load<Korisnik>(kkdto.IdKorisnika);
+            Korisnik korisnik = s.Get<Korisnik>(kkdto.IdKorisnika);
 
             korisnik.KorisnickoIme = kkdto.KorisnickoIme;
             korisnik.Ime = kkdto.Ime;
@@ -532,7 +532,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             Azuriraj(kkdto);
 
             ISession s = SesijeProvajder.Sesija;
-            Korisnik korisnik = s.Load<Korisnik>(kkdto.IdKorisnika);
+            Korisnik korisnik = s.Get<Korisnik>(kkdto.IdKorisnika);
 
             korisnik.BrojIndeksa = kkdto.BrojIndeksa;
             korisnik.DatumVaziDo = kkdto.DatumVaziDo;
