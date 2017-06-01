@@ -267,14 +267,14 @@ namespace MensariumDesktop
             // statbarUserProfile
             // 
             this.statbarUserProfile.Name = "statbarUserProfile";
-            this.statbarUserProfile.Size = new System.Drawing.Size(152, 26);
+            this.statbarUserProfile.Size = new System.Drawing.Size(144, 26);
             this.statbarUserProfile.Text = "Profil";
             this.statbarUserProfile.Click += new System.EventHandler(this.statbarUserProfile_Click);
             // 
             // statbarUserSignOut
             // 
             this.statbarUserSignOut.Name = "statbarUserSignOut";
-            this.statbarUserSignOut.Size = new System.Drawing.Size(152, 26);
+            this.statbarUserSignOut.Size = new System.Drawing.Size(144, 26);
             this.statbarUserSignOut.Text = "Odjavi se";
             this.statbarUserSignOut.Click += new System.EventHandler(this.statbarUserSignOut_Click);
             // 
@@ -378,7 +378,7 @@ namespace MensariumDesktop
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(702, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(733, 22);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // statbarOPStatus
@@ -581,6 +581,7 @@ namespace MensariumDesktop
             this.btnSignOut.Text = " Odjavi se";
             this.btnSignOut.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSignOut.UseVisualStyleBackColor = false;
+            this.btnSignOut.Click += new System.EventHandler(this.btnSignOut_Click);
             // 
             // groupBox4
             // 
@@ -2253,6 +2254,7 @@ namespace MensariumDesktop
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mensarium";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();

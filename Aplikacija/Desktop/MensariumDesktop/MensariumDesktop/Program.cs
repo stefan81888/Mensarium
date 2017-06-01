@@ -22,16 +22,16 @@ namespace MensariumDesktop
             MainController.InitApplication();
 
             LoginForm fLogin = new LoginForm();
-            if (fLogin.ShowDialog() == DialogResult.OK)
+            while (fLogin.ShowDialog() == DialogResult.OK)
             {
                 LoadingForm lf = new LoadingForm();
                 lf.ShowDialog();
                 Application.Run(new MainForm());
+                fLogin = new LoginForm();
             }
-            else
-            {
-                Application.Exit();
-            }
+
+            Application.Exit();
+            
 
 
             //Application.Run(new MainForm());

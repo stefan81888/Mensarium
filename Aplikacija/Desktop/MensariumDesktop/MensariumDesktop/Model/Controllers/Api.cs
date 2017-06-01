@@ -23,7 +23,7 @@ namespace MensariumDesktop.Model.Controllers
     public static class Api
     {
         static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        static string SessionID = "skfd123"; //nebitno za sad
+        
         
         private static ApiResponse<T> Execute<T>(RestRequest request, bool includeSid = true) where T : new()
         {
@@ -31,9 +31,9 @@ namespace MensariumDesktop.Model.Controllers
             client.BaseUrl = new Uri(BaseUrl);
 
             if (includeSid)
-                request.AddQueryParameter("sid", SessionID);
+                request.AddQueryParameter("sid", MSettings.CurrentSession.SessionID);
                 
-            MessageBox.Show("RequestedURL: " + client.BuildUri(request).ToString());
+            Console.WriteLine("RequestedURL: " + client.BuildUri(request).ToString());
 
             var response = client.Execute(request);
 
@@ -71,10 +71,10 @@ namespace MensariumDesktop.Model.Controllers
             RestClient client = new RestClient();
             client.BaseUrl = new Uri(BaseUrl);
             if (includeSid)
-                request.AddQueryParameter("sid", SessionID);
+                request.AddQueryParameter("sid", MSettings.CurrentSession.SessionID);
 
             //debug
-            MessageBox.Show("ExecuteURL " + client.BuildUri(request).ToString());
+            Console.WriteLine("ExecuteURL " + client.BuildUri(request).ToString());
 
             var response = client.Execute(request);
             if (response.ResponseStatus != ResponseStatus.Completed) //nastala greska na mreznom nivou
@@ -108,14 +108,11 @@ namespace MensariumDesktop.Model.Controllers
         }
         public static bool LogoutUser(string sessionId)
         {
-            MessageBox.Show("NOT IMPLEMENTED YET");
-            return true;
-
-            RestRequest request = new RestRequest(Method.POST);
+            RestRequest request = new RestRequest(Method.PUT);
             request.Resource = "korisnici/odjava";
             
             ApiResponse<object> response = Execute(request);
-            return (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect);
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
         }
 
         //KORISNICI
@@ -151,7 +148,7 @@ namespace MensariumDesktop.Model.Controllers
             request.AddObject(user);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK);
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
         }
         public static bool AddNewUser(KorisnikDodavanjeDto u)
         {
@@ -160,7 +157,7 @@ namespace MensariumDesktop.Model.Controllers
             request.AddObject(u);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK);
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
         }
         //FAKULTETI
         public static bool AddNewFaculty(FakultetFullDto fax)
@@ -170,8 +167,8 @@ namespace MensariumDesktop.Model.Controllers
             request.AddObject(fax);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK);
-            
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+
         }
         public static bool UpdateFaculty(FakultetFullDto fax)
         {
@@ -180,7 +177,7 @@ namespace MensariumDesktop.Model.Controllers
             request.AddObject(fax);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK);
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
         }
         public static bool DeleteFaculty(int id)
         {

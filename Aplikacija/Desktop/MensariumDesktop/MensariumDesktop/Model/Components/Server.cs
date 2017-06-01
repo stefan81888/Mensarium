@@ -32,17 +32,19 @@ namespace MensariumDesktop.Model.Components
         public bool ChangeIP(string newIP)
         {
             //TO-DO napravi i da moze hostname da se unese
-            IPAddress newAddress;
-            bool isValid = IPAddress.TryParse(newIP, out newAddress);
+            //IPAddress newAddress;
+            //bool isValid = IPAddress.TryParse(newIP, out newAddress);
 
-            if (isValid)
-            {
-                IP = newAddress.ToString();
-                return true;
-            }
+            //if (isValid)
+            //{
+            //   IP = newAddress.ToString();
+            //   return true;
+            //}
 
-            MessageBox.Show("Nevalidna IP adresa");
-            return false;
+            //MessageBox.Show("Nevalidna IP adresa");
+            //return false;
+            IP = newIP;
+            return true;
         }
 
         public bool ChangePort(string newPort)
