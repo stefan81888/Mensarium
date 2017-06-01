@@ -384,8 +384,8 @@ namespace MensariumAPI.Controllers
 
         //Broj obroka korisnika
         [System.Web.Http.HttpGet]
-       // [System.Web.Http.Route("stanje/{id:int}")]
-        public KorisnikStanjeDto VratiKorisnikovoStanjeObroka(int id, [FromUri]string sid)
+        [System.Web.Http.Route("stanje")]
+        public IHttpActionResult VratiKorisnikovoStanjeObroka([FromUri] int id, [FromUri]string sid)
         {
             try
             {
@@ -423,8 +423,8 @@ namespace MensariumAPI.Controllers
 
         //Priivlegije naloga
         [System.Web.Http.HttpGet]
-        //[System.Web.Http.Route("privilegije/{id:int}")]
-        public List<PrivilegijaFullDto> VratiPrivilegijeKorisnika(int id, [FromUri]string sid)
+        [System.Web.Http.Route("privilegije")]
+        public IHttpActionResult VratiPrivilegijeKorisnika(int id, [FromUri]string sid)
         {
             try
             {
@@ -508,8 +508,8 @@ namespace MensariumAPI.Controllers
 
         //Vraca sve pozive upucene jednom korisniku
         [System.Web.Http.HttpGet]
-       // [System.Web.Http.Route("pozivi/{id:int}")]
-        public List<PozivanjaNewsFeedItemDto> SviPozivi(int id, [FromUri]string sid)
+        [System.Web.Http.Route("pozivi")]
+        public IHttpActionResult SviPozivi(int id, [FromUri]string sid)
         {
             try
             {
