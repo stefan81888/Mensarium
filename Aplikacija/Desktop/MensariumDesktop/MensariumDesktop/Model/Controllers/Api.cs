@@ -171,14 +171,96 @@ namespace MensariumDesktop.Model.Controllers
 
             return response.ResponseObject;
         }
-        //public static List<KorisnikFollowDto> UsersThatFollows(int userId)
-        //{
-        //    RestRequest request = new RestRequest(Method.GET);
-        //    request.Resource = "pracenja";
-        //    request.AddParameter("id", userId, ParameterType.QueryString);
+        public static List<KorisnikFollowDto> UsersThatFollows(int userId)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "pracenja";
+            request.AddParameter("id", userId, ParameterType.QueryString);
 
-        //    request
-        //}
+            ApiResponse<List<KorisnikFollowDto>> response = Execute<List<KorisnikFollowDto>>(request);
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+
+            return response.ResponseObject;
+        }
+        public static List<KorisnikFollowDto> SearchUsers(PretragaKriterijumDto criteria)
+        {
+            RestRequest request = new RestRequest(Method.POST);
+            request.Resource = "korisnici/pretraga";
+            request.AddObject(criteria);
+
+            ApiResponse<List<KorisnikFollowDto>> response = Execute<List<KorisnikFollowDto>>(request);
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+
+            return response.ResponseObject;
+        }
+        public static KorisnikStanjeDto UserMealsCount(int userId)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/stanje";
+            request.AddParameter("id", userId, ParameterType.QueryString);
+
+            ApiResponse<KorisnikStanjeDto> response = Execute<KorisnikStanjeDto>(request);
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+
+            return response.ResponseObject;
+        }
+        public static List<PrivilegijaFullDto> UserPriviledges(int userId)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/privilegije";
+            request.AddParameter("id", userId, ParameterType.QueryString);
+
+            ApiResponse<List<PrivilegijaFullDto>> response = Execute<List<PrivilegijaFullDto>>(request);
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+
+            return response.ResponseObject;
+        }
+        public static bool InviteUser(PozivanjaFullDto m)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.AddObject(m);
+
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+        }
+        public static List<PozivanjaNewsFeedItemDto> UserCalledBy(int userId)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/pozivi";
+            request.AddParameter("id", userId, ParameterType.QueryString);
+
+            ApiResponse<List<PozivanjaNewsFeedItemDto>> response = Execute<List<PozivanjaNewsFeedItemDto>>(request);
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("GetMeal: Neuspesno pribavljanje informacije o obroku");
+
+            return response.ResponseObject;
+        }
+        public static PozivanjaPozvaniDto Respond2Invite(PozivanjaPozvaniDto m)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "odgovor/pozivi";
+            request.AddObject(m);
+
+            ApiResponse<PozivanjaPozvaniDto> response = Execute<PozivanjaPozvaniDto>(request);
+            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
+                throw new Exception("GetMeal: Neuspesno pribavljanje informacije o obroku");
+
+            return response.ResponseObject;
+        }
+        public static bool Unfolow(int idFollower, int idFollowing)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "pracenja/prestani/{idFollower}/{idFollowing}";
+            request.AddParameter("idFollower", idFollower, ParameterType.UrlSegment);
+            request.AddParameter("idFollowing", idFollower, ParameterType.UrlSegment);
+
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+        }
         public static bool LogoutUser(string sessionId)
         {
             RestRequest request = new RestRequest(Method.PUT);
@@ -187,7 +269,14 @@ namespace MensariumDesktop.Model.Controllers
             ApiResponse<object> response = Execute(request);
             return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
         }
+        public static bool UpdateUser(KorisnikKreiranjeDto m)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.AddObject(m);
 
+            var response = Execute(request);
+            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+        }
         #endregion
 
         #region FAKULTETI
