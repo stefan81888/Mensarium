@@ -19,8 +19,6 @@ namespace MensariumAPI.Controllers
         {
             try
             {
-                SesijeProvajder.OtvoriSesiju();
-
                 ObjavaFullDto o = ProvajderPodatakaObjava.VratiObjavuDto(id);
 
                 SesijeProvajder.ZatvoriSesiju();
