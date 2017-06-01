@@ -308,8 +308,8 @@ namespace MensariumAPI.Controllers
 
         //Broj obroka korisnika
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("stanje/{id:int}")]
-        public IHttpActionResult VratiKorisnikovoStanjeObroka(int id, [FromUri]string sid)
+        [System.Web.Http.Route("stanje")]
+        public IHttpActionResult VratiKorisnikovoStanjeObroka([FromUri] int id, [FromUri]string sid)
         {
             try
             {

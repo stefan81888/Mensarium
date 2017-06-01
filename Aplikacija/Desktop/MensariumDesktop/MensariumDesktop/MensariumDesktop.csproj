@@ -128,6 +128,7 @@
     <Compile Include="Model\Components\DTOs\KorisnikDodavanjeDto.cs" />
     <Compile Include="Model\Components\DTOs\KorisnikFollowDto.cs" />
     <Compile Include="Model\Components\DTOs\KorisnikFullDto.cs" />
+    <Compile Include="Model\Components\DTOs\KorisnikKreiranjeDto.cs" />
     <Compile Include="Model\Components\DTOs\KorisnikReadDto.cs" />
     <Compile Include="Model\Components\DTOs\KorisnikStanjeDto.cs" />
     <Compile Include="Model\Components\DTOs\LoginSesijeFullDto.cs" />
