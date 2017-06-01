@@ -466,7 +466,7 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.ZatvoriSesiju();
 
                 if(s != null)
-                    return Content(HttpStatusCode.Found, s);
+                    return Content(HttpStatusCode.OK, s);
             }
             catch (Exception e)
             {

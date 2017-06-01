@@ -140,6 +140,7 @@ namespace MensariumAPI.Controllers
         }
 
         [HttpGet]
+        [Route("guzvaMenza")]
         public int GuzvaZaJelo([FromUri]int id, [FromUri]string sid)
         {
             try
@@ -170,6 +171,7 @@ namespace MensariumAPI.Controllers
         }
 
         [HttpGet]
+        [Route("guzvaUplata")]
         public int GuzvaZaUplatu([FromUri]int id, [FromUri]string sid)
         {
             try
