@@ -271,3 +271,6 @@ Parameter name: index
    at System.Nullable`1.get_Value()
    at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.DodajStudenta(KorisnikKreiranjeDto kkdto) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 404
    at MensariumAPI.Controllers.KorisniciController.Azuriraj(KorisnikKreiranjeDto kddto, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 664
+[6/2/2017 21:20:34]	System.Web.Http.HttpResponseException: Processing of the HTTP request resulted in an exception. Please see the HTTP response returned by the 'Response' property of this exception for details.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 621
+   at MensariumAPI.Controllers.KorisniciController.SlikaKorisnika(String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 738
