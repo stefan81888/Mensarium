@@ -19,9 +19,9 @@ namespace Mensarium.Comp
 
         private ListaMenzi()
         {
-            lista.Add(new MenzaItem() { Ime = "Kod elektronski", Lokacija = "Medvedeva 14", Radi = true, Popunjenost = 35 });
-            lista.Add(new MenzaItem() { Ime = "Kod pravni", Lokacija = "Neka ulica 23", Radi = true, Popunjenost = 67 });
-            lista.Add(new MenzaItem() { Ime = "Kod medicinski", Lokacija = "Bolnicka BB", Radi = false, Popunjenost = 0 });
+            lista.Add(new MenzaItem() { Ime = "Kod elektronski", Lokacija = "Medvedeva 14", Radi = true, Popunjenost = 35, latiCoo = 43.332193, longCoo = 21.893788 });
+            lista.Add(new MenzaItem() { Ime = "Kod pravni", Lokacija = "Neka ulica 23", Radi = true, Popunjenost = 67, latiCoo = 43.3171342, longCoo = 21.8898055 });
+            lista.Add(new MenzaItem() { Ime = "Kod medicinski", Lokacija = "Bolnicka BB", Radi = false, Popunjenost = 0, latiCoo = 43.3167453, longCoo = 21.9152952 });
         }
 
         public static ListaMenzi InstancaListaMenzi

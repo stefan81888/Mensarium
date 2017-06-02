@@ -19,7 +19,7 @@ namespace Mensarium.Api
     public static class Api
     {
         //static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        static string BaseUrl = "https://ca5241e7.ngrok.io/api/";
+        static string BaseUrl = "https://233b44c2.ngrok.io/api/";
 
         public static SesijaDto LoginUser(ClientLoginDto loginData)
         {
