@@ -10,12 +10,12 @@ using MensariumAPI.Podaci.ProvajderiPodataka;
 
 namespace MensariumAPI.Controllers
 {
-    [System.Web.Http.RoutePrefix("api/objave")]
+    [RoutePrefix("api/objave")]
     public class ObjaveController : ApiController
     {
         //Objava korisnika
         [HttpGet]
-       // [System.Web.Http.Route("prikazi/{id:int}")]
+        [Route("prikazi")]
         public ObjavaFullDto PrikaziObjavu(int id, [FromUri]string sid)
         {
             try
@@ -48,7 +48,7 @@ namespace MensariumAPI.Controllers
 
         //Azuriranje objave korisnika
         [HttpPost]
-       // [System.Web.Http.Route("objavi/{id:int}")]
+        [Route("objavi")]
         public ObjavaCUDto Objavi(int id, [FromBody] ObjavaCUDto ocdto, [FromUri]string sid)
         {
             try
@@ -82,7 +82,7 @@ namespace MensariumAPI.Controllers
 
         //Prikaz objava korisnika koje korisnik prati
         [HttpGet]
-        //[System.Web.Http.Route("newsfeed/{id:int}")]
+        [Route("pracenih")]
         public List<ObjavaReadDto> PrikaziSveObjave(int id, [FromUri]string sid)
         {
             try
@@ -97,7 +97,7 @@ namespace MensariumAPI.Controllers
 
                 if (o.Count == 0)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                        { Content = new StringContent("Fakultet nije pronadjen") });
+                        { Content = new StringContent("Korisnik nema objavu") });
 
                 return o;
             }

@@ -116,38 +116,6 @@ namespace MensariumAPI.Controllers
             }
         }
 
-        // Kod Stefana
-        [HttpGet]
-        [Route("korisnicki/{idSesije:guid}/{idKorisnika:int}/")]
-        public IHttpActionResult VratiKorisnikovoStanjeObroka(string sid, int id)
-        {
-            if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
-                return Content(HttpStatusCode.BadRequest, "Korisnik nema dozvolu za ovu radnju.");
-            try
-            {
-                SesijeProvajder.OtvoriSesiju();
-
-                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
-
-                KorisnikStanjeDto korisnik = new KorisnikStanjeDto();
-                if (ValidatorKorisnika.KorisnikPostoji(k))
-                {
-                    List<Obrok> obrociKorisnika = k.Obroci.ToList();
-                    korisnik.BrojDorucka = obrociKorisnika.Count(o => o.Tip.IdTipObroka == 1);
-                    korisnik.BrojRuckova = obrociKorisnika.Count(o => o.Tip.IdTipObroka == 2);
-                    korisnik.BrojVecera = obrociKorisnika.Count(o => o.Tip.IdTipObroka == 3);
-                }
-                SesijeProvajder.ZatvoriSesiju();
-                if (korisnik != null)
-                    return Content(HttpStatusCode.Found, korisnik);
-            }
-            catch (Exception e)
-            {
-
-            }
-            return Content(HttpStatusCode.BadRequest, new KorisnikStanjeDto());
-        }
-
         [HttpPost]
         [System.Web.Http.Route("uplati")]
         public IHttpActionResult UplatiObroke([FromBody]ObrokUplataDto obUpDto, [FromUri]string sid)

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Mvc;
 using AutoMapper;
 using MensariumAPI.Podaci;
 using MensariumAPI.Podaci.Entiteti;
@@ -14,12 +13,11 @@ using MensariumAPI.Podaci.ProvajderiPodataka;
 using MensariumAPI.Podaci.DTO;
 namespace MensariumAPI.Controllers
 {
-    [System.Web.Http.RoutePrefix("api/korisnici")]
+    [RoutePrefix("api/korisnici")]
     public class KorisniciController : ApiController
     {
         //Vraća korisnika po id-ju
-        [System.Web.Http.HttpGet]
-        //[System.Web.Http.Route("full/{id:int}")]
+        [HttpGet]
         public KorisnikFullDto VratiKorisnikaFull(int id, [FromUri]string sid)
         {
             try
@@ -84,8 +82,7 @@ namespace MensariumAPI.Controllers
         }
 
         //Vraća sve korisnike
-        [System.Web.Http.HttpGet]
-        //[System.Web.Http.Route("")]
+        [HttpGet]
         public List<KorisnikFullDto> VratiSveKorisnikeFull([FromUri]string sid)
         {
             try
@@ -158,8 +155,8 @@ namespace MensariumAPI.Controllers
         }
 
         //Korisnik pratilac počinje da prati korisnika praceni
-        [System.Web.Http.HttpGet]
-        //[System.Web.Http.Route("zaprati/{pratilac:int}/{praceni:int}")]
+        [HttpGet]
+        [Route("zaprati/{pratilac:int}/{praceni:int}")]
         public IHttpActionResult Zaprati(int pratilac, int praceni, [FromUri]string sid)
         {
             try
@@ -192,8 +189,8 @@ namespace MensariumAPI.Controllers
         }
 
         //Kreiranje naloga
-        [System.Web.Http.HttpPost]
-       // [System.Web.Http.Route("dodaj")]
+        [HttpPost]
+        [Route("dodaj")]
         public KorisnikKreiranjeDto DodajKorisnika([FromBody]KorisnikKreiranjeDto kddto, [FromUri]string sid)
         {
 
@@ -232,8 +229,8 @@ namespace MensariumAPI.Controllers
         }
 
         //Ažuriranje korisnika -> registracija na android aplikaciju
-        [System.Web.Http.HttpPut]
-       // [System.Web.Http.Route("update")]
+        [HttpPut]
+        [Route("update")]
         public IHttpActionResult UpdateKorisnika([FromBody]ClientZaRegistracijuDto klijentReg, [FromUri]string sid)
         {
             try
@@ -258,9 +255,13 @@ namespace MensariumAPI.Controllers
                             k.BrojTelefona = klijentReg.Telefon;
                         }
                         ProvajderPodatakaKorisnika.UpdateKorisnika(k);
+
+                        return Ok("Korisnik je registrovan na aplikaciju");
                     }
                 }
-                return Ok("Korisnik je registrovan na aplikaciju");
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                { Content = new StringContent("Korisnik nije pronadjen u bazi") });
+
             }
             catch (Exception e)
             {
@@ -277,18 +278,14 @@ namespace MensariumAPI.Controllers
         }
 
         //Prijava na sistem
-        [System.Web.Http.HttpPost]
-        //[System.Web.Http.Route("prijava")]
-        public SesijaDto Prijava([FromBody]ClientLoginDto cdto, [FromUri]string sid)
+        [HttpPost]
+        [Route("prijava")]
+        public SesijaDto Prijava([FromBody]ClientLoginDto cdto) //NE TURAJ SESSION ID I VERFIKACIJU
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
-
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
-                    { Content = new StringContent("Nemate privilegiju") });
-
+                                
                 SesijaDto sdto = ProvajderPodatakaKorisnika.PrijavaKorisnika(cdto);
 
                 if(sdto == null)
@@ -313,9 +310,9 @@ namespace MensariumAPI.Controllers
         }
 
         //Prikaz svih korisnika koje korisnik prati
-        [System.Web.Http.HttpGet]
-        // [System.Web.Http.Route("pracenja/{id:int}")]
-        public List<KorisnikFollowDto> Pracenja(int id, [FromUri]string sid)
+        [HttpGet]
+        [Route("pracenja")]
+        public List<KorisnikFollowDto> Pracenja([FromUri] int id, [FromUri]string sid)
         {
             try
             {
@@ -344,8 +341,8 @@ namespace MensariumAPI.Controllers
         }
 
         //Pretraga po kriterijumu
-        [System.Web.Http.HttpPost]
-    //    [System.Web.Http.Route("pretraga")]
+        [HttpPost]
+        [Route("pretraga")]
         public List<KorisnikFollowDto> Pretraga([FromBody] PretragaKriterijumDto pkdto, [FromUri]string sid)
         {
             // id korisnika koji pretrazuje
@@ -383,8 +380,8 @@ namespace MensariumAPI.Controllers
         }
 
         //Broj obroka korisnika
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("stanje")]
+        [HttpGet]
+        [Route("stanje")]
         public KorisnikStanjeDto VratiKorisnikovoStanjeObroka([FromUri] int id, [FromUri]string sid)
         {
             try
@@ -422,9 +419,9 @@ namespace MensariumAPI.Controllers
         }
 
         //Priivlegije naloga
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("privilegije")]
-        public List<PrivilegijaFullDto> VratiPrivilegijeKorisnika(int id, [FromUri]string sid)
+        [HttpGet]
+        [Route("privilegije")]
+        public List<PrivilegijaFullDto> VratiPrivilegijeKorisnika([FromUri] int id, [FromUri]string sid)
         {
             try
             {
@@ -471,8 +468,8 @@ namespace MensariumAPI.Controllers
         }
 
         //Pozivanje na obrok
-        [System.Web.Http.HttpPut]
-      //  [System.Web.Http.Route("pozovi")]
+        [HttpPut]
+        [Route("pozovi")]
         public PozivanjaFullDto Pozovi([FromBody] PozivanjaFullDto pfdto, [FromUri]string sid)
         {
             try
@@ -507,8 +504,8 @@ namespace MensariumAPI.Controllers
         }
 
         //Vraca sve pozive upucene jednom korisniku
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("pozivi")]
+        [HttpGet]
+        [Route("pozivi")]
         public List<PozivanjaNewsFeedItemDto> SviPozivi(int id, [FromUri]string sid)
         {
             try
@@ -541,8 +538,8 @@ namespace MensariumAPI.Controllers
         }
         
         //Odgovor na poziv za obrok
-        [System.Web.Http.HttpPut]
-      //  [System.Web.Http.Route("odgovor/pozivi")]
+        [HttpPut]
+        [Route("odgovor/pozivi")]
         public PozivanjaPozvaniDto OdgovorNaPoziv([FromBody] PozivanjaPozvaniDto poziv, [FromUri]string sid)
         {
             try
@@ -577,8 +574,8 @@ namespace MensariumAPI.Controllers
         }
         
         //Korisnik pratilac prestaje da prati korisnika praceni
-        [System.Web.Http.HttpPut]
-       // [System.Web.Http.Route("pracenja/prestani/{pratilac:int}/{praceni:int}")]
+        [HttpPut]
+        [Route("pracenja/prestani/{pratilac:int}/{praceni:int}")]
         public IHttpActionResult PrestaniDaPratis(int pratilac, int praceni, [FromUri]string sid)
         {
             try
@@ -612,8 +609,8 @@ namespace MensariumAPI.Controllers
         }
 
         //Odjava korisnika
-        [System.Web.Http.HttpPut]
-        //[System.Web.Http.Route("odjava")]
+        [HttpPut]
+        [Route("odjava")]
         public IHttpActionResult Odjava([FromUri]string sid)
         { 
             try
@@ -630,7 +627,7 @@ namespace MensariumAPI.Controllers
                     return Ok("Uspena odjava");
 
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
-                    { Content = new StringContent("Nemate privilegiju") });
+                    { Content = new StringContent("Neuspesna odjava") });
             }
             catch (Exception e)
             {
@@ -647,8 +644,8 @@ namespace MensariumAPI.Controllers
         }
 
         //Azuriranje naloga bilo korisnika
-        [System.Web.Http.HttpPut]
-    //    [System.Web.Http.Route("azuriraj")]
+        [HttpPut]
+        [Route("azuriraj")]
         public KorisnikKreiranjeDto Azuriraj([FromBody] KorisnikKreiranjeDto kddto, [FromUri]string sid)
         {
             try

@@ -498,9 +498,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (login == null)
                 return false;
 
-            login.ValidnaDo = DateTime.Now;
-            
-            s.Save(login);
+            //login.ValidnaDo = DateTime.Now;
+            s.Delete(login);
+            //s.Save(login);
             s.Flush();
 
             return true;
