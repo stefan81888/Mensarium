@@ -700,11 +700,6 @@ namespace MensariumAPI.Controllers
                 if (uspesno)
                     return Ok("Uspeno brisanje iz baze");
 
-                uspesno = ProvajderPodatakaKorisnika.Obrisi(id);
-
-                if (uspesno)
-                    return Ok("Uspeno brisanje iz baze");
-
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Neuspesno brisanje") });
             }

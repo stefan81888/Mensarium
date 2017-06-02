@@ -602,10 +602,10 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static bool ObrisiIzBaze(int id)
         {
-            Korisnik obrisani = VratiKorisnika(id);
+            Korisnik obrisani = Obrisi(id);
 
             if (obrisani == null)
-                return false;
+                return false; // Korisnik ne postoji, nemoguce brisanje iz baze
 
             ISession s = SesijeProvajder.Sesija;
 
@@ -615,17 +615,23 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return true;
         }
 
-        public static bool Obrisi(int id)
+        public static Korisnik Obrisi(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik k = VratiKorisnika(id);
+            Korisnik k = s.Get<Korisnik>(id);
+
+            if (k == null)
+                return null; // Korisnik ne postoji, nemoguce setovanje flegova 
 
             k.Obrisan = true;
+            k.AktivanNalog = false;
 
             s.Save(k);
-            s.Flush();
+            s.Flush(); // ne moze da pukne ako je korisnik null
 
-            return true;
+            Korisnik rezultat = s.Get<Korisnik>(id);
+
+            return rezultat;
         }
 
         public static KorisnikFullDto KorisnikToFullDto(Korisnik k)
