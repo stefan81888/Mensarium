@@ -379,6 +379,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static bool PrestaniDaPratis(int idPratilac, int idPraceni)
         {
+            if (idPraceni == idPratilac)
+                return false;
+
             ISession s = SesijeProvajder.Sesija;
 
             Korisnik pratilac = s.Get<Korisnik>(idPratilac);
@@ -389,6 +392,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             Korisnik praceni = s.Get<Korisnik>(idPraceni);
 
             if (!ValidatorKorisnika.KorisnikPostoji(praceni))
+                return false;
+
+            if (praceni.PracenOd.Contains(pratilac))
                 return false;
 
             praceni.PracenOd.Remove(pratilac);
