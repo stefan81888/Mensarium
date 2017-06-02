@@ -46,8 +46,7 @@ namespace MensariumDesktop.Model.Controllers
                 if (korisnik.IdTipaNaloga == (int) User.UserAccountType.Student)
                 {
                     MessageBox.Show("Prijavljivanje sa studentskog naloga je onemoguceno na ovoj aplikaciji!");
-                    if (!Api.LogoutUser(MSettings.CurrentSession.SessionID))
-                        throw new Exception("Neuspesno ciscenje logovanja");
+                    Api.LogoutUser(MSettings.CurrentSession.SessionID);
                     return false;
                 }
                 MSettings.CurrentSession.LoggedUser = MUtility.User_From_KorisnikFullDto(korisnik);
@@ -64,14 +63,9 @@ namespace MensariumDesktop.Model.Controllers
         {
             try
             {
-                bool successfull = false;
-
                 if (MSettings.CurrentSession != null)
-                    successfull = Api.LogoutUser(MSettings.CurrentSession.SessionID);
-
-                if (!successfull)
-                    throw new Exception("Neuspesno odjavljivanje");
-
+                    Api.LogoutUser(MSettings.CurrentSession.SessionID);
+                
                 MSettings.CurrentSession = null;
             }
             catch (Exception ex)

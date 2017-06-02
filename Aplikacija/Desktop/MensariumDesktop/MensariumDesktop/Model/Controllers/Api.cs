@@ -92,7 +92,7 @@ namespace MensariumDesktop.Model.Controllers
 
         }
         #endregion
-        
+
         #region KORISNICI
         public static KorisnikFullDto GetUserFullInfo(int id)
         {
@@ -102,34 +102,36 @@ namespace MensariumDesktop.Model.Controllers
 
             ApiResponse<KorisnikFullDto> response = Execute<KorisnikFullDto>(request);
 
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("GetUserFullInfo: Neuspesno pribavljanje podataka o korisniku!" + "\n" + response.HttpStatusCode.ToString());
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetUserFullInfo: Neuspesno pribavljanje podataka o korisniku!" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
         public static List<KorisnikFullDto> GetUsersFullInfo()
         {
             RestRequest request = new RestRequest();
-            request.Resource = "korisnici/full";
+            request.Resource = "korisnici";
 
             ApiResponse<List<KorisnikFullDto>> response = Execute<List<KorisnikFullDto>>(request);
 
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("GetUsersFullInfo: Neuspesno pribavljanje podatak o korisnicima!" + "\n" + response.HttpStatusCode.ToString());
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetUsersFullInfo: Neuspesno pribavljanje podatak o korisnicima!" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
         public static KorisnikFollowDto FollowUser(int idFollower, int idFollowing)
         {
             RestRequest request = new RestRequest(Method.GET);
-            request.Resource = "zaprati/{idFollower}/{idFollowing}";
+            request.Resource = "korisnici/zaprati/{idFollower}/{idFollowing}";
             request.AddParameter("idFollower", idFollower, ParameterType.UrlSegment);
             request.AddParameter("idFollowing", idFollowing, ParameterType.UrlSegment);
 
             ApiResponse<KorisnikFollowDto> response = Execute<KorisnikFollowDto>(request);
 
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("FollowUser Error" + "\nServerResponse: "
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
 
@@ -141,8 +143,9 @@ namespace MensariumDesktop.Model.Controllers
             request.AddObject(u);
 
             var response = Execute<KorisnikKreiranjeDto>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("AddNewUser Error" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
@@ -153,8 +156,9 @@ namespace MensariumDesktop.Model.Controllers
             request.AddObject(c);
 
             var response = Execute<KorisnikFullDto>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("AndroidUserRegistrationError" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
@@ -166,20 +170,21 @@ namespace MensariumDesktop.Model.Controllers
 
             ApiResponse<SesijaDto> response = Execute<SesijaDto>(request, false);
 
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
         public static List<KorisnikFollowDto> UsersThatFollows(int userId)
         {
             RestRequest request = new RestRequest(Method.GET);
-            request.Resource = "pracenja";
+            request.Resource = "korisnici/pracenja";
             request.AddParameter("id", userId, ParameterType.QueryString);
 
             ApiResponse<List<KorisnikFollowDto>> response = Execute<List<KorisnikFollowDto>>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
@@ -190,8 +195,9 @@ namespace MensariumDesktop.Model.Controllers
             request.AddObject(criteria);
 
             ApiResponse<List<KorisnikFollowDto>> response = Execute<List<KorisnikFollowDto>>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
@@ -202,8 +208,9 @@ namespace MensariumDesktop.Model.Controllers
             request.AddParameter("id", userId, ParameterType.QueryString);
 
             ApiResponse<KorisnikStanjeDto> response = Execute<KorisnikStanjeDto>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
@@ -214,18 +221,22 @@ namespace MensariumDesktop.Model.Controllers
             request.AddParameter("id", userId, ParameterType.QueryString);
 
             ApiResponse<List<PrivilegijaFullDto>> response = Execute<List<PrivilegijaFullDto>>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\n" + response.HttpStatusCode.ToString());
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
-        public static bool InviteUser(PozivanjaFullDto m)
+        public static void InviteUser(PozivanjaFullDto m)
         {
             RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "korisnici/pozovi";
             request.AddObject(m);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("InviteUser Error" + "\nServerResponse: " + response.ErrorResponse 
+                    + "\nHttpStatus: " + response.HttpStatusCode);
         }
         public static List<PozivanjaNewsFeedItemDto> UserCalledBy(int userId)
         {
@@ -234,79 +245,93 @@ namespace MensariumDesktop.Model.Controllers
             request.AddParameter("id", userId, ParameterType.QueryString);
 
             ApiResponse<List<PozivanjaNewsFeedItemDto>> response = Execute<List<PozivanjaNewsFeedItemDto>>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("GetMeal: Neuspesno pribavljanje informacije o obroku");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetMeal: Neuspesno pribavljanje informacije o obroku" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
         public static PozivanjaPozvaniDto Respond2Invite(PozivanjaPozvaniDto m)
         {
             RestRequest request = new RestRequest(Method.PUT);
-            request.Resource = "odgovor/pozivi";
+            request.Resource = "korisnici/odgovor/pozivi";
             request.AddObject(m);
 
             ApiResponse<PozivanjaPozvaniDto> response = Execute<PozivanjaPozvaniDto>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("GetMeal: Neuspesno pribavljanje informacije o obroku");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("Respond2InviteError" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
-        public static bool Unfolow(int idFollower, int idFollowing)
+        public static void Unfolow(int idFollower, int idFollowing)
         {
             RestRequest request = new RestRequest(Method.PUT);
-            request.Resource = "pracenja/prestani/{idFollower}/{idFollowing}";
+            request.Resource = "korisnici/pracenja/prestani/{idFollower}/{idFollowing}";
             request.AddParameter("idFollower", idFollower, ParameterType.UrlSegment);
             request.AddParameter("idFollowing", idFollower, ParameterType.UrlSegment);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("Unfollow Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " 
+                    + response.HttpStatusCode);
         }
-        public static bool LogoutUser(string sessionId)
+        public static void LogoutUser(string sessionId)
         {
             RestRequest request = new RestRequest(Method.PUT);
             request.Resource = "korisnici/odjava";
 
             ApiResponse<object> response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("LogoutErrror" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " 
+                    + response.HttpStatusCode);
         }
-        public static bool UpdateUser(KorisnikKreiranjeDto m)
+        public static void UpdateUser(KorisnikKreiranjeDto m)
         {
             RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "korisnici/azuriraj";
             request.AddObject(m);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("UpdateUser Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " 
+                    + response.HttpStatusCode);
         }
         #endregion
 
         #region FAKULTETI
-        public static bool AddNewFaculty(FakultetFullDto fax)
+        public static void AddNewFaculty(FakultetFullDto fax)
         {
             RestRequest request = new RestRequest(Method.POST);
             request.Resource = "fakulteti/dodaj";
             request.AddObject(fax);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("AddNewFaculty Error" + "\nServerResponse: " + response.ErrorResponse 
+                    + "\nHttpStatus: " + response.HttpStatusCode);
 
         }
-        public static bool UpdateFaculty(FakultetFullDto fax)
+        public static void UpdateFaculty(FakultetFullDto fax)
         {
             RestRequest request = new RestRequest(Method.PUT);
             request.Resource = "fakulteti/update";
             request.AddObject(fax);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("UpdateFacultyError" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
         }
-        public static bool DeleteFaculty(int id)
+        public static void DeleteFaculty(int id)
         {
             RestRequest request = new RestRequest(Method.DELETE);
             request.Resource = "fakulteti/obrisi";
             request.AddParameter("id", id, ParameterType.QueryString);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK);
+            if (response.HttpStatusCode != HttpStatusCode.OK)
+                throw new Exception("Fakultet nije obrisan\n" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
         }
         public static List<FakultetFullDto> GetAllFaculties()
         {
@@ -315,8 +340,9 @@ namespace MensariumDesktop.Model.Controllers
 
             ApiResponse<List<FakultetFullDto>> response = Execute<List<FakultetFullDto>>(request);
 
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("GetAllFaculies: Neuspesno pribavljanje liste fakulteta");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetAllFaculies: Neuspesno pribavljanje liste fakulteta" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
@@ -327,8 +353,9 @@ namespace MensariumDesktop.Model.Controllers
             request.AddParameter("id", id, ParameterType.QueryString);
 
             ApiResponse<FakultetFullDto> response = Execute<FakultetFullDto>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("GetFacultyInfo: Neuspesno pribavljanje informacije o fakultetu");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetFacultyInfo: Neuspesno pribavljanje informacije o fakultetu" + "\nServerResponse: "
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
@@ -342,8 +369,9 @@ namespace MensariumDesktop.Model.Controllers
 
             ApiResponse<List<MenzaFullDto>> response = Execute<List<MenzaFullDto>>(request);
 
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("GetAllMensas: Neuspesno pribavljanje liste menza");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetAllMensas: Neuspesno pribavljanje liste menza" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
@@ -354,29 +382,31 @@ namespace MensariumDesktop.Model.Controllers
             request.AddParameter("id", id, ParameterType.QueryString);
 
             ApiResponse<MenzaFullDto> response = Execute<MenzaFullDto>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("GetMensas: Neuspesno pribavljanje informacije o menzi");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetMensas: Neuspesno pribavljanje informacije o menzi" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
-        public static bool AddNewMensa(MenzaFullDto m)
+        public static void AddNewMensa(MenzaFullDto m)
         {
             RestRequest request = new RestRequest(Method.POST);
             request.Resource = "menze/dodaj";
             request.AddObject(m);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("AddNewMensa Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
         }
-        public static bool DeleteMensa(int id)
+        public static void DeleteMensa(int id)
         {
-            throw new Exception("Not implemented on server");
+            
             RestRequest request = new RestRequest(Method.DELETE);
             request.Resource = "menze/obrisi";
             request.AddParameter("id", id, ParameterType.QueryString);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("DeleteMensa" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
         }
         public static int CrowdInMensa(int id)
         {
@@ -385,8 +415,9 @@ namespace MensariumDesktop.Model.Controllers
             request.AddParameter("id", id, ParameterType.QueryString);
 
             ApiResponse<int> response = Execute<int>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("CrowdInMensa: Neuspesno pribavljanje informacije o guzvi u menzi");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("CrowdInMensa: Neuspesno pribavljanje informacije o guzvi u menzi" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
 
@@ -398,20 +429,23 @@ namespace MensariumDesktop.Model.Controllers
             request.AddParameter("id", id, ParameterType.QueryString);
 
             ApiResponse<int> response = Execute<int>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("CrowdInPaymentCounter: Neuspesno pribavljanje informacije o guzvi na salteru");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("CrowdInPaymentCounter: Neuspesno pribavljanje informacije o guzvi na salteru" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
 
         }
-        public static bool UpdateMenza(MenzaFullDto m)
+        public static void UpdateMenza(MenzaFullDto m)
         {
-            throw new Exception("Not implemented on server");
+            
             RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "menze/update";
             request.AddObject(m);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("" + "\n" + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
         }
         #endregion
 
@@ -423,8 +457,9 @@ namespace MensariumDesktop.Model.Controllers
             request.AddParameter("id", id, ParameterType.QueryString);
 
             ApiResponse<ObrokFullDto> response = Execute<ObrokFullDto>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("GetMeal: Neuspesno pribavljanje informacije o obroku");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetMeal: Neuspesno pribavljanje informacije o obroku" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
@@ -434,28 +469,32 @@ namespace MensariumDesktop.Model.Controllers
             request.Resource = "obroci";
 
             ApiResponse<List<ObrokFullDto>> response = Execute<List<ObrokFullDto>>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("GetAllMeals: Neuspesno pribavljanje informacije o obrocima");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetAllMeals: Neuspesno pribavljanje informacije o obrocima" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
-        public static bool AddMeal(ObrokUplataDto meal)
+        public static void AddMeal(ObrokUplataDto meal)
         {
             RestRequest request = new RestRequest(Method.POST);
             request.Resource = "obroci/uplati";
             request.AddObject(meal);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("AddMeal: Neuspesno dodavanje obroka." + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
         }
-        public static bool UseMeal(ObrokNaplataDto m)
+        public static void UseMeal(ObrokNaplataDto m)
         {
             RestRequest request = new RestRequest(Method.PUT);
             request.Resource = "obroci/naplati";
             request.AddObject(m);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("UseMeal: Obrok nije naplacen." + "\n" + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
         }
         public static List<ObrokDanasUplacenDto> TodayAddedMeals(int mealTypeId)
         {
@@ -464,8 +503,9 @@ namespace MensariumDesktop.Model.Controllers
             request.AddParameter("id", mealTypeId, ParameterType.QueryString);
 
             ApiResponse<List<ObrokDanasUplacenDto>> response = Execute<List<ObrokDanasUplacenDto>>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("TodayAddedMeals: Neuspesno pribavljanje informacije o obrocima");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("TodayAddedMeals: Neuspesno pribavljanje informacije o obrocima" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
@@ -476,29 +516,80 @@ namespace MensariumDesktop.Model.Controllers
             request.AddParameter("id", mealTypeId, ParameterType.QueryString);
 
             ApiResponse<List<ObrokDanasSkinutDto>> response = Execute<List<ObrokDanasSkinutDto>>(request);
-            if (response.HttpStatusCode != HttpStatusCode.OK && response.HttpStatusCode != HttpStatusCode.Redirect)
-                throw new Exception("TodayAddedMeals: Neuspesno pribavljanje informacije o obrocima");
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("TodayAddedMeals: Neuspesno pribavljanje informacije o obrocima" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
-        public static bool UndoUseMeals(int[] mealsId) //netestirano
+        public static void UndoUseMeals(int[] mealsId) //netestirano
         {
             RestRequest request = new RestRequest(Method.PUT);
             request.Resource = "obroci/vratiPogresnoSkinute";
             request.AddObject(mealsId);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("UndoUseMeals: Error" + "\nServerResponse: " + response.ErrorResponse 
+                    + "\nHttpStatus: " + response.HttpStatusCode);
         }
-        public static bool UndoAddMeals(int[] mealsId) //netestirano
+        public static void UndoAddMeals(int[] mealsId) //netestirano
         {
             RestRequest request = new RestRequest(Method.PUT);
             request.Resource = "obroci/skiniPogresnoUplacene";
             request.AddObject(mealsId);
 
             var response = Execute(request);
-            return (response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("UndoAddMeals: Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " 
+                    + response.HttpStatusCode);
         }
         #endregion
+
+        #region OBJAVE
+        public static ObjavaFullDto ShowUserPost(int userId)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "objave/prikazi";
+            request.AddParameter("id", userId, ParameterType.QueryString);
+
+            ApiResponse<ObjavaFullDto> response = Execute<ObjavaFullDto>(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("ShowUserPost: Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " 
+                    + response.HttpStatusCode);
+
+            return response.ResponseObject;
+
+        }
+        public static ObjavaCUDto UserNewPost(int userId, ObjavaCUDto post)
+        {
+            RestRequest request = new RestRequest(Method.POST);
+            request.Resource = "objave/objavi";
+            request.AddParameter("id", userId, ParameterType.QueryString);
+            request.AddObject(post);
+
+
+            ApiResponse<ObjavaCUDto> response = Execute<ObjavaCUDto>(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("UserNewPost: Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " 
+                    + response.HttpStatusCode);
+
+            return response.ResponseObject;
+        }
+        public static List<ObjavaReadDto> GetFollowedUsersPosts(int userId)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "objave/pracenih";
+            request.AddParameter("id", userId, ParameterType.QueryString);
+
+            ApiResponse<List<ObjavaReadDto>> response = Execute<List<ObjavaReadDto>>(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetFollowedUsersPosts: Error" + "\nServerResponse: " + response.ErrorResponse 
+                    + "\nHttpStatus: " + response.HttpStatusCode);
+
+            return response.ResponseObject;
+        }
+        #endregion
+
     }
 }

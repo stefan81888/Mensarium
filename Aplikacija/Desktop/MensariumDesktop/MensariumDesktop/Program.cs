@@ -6,6 +6,10 @@ using System.Windows.Forms;
 using MensariumDesktop.Forms;
 using MensariumDesktop.Model.Controllers;
 
+
+using MensariumDesktop.Model.Components;
+using MensariumDesktop.Model.Components.DTOs;
+
 namespace MensariumDesktop
 {
     static class Program
@@ -21,6 +25,7 @@ namespace MensariumDesktop
 
             MainController.InitApplication();
 
+        
             LoginForm fLogin = new LoginForm();
             while (fLogin.ShowDialog() == DialogResult.OK)
             {

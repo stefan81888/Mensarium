@@ -378,7 +378,7 @@ namespace MensariumDesktop
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(733, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(702, 22);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // statbarOPStatus
