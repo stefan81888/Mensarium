@@ -352,8 +352,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static PozivanjaPozvaniDto OdogovoriNaPoziv(PozivanjaPozvaniDto ppdto)
         {
             ISession s = SesijeProvajder.Sesija;
+
             Korisnik k = s.Get<Korisnik>(ppdto.IdPozvanog);
+            if (k == null)
+                return null;
+
             Pozivanje p = s.Get<Pozivanje>(ppdto.IdPoziva);
+            if (p == null)
+                return null;
 
             PozivanjaPozvani pp = new PozivanjaPozvani()
             {
