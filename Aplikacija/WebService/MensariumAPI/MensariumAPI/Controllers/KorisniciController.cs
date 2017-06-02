@@ -682,5 +682,46 @@ namespace MensariumAPI.Controllers
             }
         }
 
+        //Brisanje korisnika
+        [HttpPut]
+        [Route("odjava")]
+        public IHttpActionResult Obrisi([FromUri] int id, [FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
+                bool uspesno = ProvajderPodatakaKorisnika.ObrisiIzBaze(id);
+
+                if (uspesno)
+                    return Ok("Uspeno brisanje iz baze");
+
+                uspesno = ProvajderPodatakaKorisnika.Obrisi(id);
+
+                if (uspesno)
+                    return Ok("Uspeno brisanje iz baze");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Neuspesno brisanje") });
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+
+        }
+
+
     }
 }

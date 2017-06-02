@@ -47,7 +47,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
             Korisnik k = s.Get<Korisnik>(id);
-            return k;
+
+            if (k != null)
+                return k;
+
+            return null;
         }
 
         public static List<Korisnik> VratiKorisnike()
@@ -595,5 +599,60 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return ses.KorisnikSesije.IdKorisnika;
         }
+
+        public static bool ObrisiIzBaze(int id)
+        {
+            Korisnik obrisani = VratiKorisnika(id);
+
+            if (obrisani == null)
+                return false;
+
+            ISession s = SesijeProvajder.Sesija;
+
+            s.Delete(obrisani);
+            s.Flush();
+
+            return true;
+        }
+
+        public static bool Obrisi(int id)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Korisnik k = VratiKorisnika(id);
+
+            k.Obrisan = true;
+
+            s.Save(k);
+            s.Flush();
+
+            return true;
+        }
+
+        public static KorisnikFullDto KorisnikToFullDto(Korisnik k)
+        {
+            KorisnikFullDto korisnik = new KorisnikFullDto();
+            korisnik.KorisnickoIme = k.KorisnickoIme;
+            korisnik.Email = k.Email;
+            korisnik.Ime = k.Ime;
+            korisnik.Prezime = k.Prezime;
+            korisnik.DatumRodjenja = k.DatumRodjenja;
+            korisnik.DatumRegistracije = k.DatumRegistracije;
+            korisnik.BrojTelefona = k.BrojTelefona;
+            if (k.BrojIndeksa != null)
+                korisnik.BrojIndeksa = k.BrojIndeksa;
+            if (k.DatumVaziDo != null)
+                korisnik.DatumVaziDo = k.DatumVaziDo;
+            korisnik.AktivanNalog = k.AktivanNalog;
+            korisnik.IdTipaNaloga = k.TipNaloga.IdTip;
+            if (k.StudiraFakultet != null)
+                korisnik.IdFakulteta = k.StudiraFakultet.IdFakultet;
+            if (k.Objava != null)
+                korisnik.IdObjave = k.Objava.IdObjave;
+            if (k.IdKorisnika != 0)
+                korisnik.IdKorisnika = k.IdKorisnika;
+            return korisnik;
+
+        }
+
     }
 }
