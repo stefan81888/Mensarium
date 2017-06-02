@@ -162,9 +162,8 @@ namespace MensariumDesktop
 
         private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Api.FollowUser(22);
-
-            try { Api.GetUsersFullInfo(); } catch (Exception exception) { MessageBox.Show(exception.Message); }
+            
+            try { Api.DeleteUser(31); } catch (Exception exception) { MessageBox.Show(exception.Message); }
             try { Api.FollowUser(9); } catch (Exception exception) { MessageBox.Show(exception.Message); } //forbidden
             try { Api.AndroidUserRegistration(new ClientZaRegistracijuDto()); } catch (Exception exception) { MessageBox.Show(exception.Message); } 
             try { Api.UsersThatFollows(); } catch (Exception exception) { MessageBox.Show(exception.Message); }

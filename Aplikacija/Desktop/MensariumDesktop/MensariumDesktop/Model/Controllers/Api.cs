@@ -295,6 +295,18 @@ namespace MensariumDesktop.Model.Controllers
                 throw new Exception("UpdateUser Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " 
                     + response.HttpStatusCode);
         }
+        public static void DeleteUser(int idUser)
+        {
+            RestRequest request = new RestRequest(Method.DELETE);
+            request.Resource = "korisnici/obrisi";
+            request.AddParameter("id", idUser, ParameterType.QueryString);
+
+            var response = Execute(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("DeleteUser Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
+                    + response.HttpStatusCode);
+
+        }
         #endregion
 
         #region FAKULTETI
