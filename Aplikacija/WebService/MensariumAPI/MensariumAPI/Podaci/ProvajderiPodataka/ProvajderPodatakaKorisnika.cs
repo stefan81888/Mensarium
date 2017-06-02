@@ -110,8 +110,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static bool Zaprati(int idPratioca, int idPracenog)
         {
-            //Onemoguciti u mobilnoj aplikaciji pracenje vec pracenih
-
+            
             ISession s = SesijeProvajder.Sesija;
 
             Korisnik pratilac = s.Get<Korisnik>(idPratioca);
@@ -122,6 +121,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             Korisnik praceni = s.Get<Korisnik>(idPracenog);
 
             if (!ValidatorKorisnika.KorisnikPostoji(praceni))
+                return false;
+
+            if (praceni.PracenOd.Contains(pratilac))
                 return false;
 
             praceni.PracenOd.Add(pratilac);
