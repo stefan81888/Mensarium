@@ -217,3 +217,57 @@ Parameter name: index
    at System.Nullable`1.get_Value()
    at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.DodajStudenta(KorisnikKreiranjeDto kkdto) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 401
    at MensariumAPI.Controllers.KorisniciController.Azuriraj(KorisnikKreiranjeDto kddto, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 660
+[6/2/2017 04:17:01]	MySql.Data.MySqlClient.MySqlException (0x80004005): Duplicate entry '22-22' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.PerformInsert(Object ownerId, IPersistentCollection collection, IExpectation expectation, Object entry, Int32 index, Boolean useBatch, Boolean callable, ISessionImplementor session)
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.Recreate(IPersistentCollection collection, Object id, ISessionImplementor session)
+[6/2/2017 04:20:14]	System.InvalidOperationException: Sequence contains no elements
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 573
+   at MensariumAPI.Controllers.KorisniciController.Zaprati(Int32 pratilac, Int32 praceni, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 170
+[6/2/2017 04:26:47]	MySql.Data.MySqlClient.MySqlException (0x80004005): Duplicate entry '22-22' for key 'PRIMARY'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.PerformInsert(Object ownerId, IPersistentCollection collection, IExpectation expectation, Object entry, Int32 index, Boolean useBatch, Boolean callable, ISessionImplementor session)
+   at NHibernate.Persister.Collection.AbstractCollectionPersister.Recreate(IPersistentCollection collection, Object id, ISessionImplementor session)
+[6/2/2017 04:44:22]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 154
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 325
+[6/2/2017 04:44:30]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Controllers.KorisniciController.Pretraga(PretragaKriterijumDto pkdto, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 363
+[6/2/2017 04:44:49]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.Pozovi(PozivanjaFullDto pfdto) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 289
+   at MensariumAPI.Controllers.KorisniciController.Pozovi(PozivanjaFullDto pfdto, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 487
+[6/2/2017 04:45:14]	NHibernate.StaleObjectStateException: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect): [MensariumAPI.Podaci.Entiteti.PozivanjaPozvani#MensariumAPI.Podaci.Entiteti.PozivanjaPozvaniID]
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+   at NHibernate.Event.Default.DefaultFlushEventListener.OnFlush(FlushEvent event)
+   at NHibernate.Impl.SessionImpl.Flush()
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.OdogovoriNaPoziv(PozivanjaPozvaniDto ppdto) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 369
+   at MensariumAPI.Controllers.KorisniciController.OdgovorNaPoziv(PozivanjaPozvaniDto poziv, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 557
+[6/2/2017 04:45:30]	System.InvalidOperationException: Nullable object must have a value.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Nullable`1.get_Value()
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.DodajStudenta(KorisnikKreiranjeDto kkdto) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 404
+   at MensariumAPI.Controllers.KorisniciController.Azuriraj(KorisnikKreiranjeDto kddto, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 664
