@@ -11,6 +11,8 @@ using MensariumAPI.Podaci.Konfigracija;
 using NHibernate;
 using MensariumAPI.Podaci.ProvajderiPodataka;
 using MensariumAPI.Podaci.DTO;
+using System.Web;
+
 namespace MensariumAPI.Controllers
 {
     [RoutePrefix("api/korisnici")]
@@ -717,6 +719,35 @@ namespace MensariumAPI.Controllers
 
         }
 
+        //VratiKorisnicku sliku sa traznem ID-om
+        [HttpGet]
+        [Route("slika")]
+        public HttpResponseMessage SlikaKorisnika([FromUri]int id, [FromUri]string sid)
+        {
+            return ProvajderPodatakaSlike.VratiSliku(id);                           
+        }
+
+        //VratiKorisnicku sliku (trenutno ulogovan korisnik)
+        [HttpGet]
+        [Route("slika")]
+        public HttpResponseMessage SlikaKorisnika([FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+                return ProvajderPodatakaSlike.VratiSliku(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
+            }
+            catch(Exception e)
+            {
+                DnevnikIzuzetaka.Zabelezi(e);
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                { Content = new StringContent("ServerGreska: Neuspelo pribavljanje slike") };
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
 
     }
 }
