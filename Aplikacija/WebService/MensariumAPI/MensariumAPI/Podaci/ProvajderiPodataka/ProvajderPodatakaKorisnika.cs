@@ -7,6 +7,9 @@ using MensariumAPI.Podaci.Entiteti;
 using Microsoft.Ajax.Utilities;
 using NHibernate;
 using NHibernate.Linq;
+using System.Net.Http;
+using System.Web.Http;
+using System.Net;
 
 namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
@@ -562,6 +565,21 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static KorisnikKreiranjeDto AzurirajMenadzera(KorisnikKreiranjeDto kkdto)
         {
             return Azuriraj(kkdto);
+        }
+        
+        public static int KorisnikIDizSesijaID(string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            LoginSesija ses = s.Query<LoginSesija>()
+                .Where(x => x.IdSesije == sid)
+                .FirstOrDefault();
+
+            if (ses == null) 
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                                    { Content = new StringContent("Nevalidna sesija") });
+
+            return ses.KorisnikSesije.IdKorisnika;
         }
     }
 }

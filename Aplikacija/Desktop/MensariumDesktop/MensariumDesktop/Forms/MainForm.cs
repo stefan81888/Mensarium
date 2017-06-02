@@ -162,18 +162,19 @@ namespace MensariumDesktop
 
         private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            Api.FollowUser(22);
+
             try { Api.GetUsersFullInfo(); } catch (Exception exception) { MessageBox.Show(exception.Message); }
-            try { Api.FollowUser(0, 9); } catch (Exception exception) { MessageBox.Show(exception.Message); } //forbidden
+            try { Api.FollowUser(9); } catch (Exception exception) { MessageBox.Show(exception.Message); } //forbidden
             try { Api.AndroidUserRegistration(new ClientZaRegistracijuDto()); } catch (Exception exception) { MessageBox.Show(exception.Message); } 
-            try { Api.UsersThatFollows(99); } catch (Exception exception) { MessageBox.Show(exception.Message); }
+            try { Api.UsersThatFollows(); } catch (Exception exception) { MessageBox.Show(exception.Message); }
             try { Api.SearchUsers(new PretragaKriterijumDto()); } catch (Exception exception) { MessageBox.Show(exception.Message); }
-            try { Api.UserMealsCount(2); } catch (Exception exception) { MessageBox.Show(exception.Message); }
-            try { Api.UserPriviledges(99); } catch (Exception exception) { MessageBox.Show(exception.Message); } 
+            try { Api.UserMealsCount(); } catch (Exception exception) { MessageBox.Show(exception.Message); }
+            try { Api.UserPriviledges(); } catch (Exception exception) { MessageBox.Show(exception.Message); } 
             try { Api.InviteUser(new PozivanjaFullDto()); } catch (Exception exception) { MessageBox.Show(exception.Message); }//NOT FOUND
-            try { Api.UserCalledBy(0); } catch (Exception exception) { MessageBox.Show(exception.Message); }//null kad nevalidan
+            try { Api.UserCalledBy(); } catch (Exception exception) { MessageBox.Show(exception.Message); }//null kad nevalidan
             try { Api.Respond2Invite(new PozivanjaPozvaniDto()); } catch (Exception exception) { MessageBox.Show(exception.Message); }
-            try { Api.Unfolow(22, 22); } catch (Exception exception) { MessageBox.Show(exception.Message); }
+            try { Api.Unfolow(22); } catch (Exception exception) { MessageBox.Show(exception.Message); }
             try { Api.UpdateUser(new KorisnikKreiranjeDto()); } catch (Exception exception) { MessageBox.Show(exception.Message); }
 
         }

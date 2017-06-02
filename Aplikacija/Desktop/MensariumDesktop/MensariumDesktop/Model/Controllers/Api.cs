@@ -120,12 +120,11 @@ namespace MensariumDesktop.Model.Controllers
 
             return response.ResponseObject;
         }
-        public static KorisnikFollowDto FollowUser(int idFollower, int idFollowing)
+        public static KorisnikFollowDto FollowUser(int idFollowing)
         {
             RestRequest request = new RestRequest(Method.GET);
-            request.Resource = "korisnici/zaprati/{idFollower}/{idFollowing}";
-            request.AddParameter("idFollower", idFollower, ParameterType.UrlSegment);
-            request.AddParameter("idFollowing", idFollowing, ParameterType.UrlSegment);
+            request.Resource = "korisnici/zaprati";
+            request.AddParameter("praceni", idFollowing, ParameterType.QueryString);
 
             ApiResponse<KorisnikFollowDto> response = Execute<KorisnikFollowDto>(request);
 
@@ -176,11 +175,11 @@ namespace MensariumDesktop.Model.Controllers
 
             return response.ResponseObject;
         }
-        public static List<KorisnikFollowDto> UsersThatFollows(int userId)
+        public static List<KorisnikFollowDto> UsersThatFollows()
         {
             RestRequest request = new RestRequest(Method.GET);
             request.Resource = "korisnici/pracenja";
-            request.AddParameter("id", userId, ParameterType.QueryString);
+            
 
             ApiResponse<List<KorisnikFollowDto>> response = Execute<List<KorisnikFollowDto>>(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
@@ -201,11 +200,11 @@ namespace MensariumDesktop.Model.Controllers
 
             return response.ResponseObject;
         }
-        public static KorisnikStanjeDto UserMealsCount(int userId)
+        public static KorisnikStanjeDto UserMealsCount()
         {
             RestRequest request = new RestRequest(Method.GET);
             request.Resource = "korisnici/stanje";
-            request.AddParameter("id", userId, ParameterType.QueryString);
+            
 
             ApiResponse<KorisnikStanjeDto> response = Execute<KorisnikStanjeDto>(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
@@ -214,11 +213,11 @@ namespace MensariumDesktop.Model.Controllers
 
             return response.ResponseObject;
         }
-        public static List<PrivilegijaFullDto> UserPriviledges(int userId)
+        public static List<PrivilegijaFullDto> UserPriviledges()
         {
             RestRequest request = new RestRequest(Method.GET);
             request.Resource = "korisnici/privilegije";
-            request.AddParameter("id", userId, ParameterType.QueryString);
+            
 
             ApiResponse<List<PrivilegijaFullDto>> response = Execute<List<PrivilegijaFullDto>>(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
@@ -238,11 +237,11 @@ namespace MensariumDesktop.Model.Controllers
                 throw new Exception("InviteUser Error" + "\nServerResponse: " + response.ErrorResponse 
                     + "\nHttpStatus: " + response.HttpStatusCode);
         }
-        public static List<PozivanjaNewsFeedItemDto> UserCalledBy(int userId)
+        public static List<PozivanjaNewsFeedItemDto> UserCalledBy()
         {
             RestRequest request = new RestRequest(Method.GET);
             request.Resource = "korisnici/pozivi";
-            request.AddParameter("id", userId, ParameterType.QueryString);
+            
 
             ApiResponse<List<PozivanjaNewsFeedItemDto>> response = Execute<List<PozivanjaNewsFeedItemDto>>(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
@@ -264,12 +263,11 @@ namespace MensariumDesktop.Model.Controllers
 
             return response.ResponseObject;
         }
-        public static void Unfolow(int idFollower, int idFollowing)
+        public static void Unfolow(int idFollowing)
         {
             RestRequest request = new RestRequest(Method.PUT);
-            request.Resource = "korisnici/pracenja/prestani/{idFollower}/{idFollowing}";
-            request.AddParameter("idFollower", idFollower, ParameterType.UrlSegment);
-            request.AddParameter("idFollowing", idFollower, ParameterType.UrlSegment);
+            request.Resource = "korisnici/pracenja/prestani";
+            request.AddParameter("praceni", idFollowing, ParameterType.QueryString);
 
             var response = Execute(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))

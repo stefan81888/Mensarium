@@ -59,7 +59,8 @@ namespace MensariumAPI.Controllers
                         korisnik.IdFakulteta = k.StudiraFakultet.IdFakultet;
                     if (k.Objava != null)
                         korisnik.IdObjave = k.Objava.IdObjave;
-                    if (k.IdKorisnika != null)
+                    //if (k.IdKorisnika != null)
+                    if (k.IdKorisnika != 0)
                         korisnik.IdKorisnika = k.IdKorisnika;
                 }
                 return korisnik;
@@ -129,7 +130,8 @@ namespace MensariumAPI.Controllers
                         korisnik.IdFakulteta = k.StudiraFakultet.IdFakultet;
                     if (k.Objava != null)
                         korisnik.IdObjave = k.Objava.IdObjave;
-                    if (k.IdKorisnika != null)
+                    //if (k.IdKorisnika != null)
+                    if (k.IdKorisnika != 0)
                         korisnik.IdKorisnika = k.IdKorisnika;
 
 
@@ -156,8 +158,8 @@ namespace MensariumAPI.Controllers
 
         //Korisnik pratilac počinje da prati korisnika praceni
         [HttpGet]
-        [Route("zaprati/{pratilac:int}/{praceni:int}")]
-        public IHttpActionResult Zaprati(int pratilac, int praceni, [FromUri]string sid)
+        [Route("zaprati")]
+        public IHttpActionResult Zaprati([FromUri] int praceni, [FromUri]string sid)
         {
             try
             {
@@ -167,6 +169,8 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
+                int pratilac = ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid);
+                
                 bool status = ProvajderPodatakaKorisnika.Zaprati(pratilac, praceni);
               
                 if(status)
@@ -312,13 +316,13 @@ namespace MensariumAPI.Controllers
         //Prikaz svih korisnika koje korisnik prati
         [HttpGet]
         [Route("pracenja")]
-        public List<KorisnikFollowDto> Pracenja([FromUri] int id, [FromUri]string sid)
+        public List<KorisnikFollowDto> Pracenja([FromUri]string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                List<KorisnikFollowDto> pracenja = ProvajderPodatakaKorisnika.SvaPracenja(id);
+                List<KorisnikFollowDto> pracenja = ProvajderPodatakaKorisnika.SvaPracenja(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
 
                if(pracenja.Count == 0)
                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
@@ -382,7 +386,7 @@ namespace MensariumAPI.Controllers
         //Broj obroka korisnika
         [HttpGet]
         [Route("stanje")]
-        public KorisnikStanjeDto VratiKorisnikovoStanjeObroka([FromUri] int id, [FromUri]string sid)
+        public KorisnikStanjeDto VratiKorisnikovoStanjeObroka([FromUri]string sid)
         {
             try
             {
@@ -392,7 +396,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
-                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
 
                 KorisnikStanjeDto korisnik = new KorisnikStanjeDto();
                 if (ValidatorKorisnika.KorisnikPostoji(k))
@@ -421,7 +425,7 @@ namespace MensariumAPI.Controllers
         //Priivlegije naloga
         [HttpGet]
         [Route("privilegije")]
-        public List<PrivilegijaFullDto> VratiPrivilegijeKorisnika([FromUri] int id, [FromUri]string sid)
+        public List<PrivilegijaFullDto> VratiPrivilegijeKorisnika([FromUri]string sid)
         {
             try
             {
@@ -431,7 +435,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
-                List<Privilegija> listaPrivilegija = ProvajderPodatakaTipovaNaloga.VratiPrivilegijeKorisnika(id);
+                List<Privilegija> listaPrivilegija = ProvajderPodatakaTipovaNaloga.VratiPrivilegijeKorisnika(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
 
                 if (listaPrivilegija.Count == 0)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
@@ -506,7 +510,7 @@ namespace MensariumAPI.Controllers
         //Vraca sve pozive upucene jednom korisniku
         [HttpGet]
         [Route("pozivi")]
-        public List<PozivanjaNewsFeedItemDto> SviPozivi(int id, [FromUri]string sid)
+        public List<PozivanjaNewsFeedItemDto> SviPozivi([FromUri]string sid)
         {
             try
             {
@@ -516,7 +520,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
-                List<PozivanjaNewsFeedItemDto> listaPoziva = ProvajderPodatakaKorisnika.SviPozivi(id);
+                List<PozivanjaNewsFeedItemDto> listaPoziva = ProvajderPodatakaKorisnika.SviPozivi(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
 
                 if(listaPoziva.Count == 0)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
@@ -575,8 +579,8 @@ namespace MensariumAPI.Controllers
         
         //Korisnik pratilac prestaje da prati korisnika praceni
         [HttpPut]
-        [Route("pracenja/prestani/{pratilac:int}/{praceni:int}")]
-        public IHttpActionResult PrestaniDaPratis(int pratilac, int praceni, [FromUri]string sid)
+        [Route("pracenja/prestani")]
+        public IHttpActionResult PrestaniDaPratis([FromUri] int praceni, [FromUri]string sid)
         {
             try
             {
@@ -586,7 +590,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                         { Content = new StringContent("Nemate privilegiju") });
 
-                bool status = ProvajderPodatakaKorisnika.PrestaniDaPratis(pratilac, praceni);
+                bool status = ProvajderPodatakaKorisnika.PrestaniDaPratis(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid), praceni);
 
                 if (status)
                     return Ok("Korisnik prestao sa pracenjem");
