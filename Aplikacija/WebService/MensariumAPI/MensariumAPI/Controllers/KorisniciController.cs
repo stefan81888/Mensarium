@@ -683,8 +683,8 @@ namespace MensariumAPI.Controllers
         }
 
         //Brisanje korisnika
-        [HttpPut]
-        [Route("odjava")]
+        [HttpDelete]
+        [Route("obrisi")]
         public IHttpActionResult Obrisi([FromUri] int id, [FromUri]string sid)
         {
             try
