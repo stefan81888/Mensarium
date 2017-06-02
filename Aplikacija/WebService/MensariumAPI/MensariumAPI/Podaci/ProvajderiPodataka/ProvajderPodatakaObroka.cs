@@ -114,21 +114,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return null;
         }
 
-        public static KorisnikStanjeDto PredlogUplate(int idKorisnika)
-        {
-            ISession s = SesijeProvajder.Sesija;
-            KorisnikStanjeDto predlog = new KorisnikStanjeDto();
-
-            Korisnik kor = ProvajderPodatakaKorisnika.VratiKorisnika(idKorisnika);
-
-            predlog.BrojDorucka = (kor.Obroci.Count(k => k.Tip.IdTipObroka == 1 && k.DatumUplacivanja.Month <= DateTime.Now.Month && k.DatumUplacivanja.Month >= DateTime.Now.AddMonths(-3).Month) / 3);
-            predlog.BrojRuckova = (kor.Obroci.Count(k => k.Tip.IdTipObroka == 2 && k.DatumUplacivanja.Month <= DateTime.Now.Month && k.DatumUplacivanja.Month >= DateTime.Now.AddMonths(-3).Month) / 3);
-            predlog.BrojVecera = (kor.Obroci.Count(k => k.Tip.IdTipObroka == 3 && k.DatumUplacivanja.Month <= DateTime.Now.Month && k.DatumUplacivanja.Month >= DateTime.Now.AddMonths(-3).Month) / 3);
-
-            if (predlog != null)
-                return predlog;
-            return null;
-                
-        }
+        
     }
 }

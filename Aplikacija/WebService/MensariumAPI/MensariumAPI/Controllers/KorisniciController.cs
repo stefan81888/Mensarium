@@ -806,6 +806,46 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.ZatvoriSesiju();
             }
+
+
+        }
+
+        [HttpGet]
+        [Route("predlogUplate")]
+        public KorisnikStanjeDto PredloziKorisnikuBrojObrokaZaUplatu([FromUri]int id, [FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+
+                Korisnik kor = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+
+                if (kor == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Korisnik nije pronadjen") });
+
+                KorisnikStanjeDto predlog = new KorisnikStanjeDto();
+
+                predlog = ProvajderPodatakaObroka.PredlogUplate(id);
+                if (predlog != null)
+                    return predlog;
+                else
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Greska u racunanju predloga") });
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
         }
     }
 }
