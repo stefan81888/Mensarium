@@ -828,7 +828,7 @@ namespace MensariumAPI.Controllers
 
                 KorisnikStanjeDto predlog = new KorisnikStanjeDto();
 
-                predlog = ProvajderPodatakaObroka.PredlogUplate(id);
+                predlog = ProvajderPodatakaKorisnika.PredlogUplate(id);
                 if (predlog != null)
                     return predlog;
                 else
@@ -840,7 +840,7 @@ namespace MensariumAPI.Controllers
                     throw e;
                 DnevnikIzuzetaka.Zabelezi(e);
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
-
+			
             }
             finally
             {
