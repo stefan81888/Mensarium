@@ -92,14 +92,18 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             List<Korisnik> ko = (from k in korisnici
                 where k.KorisnickoIme == cdto.KIme_Mail
                 || k.Email == cdto.KIme_Mail
-                || k.AktivanNalog
-                || !k.Obrisan
                 select k).ToList();
 
             if (ko.Count != 1)
                 return null;
 
             if (ko[0].Sifra != cdto.Sifra)
+                return null;
+
+            if (ko[0].Obrisan)
+                return null;
+
+            if (!ko[0].AktivanNalog)
                 return null;
             
             LoginSesija sesija = new LoginSesija()
