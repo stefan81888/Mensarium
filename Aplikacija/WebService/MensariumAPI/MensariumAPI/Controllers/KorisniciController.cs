@@ -293,7 +293,7 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.OtvoriSesiju();
                                 
                 SesijaDto sdto = ProvajderPodatakaKorisnika.PrijavaKorisnika(cdto);
-
+               
                 if(sdto == null)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                     { Content = new StringContent("Prijava neuspesna") });
@@ -749,5 +749,63 @@ namespace MensariumAPI.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("postaviSliku")]
+        public HttpResponseMessage PostaviSlikuKorisniku([FromUri] int id, [FromUri]string sid)
+        {
+            try
+            {
+                var httpRequest = HttpContext.Current.Request;
+
+                foreach (string file in httpRequest.Files)
+                {
+                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+
+                    var postedFile = httpRequest.Files[file];
+                    if (postedFile != null && postedFile.ContentLength > 0)
+                    {
+
+                        int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB
+
+                        IList<string> AllowedFileExtensions = new List<string> { ".jpg"};
+                        var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
+                        var extension = ext.ToLower();
+                        if (!AllowedFileExtensions.Contains(extension))
+                        {
+                            var message = string.Format("Greska: Nedozvoljen format slike.\nDozvoljeni format: .jpg");
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, message);
+                        }
+                        else if (postedFile.ContentLength > MaxContentLength)
+                        {
+                            var message = string.Format("Greska: Velicina slike mora biti do 1MB");
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, message);
+                        }
+                        else
+                        {
+                            SesijeProvajder.OtvoriSesiju();
+                            string fname = ProvajderPodatakaSlike.PostaviSliku(id);
+                            
+                            var filePath = HttpContext.Current.Server.MapPath("~/App_Data/SlikeKorisnika/" + fname);
+                            postedFile.SaveAs(filePath);
+                        }
+                    }
+                    var message1 = string.Format("Slika uspesno postavljena");
+                    return Request.CreateErrorResponse(HttpStatusCode.Created, message1); ;
+                }
+                var res = string.Format("Please Upload a image.");
+                
+                return Request.CreateResponse(HttpStatusCode.NotFound, res);
+            }
+            catch (Exception ex)
+            {
+                var res = string.Format("GreskaInterna: Postavljanje slike" + ex.Message);
+                DnevnikIzuzetaka.Zabelezi(ex);
+                return Request.CreateResponse(HttpStatusCode.NotFound, res);
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
     }
 }

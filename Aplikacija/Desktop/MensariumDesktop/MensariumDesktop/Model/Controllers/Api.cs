@@ -9,7 +9,8 @@ using System.Windows.Forms;
 using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
 using RestSharp;
-
+using System.IO;
+using System.Drawing;
 
 namespace MensariumDesktop.Model.Controllers
 {
@@ -25,6 +26,32 @@ namespace MensariumDesktop.Model.Controllers
         }
         static string BaseUrl = MSettings.Server.ServerURL + "api/";
 
+        private static ApiResponse<byte[]> DownloadData (RestRequest request, bool includeSid = true)
+        {
+            RestClient client = new RestClient();
+            client.BaseUrl = new Uri(BaseUrl);
+            if (includeSid)
+                request.AddQueryParameter("sid", MSettings.CurrentSession.SessionID);
+
+            var response = client.Execute(request);
+            
+            Console.WriteLine("RequestedDownloadURL: " + client.BuildUri(request).ToString());
+
+
+            if (response.ResponseStatus != ResponseStatus.Completed) //nastala greska na mreznom nivou
+            {
+                string message = "Greska u komuniciranju sa serverom.\nProveri internet konekciju.\n\n" +
+                                 "ErrorReason: " + response.ErrorMessage;
+                throw new ApplicationException(message, response.ErrorException);
+            }
+
+            ApiResponse<byte[]> executeResut = new ApiResponse<byte[]>();
+            executeResut.ErrorResponse = response.Content;
+            executeResut.HttpStatusCode = response.StatusCode;
+            executeResut.ResponseObject = response.RawBytes;
+            return executeResut;
+
+        }
         private static ApiResponse<T> Execute<T>(RestRequest request, bool includeSid = true) where T : new()
         {
             RestClient client = new RestClient();
@@ -306,6 +333,52 @@ namespace MensariumDesktop.Model.Controllers
                 throw new Exception("DeleteUser Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
                     + response.HttpStatusCode);
 
+        }
+        public static void SetUserImage(int userId,FileInfo image)
+        {
+            SetUserImage(userId, image.FullName);
+        }
+        public static void SetUserImage(int userId, string imagePath)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "korisnici/postaviSliku";
+            request.AddParameter("id", userId, ParameterType.QueryString);
+            request.AddFile(userId.ToString(), imagePath, "image/jpg");
+
+            var response = Execute(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.Created || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("SetUserImage Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
+                    + response.HttpStatusCode);
+        }
+        public static Image GetCurrentUserImage()
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/slika";
+                        
+            var response = DownloadData(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetUserImage Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
+                    + response.HttpStatusCode);
+            byte[] imgBytes = response.ResponseObject;
+            MemoryStream ms = new MemoryStream(imgBytes);
+            Image im = Image.FromStream(ms);
+            return im;
+        }
+        public static Image GetUserImage(int userId)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/slika";
+            request.AddParameter("id", userId, ParameterType.QueryString);
+
+            var response = DownloadData(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetUserImage Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
+                    + response.HttpStatusCode);
+
+            byte[] imgBytes = response.ResponseObject;
+            MemoryStream ms = new MemoryStream(imgBytes);
+            Image im = Image.FromStream(ms);
+            return im;
         }
         #endregion
 

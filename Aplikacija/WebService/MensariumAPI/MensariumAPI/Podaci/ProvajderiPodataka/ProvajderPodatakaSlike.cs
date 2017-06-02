@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MensariumAPI.Podaci.Entiteti;
+using NHibernate;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -30,9 +32,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             }
         }
 
-        public static void PostaviSliku(int id)
+        public static string PostaviSliku(int id)
         {
-
+            ISession s = SesijeProvajder.Sesija;
+            Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+            k.Slika = k.IdKorisnika + ".jpg";
+            s.Save(k);
+            s.Flush();
+            return k.Slika;
         }
     }
 }
