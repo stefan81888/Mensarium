@@ -32,7 +32,19 @@ namespace MensariumDesktop.Model.Controllers
             MSettings.SaveSettings();
             Application.Exit();
         }
-
+        public static bool TestConnection(string hostname, string port)
+        {
+            try
+            {
+                MainController.ShowInformation(Api.TestConnection(hostname, port));
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MainController.ShowInformation(ex.Message);
+                return false;
+            }
+        }
         public static bool LoginUser(string username, string password)
         {
             ClientLoginDto clog = new ClientLoginDto{ KIme_Mail = username, Sifra = password };
@@ -78,11 +90,29 @@ namespace MensariumDesktop.Model.Controllers
 
         public static bool ChangeServerIP(string newIP)
         {
-            return MSettings.Server.ChangeIP(newIP);
+            try
+            {
+                MSettings.Server.IP = newIP;
+                return true;
+            }
+            catch(Exception e)
+            {
+                MainController.ShowException(e);
+                return false;
+            }
         }
         public static bool ChangeServerPort(string newPort)
         {
-            return MSettings.Server.ChangePort(newPort);
+            try
+            {
+                MSettings.Server.Port = newPort;
+                return true;
+            }
+            catch (Exception e)
+            {
+                MainController.ShowException(e);
+                return false;
+            }
         }
         public static bool ChangeServer(string newIP, string newPort)
         {

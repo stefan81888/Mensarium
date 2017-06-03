@@ -94,6 +94,7 @@
             this.btnTestConnection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnTestConnection.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTestConnection.UseVisualStyleBackColor = true;
+            this.btnTestConnection.Click += new System.EventHandler(this.btnTestConnection_Click);
             // 
             // imageListButtonIconsSettings
             // 

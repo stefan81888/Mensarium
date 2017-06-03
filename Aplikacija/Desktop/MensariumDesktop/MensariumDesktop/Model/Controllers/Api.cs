@@ -93,6 +93,8 @@ namespace MensariumDesktop.Model.Controllers
             }
             return executeResut;
         }
+
+        
         private static ApiResponse<object> Execute(RestRequest request, bool includeSid = true)
         {
             RestClient client = new RestClient();
@@ -117,6 +119,24 @@ namespace MensariumDesktop.Model.Controllers
             executeResult.ErrorResponse = response.Content;
             return executeResult;
 
+        }
+
+        public static string TestConnection(string host, string port)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "server";
+
+            RestClient client = new RestClient();
+            client.BaseUrl = new Uri(string.Format("http://{0}:{1}/api/server", host, port));
+
+            var response = client.Execute(request);
+            if (response.ResponseStatus != ResponseStatus.Completed) //nastala greska na mreznom nivou
+            {
+                string message = "Neuspela komunikacija sa serverom. Razlog: " + response.ErrorMessage;
+                throw new ApplicationException(message, response.ErrorException);
+            }
+
+            return response.Content;
         }
         #endregion
 

@@ -24,6 +24,11 @@ namespace MensariumDesktop.Forms
             txtmServerIP.Text = MSettings.Server.IP;
             txtmServerPort.Text = MSettings.Server.Port;
 
+            if (Mensa.Mensas == null || Mensa.Mensas.Count == 0)
+            {
+                gbxLokacija.Enabled = false;
+                return;
+            }
             cbxSettingsMenza.DataSource = Mensa.Mensas;
             cbxSettingsMenza.DisplayMember = "Name";
             cbxSettingsMenza.ValueMember = "MensaID";
@@ -44,16 +49,29 @@ namespace MensariumDesktop.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            bool successful = MainController.ChangeServer(txtmServerIP.Text, txtmServerPort.Text);
-            successful &= MainController.ChangeCurrentMensa((int)cbxSettingsMenza.SelectedValue);
-            RefreshData();
-
-            if (successful)
+            bool successful = true;
+            try
             {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                successful &= MainController.ChangeServer(txtmServerIP.Text, txtmServerPort.Text);
+                if (gbxLokacija.Enabled)
+                    successful &= MainController.ChangeCurrentMensa((int)cbxSettingsMenza.SelectedValue);
             }
+            catch(Exception ex)
+            {
+                MainController.ShowException(ex);
+                return;
+            }
+            if (!successful) return;
+
+            this.DialogResult = DialogResult.OK;
+            Close();
         }
 
+        private void btnTestConnection_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            MainController.TestConnection(txtmServerIP.Text, txtmServerPort.Text);
+            Cursor.Current = Cursors.Default;
+        }
     }
 }

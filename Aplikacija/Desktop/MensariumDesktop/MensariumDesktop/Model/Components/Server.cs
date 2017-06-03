@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,8 +12,34 @@ namespace MensariumDesktop.Model.Components
 {
     public class Server
     {
-        public string IP { get; protected set; }
-        public string Port { get; protected set; }
+        private string _ip;
+        private string _port;
+       
+        public string IP
+        {
+            get{ return _ip; }
+            set
+            {
+                if (Regex.IsMatch(value, @"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+                    || Regex.IsMatch(value, @"^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$"))
+                    _ip = value;
+                else
+                    throw new ArgumentException("Nevalidna adresa hosta");
+            }
+        }
+        public string Port
+        {
+            get { return _port; }
+            set
+            {
+                int port;
+                int.TryParse(value, out port);
+                if (port > 0 && port < 65535)
+                    _port = value;
+                else
+                    throw new ArgumentException("Nevalidna adresa hosta");
+            }
+        }
 
         public Server()
         {
@@ -30,35 +57,5 @@ namespace MensariumDesktop.Model.Components
             IP,
             Port);
 
-        public bool ChangeIP(string newIP)
-        {
-            //TO-DO napravi i da moze hostname da se unese
-            //IPAddress newAddress;
-            //bool isValid = IPAddress.TryParse(newIP, out newAddress);
-
-            //if (isValid)
-            //{
-            //   IP = newAddress.ToString();
-            //   return true;
-            //}
-
-            //MessageBox.Show("Nevalidna IP adresa");
-            //return false;
-            IP = newIP;
-            return true;
-        }
-
-        public bool ChangePort(string newPort)
-        {
-            int port;
-            bool isValid = int.TryParse(newPort, out port);
-            if (isValid && port >= 0 && port <= 65535)
-            {
-                Port = newPort;
-                return true;
-            }
-            MainController.ShowError("Nevalidna vrednost porta");
-            return false;
-        }
     }
 }
