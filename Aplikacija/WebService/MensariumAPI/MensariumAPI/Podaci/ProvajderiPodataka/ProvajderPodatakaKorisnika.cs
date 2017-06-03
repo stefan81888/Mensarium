@@ -708,5 +708,22 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return null;
 
         }
+
+        public static bool PrvaPrijava(int id, string sifra)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            List<Korisnik> lista = s.Query<Korisnik>().Select(x => x).ToList();
+
+            Korisnik k = lista.Find(x => x.IdKorisnika == id
+                                         && x.AktivanNalog
+                                         && !x.Obrisan);
+
+            if (k == null)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Student ne postoji") });
+
+
+            return sifra == k.Sifra;
+        }
     }
 }
