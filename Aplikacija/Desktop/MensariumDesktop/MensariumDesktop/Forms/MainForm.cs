@@ -34,31 +34,38 @@ namespace MensariumDesktop
             HOME_lblCurrentUserLName.Text = MSettings.CurrentSession.LoggedUser.LastName;
             HOME_lblCurrentUserAccType.Text = MSettings.CurrentSession.LoggedUser.AccountType.ToString();
             HOME_picCurrentUser.Image = MSettings.CurrentSession.LoggedUser.ProfilePicture;
-
-            STATUS_statbarUser.Text = MSettings.CurrentSession.LoggedUser.FirstName + " " + MSettings.CurrentSession.LoggedUser.LastName;
-
+            
             //TO-DO: CURRENT MENSA
-            HOME_lblCurrentLocation.Text = Mensa.Mensas[0].Name;
-            HOME_lblCurrentLocationAddress.Text = Mensa.Mensas[0].Location;
+            HOME_lblCurrentLocation.Text = MSettings.CurrentMensa.Name;
+            HOME_lblCurrentLocationAddress.Text = MSettings.CurrentMensa.Location;
 
-            STATUS_statbarMenza.Text = Mensa.Mensas[0].Name;
-
+            RefreshStatusBarData();
+            
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             MainController.Shutdown();
         }
         #endregion
-        
+
         #region STATUS BAR
+        private void RefreshStatusBarData()
+        {
+            STATUS_statbarUser.Text = MSettings.CurrentSession.LoggedUser.FullName;
+            STATUS_statbarMenza.Text = MSettings.CurrentMensa.Name;
+        }
+
         private void statusBarSettingsBtn_Click(object sender, EventArgs e)
         {
-            SettingsForm settingsForm = new SettingsForm();
-            settingsForm.ShowDialog();
+            SettingsForm fs = new SettingsForm();
+            fs.ShowDialog();
+            RefreshStatusBarData();
         }
         private void statbarUserProfile_Click(object sender, EventArgs e)
         {
-
+            ProfileForm f = new ProfileForm(MSettings.CurrentSession.LoggedUser);
+            f.ShowDialog();
+            RefreshStatusBarData();
         }
         private void statbarUserSignOut_Click(object sender, EventArgs e)
         {
@@ -72,6 +79,12 @@ namespace MensariumDesktop
                 MainController.ShowException(ex);
             }
 
+        }
+        private void promeniLokacijuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MensaChangerForm mc = new MensaChangerForm();
+            mc.ShowDialog();
+            RefreshStatusBarData();
         }
         #region DEBUG
         private void showLoginFormToolStripMenuItem_Click(object sender, EventArgs e)
@@ -89,11 +102,6 @@ namespace MensariumDesktop
             MensaChangerForm mc = new MensaChangerForm();
             mc.ShowDialog();
 
-        }
-        private void promeniLokacijuToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MensaChangerForm mc = new MensaChangerForm();
-            mc.ShowDialog();
         }
         private void showProfileFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -132,15 +140,17 @@ namespace MensariumDesktop
         {
             STATUS_statbarUserSignOut.PerformClick();
         }
+        private void HOME_MensaChanger_Click(object sender, EventArgs e)
+        {
+            STATUS_statbarMenzaChangeLocation.PerformClick();
+        }
+        private void HOME_btnSettings_Click(object sender, EventArgs e)
+        {
+            STATUS_statbarSettings.PerformClick();
+        }
         #endregion
         private void button2_Click(object sender, EventArgs e)
         {
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MensaChangerForm mf = new MensaChangerForm();
-            mf.ShowDialog();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -149,8 +159,7 @@ namespace MensariumDesktop
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
-            ProfileForm f = new ProfileForm(MSettings.CurrentSession.LoggedUser);
-            f.ShowDialog();
+            STATUS_statbarUserProfile.PerformClick();
         }
         
         private void button9_Click(object sender, EventArgs e)
@@ -203,7 +212,6 @@ namespace MensariumDesktop
             //if (e.TabPage == tabPage1)
             //    e.Cancel = true;
         }
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
@@ -213,15 +221,14 @@ namespace MensariumDesktop
             else
             {
                 tabControls.TabPages.Insert(3, tabUsers);
-            }
-
-            
+            }  
         }
         #endregion
-
         private void HOME_picCurrentUser_Paint(object sender, PaintEventArgs e)
         {
             MUtility.RoundPictureBox(sender as PictureBox);
         }
+
+
     }
 }

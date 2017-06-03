@@ -66,6 +66,7 @@ namespace MensariumDesktop.Model.Components
         public Image ProfilePicture { get; set; }
         public bool ActiveAccount { get; set; }
 
+        public string FullName { get { return FirstName + " " + LastName; } }
         public User()
         {
             UserPrivilegeses = new List<UserPrivileges>();

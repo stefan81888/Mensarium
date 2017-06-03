@@ -287,6 +287,7 @@ namespace MensariumDesktop
             this.STATUS_statbarMenza.Name = "STATUS_statbarMenza";
             this.STATUS_statbarMenza.Size = new System.Drawing.Size(125, 25);
             this.STATUS_statbarMenza.Text = "Menza XXXX";
+            this.STATUS_statbarMenza.ToolTipText = "Lokacija gde je pokrenuta aplikacija";
             // 
             // STATUS_statbarMenzaChangeLocation
             // 
@@ -534,7 +535,7 @@ namespace MensariumDesktop
             this.HOME_btnMensaChanger.Text = " Promeni menzu";
             this.HOME_btnMensaChanger.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.HOME_btnMensaChanger.UseVisualStyleBackColor = false;
-            this.HOME_btnMensaChanger.Click += new System.EventHandler(this.button1_Click);
+            this.HOME_btnMensaChanger.Click += new System.EventHandler(this.HOME_MensaChanger_Click);
             // 
             // HOME_btnSettings
             // 
@@ -558,7 +559,7 @@ namespace MensariumDesktop
             this.HOME_btnSettings.Text = " Podešavanja";
             this.HOME_btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.HOME_btnSettings.UseVisualStyleBackColor = false;
-            this.HOME_btnSettings.Click += new System.EventHandler(this.button2_Click);
+            this.HOME_btnSettings.Click += new System.EventHandler(this.HOME_btnSettings_Click);
             // 
             // HOME_btnSignOut
             // 
