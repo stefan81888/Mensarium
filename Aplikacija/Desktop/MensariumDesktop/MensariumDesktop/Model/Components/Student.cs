@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace MensariumDesktop.Model.Components
 {
-    public class StudentUser : User
+    public class Student : User
     {
+        public string Index { get; set; }
+        public DateTime ValidUntil { get; set; }
         public Faculty Faculty { get; set; }
     }
 }

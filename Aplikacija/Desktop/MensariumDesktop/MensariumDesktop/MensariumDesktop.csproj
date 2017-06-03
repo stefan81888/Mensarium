@@ -158,7 +158,7 @@
     <Compile Include="Model\Components\Server.cs" />
     <Compile Include="Model\Components\Session.cs" />
     <Compile Include="Model\Components\MSettings.cs" />
-    <Compile Include="Model\Components\StudentUser.cs" />
+    <Compile Include="Model\Components\Student.cs" />
     <Compile Include="Model\Components\User.cs" />
     <Compile Include="Model\Controllers\Api.cs" />
     <Compile Include="Model\Controllers\MainController.cs" />

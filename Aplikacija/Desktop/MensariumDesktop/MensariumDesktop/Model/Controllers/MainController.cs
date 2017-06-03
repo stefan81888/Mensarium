@@ -42,14 +42,13 @@ namespace MensariumDesktop.Model.Controllers
                 MSettings.CurrentSession = new Session() { SessionID = sesija.IdSesije };
                 
                 KorisnikFullDto korisnik = Api.GetUserFullInfo(sesija.IdKorisnika);
-                if (korisnik.IdTipaNaloga == (int) User.UserAccountType.Student)
+                if (korisnik.IdTipaNaloga == (int)User.UserAccountType.Student)
                 {
                     MainController.ShowError("Prijavljivanje sa studentskog naloga je onemoguceno na ovoj aplikaciji!");
                     Api.LogoutUser(MSettings.CurrentSession.SessionID);
                     return false;
                 }
-                MSettings.CurrentSession.LoggedUser = MUtility.User_From_KorisnikFullDto(korisnik);
-                MSettings.CurrentSession.LoggedUser.ProfilePicture = Api.GetCurrentUserImage();
+                MSettings.CurrentSession.LoggedUser = MUtility.GenerateUserFromDTO(korisnik);
                 return true;
             }
             catch (Exception ex)

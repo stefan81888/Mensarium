@@ -97,8 +97,6 @@ namespace MensariumDesktop
         }
         private void showProfileFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ProfileForm pf = new ProfileForm();
-            pf.ShowDialog();
         }
         private void showUserFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -149,7 +147,8 @@ namespace MensariumDesktop
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
-
+            ProfileForm f = new ProfileForm(MSettings.CurrentSession.LoggedUser);
+            f.ShowDialog();
         }
         
         private void button9_Click(object sender, EventArgs e)

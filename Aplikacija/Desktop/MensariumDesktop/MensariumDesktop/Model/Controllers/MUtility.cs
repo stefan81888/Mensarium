@@ -14,10 +14,10 @@ namespace MensariumDesktop.Model.Controllers
 {
     public static class MUtility
     {
-        public static User User_From_KorisnikFullDto(KorisnikFullDto korisnik)
+        public static User GenerateUserFromDTO(KorisnikFullDto korisnik)
         {
-            User u = new User();
-            
+            Student u = new Student();
+
             u.AccountType = (User.UserAccountType)korisnik.IdTipaNaloga;
             u.Birthday = korisnik.DatumRodjenja;
             if (korisnik.Email != null) u.Email = korisnik.Email;
@@ -27,10 +27,19 @@ namespace MensariumDesktop.Model.Controllers
             u.RegistrationDate = korisnik.DatumRegistracije;
             u.UserID = korisnik.IdKorisnika;
             if (korisnik.KorisnickoIme != null) u.Username = korisnik.KorisnickoIme;
+            u.ActiveAccount = korisnik.AktivanNalog;
 
-            return u;
+            u.ProfilePicture = Api.GetUserImage(u.UserID);
+
+            if (u.AccountType == User.UserAccountType.Student)
+            {
+                u.ValidUntil = (DateTime)korisnik.DatumVaziDo;
+                u.Index = korisnik.BrojIndeksa;
+                u.Faculty = Faculty.Faculties.Find(x => x.FacultyID == korisnik.IdFakulteta);
+                return u;
+            }  
+            return u as User;
         }
-
         public static Faculty Faculty_From_FakultetFullDto(FakultetFullDto f)
         {
             return new Faculty() {FacultyID = f.IdFakultet, Name = f.Naziv };

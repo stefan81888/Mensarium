@@ -62,14 +62,14 @@
             this.txtCardValid = new System.Windows.Forms.TextBox();
             this.txtAccType = new System.Windows.Forms.TextBox();
             this.txtRegistrationDate = new System.Windows.Forms.TextBox();
-            this.pcbCurrentUser = new System.Windows.Forms.PictureBox();
+            this.picUserImage = new System.Windows.Forms.PictureBox();
             this.imageListProfileForm = new System.Windows.Forms.ImageList(this.components);
             this.btnFinish = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pcbCurrentUser)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picUserImage)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -99,11 +99,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Humnst777 Blk BT", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(68, 14);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(183, 36);
+            this.label5.Size = new System.Drawing.Size(160, 33);
             this.label5.TabIndex = 3;
             this.label5.Text = "Mensarium";
             // 
@@ -124,7 +124,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Controls.Add(this.tableLayoutPanel1);
-            this.panel1.Controls.Add(this.pcbCurrentUser);
+            this.panel1.Controls.Add(this.picUserImage);
             this.panel1.Location = new System.Drawing.Point(12, 88);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1060, 253);
@@ -196,7 +196,7 @@
             this.txtEmail.ReadOnly = true;
             this.txtEmail.Size = new System.Drawing.Size(261, 26);
             this.txtEmail.TabIndex = 10;
-            this.txtEmail.Text = "mail@gmail.com";
+            this.txtEmail.Text = "/";
             // 
             // txtUsername
             // 
@@ -209,7 +209,7 @@
             this.txtUsername.ReadOnly = true;
             this.txtUsername.Size = new System.Drawing.Size(261, 26);
             this.txtUsername.TabIndex = 9;
-            this.txtUsername.Text = "starwars555";
+            this.txtUsername.Text = "/";
             // 
             // label7
             // 
@@ -258,7 +258,7 @@
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(261, 26);
             this.txtID.TabIndex = 8;
-            this.txtID.Text = "1231231";
+            this.txtID.Text = "/";
             // 
             // txtFName
             // 
@@ -271,7 +271,7 @@
             this.txtFName.ReadOnly = true;
             this.txtFName.Size = new System.Drawing.Size(261, 26);
             this.txtFName.TabIndex = 11;
-            this.txtFName.Text = "Nikola";
+            this.txtFName.Text = "/";
             // 
             // label4
             // 
@@ -332,7 +332,7 @@
             this.txtLName.ReadOnly = true;
             this.txtLName.Size = new System.Drawing.Size(261, 26);
             this.txtLName.TabIndex = 19;
-            this.txtLName.Text = "Nikolić";
+            this.txtLName.Text = "/";
             // 
             // txtPhone
             // 
@@ -345,7 +345,7 @@
             this.txtPhone.ReadOnly = true;
             this.txtPhone.Size = new System.Drawing.Size(261, 26);
             this.txtPhone.TabIndex = 22;
-            this.txtPhone.Text = "064222333";
+            this.txtPhone.Text = "/";
             // 
             // label9
             // 
@@ -430,7 +430,7 @@
             this.txtFaculty.ReadOnly = true;
             this.txtFaculty.Size = new System.Drawing.Size(265, 26);
             this.txtFaculty.TabIndex = 21;
-            this.txtFaculty.Text = "Elektronski fakultet";
+            this.txtFaculty.Text = "/";
             // 
             // txtIndex
             // 
@@ -443,7 +443,7 @@
             this.txtIndex.ReadOnly = true;
             this.txtIndex.Size = new System.Drawing.Size(265, 26);
             this.txtIndex.TabIndex = 23;
-            this.txtIndex.Text = "165014";
+            this.txtIndex.Text = "/";
             // 
             // txtAccActive
             // 
@@ -455,7 +455,7 @@
             this.txtAccActive.ReadOnly = true;
             this.txtAccActive.Size = new System.Drawing.Size(265, 26);
             this.txtAccActive.TabIndex = 35;
-            this.txtAccActive.Text = "Aktivan";
+            this.txtAccActive.Text = "/";
             // 
             // txtBirthDate
             // 
@@ -468,7 +468,7 @@
             this.txtBirthDate.ReadOnly = true;
             this.txtBirthDate.Size = new System.Drawing.Size(261, 26);
             this.txtBirthDate.TabIndex = 36;
-            this.txtBirthDate.Text = "20.04.1995";
+            this.txtBirthDate.Text = "/";
             // 
             // txtCardValid
             // 
@@ -481,7 +481,7 @@
             this.txtCardValid.ReadOnly = true;
             this.txtCardValid.Size = new System.Drawing.Size(265, 26);
             this.txtCardValid.TabIndex = 37;
-            this.txtCardValid.Text = "064222333";
+            this.txtCardValid.Text = "/";
             // 
             // txtAccType
             // 
@@ -494,7 +494,7 @@
             this.txtAccType.ReadOnly = true;
             this.txtAccType.Size = new System.Drawing.Size(265, 26);
             this.txtAccType.TabIndex = 38;
-            this.txtAccType.Text = "Student";
+            this.txtAccType.Text = "/";
             // 
             // txtRegistrationDate
             // 
@@ -507,20 +507,22 @@
             this.txtRegistrationDate.ReadOnly = true;
             this.txtRegistrationDate.Size = new System.Drawing.Size(265, 26);
             this.txtRegistrationDate.TabIndex = 39;
-            this.txtRegistrationDate.Text = "19.10.2013";
+            this.txtRegistrationDate.Text = "/";
             // 
-            // pcbCurrentUser
+            // picUserImage
             // 
-            this.pcbCurrentUser.BackColor = System.Drawing.Color.Transparent;
-            this.pcbCurrentUser.BackgroundImage = global::MensariumDesktop.Properties.Resources.user_3;
-            this.pcbCurrentUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pcbCurrentUser.ErrorImage = global::MensariumDesktop.Properties.Resources.user_3;
-            this.pcbCurrentUser.InitialImage = null;
-            this.pcbCurrentUser.Location = new System.Drawing.Point(3, 6);
-            this.pcbCurrentUser.Name = "pcbCurrentUser";
-            this.pcbCurrentUser.Size = new System.Drawing.Size(180, 180);
-            this.pcbCurrentUser.TabIndex = 0;
-            this.pcbCurrentUser.TabStop = false;
+            this.picUserImage.BackColor = System.Drawing.Color.Transparent;
+            this.picUserImage.BackgroundImage = global::MensariumDesktop.Properties.Resources.user_3;
+            this.picUserImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.picUserImage.ErrorImage = global::MensariumDesktop.Properties.Resources.user_3;
+            this.picUserImage.InitialImage = null;
+            this.picUserImage.Location = new System.Drawing.Point(3, 6);
+            this.picUserImage.Name = "picUserImage";
+            this.picUserImage.Size = new System.Drawing.Size(180, 180);
+            this.picUserImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picUserImage.TabIndex = 0;
+            this.picUserImage.TabStop = false;
+            this.picUserImage.Paint += new System.Windows.Forms.PaintEventHandler(this.picUserImage_Paint);
             // 
             // imageListProfileForm
             // 
@@ -569,7 +571,7 @@
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pcbCurrentUser)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picUserImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -585,7 +587,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pcbCurrentUser;
+        private System.Windows.Forms.PictureBox picUserImage;
         private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
