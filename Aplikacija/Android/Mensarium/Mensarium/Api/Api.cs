@@ -26,7 +26,7 @@ namespace Mensarium.Api
             public T ResponseObject { get; set; }
         }
         //static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        private static string BaseUrl = "http://a0cbaedc.ngrok.io/api/";
+        private static string BaseUrl = "http://7f747cba.ngrok.io/api/";
 
         private static ApiResponse<byte[]> DownloadData(RestRequest request, bool includeSid = true)
         {
@@ -183,7 +183,7 @@ namespace Mensarium.Api
             request.Resource = "korisnici/update";
             request.AddObject(c);
 
-            var response = Execute<KorisnikFullDto>(request);
+            var response = Execute<KorisnikFullDto>(request, false);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
                 throw new Exception("AndroidUserRegistrationError" + "\nServerResponse: "
                     + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -18,6 +18,8 @@ namespace Mensarium
     public class CreateAccDrugiActivity : Activity
     {
         private Button kreirajNalog;
+        private AlertDialog dialogKraj;
+        private AlertDialog dialogCekaj;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -32,36 +34,46 @@ namespace Mensarium
         {
             if (ValidacijaUnosa())
             {
+                Thread novaNit = new Thread(FunkcijaUNovuNit);
+                novaNit.Start();
 
-                ClientZaRegistracijuDto reg = new ClientZaRegistracijuDto();
+                dialogKraj = new AlertDialog.Builder(this).Create();
+                dialogKraj.SetTitle("Uspesno ste kreirali nalog!");
+                dialogKraj.SetMessage("Sada cete biti vraceni na stranicu za prijavljivanje.");
+                dialogKraj.SetButton("U redu", OkDugme);
+                //dialog.Show();
 
-                reg.DodeljeniId = Intent.GetIntExtra("dodeljenID", 0);
-                reg.DodeljenaLozinka = Intent.GetStringExtra("dodeljenaLozinka");
-
-                reg.KorisnickoIme = FindViewById<TextView>(Resource.Id.EditTextUsername).Text;
-                reg.Email = FindViewById<TextView>(Resource.Id.EditTextEmail).Text;
-                reg.NovaLozinka = FindViewById<TextView>(Resource.Id.EditTextPassword).Text;
-                reg.Telefon = FindViewById<TextView>(Resource.Id.EditTextPhone).Text;
-
-                try
-                {
-                    if (Api.Api.AndroidUserRegistration(reg) != null)
-                    {
-                        AlertDialog dialog = new AlertDialog.Builder(this).Create();
-                        dialog.SetTitle("Uspesno ste kreirali nalog!");
-                        dialog.SetMessage("Sada cete biti vraceni na stranicu za prijavljivanje.");
-                        dialog.SetButton("U redu", OkDugme);
-                        dialog.Show();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
-                }
+                dialogCekaj = new AlertDialog.Builder(this).Create();
+                dialogCekaj.SetTitle("Provera podataka");
+                dialogCekaj.SetMessage("Molimo sacekajte!");
+                //dialogCekaj.Show();
             }
-            else
+        }
+
+        private void FunkcijaUNovuNit()
+        {
+            ClientZaRegistracijuDto reg = new ClientZaRegistracijuDto();
+
+            reg.DodeljeniId = Intent.GetIntExtra("dodeljenID", 0);
+            reg.DodeljenaLozinka = Intent.GetStringExtra("dodeljenaLozinka");
+
+            reg.KorisnickoIme = FindViewById<TextView>(Resource.Id.EditTextUsername).Text;
+            reg.Email = FindViewById<TextView>(Resource.Id.EditTextEmail).Text;
+            reg.NovaLozinka = FindViewById<TextView>(Resource.Id.EditTextPassword).Text;
+            reg.Telefon = FindViewById<TextView>(Resource.Id.EditTextPhone).Text;
+
+            try
             {
-                Toast.MakeText(this, "Proverite podatke jos jednom!", ToastLength.Short).Show();
+                RunOnUiThread(() => dialogCekaj.Show());
+                Api.Api.AndroidUserRegistration(reg);
+                RunOnUiThread(() => dialogCekaj.Dismiss());
+
+                RunOnUiThread(() => dialogKraj.Show());
+            }
+            catch (Exception ex)
+            {
+                //Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
+                RunOnUiThread(() => Toast.MakeText(this, ex.Message, ToastLength.Short).Show());
             }
         }
 
@@ -77,14 +89,14 @@ namespace Mensarium
             string greska = "";
 
             //username
-            if (FindViewById<TextView>(Resource.Id.EditTextUsername).Text.Matches(string.Empty))
+            if (FindViewById<TextView>(Resource.Id.EditTextUsername).Text.Equals(string.Empty))
             {
                 greska += "Unesite username!\n";
                 validno = false;
             }
 
             //email
-            string email = FindViewById<TextView>(Resource.Id.EditTextEmail).Text.Trim();
+            string email = FindViewById<TextView>(Resource.Id.EditTextEmail).Text;
             string emailPatern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
             if (!email.Matches(emailPatern))
             {
@@ -95,20 +107,22 @@ namespace Mensarium
             //passwordi
             string pass = FindViewById<TextView>(Resource.Id.EditTextPassword).Text;
             string passA = FindViewById<TextView>(Resource.Id.EditTextPasswordAgain).Text;
-            if (!pass.Matches(passA))
+            if (!pass.Equals(passA))
             {
-                greska += "Sifre nije ista!\n";
+                greska += "Sifre nisu iste!\n";
                 validno = false;
             }
 
             //telefon
-            if (FindViewById<TextView>(Resource.Id.EditTextPhone).Text.Matches(string.Empty))
+            if (FindViewById<TextView>(Resource.Id.EditTextPhone).Text.Equals(string.Empty))
             {
                 greska += "Unesite telefon!\n";
                 validno = false;
             }
 
-            Toast.MakeText(this, greska, ToastLength.Long).Show();
+            if(!greska.Equals(string.Empty))
+                Toast.MakeText(this, greska, ToastLength.Long).Show();
+
             return validno;
         }
     }
