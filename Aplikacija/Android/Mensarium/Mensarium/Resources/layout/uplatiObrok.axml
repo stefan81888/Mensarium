@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#243236">
+    <TextView
+        android:text="Uplacivanje obroka putem SMS-a"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:layout_marginTop="70dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+    <RelativeLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout1"
+        android:layout_marginTop="60dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutBrojDorucka"
+            android:gravity="center"
+            android:layout_marginLeft="60dp">
+            <TextView
+                android:text="Broj dorucka:"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textBrojDroucka" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/spinerBrojDorucka"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="101dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutBrojRucka"
+            android:layout_below="@id/layoutBrojDorucka"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:text="Broj rucka:"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textBrojRucka" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/spinerBrojRucka"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="121dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutBrojVecera"
+            android:layout_below="@id/layoutBrojRucka"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:text="Broj vecera:"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textBrojVecera" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/spinerBrojVecera"
+                android:layout_weight="1"
+                android:layout_marginLeft="112dp"
+                android:layout_marginRight="40dp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <TextView
+        android:text="Ukupna cena: 0 din"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ukupnaCena"
+        android:gravity="center"
+        android:layout_marginTop="60dp" />
+    <Button
+        android:text="Uplati"
+        android:textColor="@color/NaslovIImeButtona"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/uplatiObrokDugme"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_button"
+        android:textSize="18dp"
+        android:textAllCaps="false" />
+</LinearLayout>

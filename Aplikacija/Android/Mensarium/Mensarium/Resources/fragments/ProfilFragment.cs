@@ -13,6 +13,7 @@ using Mensarium.Comp;
 using Xamarin.Forms;
 using View = Android.Views.View;
 using Mensarium.Components;
+using Mensarium.Resources.activities;
 
 namespace Mensarium
 {
@@ -21,6 +22,8 @@ namespace Mensarium
         private Android.Widget.Button sveMenze;
         public int omiljenaMenza = 0; //index u listi menzi
         private ListaMenzi listaMenzi = ListaMenzi.InstancaListaMenzi;
+
+        private LinearLayout obrociLayout;
 
         private View view;
 
@@ -37,7 +40,17 @@ namespace Mensarium
             this.omiljenaMenza = prefs.GetInt("OmiljenaMezna", omiljenaMenza);
             SetujOmiljenuMenzu(omiljenaMenza);
 
+            obrociLayout = view.FindViewById<LinearLayout>(Resource.Id.profilObrociLayout);
+            obrociLayout.Click += ObrociLayoutOnClick;
+
             return view;
+        }
+
+        private void ObrociLayoutOnClick(object sender, EventArgs eventArgs)
+        {
+            var intent = new Intent(this.Activity, typeof(UplacivanjeObroka));
+
+            StartActivity(intent);
         }
 
         public void SetujOmiljenuMenzu(int indexOmiljene)
