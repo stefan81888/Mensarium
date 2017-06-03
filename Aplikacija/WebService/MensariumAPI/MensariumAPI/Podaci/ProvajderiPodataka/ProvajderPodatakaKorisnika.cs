@@ -617,13 +617,17 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
 
-            LoginSesija ses = s.Query<LoginSesija>()
-                .Where(x => x.IdSesije == sid)
-                .FirstOrDefault();
+            List<LoginSesija> lista = s.Query<LoginSesija>().Select(k => k).ToList();
 
-            if (ses == null) 
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
-                                    { Content = new StringContent("Nevalidna sesija") });
+            LoginSesija ses = lista.Find(x => x.IdSesije == sid);
+
+            //LoginSesija ses = s.Query<LoginSesija>()
+            //    .Where(x => x.IdSesije == sid)
+            //    .FirstOrDefault();
+
+            if (ses == null)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                { Content = new StringContent("Nevalidna sesija") });
 
             return ses.KorisnikSesije.IdKorisnika;
         }
