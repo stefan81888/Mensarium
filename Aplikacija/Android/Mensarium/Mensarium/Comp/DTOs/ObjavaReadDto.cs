@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace MensariumDesktop.Model.Components.DTOs
 {
     public class ObjavaReadDto
@@ -10,5 +11,7 @@ namespace MensariumDesktop.Model.Components.DTOs
         public string TekstObjave { get; set; }
         public int IdKorisnika { get; set; }
         public int IdLokacije { get; set; }
+        public string ImeKorisnika { get; set; }
+        public string PrezimeKorisnika { get; set; }
     }
 }

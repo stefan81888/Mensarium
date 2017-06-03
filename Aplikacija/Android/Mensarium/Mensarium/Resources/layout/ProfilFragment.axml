@@ -42,13 +42,13 @@
                     android:text="Text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/profilTextUnivezitet"
+                    android:id="@+id/profilTextFakultet"
                     android:textSize="15dp" />
                 <TextView
                     android:text="Text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/profilTextFakultet"
+                    android:id="@+id/profilTextBrIndexa"
                     android:textSize="15dp" />
             </LinearLayout>
         </LinearLayout>

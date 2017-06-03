@@ -157,29 +157,36 @@
     <Compile Include="Comp\DTOs\ClientLoginDto.cs" />
     <Compile Include="Comp\DTOs\ClientZaRegistracijuDto.cs" />
     <Compile Include="Comp\DTOs\FakultetFullDto.cs" />
+    <Compile Include="Comp\DTOs\KorisnikDodavanjeDto.cs" />
     <Compile Include="Comp\DTOs\KorisnikFollowDto.cs" />
     <Compile Include="Comp\DTOs\KorisnikFullDto.cs" />
+    <Compile Include="Comp\DTOs\KorisnikKreiranjeDto.cs" />
     <Compile Include="Comp\DTOs\KorisnikReadDto.cs" />
+    <Compile Include="Comp\DTOs\KorisnikStanjeDto.cs" />
     <Compile Include="Comp\DTOs\LoginSesijeFullDto.cs" />
     <Compile Include="Comp\DTOs\MenzaFullDto.cs" />
     <Compile Include="Comp\DTOs\MenzaGuzvaDto.cs" />
     <Compile Include="Comp\DTOs\ObjavaCUDto.cs" />
     <Compile Include="Comp\DTOs\ObjavaFullDto.cs" />
     <Compile Include="Comp\DTOs\ObjavaReadDto.cs" />
+    <Compile Include="Comp\DTOs\ObrokDanasSkinutDto.cs" />
+    <Compile Include="Comp\DTOs\ObrokDanasUplacenDto.cs" />
     <Compile Include="Comp\DTOs\ObrokFullDto.cs" />
     <Compile Include="Comp\DTOs\ObrokNaplataDto.cs" />
-    <Compile Include="Comp\DTOs\ObrokPogresnoSkinutDto.cs" />
-    <Compile Include="Comp\DTOs\ObrokPogresnoUplacenDto.cs" />
     <Compile Include="Comp\DTOs\ObrokUplataDto.cs" />
     <Compile Include="Comp\DTOs\OdjavaDto.cs" />
     <Compile Include="Comp\DTOs\PozivanjaFullDto.cs" />
+    <Compile Include="Comp\DTOs\PozivanjaNewsFeedItemDto.cs" />
     <Compile Include="Comp\DTOs\PozivanjaPozvaniDto.cs" />
-    <Compile Include="Comp\DTOs\PrivilegijeFullDto.cs" />
+    <Compile Include="Comp\DTOs\PozvaniDto.cs" />
+    <Compile Include="Comp\DTOs\PretragaKriterijumDto.cs" />
+    <Compile Include="Comp\DTOs\PrivilegijaFullDto.cs" />
     <Compile Include="Comp\DTOs\ServerLoginDto.cs" />
     <Compile Include="Comp\DTOs\SesijaDto.cs" />
     <Compile Include="Comp\DTOs\TipNalogaFullDto.cs" />
     <Compile Include="Comp\DTOs\TipObrokaFullDto.cs" />
     <Compile Include="Comp\Faculty.cs" />
+    <Compile Include="Comp\FullUser.cs" />
     <Compile Include="Comp\ListaMenzi.cs" />
     <Compile Include="Comp\Mensa.cs" />
     <Compile Include="Comp\MSettings.cs" />
@@ -189,6 +196,7 @@
     <Compile Include="Resources\activities\CreateAccDrugiActivity.cs" />
     <Compile Include="Resources\activities\CreateAccPrviActivity.cs" />
     <Compile Include="Resources\activities\MapActivity.cs" />
+    <Compile Include="Resources\activities\UplacivanjeObroka.cs" />
     <Compile Include="Resources\fragments\EventsFragment.cs" />
     <Compile Include="Comp\FeedItem.cs" />
     <Compile Include="Resources\adapters\FeedListAdapter.cs" />
@@ -252,6 +260,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\MapActivity.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\uplatiObrok.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
