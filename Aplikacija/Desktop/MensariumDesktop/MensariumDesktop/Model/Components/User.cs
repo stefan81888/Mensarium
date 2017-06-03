@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,7 +63,7 @@ namespace MensariumDesktop.Model.Components
         public String PhoneNumber { get; set; }
         public UserAccountType AccountType { get; set; }
         public List<UserPrivileges> UserPrivilegeses { get; set; }
-
+        public Image ProfilePicture { get; set; }
         //public string SessionID { get; set; }
 
         public User()

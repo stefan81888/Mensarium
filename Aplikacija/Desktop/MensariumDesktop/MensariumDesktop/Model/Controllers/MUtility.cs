@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
 using RestSharp.Extensions;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace MensariumDesktop.Model.Controllers
 {
@@ -66,6 +68,16 @@ namespace MensariumDesktop.Model.Controllers
             }
 
             return ml;
+        }
+
+        public static void RoundPictureBox(PictureBox t)
+        {
+            System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
+            
+            gp.AddEllipse(0, 0, t.Width - 1, t.Height - 1);
+            Region rg = new Region(gp);
+            
+            t.Region = rg;
         }
     }
 }

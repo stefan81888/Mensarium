@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using MensariumDesktop.Forms;
 using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
+using System.Drawing;
 
 namespace MensariumDesktop.Model.Controllers
 {
@@ -32,7 +33,6 @@ namespace MensariumDesktop.Model.Controllers
             Application.Exit();
         }
 
-
         public static bool LoginUser(string username, string password)
         {
             ClientLoginDto clog = new ClientLoginDto{ KIme_Mail = username, Sifra = password };
@@ -49,6 +49,7 @@ namespace MensariumDesktop.Model.Controllers
                     return false;
                 }
                 MSettings.CurrentSession.LoggedUser = MUtility.User_From_KorisnikFullDto(korisnik);
+                MSettings.CurrentSession.LoggedUser.ProfilePicture = Api.GetCurrentUserImage();
                 return true;
             }
             catch (Exception ex)
@@ -96,6 +97,7 @@ namespace MensariumDesktop.Model.Controllers
             MSettings.CurrentMensa = m;
             return true;
         }
+
         public static void ShowError(string Message) {
             MessageBox.Show(Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
