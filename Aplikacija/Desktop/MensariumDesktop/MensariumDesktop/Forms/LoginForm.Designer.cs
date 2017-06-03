@@ -74,9 +74,9 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(137, 293);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(131, 20);
+            this.label1.Size = new System.Drawing.Size(192, 20);
             this.label1.TabIndex = 2;
-            this.label1.Text = "KORISNIČKO IME";
+            this.label1.Text = "KORISNIČKO IME / EMAIL";
             // 
             // label2
             // 
@@ -136,7 +136,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MensariumDesktop.Properties.Resources.login_bg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(584, 502);
+            this.ClientSize = new System.Drawing.Size(584, 501);
             this.Controls.Add(this.picSettings);
             this.Controls.Add(this.picLogo);
             this.Controls.Add(this.btnLogin);

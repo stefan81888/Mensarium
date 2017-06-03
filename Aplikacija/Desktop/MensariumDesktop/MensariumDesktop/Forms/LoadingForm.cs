@@ -22,14 +22,8 @@ namespace MensariumDesktop.Forms
 
         private void LoadingForm_Load(object sender, EventArgs e)
         {
-            timer1.Start();   
+            
         }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            timer1.Stop();
-            MainController.PostLoginInit();
-            this.Close();
-        }
+       
     }
 }

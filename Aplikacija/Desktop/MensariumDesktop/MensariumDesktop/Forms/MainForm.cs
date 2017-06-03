@@ -14,14 +14,18 @@ using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
 using MensariumDesktop.Model.Controllers;
 using RestSharp;
+using System.Threading;
 
 namespace MensariumDesktop
 {
     public partial class MainForm : Form
     {
+        LoadingForm loadform = new LoadingForm();
         public MainForm()
         {
             InitializeComponent();
+            bgWorkerLoading.RunWorkerAsync();
+            loadform.ShowDialog();
         }
 
        
@@ -194,7 +198,7 @@ namespace MensariumDesktop
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MainController.ShowException(ex);
             }
            
         }
@@ -207,6 +211,26 @@ namespace MensariumDesktop
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             MainController.Shutdown();
+        }
+
+        private void bgWorkerLoading_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Thread.Sleep(1500);
+            try
+            {
+                MainController.PostLoginInit();
+                loadform.DialogResult = DialogResult.OK;
+            }
+            catch(Exception ex)
+            {
+                MainController.ShowException(ex);
+                MainController.LogoutUser();
+                Environment.Exit(1);            }
+        }
+
+        private void bgWorkerLoading_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            loadform.Close();
         }
     }
 }
