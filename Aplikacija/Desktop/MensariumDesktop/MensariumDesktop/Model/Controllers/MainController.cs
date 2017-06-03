@@ -118,9 +118,8 @@ namespace MensariumDesktop.Model.Controllers
         {
             return ChangeServerIP(newIP) && ChangeServerPort(newPort);
         }
-        public static bool ChangeCurrentMensa(int mid)
-        {
-            Mensa m = Mensa.Mensas.First(x => x.MensaID == mid);
+        public static bool ChangeCurrentMensa(Mensa m)
+        {            
             if (m == null)
                 return false;
             MSettings.CurrentMensa = m;

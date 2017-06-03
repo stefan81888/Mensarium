@@ -54,7 +54,7 @@ namespace MensariumDesktop.Forms
             {
                 successful &= MainController.ChangeServer(txtmServerIP.Text, txtmServerPort.Text);
                 if (gbxLokacija.Enabled)
-                    successful &= MainController.ChangeCurrentMensa((int)cbxSettingsMenza.SelectedValue);
+                    successful &= MainController.ChangeCurrentMensa((Mensa)cbxSettingsMenza.SelectedItem);
             }
             catch(Exception ex)
             {
