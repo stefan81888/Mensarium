@@ -229,7 +229,9 @@
   <ItemGroup>
     <None Include="Resources\login_bg.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\ring-alt.gif" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\settings-5.png" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MensariumDesktop.Model.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -56,7 +57,7 @@ namespace MensariumDesktop.Model.Components
                 Port = newPort;
                 return true;
             }
-            MessageBox.Show("Nevalidna vrednost porta");
+            MainController.ShowError("Nevalidna vrednost porta");
             return false;
         }
     }

@@ -39,7 +39,7 @@ namespace MensariumDesktop.Forms
         {
             if (txtUsername.Text == string.Empty || txtPassword.Text == string.Empty)
             {
-                MessageBox.Show("Unesite sve podatke");
+                MainController.ShowWarrning("Unesite sve podatke");
                 return;
             }
 

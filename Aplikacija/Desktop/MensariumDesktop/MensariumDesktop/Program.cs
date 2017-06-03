@@ -9,6 +9,8 @@ using MensariumDesktop.Model.Controllers;
 
 using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
+using System.Threading;
+using System.ComponentModel;
 
 namespace MensariumDesktop
 {
@@ -24,20 +26,14 @@ namespace MensariumDesktop
             Application.SetCompatibleTextRenderingDefault(false);
 
             MainController.InitApplication();
-
-        
             LoginForm fLogin = new LoginForm();
-            while (fLogin.ShowDialog() == DialogResult.OK)
+            
+            if (fLogin.ShowDialog() == DialogResult.OK)
             {
-                LoadingForm lf = new LoadingForm();
-                lf.ShowDialog();
-                Application.Run(new MainForm());
-                fLogin = new LoginForm();
+                Application.Run(new MainForm());                   
             }
 
             Application.Exit();
-            
-
 
             //Application.Run(new MainForm());
             //Application.Run(new LoginForm());

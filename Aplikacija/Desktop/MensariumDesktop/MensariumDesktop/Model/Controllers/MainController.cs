@@ -21,9 +21,8 @@ namespace MensariumDesktop.Model.Controllers
 
         public static void PostLoginInit()
         {
-            try{ Faculty.UpdateFacultyList(); } catch (Exception ex) { MessageBox.Show(ex.Message); }
-            try{ Mensa.UpdateMensaList(); } catch (Exception ex) { MessageBox.Show(ex.Message); }
-
+            Faculty.UpdateFacultyList(); 
+            Mensa.UpdateMensaList();
             MSettings.LoadSettings();
         }
         public static void Shutdown()
@@ -45,7 +44,7 @@ namespace MensariumDesktop.Model.Controllers
                 KorisnikFullDto korisnik = Api.GetUserFullInfo(sesija.IdKorisnika);
                 if (korisnik.IdTipaNaloga == (int) User.UserAccountType.Student)
                 {
-                    MessageBox.Show("Prijavljivanje sa studentskog naloga je onemoguceno na ovoj aplikaciji!");
+                    MainController.ShowError("Prijavljivanje sa studentskog naloga je onemoguceno na ovoj aplikaciji!");
                     Api.LogoutUser(MSettings.CurrentSession.SessionID);
                     return false;
                 }
@@ -55,7 +54,7 @@ namespace MensariumDesktop.Model.Controllers
             catch (Exception ex)
             {
                 MSettings.CurrentSession = null;
-                MessageBox.Show(ex.Message);
+                MainController.ShowException(ex);
                 return false;
             }
         }
@@ -70,7 +69,7 @@ namespace MensariumDesktop.Model.Controllers
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Greska: " + ex.Message);
+                ShowException(ex);
                 return false;
             }
             return true;
@@ -97,6 +96,17 @@ namespace MensariumDesktop.Model.Controllers
             MSettings.CurrentMensa = m;
             return true;
         }
-
+        public static void ShowError(string Message) {
+            MessageBox.Show(Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public static void ShowException(Exception e) {
+            MessageBox.Show(e.Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public static void ShowWarrning(string message) {
+            MessageBox.Show(message, "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        public static void ShowInformation(string message) {
+            MessageBox.Show(message, "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }
