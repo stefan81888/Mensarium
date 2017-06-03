@@ -382,5 +382,7 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.ZatvoriSesiju();
             }
         }
+
+        
     }
 }

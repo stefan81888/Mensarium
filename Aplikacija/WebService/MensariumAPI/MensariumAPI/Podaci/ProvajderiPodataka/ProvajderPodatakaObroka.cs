@@ -113,5 +113,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 return danasSkinuti.ToList();
             return null;
         }
+
+        
     }
 }
