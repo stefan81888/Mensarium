@@ -711,19 +711,70 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static bool PrvaPrijava(int id, string sifra)
         {
-            ISession s = SesijeProvajder.Sesija;
-            List<Korisnik> lista = s.Query<Korisnik>().Select(x => x).ToList();
-
-            Korisnik k = lista.Find(x => x.IdKorisnika == id
-                                         && x.AktivanNalog
-                                         && !x.Obrisan);
+            Korisnik k = VratiKorisnika(id);
 
             if (k == null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Student ne postoji") });
 
-
             return sifra == k.Sifra;
+        }
+
+        public static SesijaDto RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Korisnik k = VratiKorisnika(czrdto.DodeljeniId);
+
+            if (k == null)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Student ne postoji") });
+
+            if(czrdto.Email == null)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent(" Morate uneti email") });
+
+            if (czrdto.KorisnickoIme == null)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent(" Morate uneti korisničko ime") });
+
+            if (czrdto.Telefon == null)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent(" Morate uneti broj telefona") });
+
+            if (czrdto.NovaLozinka == null)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent(" Morate uneti novu sifru") });
+
+            k.Email = czrdto.Email;
+            k.KorisnickoIme = czrdto.KorisnickoIme;
+            k.BrojTelefona = czrdto.Telefon;
+            k.Sifra = czrdto.NovaLozinka;
+
+            s.Save(k);
+            s.Flush();
+
+            Korisnik korisnik = VratiKorisnika(czrdto.DodeljeniId);
+
+            LoginSesija sesija = new LoginSesija()
+            {
+                KorisnikSesije = korisnik,
+                IdSesije = Guid.NewGuid().ToString(),
+                DatumPrijavljivanja = DateTime.Now,
+                ValidnaDo = DateTime.Now.AddYears(1)
+            };
+            s.Save(sesija);
+            s.Flush();
+
+            SesijaDto sdto = new SesijaDto()
+            {
+                IdSesije = sesija.IdSesije,
+                IdKorisnika = sesija.KorisnikSesije.IdKorisnika,
+                DatumPrijavljivanja = sesija.DatumPrijavljivanja,
+                ValidnaDo = sesija.ValidnaDo
+            };
+
+            return sdto;
         }
     }
 }

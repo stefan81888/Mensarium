@@ -876,6 +876,37 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.ZatvoriSesiju();
             }
         }
+        
+        //Registracija na android
+        [HttpPut]
+        [Route("registracija/android")]
+        public SesijaDto RegistracijaNaAndroid([FromBody] ClientZaRegistracijuDto czrdto)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+
+                SesijaDto s =ProvajderPodatakaKorisnika.RegistracijaNaAndroid(czrdto);
+
+                if (s == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Neuspesna registracija") });
+                return s;
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
 
     }
 }
