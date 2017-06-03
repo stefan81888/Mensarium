@@ -4,6 +4,7 @@ using System.Linq;
 
 
 
+
 namespace MensariumDesktop.Model.Components.DTOs
 {
     public class ObrokFullDto

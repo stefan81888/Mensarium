@@ -4,11 +4,12 @@ using System.Linq;
 
 
 
+
 namespace MensariumDesktop.Model.Components.DTOs
 {
-    public class FakultetFullDto
+    public class PrivilegijaFullDto
     {
-        public string Naziv { get; set; }
-        public int IdFakultet { get; set; }
+        public int IdPrivilegije { get; set; }
+        public string Opis { get; set; }
     }
 }

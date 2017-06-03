@@ -30,6 +30,9 @@ namespace Mensarium.Api
             u.UserID = korisnik.IdKorisnika;
             if (korisnik.KorisnickoIme != null) u.Username = korisnik.KorisnickoIme;
 
+            u.IdFakulteta = (int)korisnik.IdFakulteta;
+            u.BrojIdexa = korisnik.BrojIndeksa;
+
             return u;
         }
 

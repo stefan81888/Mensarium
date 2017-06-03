@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
+
 namespace MensariumDesktop.Model.Components.DTOs
 {
     public class MenzaFullDto
@@ -15,11 +16,5 @@ namespace MensariumDesktop.Model.Components.DTOs
  
     }
 
-    public class ObrociKorisnika 
-    {
-        public int IDKorisnika;
-        public int Dorucak;
-        public int Rucak;
-        public int Vecere;
-    }
+    
 }

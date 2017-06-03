@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace MensariumDesktop.Model.Components.DTOs
 {
-    public class ObrokUplataDto
+    public class ObrokDanasUplacenDto
     {
-        public int IdKorisnika { get; set; }
-        public int IdTipa { get; set; }
-        public int BrojObroka { get; set; }
+        public int IdObroka { get; set; }
+        public DateTime DatumUplacivanja { get; set; }
+        public int IdTipaObroka { get; set; }
         public int IdLokacijeUplate { get; set; }
     }
 }

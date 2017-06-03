@@ -11,6 +11,5 @@ namespace MensariumDesktop.Model.Components.DTOs
     {
         public int IdTipaObroka { get; set; }
         public string Naziv { get; set; }
-
     }
 }

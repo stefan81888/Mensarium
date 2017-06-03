@@ -186,6 +186,7 @@
     <Compile Include="Comp\DTOs\TipNalogaFullDto.cs" />
     <Compile Include="Comp\DTOs\TipObrokaFullDto.cs" />
     <Compile Include="Comp\Faculty.cs" />
+    <Compile Include="Comp\FullUser.cs" />
     <Compile Include="Comp\ListaMenzi.cs" />
     <Compile Include="Comp\Mensa.cs" />
     <Compile Include="Comp\MSettings.cs" />

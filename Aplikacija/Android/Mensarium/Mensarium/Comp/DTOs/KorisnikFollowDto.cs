@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace MensariumDesktop.Model.Components.DTOs
 {
     public class KorisnikFollowDto
@@ -11,7 +12,7 @@ namespace MensariumDesktop.Model.Components.DTOs
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string Fakultet { get; set; }
-        public bool Zapracen {get;set;} // ???
+        public bool Zapracen {get;set;} 
         //slika
     }
 }

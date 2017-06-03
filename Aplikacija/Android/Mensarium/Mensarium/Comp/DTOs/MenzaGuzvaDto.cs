@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MensariumAPI.Podaci.DTO
+
+namespace MensariumDesktop.Model.Components.DTOs
 {
     public class MenzaGuzvaDto
     {
         public int IdMenze { get; set; }
-        public int TrenutnaGuzva { get; set; }
+        public int TrenutnaGuzvaZaJelo { get; set; }
+        public int TrenutnaGuzvaZaUplatu { get; set; }
     }
 }

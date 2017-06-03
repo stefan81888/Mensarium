@@ -68,6 +68,8 @@ namespace Mensarium.Components
         public List<UserPrivileges> UserPrivilegeses { get; set; }
 
         //public string SessionID { get; set; }
+        public int IdFakulteta { get; set; }
+        public string BrojIdexa { get; set; }
 
         public User()
         {
