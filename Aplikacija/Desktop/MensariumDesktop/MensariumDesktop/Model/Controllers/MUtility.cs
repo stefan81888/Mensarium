@@ -16,7 +16,7 @@ namespace MensariumDesktop.Model.Controllers
     {
         public static User GenerateUserFromDTO(KorisnikFullDto korisnik)
         {
-            Student u = new Student();
+            User u = new User();
 
             u.AccountType = (User.UserAccountType)korisnik.IdTipaNaloga;
             u.Birthday = korisnik.DatumRodjenja;
@@ -33,12 +33,13 @@ namespace MensariumDesktop.Model.Controllers
 
             if (u.AccountType == User.UserAccountType.Student)
             {
-                u.ValidUntil = (DateTime)korisnik.DatumVaziDo;
-                u.Index = korisnik.BrojIndeksa;
-                u.Faculty = Faculty.Faculties.Find(x => x.FacultyID == korisnik.IdFakulteta);
-                return u;
-            }  
-            return u as User;
+                Student us = new Student(u);
+                us.ValidUntil = (DateTime)korisnik.DatumVaziDo;
+                us.Index = korisnik.BrojIndeksa;
+                us.Faculty = Faculty.Faculties.Find(x => x.FacultyID == korisnik.IdFakulteta);
+                return us;
+            }
+            return u;
         }
         public static Faculty Faculty_From_FakultetFullDto(FakultetFullDto f)
         {

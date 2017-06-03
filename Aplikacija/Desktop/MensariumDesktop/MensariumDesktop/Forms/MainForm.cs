@@ -139,6 +139,8 @@ namespace MensariumDesktop
 
         private void button1_Click(object sender, EventArgs e)
         {
+            MensaChangerForm mf = new MensaChangerForm();
+            mf.ShowDialog();
         }
 
         private void button5_Click(object sender, EventArgs e)

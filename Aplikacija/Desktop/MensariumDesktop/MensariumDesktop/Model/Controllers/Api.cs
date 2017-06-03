@@ -18,13 +18,14 @@ namespace MensariumDesktop.Model.Controllers
     public static class Api
     {
         #region INTERNAL
+        static string BaseUrl = MSettings.Server.ServerURL + "api/";
+
         private class ApiResponse<T>
         {
             public HttpStatusCode HttpStatusCode { get; set; }
             public string ErrorResponse { get; set; }
             public T ResponseObject { get; set; }
         }
-        static string BaseUrl = MSettings.Server.ServerURL + "api/";
 
         private static ApiResponse<byte[]> DownloadData (RestRequest request, bool includeSid = true)
         {
@@ -93,8 +94,6 @@ namespace MensariumDesktop.Model.Controllers
             }
             return executeResut;
         }
-
-        
         private static ApiResponse<object> Execute(RestRequest request, bool includeSid = true)
         {
             RestClient client = new RestClient();
