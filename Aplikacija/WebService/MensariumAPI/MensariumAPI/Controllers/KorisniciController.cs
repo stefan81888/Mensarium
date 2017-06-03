@@ -237,28 +237,27 @@ namespace MensariumAPI.Controllers
         //Ažuriranje korisnika -> registracija na android aplikaciju
         [HttpPut]
         [Route("update")]
-        public IHttpActionResult UpdateKorisnika([FromBody]ClientZaRegistracijuDto klijentReg, [FromUri]string sid)
+        public IHttpActionResult UpdateKorisnika([FromBody]ClientZaRegistracijuDto klijentReg)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid,
-                    ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
-                        {Content = new StringContent("Nemate privilegiju")});
+                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(klijentReg.DodeljeniId);                
 
-                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(klijentReg.DodeljeniId);
                 if (ValidatorKorisnika.KorisnikPostoji(k))
                 {
                     if (k.Sifra == klijentReg.DodeljenaLozinka)
                     {
                         if (!ValidatorKorisnika.PostojiUsername(klijentReg.NovaLozinka))
                         {
-                            k.KorisnickoIme = klijentReg.KorisnickoIme;
-                            k.Email = klijentReg.Email;
-                            k.Sifra = klijentReg.NovaLozinka;
-                            k.BrojTelefona = klijentReg.Telefon;
+                            if (k.TipNaloga.IdTip == 5)
+                            {
+                                k.KorisnickoIme = klijentReg.KorisnickoIme;
+                                k.Email = klijentReg.Email;
+                                k.Sifra = klijentReg.NovaLozinka;
+                                k.BrojTelefona = klijentReg.Telefon;
+                            }
                         }
                         ProvajderPodatakaKorisnika.UpdateKorisnika(k);
 
@@ -286,7 +285,7 @@ namespace MensariumAPI.Controllers
         //Prijava na sistem
         [HttpPost]
         [Route("prijava")]
-        public SesijaDto Prijava([FromBody]ClientLoginDto cdto) //NE TURAJ SESSION ID I VERFIKACIJU
+        public SesijaDto Prijava([FromBody]ClientLoginDto cdto) 
         {
             try
             {
