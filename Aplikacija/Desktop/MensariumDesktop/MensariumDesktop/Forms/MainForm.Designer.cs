@@ -380,7 +380,7 @@ namespace MensariumDesktop
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(733, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(860, 22);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // STATUS_statbarOPStatus
@@ -388,8 +388,7 @@ namespace MensariumDesktop
             this.STATUS_statbarOPStatus.Image = global::MensariumDesktop.Properties.Resources.success;
             this.STATUS_statbarOPStatus.Name = "STATUS_statbarOPStatus";
             this.STATUS_statbarOPStatus.ShowDropDownArrow = false;
-            this.STATUS_statbarOPStatus.Size = new System.Drawing.Size(147, 25);
-            this.STATUS_statbarOPStatus.Text = "StatusOperacije1";
+            this.STATUS_statbarOPStatus.Size = new System.Drawing.Size(20, 25);
             // 
             // tabControls
             // 
@@ -477,7 +476,6 @@ namespace MensariumDesktop
             this.HOME_btnProfile.Text = " Profil";
             this.HOME_btnProfile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.HOME_btnProfile.UseVisualStyleBackColor = false;
-            this.HOME_btnProfile.Click += new System.EventHandler(this.btnProfile_Click);
             // 
             // imageListMainForm
             // 
@@ -512,6 +510,7 @@ namespace MensariumDesktop
             this.imageListMainForm.Images.SetKeyName(26, "speech-bubble-12.png");
             this.imageListMainForm.Images.SetKeyName(27, "building.png");
             this.imageListMainForm.Images.SetKeyName(28, "shuffle-1.png");
+            this.imageListMainForm.Images.SetKeyName(29, "play-button-1.png");
             // 
             // HOME_btnMensaChanger
             // 
@@ -910,7 +909,6 @@ namespace MensariumDesktop
             this.btnReclamation.Text = " Reklamacije";
             this.btnReclamation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnReclamation.UseVisualStyleBackColor = false;
-            this.btnReclamation.Click += new System.EventHandler(this.button5_Click);
             // 
             // groupBox3
             // 
@@ -1902,7 +1900,6 @@ namespace MensariumDesktop
             this.button9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button9.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button9.UseVisualStyleBackColor = false;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button6
             // 
@@ -1925,7 +1922,6 @@ namespace MensariumDesktop
             this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
@@ -1948,7 +1944,6 @@ namespace MensariumDesktop
             this.button7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button7.UseVisualStyleBackColor = false;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
             // 
@@ -2100,7 +2095,6 @@ namespace MensariumDesktop
             this.button10.Text = " Uređivanje";
             this.button10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button10.UseVisualStyleBackColor = false;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // label24
             // 

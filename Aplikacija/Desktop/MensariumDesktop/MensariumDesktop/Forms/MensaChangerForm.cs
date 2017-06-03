@@ -33,8 +33,7 @@ namespace MensariumDesktop.Forms
             {
                 cbxSettingsMenza.DataSource = Mensa.Mensas;
                 cbxSettingsMenza.DisplayMember = "Name";
-                cbxSettingsMenza.SelectedItem = MSettings.CurrentMensa;
-                
+                cbxSettingsMenza.SelectedItem = MSettings.CurrentMensa;   
             }
         }
 

@@ -44,7 +44,7 @@ namespace MensariumDesktop
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            MainController.Shutdown();
+            STATUS_statbarUserSignOut.PerformClick();
         }
         #endregion
 
@@ -69,10 +69,14 @@ namespace MensariumDesktop
         }
         private void statbarUserSignOut_Click(object sender, EventArgs e)
         {
+            
             try
             {
-                MainController.LogoutUser();
-                Close();
+                bgWorkerLoading.DoWork += (sender2, args) => bgWorkerLoading_DoWorkLogOut();
+                this.Hide();
+                bgWorkerLoading.RunWorkerAsync();
+                loadform.TextToDisplay = "Odjavljivanje";
+                loadform.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -149,60 +153,41 @@ namespace MensariumDesktop
             STATUS_statbarSettings.PerformClick();
         }
         #endregion
-        private void button2_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnProfile_Click(object sender, EventArgs e)
-        {
-            STATUS_statbarUserProfile.PerformClick();
-        }
         
-        private void button9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        
-        private void button10_Click(object sender, EventArgs e)
-        {
-
-        }
 
         
 
         #region INIT_GUI
         private void bgWorkerLoading_DoWork(object sender, DoWorkEventArgs e)
         {
-            Thread.Sleep(1500);
+            Thread.Sleep(500);
             try
             {
                 MainController.PostLoginInit();
-                loadform.DialogResult = DialogResult.OK;
             }
             catch(Exception ex)
             {
                 MainController.ShowException(ex);
                 MainController.LogoutUser();
-                Environment.Exit(1);            }
+                Environment.Exit(1);
+            }
         }
         private void bgWorkerLoading_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             loadform.Close();
+        }
+        private void bgWorkerLoading_DoWorkLogOut()
+        {
+            Thread.Sleep(500);
+            try
+            {
+                MainController.Shutdown();
+            }
+            catch (Exception ex)
+            {
+                MainController.ShowException(ex);
+                Environment.Exit(1);
+            }
         }
         #endregion
         #region OTHER

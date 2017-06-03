@@ -14,7 +14,7 @@ namespace MensariumDesktop.Forms
 {
     public partial class LoadingForm : Form
     {
-
+        public string TextToDisplay = "Učitavanje";
         public LoadingForm()
         {
             InitializeComponent();
@@ -22,7 +22,7 @@ namespace MensariumDesktop.Forms
 
         private void LoadingForm_Load(object sender, EventArgs e)
         {
-            
+            label1.Text = TextToDisplay;
         }
        
     }
