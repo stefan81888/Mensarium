@@ -58,10 +58,27 @@ namespace Mensarium
 
             alert = new AlertDialog.Builder(this).Create();
             alert.SetTitle("Ucitavanje");
-            alert.SetMessage("Molim sacekajte!");
+            alert.SetMessage("Molimo sacekajte!");
 
             alert.Show();
- 
+
+            Thread novaNit = new Thread(PozoviApiFunkciju);
+            novaNit.Start();
+
+            /*
+            var intent = new Intent(this, typeof(MainSwipePage));
+            StartActivity(intent);
+            */
+        }
+
+        private void CreateAccountButton_Click(object sender, System.EventArgs e)
+        {
+            var intent = new Intent(this, typeof(CreateAccPrviActivity));
+            StartActivity(intent);
+        }
+
+        private void PozoviApiFunkciju()
+        {
             ClientLoginDto clog = new ClientLoginDto
             {
                 KIme_Mail = FindViewById<TextView>(Resource.Id.usernameText).Text,
@@ -69,13 +86,13 @@ namespace Mensarium
             };
 
             try
-            { 
+            {
 
                 SesijaDto sesija = Api.Api.LoginUser(clog);
                 MSettings.CurrentSession = new Session() { SessionID = sesija.IdSesije };
 
                 KorisnikFullDto korisnik = Api.Api.GetUserFullInfo(sesija.IdKorisnika);
-                if (korisnik.IdTipaNaloga == (int) User.UserAccountType.Student)
+                if (korisnik.IdTipaNaloga == (int)User.UserAccountType.Student)
                 {
                     //if (!Api.LogoutUser(MSettings.CurrentSession.SessionID))
                     //    throw new Exception("Neuspesno ciscenje logovanja");
@@ -93,28 +110,18 @@ namespace Mensarium
                 {
                     alert.Dismiss();
                     MSettings.CurrentSession = null;
-                    Toast.MakeText(this, "Ovo nije korisnicki nalog!", ToastLength.Short).Show();
+                    //Toast.MakeText(this, "Ovo nije korisnicki nalog!", ToastLength.Short).Show();
+                    RunOnUiThread(() => Toast.MakeText(this, "Ovo nije korisnicki nalog!", ToastLength.Short).Show());
                 }
             }
             catch (Exception ex)
             {
                 alert.Dismiss();
                 MSettings.CurrentSession = null;
-                Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
+                //Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
+                RunOnUiThread(() => Toast.MakeText(this, ex.Message, ToastLength.Short).Show());
             }
-            
-            /*
-            var intent = new Intent(this, typeof(MainSwipePage));
-            StartActivity(intent);
-            */
         }
-
-        private void CreateAccountButton_Click(object sender, System.EventArgs e)
-        {
-            var intent = new Intent(this, typeof(CreateAccPrviActivity));
-            StartActivity(intent);
-        }
-
     }
 }
 

@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true">
     <TextView
         android:id="@+id/unesiteIdText"
-        android:text="Unesite Vas ID i password koji ste dobili od salterskog radnika:"
+        android:text="Unesite Vas ID i sifru koju ste dobili od salterskog radnika:"
         android:textColor="#d0d8dd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:background="@drawable/edittextrounded"
-        android:hint="password"
+        android:hint="sifra"
         android:textColorHint="@drawable/text_hint_selector"
         android:ellipsize="start"
         android:gravity="center"
@@ -48,7 +48,7 @@
         android:layout_below="@id/EditTextID"
         android:layout_marginTop="8dp" />
     <Button
-        android:text="Next"
+        android:text="Dalje"
         android:textColor="@color/NaslovIImeButtona"
         android:layout_width="match_parent"
         android:layout_height="45dp"
