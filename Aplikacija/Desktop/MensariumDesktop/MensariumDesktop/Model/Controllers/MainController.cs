@@ -169,11 +169,35 @@ namespace MensariumDesktop.Model.Controllers
         }
         public static void AddUserMeals(Student s, int breakfast, int lunch, int dinner)
         {
-            AddUserMeal(s, Mensa.MealType.Breakfast, breakfast);
-            AddUserMeal(s, Mensa.MealType.Lunch, lunch);
-            AddUserMeal(s, Mensa.MealType.Dinner, dinner);
+            AddUserMeal(s, Mensa.MealType.Dorucak, breakfast);
+            AddUserMeal(s, Mensa.MealType.Rucak, lunch);
+            AddUserMeal(s, Mensa.MealType.Vecera, dinner);
         }
 
+        public static List<MealTodayAdded> GetReclamationMeals(Student s)
+        {
+            try
+            {
+                List<ObrokDanasUplacenDto> list = Api.TodayAddedMeals(s.UserID);
+                List<MealTodayAdded> rlist = new List<MealTodayAdded>();
+                foreach (var obrok in list)
+                {
+                    rlist.Add(new MealTodayAdded()
+                    {
+                        Id = obrok.IdObroka,
+                        DateAdded = obrok.DatumUplacivanja,
+                        Type = (Mensa.MealType)obrok.IdTipaObroka,
+                        MensaAdded = Mensa.Mensas.Find(x => x.MensaID == obrok.IdTipaObroka)
+                    });
+                }
+                return rlist;
+            }
+            catch(Exception e)
+            {
+                MUtility.ShowException(e);
+                return new List<MealTodayAdded>();
+            }
+        }
         public static void ShowError(string Message) {
             MessageBox.Show(Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
