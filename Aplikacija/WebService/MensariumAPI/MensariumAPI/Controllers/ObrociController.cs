@@ -79,7 +79,7 @@ namespace MensariumAPI.Controllers
                 List<Obrok> listaObroka = ProvajderPodatakaObroka.VratiObroke();
                 List<ObrokFullDto> listaObrokaFull = new List<ObrokFullDto>(listaObroka.Count);
 
-                if (listaObroka == null)
+                if (listaObroka.Count == 0)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
 
 
@@ -235,10 +235,10 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
 
-                List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(id).ToList();
+                List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(id);
                 List<ObrokDanasUplacenDto> listaDanasUplacenihObroka = new List<ObrokDanasUplacenDto>(danasUplaceniObrociOvogKorisnika.Count);
 
-                if (danasUplaceniObrociOvogKorisnika == null)
+                if (danasUplaceniObrociOvogKorisnika.Count == 0)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
 
 
@@ -281,10 +281,10 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
 
-                List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(id).ToList();
+                List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(id);
                 List<ObrokDanasSkinutDto> listaDanasSkinutihObroka = new List<ObrokDanasSkinutDto>(danasSkinutiObrociOvogKorisnika.Count);
 
-                if (danasSkinutiObrociOvogKorisnika == null)
+                if (danasSkinutiObrociOvogKorisnika.Count == 0)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
 
 

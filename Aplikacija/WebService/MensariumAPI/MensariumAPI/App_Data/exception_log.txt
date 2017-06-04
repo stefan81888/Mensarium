@@ -280,3 +280,19 @@ Parameter name: index
 [6/4/2017 21:52:42]	System.NullReferenceException: Object reference not set to an instance of an object.
    at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
    at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[6/5/2017 00:01:00]	System.ArgumentNullException: Value cannot be null.
+Parameter name: source
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at MensariumAPI.Controllers.ObrociController.DanasUplaceniObrociKorisnika(Int32 id, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\ObrociController.cs:line 238
+[6/5/2017 00:01:25]	System.ArgumentNullException: Value cannot be null.
+Parameter name: source
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at MensariumAPI.Controllers.ObrociController.DanasUplaceniObrociKorisnika(Int32 id, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\ObrociController.cs:line 238
+[6/5/2017 00:02:00]	System.ArgumentNullException: Value cannot be null.
+Parameter name: source
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at MensariumAPI.Controllers.ObrociController.DanasUplaceniObrociKorisnika(Int32 id, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\ObrociController.cs:line 238
+[6/5/2017 00:03:17]	System.ArgumentNullException: Value cannot be null.
+Parameter name: source
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at MensariumAPI.Controllers.ObrociController.DanasUplaceniObrociKorisnika(Int32 id, String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\ObrociController.cs:line 238
