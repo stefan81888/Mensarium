@@ -15,6 +15,7 @@ using Android.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Xamarin.Forms;
 using Android.Support.V7.App;
+using Mensarium.Components;
 
 namespace Mensarium
 {
@@ -36,6 +37,10 @@ namespace Mensarium
 
             SupportActionBar.SetDisplayShowTitleEnabled(false);
 
+            //SupportActionBar.SetDisplayShowHomeEnabled(true);
+            //SupportActionBar.SetLogo(Resource.Drawable.ActionBarIcon);
+            //SupportActionBar.SetDisplayUseLogoEnabled(true);
+
             var fragments = new Android.Support.V4.App.Fragment[]
                 {
                     new ProfilFragment(),
@@ -56,6 +61,37 @@ namespace Mensarium
 
             TabLayout tabLayout = FindViewById<TabLayout>(Resource.Id.sliding_tabs);
             tabLayout.SetupWithViewPager(viewPager);
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.bottom_menu, menu);
+
+            
+
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                //search
+                case Resource.Id.action_search:
+                    Toast.MakeText(this, "Search", ToastLength.Short).Show();
+                    return true;
+
+                    //odjava
+                case Resource.Id.action_set2:
+                    Api.Api.LogoutUser(MSettings.CurrentSession.SessionID);
+                    var intent = new Intent(this, typeof(MainActivity));
+                    intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
+                    StartActivity(intent);
+                    this.Finish();
+                    return true;
+                default:
+                    return base.OnOptionsItemSelected(item);
+            }
         }
     }
 }

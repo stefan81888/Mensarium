@@ -325,9 +325,13 @@ namespace MensariumAPI.Controllers
 
                 List<KorisnikFollowDto> pracenja = ProvajderPodatakaKorisnika.SvaPracenja(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
 
-               if(pracenja.Count == 0)
+               if(pracenja == null)
                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                    { Content = new StringContent("Nisu pronadjeni korisnici") });
+
+                if (pracenja.Count == 0)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Korisnik nikog ne prati") });
 
                 return pracenja;
             }
@@ -932,6 +936,37 @@ namespace MensariumAPI.Controllers
                         { Content = new StringContent("Neuspesna registracija") });
                 return s;
 
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Sms uplata
+        [HttpPost]
+        [Route("uplata/sms")]
+        public IHttpActionResult SmsUplata([FromUri] int id, [FromUri] int brojObroka, [FromUri] string tip)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                bool status = ProvajderPodatakaObroka.UplatiObrok(id, brojObroka,
+                    ProvajderPodatakaObroka.SmsUplate[tip]);
+
+                if (status)
+                    return Ok("Uplata uspesna");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Neispravna uplata") });
             }
             catch (Exception e)
             {

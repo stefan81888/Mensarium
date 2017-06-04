@@ -40,6 +40,19 @@ namespace Mensarium
             this.createAccountButton.Click += CreateAccountButton_Click;
 
             this.check = FindViewById<CheckBox>(Resource.Id.checkRemember);
+
+            ProbajDaUcitasKorisnika();
+        }
+
+        private void ProbajDaUcitasKorisnika()
+        {
+            var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
+
+            if(!prefs.GetString("username", String.Empty).Equals(String.Empty))
+            {
+                FindViewById<TextView>(Resource.Id.usernameText).Text = prefs.GetString("username", String.Empty);
+                FindViewById<TextView>(Resource.Id.passwordText).Text = prefs.GetString("password", String.Empty);
+            };
         }
 
         private void ZapamtiKorisnika(string user, string pass)
@@ -59,6 +72,7 @@ namespace Mensarium
             alert = new AlertDialog.Builder(this).Create();
             alert.SetTitle("Ucitavanje");
             alert.SetMessage("Molimo sacekajte!");
+            alert.SetCancelable(false);
 
             alert.Show();
 
