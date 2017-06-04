@@ -20,6 +20,7 @@ namespace MensariumDesktop
 {
     public partial class MainForm : Form
     {
+        #region MAIN_FORM
         LoadingForm loadform = new LoadingForm();
         public MainForm()
         {
@@ -27,147 +28,109 @@ namespace MensariumDesktop
             bgWorkerLoading.RunWorkerAsync();
             loadform.ShowDialog();
         }
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            HOME_lblCurrentUserFName.Text = MSettings.CurrentSession.LoggedUser.FirstName;
+            HOME_lblCurrentUserLName.Text = MSettings.CurrentSession.LoggedUser.LastName;
+            HOME_lblCurrentUserAccType.Text = MSettings.CurrentSession.LoggedUser.AccountType.ToString();
+            HOME_picCurrentUser.Image = MSettings.CurrentSession.LoggedUser.ProfilePicture;
+            
+            //TO-DO: CURRENT MENSA
+            HOME_lblCurrentLocation.Text = MSettings.CurrentMensa.Name;
+            HOME_lblCurrentLocationAddress.Text = MSettings.CurrentMensa.Location;
 
-       
+            RefreshStatusBarData();
+            
+        }
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            STATUS_statbarUserSignOut.PerformClick();
+        }
+        #endregion
 
+        #region STATUS BAR
+        private void RefreshStatusBarData()
+        {
+            STATUS_statbarUser.Text = MSettings.CurrentSession.LoggedUser.FullName;
+            STATUS_statbarMenza.Text = MSettings.CurrentMensa.Name;
+        }
+        private void OpStatusWorking()
+        {
+            STATUS_statbarOPStatus.Visible = true;
+            Cursor.Current = Cursors.AppStarting;
+        }
+        private void OpStatusIdle()
+        {
+            STATUS_statbarOPStatus.Visible = false;
+            Cursor.Current = Cursors.Default;
+        }
         private void statusBarSettingsBtn_Click(object sender, EventArgs e)
         {
-            SettingsForm settingsForm = new SettingsForm();
-            settingsForm.ShowDialog();
+            SettingsForm fs = new SettingsForm();
+            fs.ShowDialog();
+            RefreshStatusBarData();
         }
+        private void statbarUserProfile_Click(object sender, EventArgs e)
+        {
+            ProfileForm f = new ProfileForm(MSettings.CurrentSession.LoggedUser);
+            f.ShowDialog();
+            RefreshStatusBarData();
+        }
+        private void statbarUserSignOut_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bgWorkerLoading.DoWork += (sender2, args) => bgWorkerLoading_DoWorkLogOut();
+                this.Hide();
+                bgWorkerLoading.RunWorkerAsync();
+                loadform.TextToDisplay = "Odjavljivanje";
+                loadform.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MUtility.ShowException(ex);
+            }
 
+        }
+        private void promeniLokacijuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MensaChangerForm mc = new MensaChangerForm();
+            mc.ShowDialog();
+            RefreshStatusBarData();
+        }
+        #region DEBUG
         private void showLoginFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LoginForm lf = new LoginForm();
             lf.ShowDialog();
         }
-
-        private void tabControls_Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            e.Cancel = !e.TabPage.Enabled;
-            //if (e.TabPage == tabPage1)
-            //    e.Cancel = true;
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox1.Checked)
-            {
-                tabControls.TabPages.Remove(tabUsers);
-            }
-            else
-            {
-                tabControls.TabPages.Insert(3,tabUsers);
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            SettingsForm settingsForm = new SettingsForm();
-            settingsForm.ShowDialog();
-        }
-        
-
         private void showReclamationFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ReclamationForm reclamationForm = new ReclamationForm();
             reclamationForm.ShowDialog();
         }
-
         private void showMensaChangerFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MensaChangerForm mc = new MensaChangerForm();
             mc.ShowDialog();
 
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MensaChangerForm mc = new MensaChangerForm();
-            mc.ShowDialog();
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            ReclamationForm reclamationForm = new ReclamationForm();
-            reclamationForm.ShowDialog();
-        }
-
-        private void promeniLokacijuToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MensaChangerForm mc = new MensaChangerForm();
-            mc.ShowDialog();
-        }
-
         private void showProfileFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ProfileForm pf = new ProfileForm();
-            pf.ShowDialog();
         }
-
         private void showUserFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UserForm uf = new UserForm();
             uf.ShowDialog();
         }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            cbxKriterijum.SelectedIndex = 0;
-            lblCurrentUserFName.Text = MSettings.CurrentSession.LoggedUser.FirstName;
-            lblCurrentUserLName.Text = MSettings.CurrentSession.LoggedUser.LastName;
-            lblCurrentUserAccType.Text = MSettings.CurrentSession.LoggedUser.AccountType.ToString();
-
-            statbarUser.Text = MSettings.CurrentSession.LoggedUser.FirstName + " " + MSettings.CurrentSession.LoggedUser.LastName;
-
-            lblCurrentLocation.Text = Mensa.Mensas[0].Name;
-            lblCurrentLocation.Text = Mensa.Mensas[0].Location;
-
-            statbarMenza.Text = Mensa.Mensas[0].Name;
-            
-        }
-
         private void showNewUserCreatedFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewUserCreatedForm nu = new NewUserCreatedForm();
 
-            nu.ShowDialog();
         }
-
-        private void btnProfile_Click(object sender, EventArgs e)
-        {
-            ProfileForm pf = new ProfileForm();
-            pf.ShowDialog();
-        }
-
-        private void statbarUserProfile_Click(object sender, EventArgs e)
-        {
-           ProfileForm pf = new ProfileForm();
-           pf.ShowDialog();
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            ProfileForm pf = new ProfileForm();
-            pf.ShowDialog();
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            UserForm uf = new UserForm();
-            uf.ShowDialog();
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            UserForm uf = new UserForm();
-            uf.ShowDialog();
-        }
-
         private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
-            try { pcbCurrentUser.Image = Api.GetUserImage(2); } catch (Exception exception) { MessageBox.Show(exception.Message); }
+
+            //try { pcbCurrentUser.Image = Api.GetUserImage(2); } catch (Exception exception) { MessageBox.Show(exception.Message); }
             //try { Api.FollowUser(9); } catch (Exception exception) { MessageBox.Show(exception.Message); } //forbidden
             //try { Api.AndroidUserRegistration(new ClientZaRegistracijuDto()); } catch (Exception exception) { MessageBox.Show(exception.Message); } 
             //try { Api.UsersThatFollows(); } catch (Exception exception) { MessageBox.Show(exception.Message); }
@@ -181,56 +144,119 @@ namespace MensariumDesktop
             //try { Api.UpdateUser(new KorisnikKreiranjeDto()); } catch (Exception exception) { MessageBox.Show(exception.Message); }
 
         }
+        #endregion
+        #endregion
 
-        private void button10_Click(object sender, EventArgs e)
-        {
-            FacultyManagerForm fmf = new FacultyManagerForm();
-            fmf.ShowDialog();
-
-        }
-
-        private void statbarUserSignOut_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                MainController.LogoutUser();
-                Close();
-            }
-            catch(Exception ex)
-            {
-                MainController.ShowException(ex);
-            }
-           
-        }
-
+        #region POCETNA_TAB
         private void btnSignOut_Click(object sender, EventArgs e)
         {
-            statbarUserSignOut.PerformClick();
+            STATUS_statbarUserSignOut.PerformClick();
         }
-
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void HOME_MensaChanger_Click(object sender, EventArgs e)
         {
-            MainController.Shutdown();
+            STATUS_statbarMenzaChangeLocation.PerformClick();
         }
+        private void HOME_btnSettings_Click(object sender, EventArgs e)
+        {
+            STATUS_statbarSettings.PerformClick();
+        }
+        #endregion
 
+        #region UPLATA_TAB
+        private void UPLATA_btnLoadCard_Click(object sender, EventArgs e)
+        {
+            CardReaderEmulator creader = new CardReaderEmulator();
+            creader.ShowDialog();
+            OpStatusWorking();
+            MainController.LoadUserCard(creader.CardData);
+            OpStatusIdle();
+
+            if (MainController.LoadedCardUser == null)
+                return;   
+            
+
+            UPLATA_lblCardUserName.Text = MainController.LoadedCardUser.FullName;
+            UPLATA_lblCardUserValidUntil.Text = MainController.LoadedCardUser.ValidUntil.ToShortDateString();
+            UPLATA_lblCardUserDatebirth.Text = MainController.LoadedCardUser.Birthday.ToShortDateString();
+            UPLATA_lblCardUserFax.Text = MainController.LoadedCardUser.Faculty.Name;
+            UPLATA_lblCardUserIndex.Text = MainController.LoadedCardUser.Index;
+            UPLATA_picLoadedUser.Image = MainController.LoadedCardUser.ProfilePicture;
+
+            UPLATA_lblBreakfast.Text = MainController.LoadedCardUser.BreakfastCount.ToString();
+            UPLATA_lblLunch.Text = MainController.LoadedCardUser.LunchCount.ToString();
+            UPLATA_lblDinner.Text = MainController.LoadedCardUser.DinnerCount.ToString();
+
+        }
+        #endregion
+
+        #region INIT_GUI
         private void bgWorkerLoading_DoWork(object sender, DoWorkEventArgs e)
         {
-            Thread.Sleep(1500);
+            Thread.Sleep(500);
             try
             {
                 MainController.PostLoginInit();
-                loadform.DialogResult = DialogResult.OK;
             }
             catch(Exception ex)
             {
-                MainController.ShowException(ex);
+                MUtility.ShowException(ex);
                 MainController.LogoutUser();
-                Environment.Exit(1);            }
+                Environment.Exit(1);
+            }
         }
-
         private void bgWorkerLoading_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             loadform.Close();
+        }
+        private void bgWorkerLoading_DoWorkLogOut()
+        {
+            Thread.Sleep(500);
+            try
+            {
+                MainController.Shutdown();
+            }
+            catch (Exception ex)
+            {
+                MUtility.ShowException(ex);
+                Environment.Exit(1);
+            }
+        }
+        #endregion
+        #region OTHER
+        private void tabControls_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            e.Cancel = !e.TabPage.Enabled;
+            //if (e.TabPage == tabPage1)
+            //    e.Cancel = true;
+        }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                tabControls.TabPages.Remove(tabUsers);
+            }
+            else
+            {
+                tabControls.TabPages.Insert(3, tabUsers);
+            }  
+        }
+        #endregion
+        private void HOME_picCurrentUser_Paint(object sender, PaintEventArgs e)
+        {
+            MUtility.RoundPictureBox(sender as PictureBox);
+        }
+
+        private void UPLATA_picLoadedUser_Paint(object sender, PaintEventArgs e)
+        {
+            MUtility.RoundPictureBox(sender as PictureBox);
+        }
+
+        private void btnExecutePay_Click(object sender, EventArgs e)
+        {
+            MainController.AddUserMeals(MainController.LoadedCardUser,
+                int.Parse(txtBreakfast.Text),
+                int.Parse(txtLunch.Text),
+                int.Parse(txtDinner.Text));
         }
     }
 }

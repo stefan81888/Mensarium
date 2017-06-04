@@ -404,7 +404,45 @@ namespace MensariumAPI.Controllers
                 {
                    korisnik = ProvajderPodatakaKorisnika.Stanje(k);
                 }
-                if (korisnik == null)
+                else
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                    { Content = new StringContent("Korisnik nije pronadjen") });
+
+                return korisnik;
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        [HttpGet]
+        [Route("stanje")] //added by dacha 
+        public KorisnikStanjeDto VratiKorisnikovoStanjeObroka([FromUri] int id, [FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
+
+                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+
+                KorisnikStanjeDto korisnik = new KorisnikStanjeDto();
+                if (ValidatorKorisnika.KorisnikPostoji(k))
+                {
+                    korisnik = ProvajderPodatakaKorisnika.Stanje(k);
+                }
+               else
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                     { Content = new StringContent("Korisnik nije pronadjen") });
 
@@ -863,6 +901,68 @@ namespace MensariumAPI.Controllers
 
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Neispravna sifra") });
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+        
+        //Registracija na android
+        [HttpPut]
+        [Route("registracija/android")]
+        public SesijaDto RegistracijaNaAndroid([FromBody] ClientZaRegistracijuDto czrdto)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+
+                SesijaDto s =ProvajderPodatakaKorisnika.RegistracijaNaAndroid(czrdto);
+
+                if (s == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Neuspesna registracija") });
+                return s;
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Sms uplata
+        [HttpPost]
+        [Route("uplata/sms")]
+        public IHttpActionResult SmsUplata([FromUri] int id, [FromUri] int brojObroka, [FromUri] string tip)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                bool status = ProvajderPodatakaObroka.UplatiObrok(id, brojObroka,
+                    ProvajderPodatakaObroka.SmsUplate[tip]);
+
+                if (status)
+                    return Ok("Uplata uspesna");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Neispravna uplata") });
             }
             catch (Exception e)
             {

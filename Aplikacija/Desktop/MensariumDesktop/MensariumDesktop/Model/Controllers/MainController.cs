@@ -8,11 +8,14 @@ using System.Windows.Forms;
 using MensariumDesktop.Forms;
 using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
+using System.Drawing;
 
 namespace MensariumDesktop.Model.Controllers
 {
     public static class MainController
     {
+        public static Student LoadedCardUser;
+
         public static void InitApplication()
         {
             //Ucitaj podatke iz fajl
@@ -31,8 +34,19 @@ namespace MensariumDesktop.Model.Controllers
             MSettings.SaveSettings();
             Application.Exit();
         }
-
-
+        public static bool TestConnection(string hostname, string port)
+        {
+            try
+            {
+                MUtility.ShowInformation(Api.TestConnection(hostname, port));
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MUtility.ShowInformation(ex.Message);
+                return false;
+            }
+        }
         public static bool LoginUser(string username, string password)
         {
             ClientLoginDto clog = new ClientLoginDto{ KIme_Mail = username, Sifra = password };
@@ -42,19 +56,19 @@ namespace MensariumDesktop.Model.Controllers
                 MSettings.CurrentSession = new Session() { SessionID = sesija.IdSesije };
                 
                 KorisnikFullDto korisnik = Api.GetUserFullInfo(sesija.IdKorisnika);
-                if (korisnik.IdTipaNaloga == (int) User.UserAccountType.Student)
+                if (korisnik.IdTipaNaloga == (int)User.UserAccountType.Student)
                 {
-                    MainController.ShowError("Prijavljivanje sa studentskog naloga je onemoguceno na ovoj aplikaciji!");
+                    MUtility.ShowError("Prijavljivanje sa studentskog naloga je onemoguceno na ovoj aplikaciji!");
                     Api.LogoutUser(MSettings.CurrentSession.SessionID);
                     return false;
                 }
-                MSettings.CurrentSession.LoggedUser = MUtility.User_From_KorisnikFullDto(korisnik);
+                MSettings.CurrentSession.LoggedUser = MUtility.GenerateUserFromDTO(korisnik);
                 return true;
             }
             catch (Exception ex)
             {
                 MSettings.CurrentSession = null;
-                MainController.ShowException(ex);
+                MUtility.ShowException(ex);
                 return false;
             }
         }
@@ -78,24 +92,120 @@ namespace MensariumDesktop.Model.Controllers
 
         public static bool ChangeServerIP(string newIP)
         {
-            return MSettings.Server.ChangeIP(newIP);
+            try
+            {
+                MSettings.Server.IP = newIP;
+                return true;
+            }
+            catch(Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
         }
         public static bool ChangeServerPort(string newPort)
         {
-            return MSettings.Server.ChangePort(newPort);
+            try
+            {
+                MSettings.Server.Port = newPort;
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
         }
         public static bool ChangeServer(string newIP, string newPort)
         {
             return ChangeServerIP(newIP) && ChangeServerPort(newPort);
         }
-        public static bool ChangeCurrentMensa(int mid)
-        {
-            Mensa m = Mensa.Mensas.First(x => x.MensaID == mid);
+        public static bool ChangeCurrentMensa(Mensa m)
+        {            
             if (m == null)
                 return false;
             MSettings.CurrentMensa = m;
             return true;
         }
+
+        public static void LoadUserCard(int cardId)
+        {
+            try
+            {
+                KorisnikFullDto korisnik = Api.GetUserFullInfo(cardId);
+                if (korisnik.IdTipaNaloga != (int)User.UserAccountType.Student)
+                    throw new Exception("Nalog nije studentski");
+                LoadedCardUser = MUtility.GenerateUserFromDTO(korisnik) as Student;
+                KorisnikStanjeDto stanje = Api.UserMealsCount(LoadedCardUser.UserID);
+                LoadedCardUser.BreakfastCount = stanje.BrojDorucka;
+                LoadedCardUser.LunchCount = stanje.BrojRuckova;
+                LoadedCardUser.DinnerCount = stanje.BrojVecera;
+            }
+            catch(Exception ex)
+            {
+                MUtility.ShowException(ex);
+            }
+        }
+        public static void AddUserMeals(Student s, int breakfast, int lunch, int dinner)
+        {
+
+            //OO GOSPODARU IFOVA - REFAKTORISI OVO SUTRA 
+            if (breakfast != 0)
+            {
+                ObrokUplataDto o = new ObrokUplataDto()
+                {
+                    BrojObroka = breakfast,
+                    IdLokacijeUplate = MSettings.CurrentMensa.MensaID,
+                    IdKorisnika = s.UserID,
+                    IdTipa = 1
+                };
+                try
+                {
+                    Api.AddMeal(o);
+                }
+                catch(Exception e)
+                {
+                    MUtility.ShowException(e);
+                }
+            }
+            if (lunch != 0)
+            {
+                ObrokUplataDto o = new ObrokUplataDto()
+                {
+                    BrojObroka = lunch,
+                    IdLokacijeUplate = MSettings.CurrentMensa.MensaID,
+                    IdKorisnika = s.UserID,
+                    IdTipa = 2
+                };
+                try
+                {
+                    Api.AddMeal(o);
+                }
+                catch (Exception e)
+                {
+                    MUtility.ShowException(e);
+                }
+            }
+            if (dinner != 0)
+            {
+                ObrokUplataDto o = new ObrokUplataDto()
+                {
+                    BrojObroka = dinner,
+                    IdLokacijeUplate = MSettings.CurrentMensa.MensaID,
+                    IdKorisnika = s.UserID,
+                    IdTipa = 3
+                };
+                try
+                {
+                    Api.AddMeal(o);
+                }
+                catch (Exception e)
+                {
+                    MUtility.ShowException(e);
+                }
+            }
+        }
+
         public static void ShowError(string Message) {
             MessageBox.Show(Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }

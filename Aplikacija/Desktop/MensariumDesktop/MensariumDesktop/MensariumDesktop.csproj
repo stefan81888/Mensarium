@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\CardReaderEmulator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CardReaderEmulator.Designer.cs">
+      <DependentUpon>CardReaderEmulator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FacultyManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,13 +164,16 @@
     <Compile Include="Model\Components\Server.cs" />
     <Compile Include="Model\Components\Session.cs" />
     <Compile Include="Model\Components\MSettings.cs" />
-    <Compile Include="Model\Components\StudentUser.cs" />
+    <Compile Include="Model\Components\Student.cs" />
     <Compile Include="Model\Components\User.cs" />
     <Compile Include="Model\Controllers\Api.cs" />
     <Compile Include="Model\Controllers\MainController.cs" />
     <Compile Include="Model\Controllers\MUtility.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\CardReaderEmulator.resx">
+      <DependentUpon>CardReaderEmulator.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FacultyManagerForm.resx">
       <DependentUpon>FacultyManagerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -213,6 +222,7 @@
     </Compile>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\MensariumDesktop.Model.Components.Faculty.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -297,6 +307,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\search-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RFIDReader.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

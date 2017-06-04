@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MensariumDesktop.Model.Components;
+using MensariumDesktop.Model.Controllers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,7 +27,23 @@ namespace MensariumDesktop.Forms
 
         private void MensaChangerForm_Load(object sender, EventArgs e)
         {
-            cbxSettingsMenza.SelectedIndex = 0;
+            if (Mensa.Mensas == null || Mensa.Mensas.Count == 0)
+                gbxLokacija.Enabled = false;
+            else
+            {
+                cbxSettingsMenza.DataSource = Mensa.Mensas;
+                cbxSettingsMenza.DisplayMember = "Name";
+                cbxSettingsMenza.SelectedItem = MSettings.CurrentMensa;   
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            bool successfull = true;
+            if (gbxLokacija.Enabled)
+                successfull = MainController.ChangeCurrentMensa((Mensa)cbxSettingsMenza.SelectedItem);
+
+            if (successfull) Close();
         }
     }
 }

@@ -119,10 +119,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxSettingsMenza.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxSettingsMenza.FormattingEnabled = true;
-            this.cbxSettingsMenza.Items.AddRange(new object[] {
-            "Elektronski fakultet",
-            "Pravni Fakultet",
-            "Medicinski fakultet"});
             this.cbxSettingsMenza.Location = new System.Drawing.Point(7, 23);
             this.cbxSettingsMenza.Name = "cbxSettingsMenza";
             this.cbxSettingsMenza.Size = new System.Drawing.Size(344, 24);
@@ -143,6 +139,7 @@
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
@@ -166,7 +163,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(384, 212);
+            this.ClientSize = new System.Drawing.Size(384, 211);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.gbxLokacija);
             this.Controls.Add(this.btnSave);

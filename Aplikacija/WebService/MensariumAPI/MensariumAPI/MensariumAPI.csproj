@@ -224,6 +224,7 @@
     <Compile Include="Controllers\MenzeController.cs" />
     <Compile Include="Controllers\ObjaveController.cs" />
     <Compile Include="Controllers\ObrociController.cs" />
+    <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

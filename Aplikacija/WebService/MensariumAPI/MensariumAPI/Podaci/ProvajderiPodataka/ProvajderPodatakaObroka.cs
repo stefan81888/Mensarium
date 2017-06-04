@@ -11,6 +11,54 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
     public class ProvajderPodatakaObroka
     {
+
+        public static Dictionary<string, int> SmsUplate = new Dictionary<string, int>()
+        {
+            {"Dorucak", 1},
+            {"dorucak", 1},
+            {"Doručak", 1},
+            {"doručak", 2},
+            {"Rucak", 2},
+            {"Ručak", 2},
+            {"rucak", 2},
+            {"ručak", 2},
+            {"Vecera", 3},
+            {"Večera", 3},
+            {"vecera", 3},
+            {"večera", 3}
+        };
+
+        public static bool UplatiObrok(int id, int brojObroka, int tipObroka)
+        {
+            if (brojObroka == 0)
+                return false;
+
+            Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+
+            if (k == null)
+                return false;
+
+            if (k.TipNaloga.IdTip != 5)
+                return false;
+
+            for (int i = 0; i < brojObroka; i++)
+            {
+                Obrok o = new Obrok()
+                {
+                    Iskoriscen = false,
+                    DatumUplacivanja = DateTime.Now,
+                    DatumIskoriscenja = null,
+                    Uplatilac = k,
+                    Tip = ProvajderPodatakaTipovaObroka.VratiTipObroka(tipObroka),
+                    LokacijaIskoriscenja = null
+                };
+
+                k.Obroci.Add(o);
+
+            }
+            return true;
+        }
+
         public static Obrok VratiObrok(int id)
         {
             ISession s = SesijeProvajder.Sesija;
@@ -113,7 +161,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 return danasSkinuti.ToList();
             return null;
         }
-
         
     }
 }

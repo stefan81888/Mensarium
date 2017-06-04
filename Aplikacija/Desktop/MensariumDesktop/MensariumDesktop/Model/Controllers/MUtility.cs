@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 using MensariumDesktop.Model.Components;
 using MensariumDesktop.Model.Components.DTOs;
 using RestSharp.Extensions;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace MensariumDesktop.Model.Controllers
 {
     public static class MUtility
     {
-        public static User User_From_KorisnikFullDto(KorisnikFullDto korisnik)
+        public static User GenerateUserFromDTO(KorisnikFullDto korisnik)
         {
             User u = new User();
-            
+
             u.AccountType = (User.UserAccountType)korisnik.IdTipaNaloga;
             u.Birthday = korisnik.DatumRodjenja;
             if (korisnik.Email != null) u.Email = korisnik.Email;
@@ -25,10 +27,21 @@ namespace MensariumDesktop.Model.Controllers
             u.RegistrationDate = korisnik.DatumRegistracije;
             u.UserID = korisnik.IdKorisnika;
             if (korisnik.KorisnickoIme != null) u.Username = korisnik.KorisnickoIme;
+            u.ActiveAccount = korisnik.AktivanNalog;
 
+            u.ProfilePicture = Api.GetUserImage(u.UserID);
+
+            if (u.AccountType == User.UserAccountType.Student)
+            {
+                Student us = new Student(u);
+                us.ValidUntil = (DateTime)korisnik.DatumVaziDo;
+                us.Index = korisnik.BrojIndeksa;
+                us.Faculty = Faculty.Faculties.Find(x => x.FacultyID == korisnik.IdFakulteta);
+
+                return us;
+            }
             return u;
         }
-
         public static Faculty Faculty_From_FakultetFullDto(FakultetFullDto f)
         {
             return new Faculty() {FacultyID = f.IdFakultet, Name = f.Naziv };
@@ -66,6 +79,32 @@ namespace MensariumDesktop.Model.Controllers
             }
 
             return ml;
+        }
+
+        public static void RoundPictureBox(PictureBox t)
+        {
+            System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
+            
+            gp.AddEllipse(0, 0, t.Width - 1, t.Height - 1);
+            Region rg = new Region(gp);
+            
+            t.Region = rg;
+        }
+        public static void ShowError(string Message)
+        {
+            MessageBox.Show(Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public static void ShowException(Exception e)
+        {
+            MessageBox.Show(e.Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public static void ShowWarrning(string message)
+        {
+            MessageBox.Show(message, "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        public static void ShowInformation(string message)
+        {
+            MessageBox.Show(message, "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

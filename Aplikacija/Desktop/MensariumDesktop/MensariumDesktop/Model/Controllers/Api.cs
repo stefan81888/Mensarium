@@ -18,13 +18,14 @@ namespace MensariumDesktop.Model.Controllers
     public static class Api
     {
         #region INTERNAL
+        static string BaseUrl = MSettings.Server.ServerURL + "api/";
+
         private class ApiResponse<T>
         {
             public HttpStatusCode HttpStatusCode { get; set; }
             public string ErrorResponse { get; set; }
             public T ResponseObject { get; set; }
         }
-        static string BaseUrl = MSettings.Server.ServerURL + "api/";
 
         private static ApiResponse<byte[]> DownloadData (RestRequest request, bool includeSid = true)
         {
@@ -117,6 +118,24 @@ namespace MensariumDesktop.Model.Controllers
             executeResult.ErrorResponse = response.Content;
             return executeResult;
 
+        }
+
+        public static string TestConnection(string host, string port)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "server";
+
+            RestClient client = new RestClient();
+            client.BaseUrl = new Uri(string.Format("http://{0}:{1}/api/server", host, port));
+
+            var response = client.Execute(request);
+            if (response.ResponseStatus != ResponseStatus.Completed) //nastala greska na mreznom nivou
+            {
+                string message = "Neuspela komunikacija sa serverom. Razlog: " + response.ErrorMessage;
+                throw new ApplicationException(message, response.ErrorException);
+            }
+
+            return response.Content;
         }
         #endregion
 
@@ -223,6 +242,20 @@ namespace MensariumDesktop.Model.Controllers
             ApiResponse<List<KorisnikFollowDto>> response = Execute<List<KorisnikFollowDto>>(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
                 throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\nServerResponse: " 
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
+
+            return response.ResponseObject;
+        }
+        public static KorisnikStanjeDto UserMealsCount(int userId)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/stanje";
+            request.AddParameter("id", userId, ParameterType.QueryString);
+
+
+            ApiResponse<KorisnikStanjeDto> response = Execute<KorisnikStanjeDto>(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\nServerResponse: "
                     + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
