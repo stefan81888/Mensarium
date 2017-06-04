@@ -1,19 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item
-      android:id="@+id/bb_menu_friends"
-      android:icon="@drawable/ic_friends"
-      android:title="Profil" />
-  <item
-      android:id="@+id/bb_menu_recents"
-      android:icon="@drawable/ic_recents"
-      android:title="Novosti" />
-  <item
-      android:id="@+id/bb_menu_nearby"
-      android:icon="@drawable/ic_nearby"
-      android:title="Okupljanja"/>
-  <item
-      android:id="@+id/bb_menu_restaurants"
-      android:icon="@drawable/ic_restaurants"
-      android:title="Opcije"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item android:id="@+id/action_search"
+      android:title="Pretraga"
+      android:hint="Potrazi prijatelja.."
+      android:icon="@android:drawable/ic_menu_search"
+      app:showAsAction="always|collapseActionView"
+      app:actionViewClass="android.support.v7.widget.SearchView" />
+  <item android:id="@+id/action_set"
+      android:title="@string/action_settings"
+      app:showAsAction="never"/>
+  <item android:id="@+id/action_set2"
+      android:background="#34464E"
+      android:title="@string/action_settings2"
+      app:showAsAction="never"/>
 </menu>

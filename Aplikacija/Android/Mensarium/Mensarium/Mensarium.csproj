@@ -190,6 +190,8 @@
     <Compile Include="Comp\ListaMenzi.cs" />
     <Compile Include="Comp\Mensa.cs" />
     <Compile Include="Comp\MSettings.cs" />
+    <Compile Include="Comp\ObjectExtensions.cs" />
+    <Compile Include="Comp\PronadjiFilter.cs" />
     <Compile Include="Comp\Server.cs" />
     <Compile Include="Comp\Session.cs" />
     <Compile Include="Comp\User.cs" />
@@ -197,6 +199,8 @@
     <Compile Include="Resources\activities\CreateAccPrviActivity.cs" />
     <Compile Include="Resources\activities\MapActivity.cs" />
     <Compile Include="Resources\activities\UplacivanjeObroka.cs" />
+    <Compile Include="Resources\adapters\PozoviPrijateljaAdapter.cs" />
+    <Compile Include="Resources\adapters\ProfilItemAdapter.cs" />
     <Compile Include="Resources\fragments\EventsFragment.cs" />
     <Compile Include="Comp\FeedItem.cs" />
     <Compile Include="Resources\adapters\FeedListAdapter.cs" />
@@ -263,6 +267,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\uplatiObrok.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\profilItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\pozoviItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -339,6 +349,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\popup_menu.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ActionBarIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\action_buttons.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

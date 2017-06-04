@@ -3,13 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/pozoviToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F8F8F8" />
     <ListView
-        android:id="@+id/lstView"
+        android:id="@+id/listaPrijatelja"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

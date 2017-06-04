@@ -26,7 +26,7 @@ namespace Mensarium.Api
             public T ResponseObject { get; set; }
         }
         //static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        private static string BaseUrl = "http://7f747cba.ngrok.io/api/";
+        private static string BaseUrl = "http://8a717221.ngrok.io/api/";
 
         private static ApiResponse<byte[]> DownloadData(RestRequest request, bool includeSid = true)
         {
@@ -190,6 +190,22 @@ namespace Mensarium.Api
 
             return response.ResponseObject;
         }
+
+        public static KorisnikFullDto AndroidPrvaPrijava(ClientZaRegistracijuDto c)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/prvaprijava";
+            request.AddParameter("id", c.DodeljeniId, ParameterType.QueryString);
+            request.AddParameter("sifra", c.DodeljenaLozinka, ParameterType.QueryString);
+
+            var response = Execute<KorisnikFullDto>(request, false);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("AndroidUserRegistrationError" + "\nServerResponse: "
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
+
+            return response.ResponseObject;
+        }
+
         public static SesijaDto LoginUser(ClientLoginDto loginData)
         {
             RestRequest request = new RestRequest(Method.POST);

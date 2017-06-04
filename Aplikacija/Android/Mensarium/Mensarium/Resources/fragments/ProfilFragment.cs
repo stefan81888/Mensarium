@@ -30,22 +30,24 @@ namespace Mensarium
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            view = inflater.Inflate(Resource.Layout.ProfilFragment, container, false);
+            if (view == null)
+            {
+                view = inflater.Inflate(Resource.Layout.ProfilFragment, container, false);
 
-            NapuniLabele();
+                NapuniLabele();
 
-            //dugme sve menze.. Dodat click
-            sveMenze = view.FindViewById<Android.Widget.Button>(Resource.Id.sveMenzeDugme);
-            sveMenze.Click += SveMenzeOnClick;
+                //dugme sve menze.. Dodat click
+                sveMenze = view.FindViewById<Android.Widget.Button>(Resource.Id.sveMenzeDugme);
+                sveMenze.Click += SveMenzeOnClick;
 
-            //napunimo omiljenu menzu.. Po defaultu index 0
-            var prefs = Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
-            this.omiljenaMenza = prefs.GetInt("OmiljenaMezna", omiljenaMenza);
-            SetujOmiljenuMenzu(omiljenaMenza);
+                //napunimo omiljenu menzu.. Po defaultu index 0
+                var prefs = Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
+                this.omiljenaMenza = prefs.GetInt("OmiljenaMezna", omiljenaMenza);
+                SetujOmiljenuMenzu(omiljenaMenza);
 
-            obrociLayout = view.FindViewById<LinearLayout>(Resource.Id.profilObrociLayout);
-            obrociLayout.Click += ObrociLayoutOnClick;
-
+                obrociLayout = view.FindViewById<LinearLayout>(Resource.Id.profilObrociLayout);
+                obrociLayout.Click += ObrociLayoutOnClick;
+            }
             return view;
         }
 

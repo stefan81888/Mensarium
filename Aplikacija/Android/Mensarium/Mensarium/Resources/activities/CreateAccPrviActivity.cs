@@ -76,7 +76,8 @@ namespace Mensarium
 
             try
             {
-                Api.Api.AndroidUserRegistration(reg);
+                //Api.Api.AndroidUserRegistration(reg);
+                Api.Api.AndroidPrvaPrijava(reg);
 
                 var intent = new Intent(this, typeof(CreateAccDrugiActivity));
 
