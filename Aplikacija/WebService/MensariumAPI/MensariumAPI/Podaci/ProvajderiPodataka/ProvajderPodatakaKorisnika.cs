@@ -745,6 +745,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             Korisnik k = VratiKorisnika(czrdto.DodeljeniId);
 
+            if (k.KorisnickoIme != null)
+                return null;
+
             if (k == null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Student ne postoji") });
