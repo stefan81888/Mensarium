@@ -4,11 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MensariumDesktop.Model.Controllers;
+using MensariumDesktop.Model.Components.DTOs;
 
 namespace MensariumDesktop.Model.Components
 {
     public class Mensa
     {
+        public enum MealType
+        {
+            Breakfast = 1,
+            Lunch,
+            Dinner
+        }
+
         public static List<Mensa> Mensas { get; protected set; }
 
         public static void UpdateMensaList()
@@ -20,5 +28,13 @@ namespace MensariumDesktop.Model.Components
         public string Location { get; set; }
         public string WorkTime { get; set; }
         public bool CurrentlyClosed { get; set; }
+
+        public static void LoadPrices()
+        {
+            KorisnikStanjeDto k = Api.GetMealPrices();
+            MSettings.PriceBreakfast = k.BrojDorucka;
+            MSettings.PriceLunch = k.BrojRuckova;
+            MSettings.PriceDinner = k.BrojVecera;
+        }
     }
 }

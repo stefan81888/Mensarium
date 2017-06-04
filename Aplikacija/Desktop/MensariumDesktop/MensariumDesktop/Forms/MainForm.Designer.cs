@@ -79,6 +79,28 @@ namespace MensariumDesktop
             this.HOME_picCurrentUser = new System.Windows.Forms.PictureBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabUplata = new System.Windows.Forms.TabPage();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.UPLATA_lblTotalPrice = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.UPLATA_lblBreakfastCount = new System.Windows.Forms.Label();
+            this.UPLATA_lblLunchCount = new System.Windows.Forms.Label();
+            this.UPLATA_lblDinnerCount = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.UPLATA_txtBreakfastTotal = new System.Windows.Forms.TextBox();
+            this.UPLATA_txtLunchTotal = new System.Windows.Forms.TextBox();
+            this.UPLATA_txtDinnerTotal = new System.Windows.Forms.TextBox();
+            this.UPLATA_lblBreakfastPrice = new System.Windows.Forms.Label();
+            this.UPLATA_lblLunchPrice = new System.Windows.Forms.Label();
+            this.UPLATA_lblDinnerPrice = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.UPLATA_btnLoadCard = new System.Windows.Forms.Button();
@@ -87,8 +109,8 @@ namespace MensariumDesktop
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtDinner = new System.Windows.Forms.TextBox();
-            this.txtLunch = new System.Windows.Forms.TextBox();
+            this.UPLATA_txtDinner = new System.Windows.Forms.TextBox();
+            this.UPLATA_txtLunch = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -98,7 +120,7 @@ namespace MensariumDesktop
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.txtBreakfast = new System.Windows.Forms.TextBox();
+            this.UPLATA_txtBreakfast = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -197,6 +219,8 @@ namespace MensariumDesktop
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HOME_picCurrentUser)).BeginInit();
             this.tabUplata.SuspendLayout();
+            this.groupBox14.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -247,7 +271,7 @@ namespace MensariumDesktop
             this.statbarDebug,
             this.toolStripStatusLabel1,
             this.STATUS_statbarOPStatus});
-            this.statusStrip.Location = new System.Drawing.Point(0, 665);
+            this.statusStrip.Location = new System.Drawing.Point(0, 659);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1350, 27);
             this.statusStrip.TabIndex = 0;
@@ -321,6 +345,7 @@ namespace MensariumDesktop
             this.statbarDebug.Name = "statbarDebug";
             this.statbarDebug.Size = new System.Drawing.Size(89, 25);
             this.statbarDebug.Text = "DEBUG";
+            this.statbarDebug.Visible = false;
             // 
             // showSessionToolStripMenuItem
             // 
@@ -409,7 +434,7 @@ namespace MensariumDesktop
             this.tabControls.Name = "tabControls";
             this.tabControls.Padding = new System.Drawing.Point(10, 3);
             this.tabControls.SelectedIndex = 0;
-            this.tabControls.Size = new System.Drawing.Size(1350, 591);
+            this.tabControls.Size = new System.Drawing.Size(1350, 585);
             this.tabControls.TabIndex = 1;
             this.tabControls.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControls_Selecting);
             // 
@@ -425,7 +450,7 @@ namespace MensariumDesktop
             this.tabHome.Location = new System.Drawing.Point(4, 44);
             this.tabHome.Name = "tabHome";
             this.tabHome.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHome.Size = new System.Drawing.Size(1342, 543);
+            this.tabHome.Size = new System.Drawing.Size(1342, 537);
             this.tabHome.TabIndex = 0;
             this.tabHome.Text = "Početna";
             // 
@@ -436,7 +461,7 @@ namespace MensariumDesktop
             this.groupBox5.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold);
             this.groupBox5.Location = new System.Drawing.Point(3, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(234, 537);
+            this.groupBox5.Size = new System.Drawing.Size(234, 531);
             this.groupBox5.TabIndex = 14;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Brze opcije";
@@ -452,7 +477,7 @@ namespace MensariumDesktop
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 35);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(228, 499);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(228, 493);
             this.flowLayoutPanel1.TabIndex = 11;
             // 
             // HOME_btnProfile
@@ -477,6 +502,7 @@ namespace MensariumDesktop
             this.HOME_btnProfile.Text = " Profil";
             this.HOME_btnProfile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.HOME_btnProfile.UseVisualStyleBackColor = false;
+            this.HOME_btnProfile.Click += new System.EventHandler(this.HOME_btnProfile_Click);
             // 
             // imageListMainForm
             // 
@@ -807,10 +833,12 @@ namespace MensariumDesktop
             this.checkBox1.TabIndex = 9;
             this.checkBox1.Text = "checkBox1";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Visible = false;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // tabUplata
             // 
+            this.tabUplata.Controls.Add(this.groupBox14);
             this.tabUplata.Controls.Add(this.groupBox6);
             this.tabUplata.Controls.Add(this.groupBox3);
             this.tabUplata.Controls.Add(this.groupBox1);
@@ -818,10 +846,313 @@ namespace MensariumDesktop
             this.tabUplata.Location = new System.Drawing.Point(4, 44);
             this.tabUplata.Name = "tabUplata";
             this.tabUplata.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUplata.Size = new System.Drawing.Size(1342, 543);
+            this.tabUplata.Size = new System.Drawing.Size(1342, 537);
             this.tabUplata.TabIndex = 1;
             this.tabUplata.Text = "Uplata obroka";
             this.tabUplata.UseVisualStyleBackColor = true;
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox14.Controls.Add(this.UPLATA_lblTotalPrice);
+            this.groupBox14.Controls.Add(this.label43);
+            this.groupBox14.Controls.Add(this.tableLayoutPanel7);
+            this.groupBox14.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.groupBox14.Location = new System.Drawing.Point(243, 376);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(1091, 158);
+            this.groupBox14.TabIndex = 22;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Za naplatu";
+            // 
+            // UPLATA_lblTotalPrice
+            // 
+            this.UPLATA_lblTotalPrice.AutoSize = true;
+            this.UPLATA_lblTotalPrice.Font = new System.Drawing.Font("Segoe UI Semibold", 22F);
+            this.UPLATA_lblTotalPrice.Location = new System.Drawing.Point(567, 71);
+            this.UPLATA_lblTotalPrice.Name = "UPLATA_lblTotalPrice";
+            this.UPLATA_lblTotalPrice.Size = new System.Drawing.Size(87, 41);
+            this.UPLATA_lblTotalPrice.TabIndex = 9;
+            this.UPLATA_lblTotalPrice.Text = "0 din";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("Segoe UI Semibold", 22F);
+            this.label43.Location = new System.Drawing.Point(434, 71);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(134, 41);
+            this.label43.TabIndex = 8;
+            this.label43.Text = "Ukupno:";
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel7.ColumnCount = 7;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 71F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.Controls.Add(this.label28, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.label29, 0, 1);
+            this.tableLayoutPanel7.Controls.Add(this.label30, 0, 2);
+            this.tableLayoutPanel7.Controls.Add(this.UPLATA_lblBreakfastCount, 1, 0);
+            this.tableLayoutPanel7.Controls.Add(this.UPLATA_lblLunchCount, 1, 1);
+            this.tableLayoutPanel7.Controls.Add(this.UPLATA_lblDinnerCount, 1, 2);
+            this.tableLayoutPanel7.Controls.Add(this.label34, 4, 0);
+            this.tableLayoutPanel7.Controls.Add(this.label35, 4, 1);
+            this.tableLayoutPanel7.Controls.Add(this.label36, 4, 2);
+            this.tableLayoutPanel7.Controls.Add(this.label37, 2, 0);
+            this.tableLayoutPanel7.Controls.Add(this.label38, 2, 1);
+            this.tableLayoutPanel7.Controls.Add(this.label39, 2, 2);
+            this.tableLayoutPanel7.Controls.Add(this.UPLATA_txtBreakfastTotal, 5, 0);
+            this.tableLayoutPanel7.Controls.Add(this.UPLATA_txtLunchTotal, 5, 1);
+            this.tableLayoutPanel7.Controls.Add(this.UPLATA_txtDinnerTotal, 5, 2);
+            this.tableLayoutPanel7.Controls.Add(this.UPLATA_lblBreakfastPrice, 3, 0);
+            this.tableLayoutPanel7.Controls.Add(this.UPLATA_lblLunchPrice, 3, 1);
+            this.tableLayoutPanel7.Controls.Add(this.UPLATA_lblDinnerPrice, 3, 2);
+            this.tableLayoutPanel7.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 33);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 4;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(425, 117);
+            this.tableLayoutPanel7.TabIndex = 7;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label28.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.label28.Location = new System.Drawing.Point(3, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(94, 35);
+            this.label28.TabIndex = 0;
+            this.label28.Text = "Doručak";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label29.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.label29.Location = new System.Drawing.Point(3, 35);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(94, 35);
+            this.label29.TabIndex = 6;
+            this.label29.Text = "Ručak";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label30.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.label30.Location = new System.Drawing.Point(3, 70);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(94, 35);
+            this.label30.TabIndex = 7;
+            this.label30.Text = "Večera";
+            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // UPLATA_lblBreakfastCount
+            // 
+            this.UPLATA_lblBreakfastCount.AutoSize = true;
+            this.UPLATA_lblBreakfastCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_lblBreakfastCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.UPLATA_lblBreakfastCount.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UPLATA_lblBreakfastCount.Location = new System.Drawing.Point(103, 0);
+            this.UPLATA_lblBreakfastCount.Name = "UPLATA_lblBreakfastCount";
+            this.UPLATA_lblBreakfastCount.Size = new System.Drawing.Size(44, 35);
+            this.UPLATA_lblBreakfastCount.TabIndex = 5;
+            this.UPLATA_lblBreakfastCount.Text = "0";
+            this.UPLATA_lblBreakfastCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // UPLATA_lblLunchCount
+            // 
+            this.UPLATA_lblLunchCount.AutoSize = true;
+            this.UPLATA_lblLunchCount.BackColor = System.Drawing.Color.Transparent;
+            this.UPLATA_lblLunchCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_lblLunchCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.UPLATA_lblLunchCount.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UPLATA_lblLunchCount.Location = new System.Drawing.Point(103, 35);
+            this.UPLATA_lblLunchCount.Name = "UPLATA_lblLunchCount";
+            this.UPLATA_lblLunchCount.Size = new System.Drawing.Size(44, 35);
+            this.UPLATA_lblLunchCount.TabIndex = 8;
+            this.UPLATA_lblLunchCount.Text = "0";
+            this.UPLATA_lblLunchCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // UPLATA_lblDinnerCount
+            // 
+            this.UPLATA_lblDinnerCount.AutoSize = true;
+            this.UPLATA_lblDinnerCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_lblDinnerCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.UPLATA_lblDinnerCount.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UPLATA_lblDinnerCount.Location = new System.Drawing.Point(103, 70);
+            this.UPLATA_lblDinnerCount.Name = "UPLATA_lblDinnerCount";
+            this.UPLATA_lblDinnerCount.Size = new System.Drawing.Size(44, 35);
+            this.UPLATA_lblDinnerCount.TabIndex = 9;
+            this.UPLATA_lblDinnerCount.Text = "0";
+            this.UPLATA_lblDinnerCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label34.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.label34.Location = new System.Drawing.Point(251, 0);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(59, 35);
+            this.label34.TabIndex = 16;
+            this.label34.Text = "din =";
+            this.label34.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label35.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.label35.Location = new System.Drawing.Point(251, 35);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(59, 35);
+            this.label35.TabIndex = 17;
+            this.label35.Text = "din =";
+            this.label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label36.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.label36.Location = new System.Drawing.Point(251, 70);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(59, 35);
+            this.label36.TabIndex = 18;
+            this.label36.Text = "din =";
+            this.label36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label37.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.label37.Location = new System.Drawing.Point(153, 0);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(21, 35);
+            this.label37.TabIndex = 19;
+            this.label37.Text = "x";
+            this.label37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label38.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.label38.Location = new System.Drawing.Point(153, 35);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(21, 35);
+            this.label38.TabIndex = 20;
+            this.label38.Text = "x";
+            this.label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label39.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.label39.Location = new System.Drawing.Point(153, 70);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(21, 35);
+            this.label39.TabIndex = 21;
+            this.label39.Text = "x";
+            this.label39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // UPLATA_txtBreakfastTotal
+            // 
+            this.UPLATA_txtBreakfastTotal.BackColor = System.Drawing.Color.White;
+            this.UPLATA_txtBreakfastTotal.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UPLATA_txtBreakfastTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_txtBreakfastTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.UPLATA_txtBreakfastTotal.Location = new System.Drawing.Point(320, 3);
+            this.UPLATA_txtBreakfastTotal.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.UPLATA_txtBreakfastTotal.Name = "UPLATA_txtBreakfastTotal";
+            this.UPLATA_txtBreakfastTotal.ReadOnly = true;
+            this.UPLATA_txtBreakfastTotal.Size = new System.Drawing.Size(88, 26);
+            this.UPLATA_txtBreakfastTotal.TabIndex = 13;
+            this.UPLATA_txtBreakfastTotal.Text = "0";
+            // 
+            // UPLATA_txtLunchTotal
+            // 
+            this.UPLATA_txtLunchTotal.BackColor = System.Drawing.Color.White;
+            this.UPLATA_txtLunchTotal.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UPLATA_txtLunchTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_txtLunchTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.UPLATA_txtLunchTotal.Location = new System.Drawing.Point(320, 38);
+            this.UPLATA_txtLunchTotal.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.UPLATA_txtLunchTotal.Name = "UPLATA_txtLunchTotal";
+            this.UPLATA_txtLunchTotal.ReadOnly = true;
+            this.UPLATA_txtLunchTotal.Size = new System.Drawing.Size(88, 26);
+            this.UPLATA_txtLunchTotal.TabIndex = 14;
+            this.UPLATA_txtLunchTotal.Text = "0";
+            this.UPLATA_txtLunchTotal.TextChanged += new System.EventHandler(this.UPLATA_txtLunchTotal_TextChanged);
+            // 
+            // UPLATA_txtDinnerTotal
+            // 
+            this.UPLATA_txtDinnerTotal.BackColor = System.Drawing.Color.White;
+            this.UPLATA_txtDinnerTotal.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UPLATA_txtDinnerTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_txtDinnerTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.UPLATA_txtDinnerTotal.Location = new System.Drawing.Point(320, 73);
+            this.UPLATA_txtDinnerTotal.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.UPLATA_txtDinnerTotal.Name = "UPLATA_txtDinnerTotal";
+            this.UPLATA_txtDinnerTotal.ReadOnly = true;
+            this.UPLATA_txtDinnerTotal.Size = new System.Drawing.Size(88, 26);
+            this.UPLATA_txtDinnerTotal.TabIndex = 15;
+            this.UPLATA_txtDinnerTotal.Text = "0";
+            // 
+            // UPLATA_lblBreakfastPrice
+            // 
+            this.UPLATA_lblBreakfastPrice.AutoSize = true;
+            this.UPLATA_lblBreakfastPrice.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_lblBreakfastPrice.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.UPLATA_lblBreakfastPrice.Location = new System.Drawing.Point(180, 0);
+            this.UPLATA_lblBreakfastPrice.Name = "UPLATA_lblBreakfastPrice";
+            this.UPLATA_lblBreakfastPrice.Size = new System.Drawing.Size(65, 35);
+            this.UPLATA_lblBreakfastPrice.TabIndex = 22;
+            this.UPLATA_lblBreakfastPrice.Text = "/";
+            this.UPLATA_lblBreakfastPrice.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // UPLATA_lblLunchPrice
+            // 
+            this.UPLATA_lblLunchPrice.AutoSize = true;
+            this.UPLATA_lblLunchPrice.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_lblLunchPrice.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.UPLATA_lblLunchPrice.Location = new System.Drawing.Point(180, 35);
+            this.UPLATA_lblLunchPrice.Name = "UPLATA_lblLunchPrice";
+            this.UPLATA_lblLunchPrice.Size = new System.Drawing.Size(65, 35);
+            this.UPLATA_lblLunchPrice.TabIndex = 23;
+            this.UPLATA_lblLunchPrice.Text = "/";
+            this.UPLATA_lblLunchPrice.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // UPLATA_lblDinnerPrice
+            // 
+            this.UPLATA_lblDinnerPrice.AutoSize = true;
+            this.UPLATA_lblDinnerPrice.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_lblDinnerPrice.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
+            this.UPLATA_lblDinnerPrice.Location = new System.Drawing.Point(180, 70);
+            this.UPLATA_lblDinnerPrice.Name = "UPLATA_lblDinnerPrice";
+            this.UPLATA_lblDinnerPrice.Size = new System.Drawing.Size(65, 35);
+            this.UPLATA_lblDinnerPrice.TabIndex = 24;
+            this.UPLATA_lblDinnerPrice.Text = "/";
+            this.UPLATA_lblDinnerPrice.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox6
             // 
@@ -830,7 +1161,7 @@ namespace MensariumDesktop
             this.groupBox6.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold);
             this.groupBox6.Location = new System.Drawing.Point(3, 3);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(234, 537);
+            this.groupBox6.Size = new System.Drawing.Size(234, 531);
             this.groupBox6.TabIndex = 21;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Kontrole";
@@ -845,7 +1176,7 @@ namespace MensariumDesktop
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 35);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(228, 499);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(228, 493);
             this.flowLayoutPanel2.TabIndex = 11;
             // 
             // UPLATA_btnLoadCard
@@ -890,7 +1221,7 @@ namespace MensariumDesktop
             this.btnExecutePay.Text = " Izvrši uplatu";
             this.btnExecutePay.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExecutePay.UseVisualStyleBackColor = false;
-            this.btnExecutePay.Click += new System.EventHandler(this.btnExecutePay_Click);
+            this.btnExecutePay.Click += new System.EventHandler(this.UPLATA_btnExecutePay_Click);
             // 
             // btnReclamation
             // 
@@ -912,6 +1243,7 @@ namespace MensariumDesktop
             this.btnReclamation.Text = " Reklamacije";
             this.btnReclamation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnReclamation.UseVisualStyleBackColor = false;
+            this.btnReclamation.Click += new System.EventHandler(this.btnReclamation_Click);
             // 
             // groupBox3
             // 
@@ -947,8 +1279,8 @@ namespace MensariumDesktop
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.txtDinner, 3, 2);
-            this.tableLayoutPanel4.Controls.Add(this.txtLunch, 3, 1);
+            this.tableLayoutPanel4.Controls.Add(this.UPLATA_txtDinner, 3, 2);
+            this.tableLayoutPanel4.Controls.Add(this.UPLATA_txtLunch, 3, 1);
             this.tableLayoutPanel4.Controls.Add(this.label17, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.label19, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label20, 0, 2);
@@ -958,7 +1290,7 @@ namespace MensariumDesktop
             this.tableLayoutPanel4.Controls.Add(this.pictureBox3, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.pictureBox4, 2, 1);
             this.tableLayoutPanel4.Controls.Add(this.pictureBox5, 2, 2);
-            this.tableLayoutPanel4.Controls.Add(this.txtBreakfast, 3, 0);
+            this.tableLayoutPanel4.Controls.Add(this.UPLATA_txtBreakfast, 3, 0);
             this.tableLayoutPanel4.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -970,27 +1302,29 @@ namespace MensariumDesktop
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1079, 134);
             this.tableLayoutPanel4.TabIndex = 6;
             // 
-            // txtDinner
+            // UPLATA_txtDinner
             // 
-            this.txtDinner.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtDinner.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtDinner.Location = new System.Drawing.Point(182, 73);
-            this.txtDinner.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
-            this.txtDinner.Name = "txtDinner";
-            this.txtDinner.Size = new System.Drawing.Size(220, 29);
-            this.txtDinner.TabIndex = 15;
-            this.txtDinner.Text = "0";
+            this.UPLATA_txtDinner.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_txtDinner.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.UPLATA_txtDinner.Location = new System.Drawing.Point(182, 73);
+            this.UPLATA_txtDinner.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.UPLATA_txtDinner.Name = "UPLATA_txtDinner";
+            this.UPLATA_txtDinner.Size = new System.Drawing.Size(220, 29);
+            this.UPLATA_txtDinner.TabIndex = 15;
+            this.UPLATA_txtDinner.Text = "0";
+            this.UPLATA_txtDinner.TextChanged += new System.EventHandler(this.UPLATA_txtDinner_TextChanged);
             // 
-            // txtLunch
+            // UPLATA_txtLunch
             // 
-            this.txtLunch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtLunch.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtLunch.Location = new System.Drawing.Point(182, 38);
-            this.txtLunch.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
-            this.txtLunch.Name = "txtLunch";
-            this.txtLunch.Size = new System.Drawing.Size(220, 29);
-            this.txtLunch.TabIndex = 14;
-            this.txtLunch.Text = "0";
+            this.UPLATA_txtLunch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_txtLunch.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.UPLATA_txtLunch.Location = new System.Drawing.Point(182, 38);
+            this.UPLATA_txtLunch.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.UPLATA_txtLunch.Name = "UPLATA_txtLunch";
+            this.UPLATA_txtLunch.Size = new System.Drawing.Size(220, 29);
+            this.UPLATA_txtLunch.TabIndex = 14;
+            this.UPLATA_txtLunch.Text = "0";
+            this.UPLATA_txtLunch.TextChanged += new System.EventHandler(this.UPLATA_txtLunch_TextChanged);
             // 
             // label17
             // 
@@ -1038,12 +1372,13 @@ namespace MensariumDesktop
             this.UPLATA_lblBreakfast.Name = "UPLATA_lblBreakfast";
             this.UPLATA_lblBreakfast.Size = new System.Drawing.Size(44, 35);
             this.UPLATA_lblBreakfast.TabIndex = 5;
-            this.UPLATA_lblBreakfast.Text = "7";
+            this.UPLATA_lblBreakfast.Text = "/";
             this.UPLATA_lblBreakfast.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UPLATA_lblLunch
             // 
             this.UPLATA_lblLunch.AutoSize = true;
+            this.UPLATA_lblLunch.BackColor = System.Drawing.Color.Transparent;
             this.UPLATA_lblLunch.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UPLATA_lblLunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
             this.UPLATA_lblLunch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1051,7 +1386,7 @@ namespace MensariumDesktop
             this.UPLATA_lblLunch.Name = "UPLATA_lblLunch";
             this.UPLATA_lblLunch.Size = new System.Drawing.Size(44, 35);
             this.UPLATA_lblLunch.TabIndex = 8;
-            this.UPLATA_lblLunch.Text = "3";
+            this.UPLATA_lblLunch.Text = "/";
             this.UPLATA_lblLunch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UPLATA_lblDinner
@@ -1064,7 +1399,7 @@ namespace MensariumDesktop
             this.UPLATA_lblDinner.Name = "UPLATA_lblDinner";
             this.UPLATA_lblDinner.Size = new System.Drawing.Size(44, 35);
             this.UPLATA_lblDinner.TabIndex = 9;
-            this.UPLATA_lblDinner.Text = "12";
+            this.UPLATA_lblDinner.Text = "/";
             this.UPLATA_lblDinner.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox3
@@ -1100,16 +1435,17 @@ namespace MensariumDesktop
             this.pictureBox5.TabIndex = 12;
             this.pictureBox5.TabStop = false;
             // 
-            // txtBreakfast
+            // UPLATA_txtBreakfast
             // 
-            this.txtBreakfast.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtBreakfast.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBreakfast.Location = new System.Drawing.Point(182, 3);
-            this.txtBreakfast.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
-            this.txtBreakfast.Name = "txtBreakfast";
-            this.txtBreakfast.Size = new System.Drawing.Size(220, 29);
-            this.txtBreakfast.TabIndex = 13;
-            this.txtBreakfast.Text = "0";
+            this.UPLATA_txtBreakfast.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_txtBreakfast.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UPLATA_txtBreakfast.Location = new System.Drawing.Point(182, 3);
+            this.UPLATA_txtBreakfast.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.UPLATA_txtBreakfast.Name = "UPLATA_txtBreakfast";
+            this.UPLATA_txtBreakfast.Size = new System.Drawing.Size(220, 29);
+            this.UPLATA_txtBreakfast.TabIndex = 13;
+            this.UPLATA_txtBreakfast.Text = "0";
+            this.UPLATA_txtBreakfast.TextChanged += new System.EventHandler(this.UPLATA_txtBreakfast_TextChanged);
             // 
             // groupBox1
             // 
@@ -1232,7 +1568,7 @@ namespace MensariumDesktop
             this.tabNaplata.Location = new System.Drawing.Point(4, 44);
             this.tabNaplata.Name = "tabNaplata";
             this.tabNaplata.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNaplata.Size = new System.Drawing.Size(1342, 543);
+            this.tabNaplata.Size = new System.Drawing.Size(1342, 537);
             this.tabNaplata.TabIndex = 2;
             this.tabNaplata.Text = "Naplata obroka";
             this.tabNaplata.UseVisualStyleBackColor = true;
@@ -1406,7 +1742,7 @@ namespace MensariumDesktop
             this.groupBox8.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold);
             this.groupBox8.Location = new System.Drawing.Point(3, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(234, 537);
+            this.groupBox8.Size = new System.Drawing.Size(234, 531);
             this.groupBox8.TabIndex = 22;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Kontrole";
@@ -1424,7 +1760,7 @@ namespace MensariumDesktop
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 35);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(228, 499);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(228, 493);
             this.flowLayoutPanel3.TabIndex = 11;
             // 
             // button1
@@ -1665,7 +2001,7 @@ namespace MensariumDesktop
             this.tabUsers.Location = new System.Drawing.Point(4, 44);
             this.tabUsers.Name = "tabUsers";
             this.tabUsers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUsers.Size = new System.Drawing.Size(1342, 543);
+            this.tabUsers.Size = new System.Drawing.Size(1342, 537);
             this.tabUsers.TabIndex = 3;
             this.tabUsers.Text = "Korisnici";
             this.tabUsers.UseVisualStyleBackColor = true;
@@ -1852,7 +2188,7 @@ namespace MensariumDesktop
             this.groupBox10.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold);
             this.groupBox10.Location = new System.Drawing.Point(3, 3);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(234, 537);
+            this.groupBox10.Size = new System.Drawing.Size(234, 531);
             this.groupBox10.TabIndex = 23;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Kontrole";
@@ -1869,7 +2205,7 @@ namespace MensariumDesktop
             this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 35);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
             this.flowLayoutPanel4.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(228, 499);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(228, 493);
             this.flowLayoutPanel4.TabIndex = 11;
             // 
             // button9
@@ -1990,7 +2326,7 @@ namespace MensariumDesktop
             this.tabAdmin.Location = new System.Drawing.Point(4, 44);
             this.tabAdmin.Name = "tabAdmin";
             this.tabAdmin.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAdmin.Size = new System.Drawing.Size(1342, 543);
+            this.tabAdmin.Size = new System.Drawing.Size(1342, 537);
             this.tabAdmin.TabIndex = 4;
             this.tabAdmin.Text = "Admin Panel";
             this.tabAdmin.UseVisualStyleBackColor = true;
@@ -2035,7 +2371,7 @@ namespace MensariumDesktop
             this.groupBox12.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold);
             this.groupBox12.Location = new System.Drawing.Point(3, 3);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(234, 537);
+            this.groupBox12.Size = new System.Drawing.Size(234, 531);
             this.groupBox12.TabIndex = 22;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Kontrole";
@@ -2055,7 +2391,7 @@ namespace MensariumDesktop
             this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 35);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
             this.flowLayoutPanel5.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            this.flowLayoutPanel5.Size = new System.Drawing.Size(228, 499);
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(228, 493);
             this.flowLayoutPanel5.TabIndex = 11;
             // 
             // label23
@@ -2203,7 +2539,7 @@ namespace MensariumDesktop
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1350, 692);
+            this.panel1.Size = new System.Drawing.Size(1350, 686);
             this.panel1.TabIndex = 5;
             // 
             // label4
@@ -2247,14 +2583,14 @@ namespace MensariumDesktop
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(1350, 692);
+            this.ClientSize = new System.Drawing.Size(1350, 686);
             this.Controls.Add(this.tabControls);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.MinimumSize = new System.Drawing.Size(800, 725);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mensarium";
@@ -2278,6 +2614,10 @@ namespace MensariumDesktop
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HOME_picCurrentUser)).EndInit();
             this.tabUplata.ResumeLayout(false);
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
@@ -2394,11 +2734,11 @@ namespace MensariumDesktop
         private System.Windows.Forms.Label UPLATA_lblLunch;
         private System.Windows.Forms.Label UPLATA_lblDinner;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.TextBox txtDinner;
-        private System.Windows.Forms.TextBox txtLunch;
+        private System.Windows.Forms.TextBox UPLATA_txtDinner;
+        private System.Windows.Forms.TextBox UPLATA_txtLunch;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.TextBox txtBreakfast;
+        private System.Windows.Forms.TextBox UPLATA_txtBreakfast;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -2483,6 +2823,28 @@ namespace MensariumDesktop
         private System.Windows.Forms.DataGridViewTextBoxColumn Index;
         private System.ComponentModel.BackgroundWorker bgWorkerLoading;
         private System.Windows.Forms.ImageList imageListOPStatus;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label UPLATA_lblBreakfastCount;
+        private System.Windows.Forms.Label UPLATA_lblLunchCount;
+        private System.Windows.Forms.Label UPLATA_lblDinnerCount;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.TextBox UPLATA_txtBreakfastTotal;
+        private System.Windows.Forms.TextBox UPLATA_txtLunchTotal;
+        private System.Windows.Forms.TextBox UPLATA_txtDinnerTotal;
+        private System.Windows.Forms.Label UPLATA_lblBreakfastPrice;
+        private System.Windows.Forms.Label UPLATA_lblLunchPrice;
+        private System.Windows.Forms.Label UPLATA_lblDinnerPrice;
+        private System.Windows.Forms.Label UPLATA_lblTotalPrice;
+        private System.Windows.Forms.Label label43;
     }
 }
 

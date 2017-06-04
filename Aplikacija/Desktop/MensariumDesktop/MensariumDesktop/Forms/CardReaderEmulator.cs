@@ -29,5 +29,15 @@ namespace MensariumDesktop.Forms
             this.DialogResult = DialogResult.OK;
             Close();
         }
+
+
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1_Click(this, new EventArgs());
+            }
+        }
     }
 }

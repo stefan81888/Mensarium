@@ -34,7 +34,10 @@ namespace MensariumDesktop
             HOME_lblCurrentUserLName.Text = MSettings.CurrentSession.LoggedUser.LastName;
             HOME_lblCurrentUserAccType.Text = MSettings.CurrentSession.LoggedUser.AccountType.ToString();
             HOME_picCurrentUser.Image = MSettings.CurrentSession.LoggedUser.ProfilePicture;
-            
+            UPLATA_lblBreakfastPrice.Text = MSettings.PriceBreakfast.ToString();
+            UPLATA_lblLunchPrice.Text = MSettings.PriceLunch.ToString();
+            UPLATA_lblDinnerPrice.Text = MSettings.PriceDinner.ToString();
+
             //TO-DO: CURRENT MENSA
             HOME_lblCurrentLocation.Text = MSettings.CurrentMensa.Name;
             HOME_lblCurrentLocationAddress.Text = MSettings.CurrentMensa.Location;
@@ -106,8 +109,6 @@ namespace MensariumDesktop
         }
         private void showReclamationFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReclamationForm reclamationForm = new ReclamationForm();
-            reclamationForm.ShowDialog();
         }
         private void showMensaChangerFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -129,7 +130,6 @@ namespace MensariumDesktop
         }
         private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             //try { pcbCurrentUser.Image = Api.GetUserImage(2); } catch (Exception exception) { MessageBox.Show(exception.Message); }
             //try { Api.FollowUser(9); } catch (Exception exception) { MessageBox.Show(exception.Message); } //forbidden
             //try { Api.AndroidUserRegistration(new ClientZaRegistracijuDto()); } catch (Exception exception) { MessageBox.Show(exception.Message); } 
@@ -160,20 +160,17 @@ namespace MensariumDesktop
         {
             STATUS_statbarSettings.PerformClick();
         }
+        private void HOME_btnProfile_Click(object sender, EventArgs e)
+        {
+            STATUS_statbarUserProfile.PerformClick();
+        }
         #endregion
 
         #region UPLATA_TAB
-        private void UPLATA_btnLoadCard_Click(object sender, EventArgs e)
+        private void UPLATA_RefreshCardInfo(bool reload = false)
         {
-            CardReaderEmulator creader = new CardReaderEmulator();
-            creader.ShowDialog();
-            OpStatusWorking();
-            MainController.LoadUserCard(creader.CardData);
-            OpStatusIdle();
-
             if (MainController.LoadedCardUser == null)
-                return;   
-            
+                return;
 
             UPLATA_lblCardUserName.Text = MainController.LoadedCardUser.FullName;
             UPLATA_lblCardUserValidUntil.Text = MainController.LoadedCardUser.ValidUntil.ToShortDateString();
@@ -182,10 +179,99 @@ namespace MensariumDesktop
             UPLATA_lblCardUserIndex.Text = MainController.LoadedCardUser.Index;
             UPLATA_picLoadedUser.Image = MainController.LoadedCardUser.ProfilePicture;
 
+            string b = UPLATA_lblBreakfast.Text;
+            string l = UPLATA_lblLunch.Text;
+            string d = UPLATA_lblDinner.Text;
+
             UPLATA_lblBreakfast.Text = MainController.LoadedCardUser.BreakfastCount.ToString();
             UPLATA_lblLunch.Text = MainController.LoadedCardUser.LunchCount.ToString();
             UPLATA_lblDinner.Text = MainController.LoadedCardUser.DinnerCount.ToString();
 
+            UPLATA_lblBreakfast.BackColor = Color.Transparent;
+            UPLATA_lblLunch.BackColor = Color.Transparent;
+            UPLATA_lblDinner.BackColor = Color.Transparent;
+            if (reload)
+            {
+                if (b != UPLATA_lblBreakfast.Text) UPLATA_lblBreakfast.BackColor = Color.LightGreen;
+                if (l != UPLATA_lblLunch.Text) UPLATA_lblLunch.BackColor = Color.LightGreen;
+                if (d != UPLATA_lblDinner.Text) UPLATA_lblDinner.BackColor = Color.LightGreen;
+            }
+        }
+        private void UPLATA_btnLoadCard_Click(object sender, EventArgs e)
+        {
+            CardReaderEmulator creader = new CardReaderEmulator();
+            creader.ShowDialog();
+            OpStatusWorking();
+            MainController.LoadUserCard(creader.CardData);
+            OpStatusIdle();
+
+            UPLATA_RefreshCardInfo();
+        }
+        private void UPLATA_picLoadedUser_Paint(object sender, PaintEventArgs e)
+        {
+            MUtility.RoundPictureBox(sender as PictureBox);
+        }
+        private void UPLATA_btnExecutePay_Click(object sender, EventArgs e)
+        {
+            if (MainController.LoadedCardUser == null)
+            {
+                MUtility.ShowWarrning("Prvo ucitati korisnika");
+                return;
+            }
+            OpStatusWorking();
+            int b, l, d;
+            bool succ = true;
+            succ &= int.TryParse(UPLATA_txtBreakfast.Text, out b);
+            succ &= int.TryParse(UPLATA_txtLunch.Text, out l);
+            succ &= int.TryParse(UPLATA_txtDinner.Text, out d);
+            if (!succ)
+            {
+                MUtility.ShowError("Nisu svi uneti podaci validni");
+                return;
+            }
+            MainController.AddUserMeals(MainController.LoadedCardUser, b, l, d);
+            MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
+            UPLATA_RefreshCardInfo(true);
+            OpStatusIdle();
+
+            UPLATA_txtBreakfast.Text = "0";
+            UPLATA_txtLunch.Text = "0";
+            UPLATA_txtDinner.Text = "0";
+        }
+        private void UPLATA_txtBreakfast_TextChanged(object sender, EventArgs e)
+        {
+            UPLATA_RefreshNCalucatePrice();
+        }
+        private void UPLATA_txtLunch_TextChanged(object sender, EventArgs e)
+        {
+            UPLATA_RefreshNCalucatePrice();
+        }
+        private void UPLATA_txtDinner_TextChanged(object sender, EventArgs e)
+        {
+            UPLATA_RefreshNCalucatePrice();
+        }
+
+        private void UPLATA_RefreshNCalucatePrice()
+        {
+            UPLATA_lblBreakfastCount.Text = UPLATA_txtBreakfast.Text;
+            UPLATA_lblLunchCount.Text = UPLATA_txtLunch.Text;
+            UPLATA_lblDinnerCount.Text = UPLATA_txtDinner.Text;
+            UPLATA_CalucatePrice();
+        }
+        private void UPLATA_CalucatePrice()
+        {
+            int Total = 0, b,l,d;
+
+            int.TryParse(UPLATA_lblBreakfastCount.Text, out b);
+            int.TryParse(UPLATA_lblLunchCount.Text, out l);
+            int.TryParse(UPLATA_lblDinnerCount.Text, out d);
+
+            UPLATA_txtBreakfastTotal.Text = (MSettings.PriceBreakfast * b).ToString();
+            UPLATA_txtLunchTotal.Text = (MSettings.PriceLunch * l).ToString();
+            UPLATA_txtDinnerTotal.Text = (MSettings.PriceDinner * d).ToString();
+
+            Total = MSettings.PriceBreakfast * b + MSettings.PriceLunch * l + MSettings.PriceDinner * d;
+            UPLATA_lblTotalPrice.Text = Total.ToString() + " din";
         }
         #endregion
 
@@ -240,23 +326,31 @@ namespace MensariumDesktop
                 tabControls.TabPages.Insert(3, tabUsers);
             }  
         }
-        #endregion
         private void HOME_picCurrentUser_Paint(object sender, PaintEventArgs e)
         {
             MUtility.RoundPictureBox(sender as PictureBox);
         }
 
-        private void UPLATA_picLoadedUser_Paint(object sender, PaintEventArgs e)
+
+        #endregion
+
+        private void UPLATA_txtLunchTotal_TextChanged(object sender, EventArgs e)
         {
-            MUtility.RoundPictureBox(sender as PictureBox);
+
         }
 
-        private void btnExecutePay_Click(object sender, EventArgs e)
+        private void btnReclamation_Click(object sender, EventArgs e)
         {
-            MainController.AddUserMeals(MainController.LoadedCardUser,
-                int.Parse(txtBreakfast.Text),
-                int.Parse(txtLunch.Text),
-                int.Parse(txtDinner.Text));
+            Student s = MainController.LoadedCardUser;
+            if (s == null)
+            {
+                MUtility.ShowWarrning("Prvo ucitati korisnika");
+                return;
+            }
+
+            ReclamationForm rf = new ReclamationForm(MainController.LoadedCardUser);
+            rf.ShowDialog();
+
         }
     }
 }

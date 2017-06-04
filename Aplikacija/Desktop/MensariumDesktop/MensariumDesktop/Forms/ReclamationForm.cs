@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MensariumDesktop.Model.Components;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,14 +13,19 @@ namespace MensariumDesktop.Forms
 {
     public partial class ReclamationForm : Form
     {
-        public ReclamationForm()
+        private Student student;
+
+        public ReclamationForm(Student s)
         {
             InitializeComponent();
+            student = s;
         }
 
         private void ReclamationForm_Load(object sender, EventArgs e)
         {
-            cmbFilter.SelectedIndex = 0;
+            txtUserID.Text = student.UserID.ToString();
+            txtUserFName.Text = student.FirstName;
+            txtUserLName.Text = student.LastName;
         }
 
         private void btnSave_Click(object sender, EventArgs e)

@@ -12,6 +12,9 @@ namespace MensariumDesktop.Model.Components
         public static Server Server { get; set; }
         public static Mensa CurrentMensa { get; set; }
 
+        public static int PriceBreakfast { get; set; }
+        public static int PriceLunch { get; set; }
+        public static int PriceDinner { get; set; }
 
         public static void LoadSettings()
         {
