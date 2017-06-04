@@ -809,6 +809,12 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (pozivalac.TipNaloga.IdTip != 5)
                 return null;
 
+            if (pfdto.DatumPoziva == DateTime.MinValue)
+                return null;
+
+            if (pfdto.VaziDo == DateTime.MinValue)
+                return null;
+
             Pozivanje poziv = new Pozivanje()
             {
                 DatumPoziva = pfdto.DatumPoziva,
