@@ -12,9 +12,9 @@ namespace MensariumDesktop.Model.Components
     {
         public enum MealType
         {
-            Breakfast = 1,
-            Lunch,
-            Dinner
+            Dorucak = 1,
+            Rucak,
+            Vecera
         }
 
         public static List<Mensa> Mensas { get; protected set; }

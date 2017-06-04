@@ -46,11 +46,6 @@
             this.cmbFilter = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dgvMeals = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TipObroka = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IDUplatioca = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DatumUplate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LokacijaUplate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnFinish = new System.Windows.Forms.Button();
             this.imageListButtonIconsReclamation = new System.Windows.Forms.ImageList(this.components);
             this.btnExecute = new System.Windows.Forms.Button();
@@ -89,11 +84,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Humnst777 Blk BT", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(68, 14);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(183, 36);
+            this.label2.Size = new System.Drawing.Size(160, 33);
             this.label2.TabIndex = 3;
             this.label2.Text = "Mensarium";
             // 
@@ -243,6 +238,7 @@
             this.cmbFilter.Name = "cmbFilter";
             this.cmbFilter.Size = new System.Drawing.Size(192, 24);
             this.cmbFilter.TabIndex = 2;
+            this.cmbFilter.SelectedIndexChanged += new System.EventHandler(this.cmbFilter_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -265,12 +261,6 @@
             this.dgvMeals.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvMeals.BackgroundColor = System.Drawing.Color.White;
             this.dgvMeals.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMeals.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.TipObroka,
-            this.IDUplatioca,
-            this.DatumUplate,
-            this.LokacijaUplate});
             this.dgvMeals.Location = new System.Drawing.Point(7, 53);
             this.dgvMeals.MultiSelect = false;
             this.dgvMeals.Name = "dgvMeals";
@@ -281,40 +271,6 @@
             this.dgvMeals.ShowEditingIcon = false;
             this.dgvMeals.Size = new System.Drawing.Size(644, 295);
             this.dgvMeals.TabIndex = 0;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // TipObroka
-            // 
-            this.TipObroka.HeaderText = "Tip";
-            this.TipObroka.Name = "TipObroka";
-            this.TipObroka.ReadOnly = true;
-            this.TipObroka.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // IDUplatioca
-            // 
-            this.IDUplatioca.HeaderText = "Uplatio";
-            this.IDUplatioca.Name = "IDUplatioca";
-            this.IDUplatioca.ReadOnly = true;
-            // 
-            // DatumUplate
-            // 
-            this.DatumUplate.HeaderText = "Datum Uplate";
-            this.DatumUplate.Name = "DatumUplate";
-            this.DatumUplate.ReadOnly = true;
-            this.DatumUplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // LokacijaUplate
-            // 
-            this.LokacijaUplate.HeaderText = "LokacijaUplate";
-            this.LokacijaUplate.Name = "LokacijaUplate";
-            this.LokacijaUplate.ReadOnly = true;
-            this.LokacijaUplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // btnFinish
             // 
@@ -412,10 +368,5 @@
         private System.Windows.Forms.DataGridView dgvMeals;
         private System.Windows.Forms.ImageList imageListButtonIconsReclamation;
         private System.Windows.Forms.Button btnExecute;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TipObroka;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IDUplatioca;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DatumUplate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LokacijaUplate;
     }
 }
