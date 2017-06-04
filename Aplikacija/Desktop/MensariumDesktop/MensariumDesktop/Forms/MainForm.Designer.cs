@@ -345,6 +345,7 @@ namespace MensariumDesktop
             this.statbarDebug.Name = "statbarDebug";
             this.statbarDebug.Size = new System.Drawing.Size(89, 25);
             this.statbarDebug.Text = "DEBUG";
+            this.statbarDebug.Visible = false;
             // 
             // showSessionToolStripMenuItem
             // 
@@ -832,6 +833,7 @@ namespace MensariumDesktop
             this.checkBox1.TabIndex = 9;
             this.checkBox1.Text = "checkBox1";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Visible = false;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // tabUplata
@@ -1241,6 +1243,7 @@ namespace MensariumDesktop
             this.btnReclamation.Text = " Reklamacije";
             this.btnReclamation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnReclamation.UseVisualStyleBackColor = false;
+            this.btnReclamation.Click += new System.EventHandler(this.btnReclamation_Click);
             // 
             // groupBox3
             // 

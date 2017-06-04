@@ -109,8 +109,6 @@ namespace MensariumDesktop
         }
         private void showReclamationFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReclamationForm reclamationForm = new ReclamationForm();
-            reclamationForm.ShowDialog();
         }
         private void showMensaChangerFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -216,7 +214,10 @@ namespace MensariumDesktop
         private void UPLATA_btnExecutePay_Click(object sender, EventArgs e)
         {
             if (MainController.LoadedCardUser == null)
+            {
+                MUtility.ShowWarrning("Prvo ucitati korisnika");
                 return;
+            }
             OpStatusWorking();
             int b, l, d;
             bool succ = true;
@@ -335,6 +336,20 @@ namespace MensariumDesktop
 
         private void UPLATA_txtLunchTotal_TextChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void btnReclamation_Click(object sender, EventArgs e)
+        {
+            Student s = MainController.LoadedCardUser;
+            if (s == null)
+            {
+                MUtility.ShowWarrning("Prvo ucitati korisnika");
+                return;
+            }
+
+            ReclamationForm rf = new ReclamationForm(MainController.LoadedCardUser);
+            rf.ShowDialog();
 
         }
     }
