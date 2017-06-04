@@ -129,6 +129,13 @@ namespace MensariumDesktop
         }
         private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var j = new RestSharp.Deserializers.JsonDeserializer();
+            RestResponse r = new RestResponse();
+            r.Content = "{\"BrojDorucka\": 25,\"BrojRuckova\": 1,\"BrojVecera\": 0}\"";
+            r.ContentType = "application/json";
+            
+            KorisnikStanjeDto k = j.Deserialize<KorisnikStanjeDto>(r);
+            
 
             //try { pcbCurrentUser.Image = Api.GetUserImage(2); } catch (Exception exception) { MessageBox.Show(exception.Message); }
             //try { Api.FollowUser(9); } catch (Exception exception) { MessageBox.Show(exception.Message); } //forbidden
@@ -163,17 +170,10 @@ namespace MensariumDesktop
         #endregion
 
         #region UPLATA_TAB
-        private void UPLATA_btnLoadCard_Click(object sender, EventArgs e)
+        private void UPLATA_RefreshCardInfo(bool reload = false)
         {
-            CardReaderEmulator creader = new CardReaderEmulator();
-            creader.ShowDialog();
-            OpStatusWorking();
-            MainController.LoadUserCard(creader.CardData);
-            OpStatusIdle();
-
             if (MainController.LoadedCardUser == null)
-                return;   
-            
+                return;
 
             UPLATA_lblCardUserName.Text = MainController.LoadedCardUser.FullName;
             UPLATA_lblCardUserValidUntil.Text = MainController.LoadedCardUser.ValidUntil.ToShortDateString();
@@ -182,10 +182,33 @@ namespace MensariumDesktop
             UPLATA_lblCardUserIndex.Text = MainController.LoadedCardUser.Index;
             UPLATA_picLoadedUser.Image = MainController.LoadedCardUser.ProfilePicture;
 
+            string b = UPLATA_lblBreakfast.Text;
+            string l = UPLATA_lblLunch.Text;
+            string d = UPLATA_lblDinner.Text;
+
             UPLATA_lblBreakfast.Text = MainController.LoadedCardUser.BreakfastCount.ToString();
             UPLATA_lblLunch.Text = MainController.LoadedCardUser.LunchCount.ToString();
             UPLATA_lblDinner.Text = MainController.LoadedCardUser.DinnerCount.ToString();
 
+            UPLATA_lblBreakfast.BackColor = Color.Transparent;
+            UPLATA_lblLunch.BackColor = Color.Transparent;
+            UPLATA_lblDinner.BackColor = Color.Transparent;
+            if (reload)
+            {
+                if (b != UPLATA_lblBreakfast.Text) UPLATA_lblBreakfast.BackColor = Color.LightGreen;
+                if (l != UPLATA_lblLunch.Text) UPLATA_lblLunch.BackColor = Color.LightGreen;
+                if (d != UPLATA_lblDinner.Text) UPLATA_lblDinner.BackColor = Color.LightGreen;
+            }
+        }
+        private void UPLATA_btnLoadCard_Click(object sender, EventArgs e)
+        {
+            CardReaderEmulator creader = new CardReaderEmulator();
+            creader.ShowDialog();
+            OpStatusWorking();
+            MainController.LoadUserCard(creader.CardData);
+            OpStatusIdle();
+
+            UPLATA_RefreshCardInfo();
         }
         #endregion
 
@@ -253,10 +276,25 @@ namespace MensariumDesktop
 
         private void btnExecutePay_Click(object sender, EventArgs e)
         {
-            MainController.AddUserMeals(MainController.LoadedCardUser,
-                int.Parse(txtBreakfast.Text),
-                int.Parse(txtLunch.Text),
-                int.Parse(txtDinner.Text));
+            OpStatusWorking();
+            int b, l, d;
+            bool succ = true;
+            succ &= int.TryParse(UPLATA_txtBreakfast.Text, out b);
+            succ &= int.TryParse(UPLATA_txtLunch.Text, out l);
+            succ &= int.TryParse(UPLATA_txtDinner.Text, out d);
+            if (!succ)
+            {
+                MUtility.ShowError("Nisu svi uneti podaci validni");
+                return;
+            }
+            MainController.AddUserMeals(MainController.LoadedCardUser, b, l, d);
+            MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
+            UPLATA_RefreshCardInfo(true);
+            OpStatusIdle();
+
+            UPLATA_txtBreakfast.Text = "0";
+            UPLATA_txtLunch.Text = "0";
+            UPLATA_txtDinner.Text = "0";
         }
     }
 }

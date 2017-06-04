@@ -87,8 +87,8 @@ namespace MensariumDesktop
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtDinner = new System.Windows.Forms.TextBox();
-            this.txtLunch = new System.Windows.Forms.TextBox();
+            this.UPLATA_txtDinner = new System.Windows.Forms.TextBox();
+            this.UPLATA_txtLunch = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -98,7 +98,7 @@ namespace MensariumDesktop
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.txtBreakfast = new System.Windows.Forms.TextBox();
+            this.UPLATA_txtBreakfast = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -947,8 +947,8 @@ namespace MensariumDesktop
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.txtDinner, 3, 2);
-            this.tableLayoutPanel4.Controls.Add(this.txtLunch, 3, 1);
+            this.tableLayoutPanel4.Controls.Add(this.UPLATA_txtDinner, 3, 2);
+            this.tableLayoutPanel4.Controls.Add(this.UPLATA_txtLunch, 3, 1);
             this.tableLayoutPanel4.Controls.Add(this.label17, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.label19, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label20, 0, 2);
@@ -958,7 +958,7 @@ namespace MensariumDesktop
             this.tableLayoutPanel4.Controls.Add(this.pictureBox3, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.pictureBox4, 2, 1);
             this.tableLayoutPanel4.Controls.Add(this.pictureBox5, 2, 2);
-            this.tableLayoutPanel4.Controls.Add(this.txtBreakfast, 3, 0);
+            this.tableLayoutPanel4.Controls.Add(this.UPLATA_txtBreakfast, 3, 0);
             this.tableLayoutPanel4.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -970,27 +970,27 @@ namespace MensariumDesktop
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1079, 134);
             this.tableLayoutPanel4.TabIndex = 6;
             // 
-            // txtDinner
+            // UPLATA_txtDinner
             // 
-            this.txtDinner.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtDinner.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtDinner.Location = new System.Drawing.Point(182, 73);
-            this.txtDinner.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
-            this.txtDinner.Name = "txtDinner";
-            this.txtDinner.Size = new System.Drawing.Size(220, 29);
-            this.txtDinner.TabIndex = 15;
-            this.txtDinner.Text = "0";
+            this.UPLATA_txtDinner.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_txtDinner.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.UPLATA_txtDinner.Location = new System.Drawing.Point(182, 73);
+            this.UPLATA_txtDinner.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.UPLATA_txtDinner.Name = "UPLATA_txtDinner";
+            this.UPLATA_txtDinner.Size = new System.Drawing.Size(220, 29);
+            this.UPLATA_txtDinner.TabIndex = 15;
+            this.UPLATA_txtDinner.Text = "0";
             // 
-            // txtLunch
+            // UPLATA_txtLunch
             // 
-            this.txtLunch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtLunch.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtLunch.Location = new System.Drawing.Point(182, 38);
-            this.txtLunch.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
-            this.txtLunch.Name = "txtLunch";
-            this.txtLunch.Size = new System.Drawing.Size(220, 29);
-            this.txtLunch.TabIndex = 14;
-            this.txtLunch.Text = "0";
+            this.UPLATA_txtLunch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_txtLunch.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.UPLATA_txtLunch.Location = new System.Drawing.Point(182, 38);
+            this.UPLATA_txtLunch.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.UPLATA_txtLunch.Name = "UPLATA_txtLunch";
+            this.UPLATA_txtLunch.Size = new System.Drawing.Size(220, 29);
+            this.UPLATA_txtLunch.TabIndex = 14;
+            this.UPLATA_txtLunch.Text = "0";
             // 
             // label17
             // 
@@ -1044,6 +1044,7 @@ namespace MensariumDesktop
             // UPLATA_lblLunch
             // 
             this.UPLATA_lblLunch.AutoSize = true;
+            this.UPLATA_lblLunch.BackColor = System.Drawing.Color.Transparent;
             this.UPLATA_lblLunch.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UPLATA_lblLunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
             this.UPLATA_lblLunch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1100,16 +1101,16 @@ namespace MensariumDesktop
             this.pictureBox5.TabIndex = 12;
             this.pictureBox5.TabStop = false;
             // 
-            // txtBreakfast
+            // UPLATA_txtBreakfast
             // 
-            this.txtBreakfast.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtBreakfast.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBreakfast.Location = new System.Drawing.Point(182, 3);
-            this.txtBreakfast.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
-            this.txtBreakfast.Name = "txtBreakfast";
-            this.txtBreakfast.Size = new System.Drawing.Size(220, 29);
-            this.txtBreakfast.TabIndex = 13;
-            this.txtBreakfast.Text = "0";
+            this.UPLATA_txtBreakfast.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_txtBreakfast.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UPLATA_txtBreakfast.Location = new System.Drawing.Point(182, 3);
+            this.UPLATA_txtBreakfast.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.UPLATA_txtBreakfast.Name = "UPLATA_txtBreakfast";
+            this.UPLATA_txtBreakfast.Size = new System.Drawing.Size(220, 29);
+            this.UPLATA_txtBreakfast.TabIndex = 13;
+            this.UPLATA_txtBreakfast.Text = "0";
             // 
             // groupBox1
             // 
@@ -2394,11 +2395,11 @@ namespace MensariumDesktop
         private System.Windows.Forms.Label UPLATA_lblLunch;
         private System.Windows.Forms.Label UPLATA_lblDinner;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.TextBox txtDinner;
-        private System.Windows.Forms.TextBox txtLunch;
+        private System.Windows.Forms.TextBox UPLATA_txtDinner;
+        private System.Windows.Forms.TextBox UPLATA_txtLunch;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.TextBox txtBreakfast;
+        private System.Windows.Forms.TextBox UPLATA_txtBreakfast;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
