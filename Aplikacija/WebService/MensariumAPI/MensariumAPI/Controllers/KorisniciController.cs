@@ -884,5 +884,67 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.ZatvoriSesiju();
             }
         }
+
+        //Prva prijava
+        [HttpGet]
+        [Route("prvaprijava")]
+        public IHttpActionResult PrvaPrijava([FromUri] int id, [FromUri] string sifra)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                bool status = ProvajderPodatakaKorisnika.PrvaPrijava(id, sifra);
+
+                if (status)
+                    return Ok("Prijava validna");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Neispravna sifra") });
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+        
+        //Registracija na android
+        [HttpPut]
+        [Route("registracija/android")]
+        public SesijaDto RegistracijaNaAndroid([FromBody] ClientZaRegistracijuDto czrdto)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+
+                SesijaDto s =ProvajderPodatakaKorisnika.RegistracijaNaAndroid(czrdto);
+
+                if (s == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Neuspesna registracija") });
+                return s;
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
     }
 }
