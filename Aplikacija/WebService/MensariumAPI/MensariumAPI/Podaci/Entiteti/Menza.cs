@@ -13,6 +13,8 @@ namespace MensariumAPI.Podaci.Entiteti
         public virtual string Lokacija { get; set; }
         public virtual string RadnoVreme { get; set; }
         public virtual bool VanrednoNeRadi { get; set; }
+        public virtual double GpsLon { get; set; }
+        public virtual double GpsLat { get; set; }
 
         //Menze <- Obroci
         public virtual IList<Objava> ObjaveKorisnika { get; set; }

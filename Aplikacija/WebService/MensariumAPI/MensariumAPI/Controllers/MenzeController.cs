@@ -42,6 +42,9 @@ namespace MensariumAPI.Controllers
                 menza.Lokacija = m.Lokacija;
                 menza.RadnoVreme = m.RadnoVreme;
                 menza.VanrednoNeRadi = m.VanrednoNeRadi;
+                menza.GpsLat = m.GpsLat;
+                menza.GpsLong = m.GpsLon;
+
                 return menza;
             }
             catch (Exception e)
@@ -72,7 +75,7 @@ namespace MensariumAPI.Controllers
                 List<Menza> listaMenzi = ProvajderPodatakaMenzi.VratiMenze();
                 List<MenzaFullDto> listaMenziFull = new List<MenzaFullDto>(listaMenzi.Count);
 
-                if (listaMenzi == null)
+                if (listaMenzi.Count == 0)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Menze nisu pronadjene") });
 
 
@@ -120,7 +123,9 @@ namespace MensariumAPI.Controllers
                     Lokacija = mdto.Lokacija,
                     Naziv = mdto.Naziv,
                     RadnoVreme = mdto.RadnoVreme,
-                    VanrednoNeRadi = mdto.VanrednoNeRadi
+                    VanrednoNeRadi = mdto.VanrednoNeRadi,
+                    GpsLat = mdto.GpsLat,
+                    GpsLon =  mdto.GpsLong 
                 });
 
                 return Ok("Menza uspesno dodata");
@@ -130,8 +135,7 @@ namespace MensariumAPI.Controllers
                 if (e is HttpResponseException)
                     throw e;
                 DnevnikIzuzetaka.Zabelezi(e);
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
-                
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });   
             }
             finally
             {
