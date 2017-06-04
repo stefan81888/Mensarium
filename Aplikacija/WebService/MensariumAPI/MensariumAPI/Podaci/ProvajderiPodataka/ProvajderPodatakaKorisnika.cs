@@ -10,6 +10,7 @@ using NHibernate.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Net;
+using FluentNHibernate.Conventions;
 
 namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
@@ -341,9 +342,17 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             s.Flush();
 
-            List<Pozivanje> p = s.Query<Pozivanje>().Select(x => x).OrderBy(x => x.IdPoziva).ToList(); // TO DO : svuda primeniti ovo
+            List<Pozivanje> p = s.Query<Pozivanje>().Select(x => x).ToList();
 
-            pfdto.IdPoziva = p[p.Count - 1].IdPoziva;
+            if (p.Count == 0)
+                return null;
+
+            Pozivanje po = p.Find(x => x.Pozivaoc == pozivalac && x.DatumPoziva == poziv.DatumPoziva);
+
+            if (po == null)
+                return null;
+
+            pfdto.IdPoziva = po.IdPoziva;
 
             return pfdto;  
         }
@@ -736,6 +745,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             Korisnik k = VratiKorisnika(czrdto.DodeljeniId);
 
+            if (k.KorisnickoIme != null)
+                return null;
+
             if (k == null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Student ne postoji") });
@@ -786,5 +798,54 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return sdto;
         }
+
+        
+        public static PozivanjaFullDto NoviPoziv(PozivanjaFullDto pfdto, string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Korisnik pozivalac = VratiKorisnika(KorisnikIDizSesijaID(sid));
+
+            if (pozivalac == null)
+                return null;
+
+            if (pozivalac.TipNaloga.IdTip != 5)
+                return null;
+
+            if (pfdto.DatumPoziva == DateTime.MinValue)
+                return null;
+
+            if (pfdto.VaziDo == DateTime.MinValue)
+                return null;
+
+            Pozivanje poziv = new Pozivanje()
+            {
+                DatumPoziva = pfdto.DatumPoziva,
+                VaziDo = pfdto.VaziDo,
+                Pozivaoc = pozivalac
+            };
+
+            pozivalac.Pozivi.Add(poziv);
+
+            s.Save(pozivalac);
+            s.Save(poziv);
+
+            s.Flush();
+
+            List<Pozivanje> p = s.Query<Pozivanje>().Select(x => x).ToList();
+
+            if (p.Count == 0)
+                return null;
+
+            Pozivanje po = p.Find(x => x.Pozivaoc == pozivalac && x.DatumPoziva == poziv.DatumPoziva);
+
+            if (po == null)
+                return null;
+
+            pfdto.IdPoziva = po.IdPoziva;
+
+            return pfdto;
+        }
+        
     }
 }
