@@ -325,9 +325,13 @@ namespace MensariumAPI.Controllers
 
                 List<KorisnikFollowDto> pracenja = ProvajderPodatakaKorisnika.SvaPracenja(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
 
-               if(pracenja.Count == 0)
+               if(pracenja == null)
                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                    { Content = new StringContent("Nisu pronadjeni korisnici") });
+
+                if (pracenja.Count == 0)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Korisnik nikog ne prati") });
 
                 return pracenja;
             }

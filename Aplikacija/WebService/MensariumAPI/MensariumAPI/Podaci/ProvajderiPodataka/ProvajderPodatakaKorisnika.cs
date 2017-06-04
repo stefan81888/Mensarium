@@ -164,6 +164,12 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (k == null)
                 return null;
 
+            if (k.TipNaloga.IdTip != 5)
+                return null;
+
+            if (k.Prati.Count == 0)
+                return null;
+
             List<KorisnikFollowDto> praceni = new List<KorisnikFollowDto>();
 
             List<Korisnik> lista = k.Prati.ToList();
