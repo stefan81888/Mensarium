@@ -21,9 +21,13 @@ namespace MensariumDesktop.Model.Components
             this.UserID = u.UserID;
             this.Username = u.Username;
             this.UserPrivilegeses = u.UserPrivilegeses;
+            this.LastName = u.LastName;
         }
         public string Index { get; set; }
         public DateTime ValidUntil { get; set; }
         public Faculty Faculty { get; set; }
+        public int BreakfastCount { get; set; }
+        public int LunchCount { get; set; }
+        public int DinnerCount { get; set; }
     }
 }

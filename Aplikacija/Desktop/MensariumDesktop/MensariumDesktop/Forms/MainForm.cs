@@ -54,7 +54,16 @@ namespace MensariumDesktop
             STATUS_statbarUser.Text = MSettings.CurrentSession.LoggedUser.FullName;
             STATUS_statbarMenza.Text = MSettings.CurrentMensa.Name;
         }
-
+        private void OpStatusWorking()
+        {
+            STATUS_statbarOPStatus.Visible = true;
+            Cursor.Current = Cursors.AppStarting;
+        }
+        private void OpStatusIdle()
+        {
+            STATUS_statbarOPStatus.Visible = false;
+            Cursor.Current = Cursors.Default;
+        }
         private void statusBarSettingsBtn_Click(object sender, EventArgs e)
         {
             SettingsForm fs = new SettingsForm();
@@ -69,7 +78,6 @@ namespace MensariumDesktop
         }
         private void statbarUserSignOut_Click(object sender, EventArgs e)
         {
-            
             try
             {
                 bgWorkerLoading.DoWork += (sender2, args) => bgWorkerLoading_DoWorkLogOut();
@@ -80,7 +88,7 @@ namespace MensariumDesktop
             }
             catch (Exception ex)
             {
-                MainController.ShowException(ex);
+                MUtility.ShowException(ex);
             }
 
         }
@@ -153,9 +161,33 @@ namespace MensariumDesktop
             STATUS_statbarSettings.PerformClick();
         }
         #endregion
-        
 
-        
+        #region UPLATA_TAB
+        private void UPLATA_btnLoadCard_Click(object sender, EventArgs e)
+        {
+            CardReaderEmulator creader = new CardReaderEmulator();
+            creader.ShowDialog();
+            OpStatusWorking();
+            MainController.LoadUserCard(creader.CardData);
+            OpStatusIdle();
+
+            if (MainController.LoadedCardUser == null)
+                return;   
+            
+
+            UPLATA_lblCardUserName.Text = MainController.LoadedCardUser.FullName;
+            UPLATA_lblCardUserValidUntil.Text = MainController.LoadedCardUser.ValidUntil.ToShortDateString();
+            UPLATA_lblCardUserDatebirth.Text = MainController.LoadedCardUser.Birthday.ToShortDateString();
+            UPLATA_lblCardUserFax.Text = MainController.LoadedCardUser.Faculty.Name;
+            UPLATA_lblCardUserIndex.Text = MainController.LoadedCardUser.Index;
+            UPLATA_picLoadedUser.Image = MainController.LoadedCardUser.ProfilePicture;
+
+            UPLATA_lblBreakfast.Text = MainController.LoadedCardUser.BreakfastCount.ToString();
+            UPLATA_lblLunch.Text = MainController.LoadedCardUser.LunchCount.ToString();
+            UPLATA_lblDinner.Text = MainController.LoadedCardUser.DinnerCount.ToString();
+
+        }
+        #endregion
 
         #region INIT_GUI
         private void bgWorkerLoading_DoWork(object sender, DoWorkEventArgs e)
@@ -167,7 +199,7 @@ namespace MensariumDesktop
             }
             catch(Exception ex)
             {
-                MainController.ShowException(ex);
+                MUtility.ShowException(ex);
                 MainController.LogoutUser();
                 Environment.Exit(1);
             }
@@ -185,7 +217,7 @@ namespace MensariumDesktop
             }
             catch (Exception ex)
             {
-                MainController.ShowException(ex);
+                MUtility.ShowException(ex);
                 Environment.Exit(1);
             }
         }
@@ -214,6 +246,17 @@ namespace MensariumDesktop
             MUtility.RoundPictureBox(sender as PictureBox);
         }
 
+        private void UPLATA_picLoadedUser_Paint(object sender, PaintEventArgs e)
+        {
+            MUtility.RoundPictureBox(sender as PictureBox);
+        }
 
+        private void btnExecutePay_Click(object sender, EventArgs e)
+        {
+            MainController.AddUserMeals(MainController.LoadedCardUser,
+                int.Parse(txtBreakfast.Text),
+                int.Parse(txtLunch.Text),
+                int.Parse(txtDinner.Text));
+        }
     }
 }

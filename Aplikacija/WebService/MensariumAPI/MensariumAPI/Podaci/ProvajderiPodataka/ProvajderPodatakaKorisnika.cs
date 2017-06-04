@@ -256,22 +256,26 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static KorisnikStanjeDto Stanje(Korisnik korisnik)
         {
             ISession s = SesijeProvajder.Sesija;
-            List<Obrok> obr = ProvajderPodatakaObroka.VratiObroke().ToList();
+            //List<Obrok> obr = ProvajderPodatakaObroka.VratiObroke().ToList();
 
-            int doruckovi = (from o in obr
-                where (o.Uplatilac.IdKorisnika == korisnik.IdKorisnika && o.Tip.IdTipObroka == 1)
-                select o
-            ).Count();
+            int doruckovi = korisnik.Obroci.Count(x => x.Iskoriscen == false && x.Tip.IdTipObroka == 1);
+            int ruckovi = korisnik.Obroci.Count(x => x.Iskoriscen == false && x.Tip.IdTipObroka == 2);
+            int vecere = korisnik.Obroci.Count(x => x.Iskoriscen == false && x.Tip.IdTipObroka == 3);
+            
+            //int doruckovi = (from o in obr
+            //    where (o.Uplatilac.IdKorisnika == korisnik.IdKorisnika && o.Tip.IdTipObroka == 1)
+            //    select o
+            //).Count();
 
-            int ruckovi = (from o in obr
-                where (o.Uplatilac.IdKorisnika == korisnik.IdKorisnika && o.Tip.IdTipObroka == 2)
-                select o
-            ).Count();
+            //int ruckovi = (from o in obr
+            //    where (o.Uplatilac.IdKorisnika == korisnik.IdKorisnika && o.Tip.IdTipObroka == 2)
+            //    select o
+            //).Count();
 
-            int vecere = (from o in obr
-                where (o.Uplatilac.IdKorisnika == korisnik.IdKorisnika && o.Tip.IdTipObroka == 3)
-                select o
-            ).Count();
+            //int vecere = (from o in obr
+            //    where (o.Uplatilac.IdKorisnika == korisnik.IdKorisnika && o.Tip.IdTipObroka == 3)
+            //    select o
+            //).Count();
 
             KorisnikStanjeDto k = new KorisnikStanjeDto();
 

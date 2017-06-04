@@ -37,6 +37,7 @@ namespace MensariumDesktop.Model.Controllers
                 us.ValidUntil = (DateTime)korisnik.DatumVaziDo;
                 us.Index = korisnik.BrojIndeksa;
                 us.Faculty = Faculty.Faculties.Find(x => x.FacultyID == korisnik.IdFakulteta);
+
                 return us;
             }
             return u;
@@ -88,6 +89,22 @@ namespace MensariumDesktop.Model.Controllers
             Region rg = new Region(gp);
             
             t.Region = rg;
+        }
+        public static void ShowError(string Message)
+        {
+            MessageBox.Show(Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public static void ShowException(Exception e)
+        {
+            MessageBox.Show(e.Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public static void ShowWarrning(string message)
+        {
+            MessageBox.Show(message, "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        public static void ShowInformation(string message)
+        {
+            MessageBox.Show(message, "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

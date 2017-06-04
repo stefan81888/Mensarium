@@ -246,6 +246,20 @@ namespace MensariumDesktop.Model.Controllers
 
             return response.ResponseObject;
         }
+        public static KorisnikStanjeDto UserMealsCount(int userId)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/stanje";
+            request.AddParameter("id", userId, ParameterType.QueryString);
+
+
+            ApiResponse<KorisnikStanjeDto> response = Execute<KorisnikStanjeDto>(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\nServerResponse: "
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
+
+            return response.ResponseObject;
+        }
         public static KorisnikStanjeDto UserMealsCount()
         {
             RestRequest request = new RestRequest(Method.GET);

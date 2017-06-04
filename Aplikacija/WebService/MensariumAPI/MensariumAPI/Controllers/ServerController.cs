@@ -12,7 +12,7 @@ namespace MensariumAPI.Controllers
     {
 
         [HttpGet]
-        public HttpResponseMessage jeNaVezi()
+        public HttpResponseMessage TestPovezivanje()
         {
             return Request.CreateResponse(HttpStatusCode.OK, "Uspesno uspostavljena veza sa serverom");
         }

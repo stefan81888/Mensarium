@@ -404,7 +404,45 @@ namespace MensariumAPI.Controllers
                 {
                    korisnik = ProvajderPodatakaKorisnika.Stanje(k);
                 }
-                if (korisnik == null)
+                else
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                    { Content = new StringContent("Korisnik nije pronadjen") });
+
+                return korisnik;
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        [HttpGet]
+        [Route("stanje")] //added by dacha 
+        public KorisnikStanjeDto VratiKorisnikovoStanjeObroka([FromUri] int id, [FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Nemate privilegiju") });
+
+                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+
+                KorisnikStanjeDto korisnik = new KorisnikStanjeDto();
+                if (ValidatorKorisnika.KorisnikPostoji(k))
+                {
+                    korisnik = ProvajderPodatakaKorisnika.Stanje(k);
+                }
+               else
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                     { Content = new StringContent("Korisnik nije pronadjen") });
 

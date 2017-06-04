@@ -14,6 +14,8 @@ namespace MensariumDesktop.Model.Controllers
 {
     public static class MainController
     {
+        public static Student LoadedCardUser;
+
         public static void InitApplication()
         {
             //Ucitaj podatke iz fajl
@@ -36,12 +38,12 @@ namespace MensariumDesktop.Model.Controllers
         {
             try
             {
-                MainController.ShowInformation(Api.TestConnection(hostname, port));
+                MUtility.ShowInformation(Api.TestConnection(hostname, port));
                 return true;
             }
             catch (Exception ex)
             {
-                MainController.ShowInformation(ex.Message);
+                MUtility.ShowInformation(ex.Message);
                 return false;
             }
         }
@@ -56,7 +58,7 @@ namespace MensariumDesktop.Model.Controllers
                 KorisnikFullDto korisnik = Api.GetUserFullInfo(sesija.IdKorisnika);
                 if (korisnik.IdTipaNaloga == (int)User.UserAccountType.Student)
                 {
-                    MainController.ShowError("Prijavljivanje sa studentskog naloga je onemoguceno na ovoj aplikaciji!");
+                    MUtility.ShowError("Prijavljivanje sa studentskog naloga je onemoguceno na ovoj aplikaciji!");
                     Api.LogoutUser(MSettings.CurrentSession.SessionID);
                     return false;
                 }
@@ -66,7 +68,7 @@ namespace MensariumDesktop.Model.Controllers
             catch (Exception ex)
             {
                 MSettings.CurrentSession = null;
-                MainController.ShowException(ex);
+                MUtility.ShowException(ex);
                 return false;
             }
         }
@@ -97,7 +99,7 @@ namespace MensariumDesktop.Model.Controllers
             }
             catch(Exception e)
             {
-                MainController.ShowException(e);
+                MUtility.ShowException(e);
                 return false;
             }
         }
@@ -110,7 +112,7 @@ namespace MensariumDesktop.Model.Controllers
             }
             catch (Exception e)
             {
-                MainController.ShowException(e);
+                MUtility.ShowException(e);
                 return false;
             }
         }
@@ -124,6 +126,84 @@ namespace MensariumDesktop.Model.Controllers
                 return false;
             MSettings.CurrentMensa = m;
             return true;
+        }
+
+        public static void LoadUserCard(int cardId)
+        {
+            try
+            {
+                KorisnikFullDto korisnik = Api.GetUserFullInfo(cardId);
+                if (korisnik.IdTipaNaloga != (int)User.UserAccountType.Student)
+                    throw new Exception("Nalog nije studentski");
+                LoadedCardUser = MUtility.GenerateUserFromDTO(korisnik) as Student;
+                KorisnikStanjeDto stanje = Api.UserMealsCount(LoadedCardUser.UserID);
+                LoadedCardUser.BreakfastCount = stanje.BrojDorucka;
+                LoadedCardUser.LunchCount = stanje.BrojRuckova;
+                LoadedCardUser.DinnerCount = stanje.BrojVecera;
+            }
+            catch(Exception ex)
+            {
+                MUtility.ShowException(ex);
+            }
+        }
+        public static void AddUserMeals(Student s, int breakfast, int lunch, int dinner)
+        {
+
+            //OO GOSPODARU IFOVA - REFAKTORISI OVO SUTRA 
+            if (breakfast != 0)
+            {
+                ObrokUplataDto o = new ObrokUplataDto()
+                {
+                    BrojObroka = breakfast,
+                    IdLokacijeUplate = MSettings.CurrentMensa.MensaID,
+                    IdKorisnika = s.UserID,
+                    IdTipa = 1
+                };
+                try
+                {
+                    Api.AddMeal(o);
+                }
+                catch(Exception e)
+                {
+                    MUtility.ShowException(e);
+                }
+            }
+            if (lunch != 0)
+            {
+                ObrokUplataDto o = new ObrokUplataDto()
+                {
+                    BrojObroka = lunch,
+                    IdLokacijeUplate = MSettings.CurrentMensa.MensaID,
+                    IdKorisnika = s.UserID,
+                    IdTipa = 2
+                };
+                try
+                {
+                    Api.AddMeal(o);
+                }
+                catch (Exception e)
+                {
+                    MUtility.ShowException(e);
+                }
+            }
+            if (dinner != 0)
+            {
+                ObrokUplataDto o = new ObrokUplataDto()
+                {
+                    BrojObroka = dinner,
+                    IdLokacijeUplate = MSettings.CurrentMensa.MensaID,
+                    IdKorisnika = s.UserID,
+                    IdTipa = 3
+                };
+                try
+                {
+                    Api.AddMeal(o);
+                }
+                catch (Exception e)
+                {
+                    MUtility.ShowException(e);
+                }
+            }
         }
 
         public static void ShowError(string Message) {

@@ -58,7 +58,7 @@ namespace MensariumDesktop.Forms
             }
             catch(Exception ex)
             {
-                MainController.ShowException(ex);
+                MUtility.ShowException(ex);
                 return;
             }
             if (!successful) return;

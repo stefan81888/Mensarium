@@ -81,21 +81,20 @@ namespace MensariumDesktop
             this.tabUplata = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnLoadCard = new System.Windows.Forms.Button();
+            this.UPLATA_btnLoadCard = new System.Windows.Forms.Button();
             this.btnExecutePay = new System.Windows.Forms.Button();
             this.btnReclamation = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.cbxNextMonthPay = new System.Windows.Forms.CheckBox();
             this.txtDinner = new System.Windows.Forms.TextBox();
             this.txtLunch = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.lblBreakfast = new System.Windows.Forms.Label();
-            this.lblLunch = new System.Windows.Forms.Label();
-            this.lblDinner = new System.Windows.Forms.Label();
+            this.UPLATA_lblBreakfast = new System.Windows.Forms.Label();
+            this.UPLATA_lblLunch = new System.Windows.Forms.Label();
+            this.UPLATA_lblDinner = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -103,12 +102,12 @@ namespace MensariumDesktop
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblCardUserName = new System.Windows.Forms.Label();
-            this.lblCardUserFax = new System.Windows.Forms.Label();
-            this.lblCardUserDatebirth = new System.Windows.Forms.Label();
-            this.lblCardUserIndex = new System.Windows.Forms.Label();
-            this.lblCardUserValidUntil = new System.Windows.Forms.Label();
-            this.pbxCardUser = new System.Windows.Forms.PictureBox();
+            this.UPLATA_lblCardUserName = new System.Windows.Forms.Label();
+            this.UPLATA_lblCardUserFax = new System.Windows.Forms.Label();
+            this.UPLATA_lblCardUserDatebirth = new System.Windows.Forms.Label();
+            this.UPLATA_lblCardUserIndex = new System.Windows.Forms.Label();
+            this.UPLATA_lblCardUserValidUntil = new System.Windows.Forms.Label();
+            this.UPLATA_picLoadedUser = new System.Windows.Forms.PictureBox();
             this.tabNaplata = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -183,6 +182,7 @@ namespace MensariumDesktop
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bgWorkerLoading = new System.ComponentModel.BackgroundWorker();
+            this.imageListOPStatus = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip.SuspendLayout();
             this.tabControls.SuspendLayout();
             this.tabHome.SuspendLayout();
@@ -208,7 +208,7 @@ namespace MensariumDesktop
             this.groupBox1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxCardUser)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UPLATA_picLoadedUser)).BeginInit();
             this.tabNaplata.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -380,15 +380,16 @@ namespace MensariumDesktop
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(860, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(880, 22);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // STATUS_statbarOPStatus
             // 
-            this.STATUS_statbarOPStatus.Image = global::MensariumDesktop.Properties.Resources.success;
+            this.STATUS_statbarOPStatus.Image = global::MensariumDesktop.Properties.Resources.internet;
             this.STATUS_statbarOPStatus.Name = "STATUS_statbarOPStatus";
             this.STATUS_statbarOPStatus.ShowDropDownArrow = false;
             this.STATUS_statbarOPStatus.Size = new System.Drawing.Size(20, 25);
+            this.STATUS_statbarOPStatus.Visible = false;
             // 
             // tabControls
             // 
@@ -837,7 +838,7 @@ namespace MensariumDesktop
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
-            this.flowLayoutPanel2.Controls.Add(this.btnLoadCard);
+            this.flowLayoutPanel2.Controls.Add(this.UPLATA_btnLoadCard);
             this.flowLayoutPanel2.Controls.Add(this.btnExecutePay);
             this.flowLayoutPanel2.Controls.Add(this.btnReclamation);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -847,26 +848,27 @@ namespace MensariumDesktop
             this.flowLayoutPanel2.Size = new System.Drawing.Size(228, 499);
             this.flowLayoutPanel2.TabIndex = 11;
             // 
-            // btnLoadCard
+            // UPLATA_btnLoadCard
             // 
-            this.btnLoadCard.BackColor = System.Drawing.Color.White;
-            this.btnLoadCard.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
-            this.btnLoadCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.btnLoadCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.btnLoadCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoadCard.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoadCard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoadCard.ImageKey = "id-card-3.png";
-            this.btnLoadCard.ImageList = this.imageListMainForm;
-            this.btnLoadCard.Location = new System.Drawing.Point(4, 20);
-            this.btnLoadCard.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnLoadCard.Name = "btnLoadCard";
-            this.btnLoadCard.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnLoadCard.Size = new System.Drawing.Size(219, 55);
-            this.btnLoadCard.TabIndex = 15;
-            this.btnLoadCard.Text = " Učitaj karticu";
-            this.btnLoadCard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnLoadCard.UseVisualStyleBackColor = false;
+            this.UPLATA_btnLoadCard.BackColor = System.Drawing.Color.White;
+            this.UPLATA_btnLoadCard.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
+            this.UPLATA_btnLoadCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.UPLATA_btnLoadCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.UPLATA_btnLoadCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UPLATA_btnLoadCard.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UPLATA_btnLoadCard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UPLATA_btnLoadCard.ImageKey = "id-card-3.png";
+            this.UPLATA_btnLoadCard.ImageList = this.imageListMainForm;
+            this.UPLATA_btnLoadCard.Location = new System.Drawing.Point(4, 20);
+            this.UPLATA_btnLoadCard.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.UPLATA_btnLoadCard.Name = "UPLATA_btnLoadCard";
+            this.UPLATA_btnLoadCard.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.UPLATA_btnLoadCard.Size = new System.Drawing.Size(219, 55);
+            this.UPLATA_btnLoadCard.TabIndex = 15;
+            this.UPLATA_btnLoadCard.Text = " Učitaj karticu";
+            this.UPLATA_btnLoadCard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.UPLATA_btnLoadCard.UseVisualStyleBackColor = false;
+            this.UPLATA_btnLoadCard.Click += new System.EventHandler(this.UPLATA_btnLoadCard_Click);
             // 
             // btnExecutePay
             // 
@@ -888,6 +890,7 @@ namespace MensariumDesktop
             this.btnExecutePay.Text = " Izvrši uplatu";
             this.btnExecutePay.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExecutePay.UseVisualStyleBackColor = false;
+            this.btnExecutePay.Click += new System.EventHandler(this.btnExecutePay_Click);
             // 
             // btnReclamation
             // 
@@ -944,15 +947,14 @@ namespace MensariumDesktop
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.cbxNextMonthPay, 3, 3);
             this.tableLayoutPanel4.Controls.Add(this.txtDinner, 3, 2);
             this.tableLayoutPanel4.Controls.Add(this.txtLunch, 3, 1);
             this.tableLayoutPanel4.Controls.Add(this.label17, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.label19, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label20, 0, 2);
-            this.tableLayoutPanel4.Controls.Add(this.lblBreakfast, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.lblLunch, 1, 1);
-            this.tableLayoutPanel4.Controls.Add(this.lblDinner, 1, 2);
+            this.tableLayoutPanel4.Controls.Add(this.UPLATA_lblBreakfast, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.UPLATA_lblLunch, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.UPLATA_lblDinner, 1, 2);
             this.tableLayoutPanel4.Controls.Add(this.pictureBox3, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.pictureBox4, 2, 1);
             this.tableLayoutPanel4.Controls.Add(this.pictureBox5, 2, 2);
@@ -967,17 +969,6 @@ namespace MensariumDesktop
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1079, 134);
             this.tableLayoutPanel4.TabIndex = 6;
-            // 
-            // cbxNextMonthPay
-            // 
-            this.cbxNextMonthPay.AutoSize = true;
-            this.cbxNextMonthPay.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.cbxNextMonthPay.Location = new System.Drawing.Point(178, 108);
-            this.cbxNextMonthPay.Name = "cbxNextMonthPay";
-            this.cbxNextMonthPay.Size = new System.Drawing.Size(198, 25);
-            this.cbxNextMonthPay.TabIndex = 7;
-            this.cbxNextMonthPay.Text = "Uplata za naredni mesec";
-            this.cbxNextMonthPay.UseVisualStyleBackColor = true;
             // 
             // txtDinner
             // 
@@ -1037,44 +1028,44 @@ namespace MensariumDesktop
             this.label20.Text = "Večera";
             this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblBreakfast
+            // UPLATA_lblBreakfast
             // 
-            this.lblBreakfast.AutoSize = true;
-            this.lblBreakfast.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblBreakfast.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.lblBreakfast.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblBreakfast.Location = new System.Drawing.Point(103, 0);
-            this.lblBreakfast.Name = "lblBreakfast";
-            this.lblBreakfast.Size = new System.Drawing.Size(44, 35);
-            this.lblBreakfast.TabIndex = 5;
-            this.lblBreakfast.Text = "7";
-            this.lblBreakfast.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.UPLATA_lblBreakfast.AutoSize = true;
+            this.UPLATA_lblBreakfast.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_lblBreakfast.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.UPLATA_lblBreakfast.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UPLATA_lblBreakfast.Location = new System.Drawing.Point(103, 0);
+            this.UPLATA_lblBreakfast.Name = "UPLATA_lblBreakfast";
+            this.UPLATA_lblBreakfast.Size = new System.Drawing.Size(44, 35);
+            this.UPLATA_lblBreakfast.TabIndex = 5;
+            this.UPLATA_lblBreakfast.Text = "7";
+            this.UPLATA_lblBreakfast.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lblLunch
+            // UPLATA_lblLunch
             // 
-            this.lblLunch.AutoSize = true;
-            this.lblLunch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.lblLunch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblLunch.Location = new System.Drawing.Point(103, 35);
-            this.lblLunch.Name = "lblLunch";
-            this.lblLunch.Size = new System.Drawing.Size(44, 35);
-            this.lblLunch.TabIndex = 8;
-            this.lblLunch.Text = "3";
-            this.lblLunch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.UPLATA_lblLunch.AutoSize = true;
+            this.UPLATA_lblLunch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_lblLunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.UPLATA_lblLunch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UPLATA_lblLunch.Location = new System.Drawing.Point(103, 35);
+            this.UPLATA_lblLunch.Name = "UPLATA_lblLunch";
+            this.UPLATA_lblLunch.Size = new System.Drawing.Size(44, 35);
+            this.UPLATA_lblLunch.TabIndex = 8;
+            this.UPLATA_lblLunch.Text = "3";
+            this.UPLATA_lblLunch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lblDinner
+            // UPLATA_lblDinner
             // 
-            this.lblDinner.AutoSize = true;
-            this.lblDinner.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDinner.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.lblDinner.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblDinner.Location = new System.Drawing.Point(103, 70);
-            this.lblDinner.Name = "lblDinner";
-            this.lblDinner.Size = new System.Drawing.Size(44, 35);
-            this.lblDinner.TabIndex = 9;
-            this.lblDinner.Text = "12";
-            this.lblDinner.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.UPLATA_lblDinner.AutoSize = true;
+            this.UPLATA_lblDinner.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UPLATA_lblDinner.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.UPLATA_lblDinner.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UPLATA_lblDinner.Location = new System.Drawing.Point(103, 70);
+            this.UPLATA_lblDinner.Name = "UPLATA_lblDinner";
+            this.UPLATA_lblDinner.Size = new System.Drawing.Size(44, 35);
+            this.UPLATA_lblDinner.TabIndex = 9;
+            this.UPLATA_lblDinner.Text = "12";
+            this.UPLATA_lblDinner.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox3
             // 
@@ -1137,7 +1128,7 @@ namespace MensariumDesktop
             // 
             this.panel4.BackColor = System.Drawing.Color.Transparent;
             this.panel4.Controls.Add(this.tableLayoutPanel3);
-            this.panel4.Controls.Add(this.pbxCardUser);
+            this.panel4.Controls.Add(this.UPLATA_picLoadedUser);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 35);
             this.panel4.Name = "panel4";
@@ -1150,13 +1141,13 @@ namespace MensariumDesktop
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.lblCardUserName, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.lblCardUserFax, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.lblCardUserDatebirth, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.lblCardUserIndex, 0, 3);
-            this.tableLayoutPanel3.Controls.Add(this.lblCardUserValidUntil, 0, 4);
+            this.tableLayoutPanel3.Controls.Add(this.UPLATA_lblCardUserName, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.UPLATA_lblCardUserFax, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.UPLATA_lblCardUserDatebirth, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.UPLATA_lblCardUserIndex, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.UPLATA_lblCardUserValidUntil, 0, 4);
             this.tableLayoutPanel3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(118, 13);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(148, 13);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 5;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -1164,71 +1155,73 @@ namespace MensariumDesktop
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(964, 131);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(934, 131);
             this.tableLayoutPanel3.TabIndex = 6;
             // 
-            // lblCardUserName
+            // UPLATA_lblCardUserName
             // 
-            this.lblCardUserName.AutoSize = true;
-            this.lblCardUserName.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCardUserName.Location = new System.Drawing.Point(3, 0);
-            this.lblCardUserName.Name = "lblCardUserName";
-            this.lblCardUserName.Size = new System.Drawing.Size(116, 25);
-            this.lblCardUserName.TabIndex = 7;
-            this.lblCardUserName.Text = "Ime Prezime";
+            this.UPLATA_lblCardUserName.AutoSize = true;
+            this.UPLATA_lblCardUserName.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UPLATA_lblCardUserName.Location = new System.Drawing.Point(3, 0);
+            this.UPLATA_lblCardUserName.Name = "UPLATA_lblCardUserName";
+            this.UPLATA_lblCardUserName.Size = new System.Drawing.Size(116, 25);
+            this.UPLATA_lblCardUserName.TabIndex = 7;
+            this.UPLATA_lblCardUserName.Text = "Ime Prezime";
             // 
-            // lblCardUserFax
+            // UPLATA_lblCardUserFax
             // 
-            this.lblCardUserFax.AutoSize = true;
-            this.lblCardUserFax.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCardUserFax.Location = new System.Drawing.Point(3, 25);
-            this.lblCardUserFax.Name = "lblCardUserFax";
-            this.lblCardUserFax.Size = new System.Drawing.Size(77, 25);
-            this.lblCardUserFax.TabIndex = 8;
-            this.lblCardUserFax.Text = "Fakultet";
+            this.UPLATA_lblCardUserFax.AutoSize = true;
+            this.UPLATA_lblCardUserFax.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UPLATA_lblCardUserFax.Location = new System.Drawing.Point(3, 25);
+            this.UPLATA_lblCardUserFax.Name = "UPLATA_lblCardUserFax";
+            this.UPLATA_lblCardUserFax.Size = new System.Drawing.Size(77, 25);
+            this.UPLATA_lblCardUserFax.TabIndex = 8;
+            this.UPLATA_lblCardUserFax.Text = "Fakultet";
             // 
-            // lblCardUserDatebirth
+            // UPLATA_lblCardUserDatebirth
             // 
-            this.lblCardUserDatebirth.AutoSize = true;
-            this.lblCardUserDatebirth.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCardUserDatebirth.Location = new System.Drawing.Point(3, 50);
-            this.lblCardUserDatebirth.Name = "lblCardUserDatebirth";
-            this.lblCardUserDatebirth.Size = new System.Drawing.Size(138, 25);
-            this.lblCardUserDatebirth.TabIndex = 9;
-            this.lblCardUserDatebirth.Text = "Datum rođenja";
+            this.UPLATA_lblCardUserDatebirth.AutoSize = true;
+            this.UPLATA_lblCardUserDatebirth.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UPLATA_lblCardUserDatebirth.Location = new System.Drawing.Point(3, 50);
+            this.UPLATA_lblCardUserDatebirth.Name = "UPLATA_lblCardUserDatebirth";
+            this.UPLATA_lblCardUserDatebirth.Size = new System.Drawing.Size(138, 25);
+            this.UPLATA_lblCardUserDatebirth.TabIndex = 9;
+            this.UPLATA_lblCardUserDatebirth.Text = "Datum rođenja";
             // 
-            // lblCardUserIndex
+            // UPLATA_lblCardUserIndex
             // 
-            this.lblCardUserIndex.AutoSize = true;
-            this.lblCardUserIndex.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCardUserIndex.Location = new System.Drawing.Point(3, 75);
-            this.lblCardUserIndex.Name = "lblCardUserIndex";
-            this.lblCardUserIndex.Size = new System.Drawing.Size(58, 25);
-            this.lblCardUserIndex.TabIndex = 10;
-            this.lblCardUserIndex.Text = "Index";
+            this.UPLATA_lblCardUserIndex.AutoSize = true;
+            this.UPLATA_lblCardUserIndex.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UPLATA_lblCardUserIndex.Location = new System.Drawing.Point(3, 75);
+            this.UPLATA_lblCardUserIndex.Name = "UPLATA_lblCardUserIndex";
+            this.UPLATA_lblCardUserIndex.Size = new System.Drawing.Size(58, 25);
+            this.UPLATA_lblCardUserIndex.TabIndex = 10;
+            this.UPLATA_lblCardUserIndex.Text = "Index";
             // 
-            // lblCardUserValidUntil
+            // UPLATA_lblCardUserValidUntil
             // 
-            this.lblCardUserValidUntil.AutoSize = true;
-            this.lblCardUserValidUntil.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCardUserValidUntil.Location = new System.Drawing.Point(3, 100);
-            this.lblCardUserValidUntil.Name = "lblCardUserValidUntil";
-            this.lblCardUserValidUntil.Size = new System.Drawing.Size(209, 25);
-            this.lblCardUserValidUntil.TabIndex = 11;
-            this.lblCardUserValidUntil.Text = "Validna do: dd.mm.yyyy";
+            this.UPLATA_lblCardUserValidUntil.AutoSize = true;
+            this.UPLATA_lblCardUserValidUntil.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UPLATA_lblCardUserValidUntil.Location = new System.Drawing.Point(3, 100);
+            this.UPLATA_lblCardUserValidUntil.Name = "UPLATA_lblCardUserValidUntil";
+            this.UPLATA_lblCardUserValidUntil.Size = new System.Drawing.Size(209, 25);
+            this.UPLATA_lblCardUserValidUntil.TabIndex = 11;
+            this.UPLATA_lblCardUserValidUntil.Text = "Validna do: dd.mm.yyyy";
             // 
-            // pbxCardUser
+            // UPLATA_picLoadedUser
             // 
-            this.pbxCardUser.BackColor = System.Drawing.Color.Transparent;
-            this.pbxCardUser.BackgroundImage = global::MensariumDesktop.Properties.Resources.user_3;
-            this.pbxCardUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbxCardUser.ErrorImage = global::MensariumDesktop.Properties.Resources.user_3;
-            this.pbxCardUser.InitialImage = null;
-            this.pbxCardUser.Location = new System.Drawing.Point(12, 13);
-            this.pbxCardUser.Name = "pbxCardUser";
-            this.pbxCardUser.Size = new System.Drawing.Size(100, 100);
-            this.pbxCardUser.TabIndex = 0;
-            this.pbxCardUser.TabStop = false;
+            this.UPLATA_picLoadedUser.BackColor = System.Drawing.Color.Transparent;
+            this.UPLATA_picLoadedUser.BackgroundImage = global::MensariumDesktop.Properties.Resources.user_3;
+            this.UPLATA_picLoadedUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.UPLATA_picLoadedUser.ErrorImage = global::MensariumDesktop.Properties.Resources.user_3;
+            this.UPLATA_picLoadedUser.InitialImage = null;
+            this.UPLATA_picLoadedUser.Location = new System.Drawing.Point(11, 13);
+            this.UPLATA_picLoadedUser.Name = "UPLATA_picLoadedUser";
+            this.UPLATA_picLoadedUser.Size = new System.Drawing.Size(131, 131);
+            this.UPLATA_picLoadedUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.UPLATA_picLoadedUser.TabIndex = 0;
+            this.UPLATA_picLoadedUser.TabStop = false;
+            this.UPLATA_picLoadedUser.Paint += new System.Windows.Forms.PaintEventHandler(this.UPLATA_picLoadedUser_Paint);
             // 
             // tabNaplata
             // 
@@ -2239,6 +2232,15 @@ namespace MensariumDesktop
             this.bgWorkerLoading.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorkerLoading_DoWork);
             this.bgWorkerLoading.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorkerLoading_RunWorkerCompleted);
             // 
+            // imageListOPStatus
+            // 
+            this.imageListOPStatus.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListOPStatus.ImageStream")));
+            this.imageListOPStatus.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListOPStatus.Images.SetKeyName(0, "error.png");
+            this.imageListOPStatus.Images.SetKeyName(1, "success.png");
+            this.imageListOPStatus.Images.SetKeyName(2, "working.png");
+            this.imageListOPStatus.Images.SetKeyName(3, "internet.png");
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2289,7 +2291,7 @@ namespace MensariumDesktop
             this.panel4.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxCardUser)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UPLATA_picLoadedUser)).EndInit();
             this.tabNaplata.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
@@ -2375,29 +2377,28 @@ namespace MensariumDesktop
         private System.Windows.Forms.Button HOME_btnProfile;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Label lblCardUserName;
-        private System.Windows.Forms.Label lblCardUserFax;
-        private System.Windows.Forms.Label lblCardUserDatebirth;
-        private System.Windows.Forms.PictureBox pbxCardUser;
-        private System.Windows.Forms.Button btnLoadCard;
-        private System.Windows.Forms.Label lblCardUserIndex;
-        private System.Windows.Forms.Label lblCardUserValidUntil;
+        private System.Windows.Forms.Label UPLATA_lblCardUserName;
+        private System.Windows.Forms.Label UPLATA_lblCardUserFax;
+        private System.Windows.Forms.Label UPLATA_lblCardUserDatebirth;
+        private System.Windows.Forms.PictureBox UPLATA_picLoadedUser;
+        private System.Windows.Forms.Button UPLATA_btnLoadCard;
+        private System.Windows.Forms.Label UPLATA_lblCardUserIndex;
+        private System.Windows.Forms.Label UPLATA_lblCardUserValidUntil;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button btnExecutePay;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label lblBreakfast;
-        private System.Windows.Forms.Label lblLunch;
-        private System.Windows.Forms.Label lblDinner;
+        private System.Windows.Forms.Label UPLATA_lblBreakfast;
+        private System.Windows.Forms.Label UPLATA_lblLunch;
+        private System.Windows.Forms.Label UPLATA_lblDinner;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.TextBox txtDinner;
         private System.Windows.Forms.TextBox txtLunch;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.TextBox txtBreakfast;
-        private System.Windows.Forms.CheckBox cbxNextMonthPay;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -2481,6 +2482,7 @@ namespace MensariumDesktop
         private System.Windows.Forms.DataGridViewTextBoxColumn dgFaculty;
         private System.Windows.Forms.DataGridViewTextBoxColumn Index;
         private System.ComponentModel.BackgroundWorker bgWorkerLoading;
+        private System.Windows.Forms.ImageList imageListOPStatus;
     }
 }
 
