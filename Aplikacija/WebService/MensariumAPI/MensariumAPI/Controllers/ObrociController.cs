@@ -383,6 +383,35 @@ namespace MensariumAPI.Controllers
             }
         }
 
-        
+        [HttpGet]
+        [Route("cena")]
+        public KorisnikStanjeDto VratiCenuObroka([FromUri]string sid)
+        {
+            
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
+
+                //za demo
+                return new KorisnikStanjeDto() { BrojDorucka = 40, BrojRuckova = 72, BrojVecera = 59 };
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
     }
 }

@@ -660,6 +660,18 @@ namespace MensariumDesktop.Model.Controllers
                 throw new Exception("UndoAddMeals: Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: " 
                     + response.HttpStatusCode);
         }
+        public static KorisnikStanjeDto GetMealPrices()
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "obroci/cena";
+
+            var response = Execute<KorisnikStanjeDto>(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetMeal Prices: Neuspesno pribavljanje cene o obrocima" + "\nServerResponse: "
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
+
+            return response.ResponseObject;
+        }
         #endregion
 
         #region OBJAVE

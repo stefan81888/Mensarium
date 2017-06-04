@@ -34,7 +34,10 @@ namespace MensariumDesktop
             HOME_lblCurrentUserLName.Text = MSettings.CurrentSession.LoggedUser.LastName;
             HOME_lblCurrentUserAccType.Text = MSettings.CurrentSession.LoggedUser.AccountType.ToString();
             HOME_picCurrentUser.Image = MSettings.CurrentSession.LoggedUser.ProfilePicture;
-            
+            UPLATA_lblBreakfastPrice.Text = MSettings.PriceBreakfast.ToString();
+            UPLATA_lblLunchPrice.Text = MSettings.PriceLunch.ToString();
+            UPLATA_lblDinnerPrice.Text = MSettings.PriceDinner.ToString();
+
             //TO-DO: CURRENT MENSA
             HOME_lblCurrentLocation.Text = MSettings.CurrentMensa.Name;
             HOME_lblCurrentLocationAddress.Text = MSettings.CurrentMensa.Location;
@@ -129,14 +132,6 @@ namespace MensariumDesktop
         }
         private void dEBUGMEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var j = new RestSharp.Deserializers.JsonDeserializer();
-            RestResponse r = new RestResponse();
-            r.Content = "{\"BrojDorucka\": 25,\"BrojRuckova\": 1,\"BrojVecera\": 0}\"";
-            r.ContentType = "application/json";
-            
-            KorisnikStanjeDto k = j.Deserialize<KorisnikStanjeDto>(r);
-            
-
             //try { pcbCurrentUser.Image = Api.GetUserImage(2); } catch (Exception exception) { MessageBox.Show(exception.Message); }
             //try { Api.FollowUser(9); } catch (Exception exception) { MessageBox.Show(exception.Message); } //forbidden
             //try { Api.AndroidUserRegistration(new ClientZaRegistracijuDto()); } catch (Exception exception) { MessageBox.Show(exception.Message); } 
@@ -166,6 +161,10 @@ namespace MensariumDesktop
         private void HOME_btnSettings_Click(object sender, EventArgs e)
         {
             STATUS_statbarSettings.PerformClick();
+        }
+        private void HOME_btnProfile_Click(object sender, EventArgs e)
+        {
+            STATUS_statbarUserProfile.PerformClick();
         }
         #endregion
 
@@ -209,6 +208,69 @@ namespace MensariumDesktop
             OpStatusIdle();
 
             UPLATA_RefreshCardInfo();
+        }
+        private void UPLATA_picLoadedUser_Paint(object sender, PaintEventArgs e)
+        {
+            MUtility.RoundPictureBox(sender as PictureBox);
+        }
+        private void UPLATA_btnExecutePay_Click(object sender, EventArgs e)
+        {
+            if (MainController.LoadedCardUser == null)
+                return;
+            OpStatusWorking();
+            int b, l, d;
+            bool succ = true;
+            succ &= int.TryParse(UPLATA_txtBreakfast.Text, out b);
+            succ &= int.TryParse(UPLATA_txtLunch.Text, out l);
+            succ &= int.TryParse(UPLATA_txtDinner.Text, out d);
+            if (!succ)
+            {
+                MUtility.ShowError("Nisu svi uneti podaci validni");
+                return;
+            }
+            MainController.AddUserMeals(MainController.LoadedCardUser, b, l, d);
+            MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
+            UPLATA_RefreshCardInfo(true);
+            OpStatusIdle();
+
+            UPLATA_txtBreakfast.Text = "0";
+            UPLATA_txtLunch.Text = "0";
+            UPLATA_txtDinner.Text = "0";
+        }
+        private void UPLATA_txtBreakfast_TextChanged(object sender, EventArgs e)
+        {
+            UPLATA_RefreshNCalucatePrice();
+        }
+        private void UPLATA_txtLunch_TextChanged(object sender, EventArgs e)
+        {
+            UPLATA_RefreshNCalucatePrice();
+        }
+        private void UPLATA_txtDinner_TextChanged(object sender, EventArgs e)
+        {
+            UPLATA_RefreshNCalucatePrice();
+        }
+
+        private void UPLATA_RefreshNCalucatePrice()
+        {
+            UPLATA_lblBreakfastCount.Text = UPLATA_txtBreakfast.Text;
+            UPLATA_lblLunchCount.Text = UPLATA_txtLunch.Text;
+            UPLATA_lblDinnerCount.Text = UPLATA_txtDinner.Text;
+            UPLATA_CalucatePrice();
+        }
+        private void UPLATA_CalucatePrice()
+        {
+            int Total = 0, b,l,d;
+
+            int.TryParse(UPLATA_lblBreakfastCount.Text, out b);
+            int.TryParse(UPLATA_lblLunchCount.Text, out l);
+            int.TryParse(UPLATA_lblDinnerCount.Text, out d);
+
+            UPLATA_txtBreakfastTotal.Text = (MSettings.PriceBreakfast * b).ToString();
+            UPLATA_txtLunchTotal.Text = (MSettings.PriceLunch * l).ToString();
+            UPLATA_txtDinnerTotal.Text = (MSettings.PriceDinner * d).ToString();
+
+            Total = MSettings.PriceBreakfast * b + MSettings.PriceLunch * l + MSettings.PriceDinner * d;
+            UPLATA_lblTotalPrice.Text = Total.ToString() + " din";
         }
         #endregion
 
@@ -263,38 +325,17 @@ namespace MensariumDesktop
                 tabControls.TabPages.Insert(3, tabUsers);
             }  
         }
-        #endregion
         private void HOME_picCurrentUser_Paint(object sender, PaintEventArgs e)
         {
             MUtility.RoundPictureBox(sender as PictureBox);
         }
 
-        private void UPLATA_picLoadedUser_Paint(object sender, PaintEventArgs e)
-        {
-            MUtility.RoundPictureBox(sender as PictureBox);
-        }
 
-        private void btnExecutePay_Click(object sender, EventArgs e)
-        {
-            OpStatusWorking();
-            int b, l, d;
-            bool succ = true;
-            succ &= int.TryParse(UPLATA_txtBreakfast.Text, out b);
-            succ &= int.TryParse(UPLATA_txtLunch.Text, out l);
-            succ &= int.TryParse(UPLATA_txtDinner.Text, out d);
-            if (!succ)
-            {
-                MUtility.ShowError("Nisu svi uneti podaci validni");
-                return;
-            }
-            MainController.AddUserMeals(MainController.LoadedCardUser, b, l, d);
-            MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
-            UPLATA_RefreshCardInfo(true);
-            OpStatusIdle();
+        #endregion
 
-            UPLATA_txtBreakfast.Text = "0";
-            UPLATA_txtLunch.Text = "0";
-            UPLATA_txtDinner.Text = "0";
+        private void UPLATA_txtLunchTotal_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

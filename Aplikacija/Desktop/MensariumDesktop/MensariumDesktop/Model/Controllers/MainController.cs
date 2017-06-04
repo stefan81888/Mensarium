@@ -26,6 +26,7 @@ namespace MensariumDesktop.Model.Controllers
         {
             Faculty.UpdateFacultyList(); 
             Mensa.UpdateMensaList();
+            Mensa.LoadPrices();
             MSettings.LoadSettings();
         }
         public static void Shutdown()
@@ -88,7 +89,6 @@ namespace MensariumDesktop.Model.Controllers
             }
             return true;
         }
-
 
         public static bool ChangeServerIP(string newIP)
         {
