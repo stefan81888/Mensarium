@@ -20,6 +20,8 @@ namespace MensariumAPI.Podaci.Mapiranja
             Map(x => x.Lokacija, "lokacija").Not.Nullable();
             Map(x => x.RadnoVreme, "radnoVreme");
             Map(x => x.VanrednoNeRadi, "vanrednoNeRadi").Not.Nullable();
+            Map(x => x.GpsLat, "gps_lat");
+            Map(x => x.GpsLon, "gps_long");
 
             //Menze <- Obroci
             HasMany(x => x.ObjaveKorisnika)
