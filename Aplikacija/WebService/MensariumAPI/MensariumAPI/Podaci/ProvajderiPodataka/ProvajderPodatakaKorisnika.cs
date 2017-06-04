@@ -331,9 +331,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             pozivalac.Pozivi.Add(poziv);
 
             //prebaciti izmedju prethodnih foreach petlji
-
-            s.Save(pozivalac);
             s.Save(poziv);
+            s.Save(pozivalac);
+           
 
             foreach (var v in pozvani)
             {
@@ -827,8 +827,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             pozivalac.Pozivi.Add(poziv);
 
-            s.Save(pozivalac);
             s.Save(poziv);
+            s.Save(pozivalac);
+           
 
             s.Flush();
 
@@ -837,12 +838,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (p.Count == 0)
                 return null;
 
-            Pozivanje po = p.Find(x => x.Pozivaoc == pozivalac && x.DatumPoziva == poziv.DatumPoziva);
+            Pozivanje po = p.Find(x => x.Pozivaoc.IdKorisnika == pozivalac.IdKorisnika && x.DatumPoziva == poziv.DatumPoziva);
 
             if (po == null)
                 return null;
 
             pfdto.IdPoziva = po.IdPoziva;
+            pfdto.IdPozivaoca = po.Pozivaoc.IdKorisnika;
+            
 
             return pfdto;
         }
