@@ -946,5 +946,36 @@ namespace MensariumAPI.Controllers
             }
         }
 
+        //Sms uplata
+        [HttpPost]
+        [Route("uplata/sms")]
+        public IHttpActionResult SmsUplata([FromUri] int id, [FromUri] int brojObroka, [FromUri] string tip)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                bool status = ProvajderPodatakaObroka.UplatiObrok(id, brojObroka,
+                    ProvajderPodatakaObroka.SmsUplate[tip]);
+
+                if (status)
+                    return Ok("Uplata uspesna");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Neispravna uplata") });
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
     }
 }
