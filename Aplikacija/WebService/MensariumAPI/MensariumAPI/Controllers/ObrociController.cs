@@ -79,7 +79,7 @@ namespace MensariumAPI.Controllers
                 List<Obrok> listaObroka = ProvajderPodatakaObroka.VratiObroke();
                 List<ObrokFullDto> listaObrokaFull = new List<ObrokFullDto>(listaObroka.Count);
 
-                if (listaObroka == null)
+                if (listaObroka.Count == 0)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
 
 
@@ -235,11 +235,11 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
 
-                List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(id).ToList();
+                List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(id);
                 List<ObrokDanasUplacenDto> listaDanasUplacenihObroka = new List<ObrokDanasUplacenDto>(danasUplaceniObrociOvogKorisnika.Count);
 
-                if (danasUplaceniObrociOvogKorisnika == null)
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
+                //if (danasUplaceniObrociOvogKorisnika.Count == 0)
+                //    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
 
 
                 foreach (Obrok o in danasUplaceniObrociOvogKorisnika)
@@ -261,7 +261,6 @@ namespace MensariumAPI.Controllers
                     throw e;
                 DnevnikIzuzetaka.Zabelezi(e);
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
-			
             }
             finally
             {
@@ -281,11 +280,11 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
 
-                List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(id).ToList();
+                List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(id);
                 List<ObrokDanasSkinutDto> listaDanasSkinutihObroka = new List<ObrokDanasSkinutDto>(danasSkinutiObrociOvogKorisnika.Count);
 
-                if (danasSkinutiObrociOvogKorisnika == null)
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
+                //if (danasSkinutiObrociOvogKorisnika.Count == 0)
+                //    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
 
 
                 foreach (Obrok o in danasSkinutiObrociOvogKorisnika)
@@ -315,7 +314,7 @@ namespace MensariumAPI.Controllers
 
         [HttpPut]
         [Route("vratiPogresnoSkinute")]
-        public IHttpActionResult VratiPogresnoSkinuteObroke([FromUri]int[] obrokId, [FromUri]string sid)
+        public IHttpActionResult VratiPogresnoSkinuteObroke([FromUri]int id, [FromUri]string sid)
         {
             try
             {
@@ -324,9 +323,8 @@ namespace MensariumAPI.Controllers
                 if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaObrok))
                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
                 
-                for (int i = 0; i < obrokId.Count(); ++i)
-                {
-                    Obrok o = ProvajderPodatakaObroka.VratiObrok(obrokId[i]);
+                
+                    Obrok o = ProvajderPodatakaObroka.VratiObrok(id);
                     if (o != null && ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(o.Uplatilac.IdKorisnika).Contains(o))
                     {
                         o.DatumIskoriscenja = null;
@@ -335,7 +333,7 @@ namespace MensariumAPI.Controllers
 
                         ProvajderPodatakaObroka.UpdateObrok(o);
                     }
-                }
+                
                 return Ok("Korekcija uspesno obavljena.");
             }
             catch (Exception e)
@@ -353,7 +351,7 @@ namespace MensariumAPI.Controllers
 
         [HttpPut]
         [Route("skiniPogresnoUplacene")]
-        public IHttpActionResult SkiniPogresnoUplaceneObroke([FromUri]int[] obrokId, [FromUri]string sid)
+        public IHttpActionResult SkiniPogresnoUplaceneObroke([FromUri]int id, [FromUri]string sid)
         {
             try
             {
@@ -362,12 +360,12 @@ namespace MensariumAPI.Controllers
                 if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.BrisanjeObrok))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
-                for (int i = 0; i < obrokId.Count(); ++i)
-                {
-                    Obrok o = ProvajderPodatakaObroka.VratiObrok(obrokId[i]);
+                
+                
+                    Obrok o = ProvajderPodatakaObroka.VratiObrok(id);
                     if (o != null && ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(o.Uplatilac.IdKorisnika).Contains(o))
-                        ProvajderPodatakaObroka.ObrisiObrok(obrokId[i]);
-                }
+                        ProvajderPodatakaObroka.ObrisiObrok(id);
+                
                 return Ok("Korekcija uspesno obavljena.");
             }
             catch (Exception e)

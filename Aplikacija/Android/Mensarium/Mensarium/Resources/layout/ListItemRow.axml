@@ -12,7 +12,7 @@
         android:layout_marginTop="10dp"
         android:background="#395056"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
+        android:paddingBottom="10dp"
         android:paddingTop="20dp"
         android:layout_marginBottom="10dp">
         <LinearLayout
@@ -23,16 +23,18 @@
             android:paddingRight="15dp">
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/FeedProfilSlika"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/user"
                 app:civ_border_width="2dp"
-                app:civ_border_color="@color/SeparatorLine" />
+                app:civ_border_color="@color/SeparatorLine"
+                android:layout_marginLeft="10dp" />
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="10dp">
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp">
                 <TextView
                     android:id="@+id/FeedIme"
                     android:layout_width="fill_parent"
@@ -55,11 +57,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:paddingLeft="15dp"
+            android:paddingLeft="20dp"
             android:paddingRight="15dp"
             android:paddingTop="20dp"
             android:text="STATUS"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:textColor="#c5c9cc" />
     </LinearLayout>
 </LinearLayout>

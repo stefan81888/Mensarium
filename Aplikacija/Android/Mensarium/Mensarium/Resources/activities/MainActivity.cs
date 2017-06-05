@@ -41,7 +41,20 @@ namespace Mensarium
 
             this.check = FindViewById<CheckBox>(Resource.Id.checkRemember);
 
+            FindViewById<TextView>(Resource.Id.forgotPassword).Click += ForgotOnClick;
+
             ProbajDaUcitasKorisnika();
+        }
+
+        private void ForgotOnClick(object sender, EventArgs eventArgs)
+        {
+            var alert = new AlertDialog.Builder(this);
+            alert.SetTitle("Oh ne!");
+            alert.SetPositiveButton("U redu", (o, args) => { alert.Dispose(); });
+
+            alert.SetMessage("Nista ne brinite!\n\nRadi resetovanja sifre, javite se nasem adminu na mail:\n\ndalibor.aleksic.dacha@gmail.com");
+
+            alert.Show();
         }
 
         private void ProbajDaUcitasKorisnika()
@@ -111,6 +124,7 @@ namespace Mensarium
                     //if (!Api.LogoutUser(MSettings.CurrentSession.SessionID))
                     //    throw new Exception("Neuspesno ciscenje logovanja");
                     var intent = new Intent(this, typeof(MainSwipePage));
+                    intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
                     StartActivity(intent);
 
                     alert.Dismiss();
@@ -119,6 +133,8 @@ namespace Mensarium
 
                     if (check.Checked)
                         ZapamtiKorisnika(clog.KIme_Mail, clog.Sifra);
+
+                    this.Finish();
                 }
                 else
                 {
@@ -133,7 +149,7 @@ namespace Mensarium
                 alert.Dismiss();
                 MSettings.CurrentSession = null;
                 //Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
-                RunOnUiThread(() => Toast.MakeText(this, ex.Message, ToastLength.Short).Show());
+                RunOnUiThread(() => Toast.MakeText(this, "Nepravilno korisnicko ime ili lozinka!", ToastLength.Short).Show());
             }
         }
     }

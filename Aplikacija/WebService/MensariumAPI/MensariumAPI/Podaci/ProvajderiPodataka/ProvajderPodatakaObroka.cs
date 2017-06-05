@@ -147,9 +147,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 .Where(k => k.Iskoriscen == false)
                 .Where(k => k.DatumIskoriscenja == null)
                 .Where(k => k.LokacijaIskoriscenja == null).ToList();
-            if (danasUplaceni.Count > 0)
+            //if (danasUplaceni.Count > 0)
                 return danasUplaceni.ToList();
-            return null;
+            //return null;
         }
 
         public static List<Obrok> DanasSkinutiObrociKorisnika(int idKorisnika)
@@ -162,9 +162,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 .Where(k => k.Uplatilac.IdKorisnika == idKorisnika)
                 .Where(k => k.DatumIskoriscenja <= DateTime.Now)
                 .Where(k => k.DatumIskoriscenja >= danasPonoc).ToList();
-            if (danasSkinuti.Count > 0)
+            //if (danasSkinuti.Count > 0)
                 return danasSkinuti.ToList();
-            return null;
+            //return null;
         }
         
     }

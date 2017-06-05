@@ -11,9 +11,16 @@ namespace MensariumDesktop.Model.Components
     {
         public int Id { get; set; }
         public DateTime DateAdded { get; set; }
-        public Mensa.MealType Type { get; set; }
+        public MealType Type { get; set; }
         public Mensa MensaAdded { get; set; }
 
         public string MensaName { get { return MensaAdded.Name; } }
+    }
+
+    public enum MealType
+    {
+        Dorucak = 1,
+        Rucak,
+        Vecera
     }
 }

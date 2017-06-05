@@ -95,6 +95,7 @@ namespace MensariumDesktop.Model.Controllers
             try
             {
                 MSettings.Server.IP = newIP;
+                Api.UpdateBaseUrl();
                 return true;
             }
             catch(Exception e)
@@ -108,6 +109,7 @@ namespace MensariumDesktop.Model.Controllers
             try
             {
                 MSettings.Server.Port = newPort;
+                Api.UpdateBaseUrl();
                 return true;
             }
             catch (Exception e)
@@ -146,7 +148,7 @@ namespace MensariumDesktop.Model.Controllers
                 MUtility.ShowException(ex);
             }
         }
-        public static void AddUserMeal(Student s, Mensa.MealType type, int count)
+        public static void AddUserMeal(Student s, MealType type, int count)
         {
             if (count <= 0)
                 return;
@@ -169,11 +171,46 @@ namespace MensariumDesktop.Model.Controllers
         }
         public static void AddUserMeals(Student s, int breakfast, int lunch, int dinner)
         {
-            AddUserMeal(s, Mensa.MealType.Dorucak, breakfast);
-            AddUserMeal(s, Mensa.MealType.Rucak, lunch);
-            AddUserMeal(s, Mensa.MealType.Vecera, dinner);
+            AddUserMeal(s, MealType.Dorucak, breakfast);
+            AddUserMeal(s, MealType.Rucak, lunch);
+            AddUserMeal(s, MealType.Vecera, dinner);
         }
 
+        public static bool UndoAddMeals(MealTodayAdded meal)
+        {
+            try
+            {
+                Api.UndoAddMeals(meal.Id);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+        }
+
+        public static bool UseMeal(MealType type)
+        {
+            try
+            {
+
+                ObrokNaplataDto o = new ObrokNaplataDto();
+                o.BrojObroka = 1;
+                o.IdKorisnika = MainController.LoadedCardUser.UserID;
+                o.IdLokacijeIskoriscenja = MSettings.CurrentMensa.MensaID;
+                o.IdTipa = (int) type;
+
+                Api.UseMeal(o);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+
+        }
         public static List<MealTodayAdded> GetReclamationMeals(Student s)
         {
             try
@@ -186,7 +223,7 @@ namespace MensariumDesktop.Model.Controllers
                     {
                         Id = obrok.IdObroka,
                         DateAdded = obrok.DatumUplacivanja,
-                        Type = (Mensa.MealType)obrok.IdTipaObroka,
+                        Type = (MealType)obrok.IdTipaObroka,
                         MensaAdded = Mensa.Mensas.Find(x => x.MensaID == obrok.IdTipaObroka)
                     });
                 }

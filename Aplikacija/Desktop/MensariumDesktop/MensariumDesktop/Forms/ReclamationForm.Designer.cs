@@ -309,10 +309,11 @@
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(203, 35);
             this.btnExecute.TabIndex = 15;
-            this.btnExecute.Text = " Izvrši reklamaciju";
+            this.btnExecute.Text = "Obriši obrok";
             this.btnExecute.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnExecute.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExecute.UseVisualStyleBackColor = true;
+            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
             // ReclamationForm
             // 
