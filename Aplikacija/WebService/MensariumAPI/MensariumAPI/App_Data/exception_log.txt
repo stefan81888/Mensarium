@@ -274,6 +274,7 @@ Parameter name: index
 [6/2/2017 21:20:34]	System.Web.Http.HttpResponseException: Processing of the HTTP request resulted in an exception. Please see the HTTP response returned by the 'Response' property of this exception for details.
    at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 621
    at MensariumAPI.Controllers.KorisniciController.SlikaKorisnika(String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 738
+<<<<<<< Updated upstream
 [6/4/2017 21:52:07]	System.NullReferenceException: Object reference not set to an instance of an object.
    at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
    at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in E:\[Personal Stuff]\[FAX]\PROJEKAT\MensariumGit\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
@@ -330,3 +331,91 @@ Parameter name: index
    at MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
    at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
    at NHibernate.Id.Insert.AbstractSelectingDelegate.PerformInsert(SqlCommandInfo insertSQL, ISessionImplementor session, IBinder binder)
+=======
+<<<<<<< Updated upstream
+[4.6.2017 21:11:12]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 181
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[4.6.2017 21:12:13]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 181
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+=======
+[03.06.2017. 18.22.20]	NHibernate.PropertyValueException: not-null property references a null or transient value MensariumAPI.Podaci.Entiteti.Korisnik.Sifra
+   at NHibernate.Engine.Nullability.CheckNullability(Object[] values, IEntityPersister persister, Boolean isUpdate)
+   at NHibernate.Event.Default.DefaultFlushEntityEventListener.ScheduleUpdate(FlushEntityEvent event)
+   at NHibernate.Event.Default.DefaultFlushEntityEventListener.OnFlushEntity(FlushEntityEvent event)
+   at NHibernate.Event.Default.AbstractFlushingEventListener.FlushEntities(FlushEvent event)
+   at NHibernate.Event.Default.AbstractFlushingEventListener.FlushEverythingToExecutions(FlushEvent event)
+   at NHibernate.Event.Default.DefaultFlushEventListener.OnFlush(FlushEvent event)
+   at NHibernate.Impl.SessionImpl.Flush()
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.UpdateKorisnika(Korisnik k) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 84
+   at MensariumAPI.Controllers.KorisniciController.UpdateKorisnika(ClientZaRegistracijuDto klijentReg) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 262
+[03.06.2017. 18.23.38]	NHibernate.PropertyValueException: not-null property references a null or transient value MensariumAPI.Podaci.Entiteti.Korisnik.Sifra
+   at NHibernate.Engine.Nullability.CheckNullability(Object[] values, IEntityPersister persister, Boolean isUpdate)
+   at NHibernate.Event.Default.DefaultFlushEntityEventListener.ScheduleUpdate(FlushEntityEvent event)
+   at NHibernate.Event.Default.DefaultFlushEntityEventListener.OnFlushEntity(FlushEntityEvent event)
+   at NHibernate.Event.Default.AbstractFlushingEventListener.FlushEntities(FlushEvent event)
+   at NHibernate.Event.Default.AbstractFlushingEventListener.FlushEverythingToExecutions(FlushEvent event)
+   at NHibernate.Event.Default.DefaultFlushEventListener.OnFlush(FlushEvent event)
+   at NHibernate.Impl.SessionImpl.Flush()
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.UpdateKorisnika(Korisnik k) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 84
+   at MensariumAPI.Controllers.KorisniciController.UpdateKorisnika(ClientZaRegistracijuDto klijentReg) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 262
+[03.06.2017. 20.20.48]	NHibernate.PropertyValueException: not-null property references a null or transient value MensariumAPI.Podaci.Entiteti.Korisnik.Sifra
+   at NHibernate.Engine.Nullability.CheckNullability(Object[] values, IEntityPersister persister, Boolean isUpdate)
+   at NHibernate.Event.Default.DefaultFlushEntityEventListener.ScheduleUpdate(FlushEntityEvent event)
+   at NHibernate.Event.Default.DefaultFlushEntityEventListener.OnFlushEntity(FlushEntityEvent event)
+   at NHibernate.Event.Default.AbstractFlushingEventListener.FlushEntities(FlushEvent event)
+   at NHibernate.Event.Default.AbstractFlushingEventListener.FlushEverythingToExecutions(FlushEvent event)
+   at NHibernate.Event.Default.DefaultFlushEventListener.OnFlush(FlushEvent event)
+   at NHibernate.Impl.SessionImpl.Flush()
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.UpdateKorisnika(Korisnik k) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 84
+   at MensariumAPI.Controllers.KorisniciController.UpdateKorisnika(ClientZaRegistracijuDto klijentReg) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 262
+[04.06.2017. 18.27.29]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 18.32.08]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 19.14.03]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 19.19.40]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 19.20.37]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 19.20.50]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 19.20.55]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 19.24.44]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 19.24.52]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 175
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+>>>>>>> Stashed changes
+[04.06.2017. 21.41.07]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 181
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 21.43.57]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 181
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 21.44.44]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 181
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[04.06.2017. 21.45.07]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SvaPracenja(Int32 id) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 181
+   at MensariumAPI.Controllers.KorisniciController.Pracenja(String sid) in C:\Users\Bazinga!\Desktop\Mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 326
+[05.06.2017. 00.48.22]	System.ObjectDisposedException: Session is closed!
+Object name: 'ISession'.
+   at NHibernate.Impl.AbstractSessionImpl.ErrorIfClosed()
+   at NHibernate.Impl.AbstractSessionImpl.CheckAndUpdateSessionStatus()
+   at NHibernate.Impl.SessionImpl.get_Batcher()
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.LoadEntity(ISessionImplementor session, Object id, IType identifierType, Object optionalObject, String optionalEntityName, Object optionalIdentifier, IEntityPersister persister)
+>>>>>>> Stashed changes
