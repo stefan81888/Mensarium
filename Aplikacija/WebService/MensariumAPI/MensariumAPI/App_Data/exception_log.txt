@@ -330,3 +330,13 @@ Parameter name: index
    at MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
    at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
    at NHibernate.Id.Insert.AbstractSelectingDelegate.PerformInsert(SqlCommandInfo insertSQL, ISessionImplementor session, IBinder binder)
+[5.6.2017 14:35:58]	System.Exception: Invalid license code! For evaluation usage, please use "TryIt" as the license code!
+   at EASendMail.9E.v(String 3`, Type $)
+   at EASendMail.SmtpMail.;u()
+   at EASendMail.SmtpMail..ctor(String v)
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.VerifikacijaNaloga(String email) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 855
+   at MensariumAPI.Controllers.KorisniciController.VratiSveKorisnikeFull(String sid) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 95
+[5.6.2017 14:37:13]	System.Exception: No recipient found!
+   at EASendMail.SmtpClient.Connect(SmtpMail mail, SmtpServer $F)
+   at EASendMail.SmtpClient.SendMail(SmtpServer server, SmtpMail mail)
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.VerifikacijaNaloga(String email) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 876

@@ -21,7 +21,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static List<Menza> VratiMenze()
         {
             ISession s = SesijeProvajder.Sesija;
-            IEnumerable<Menza> menze = s.Query<Menza>().Select(k => k);
+            List<Menza> menze = s.Query<Menza>().Select(k => k).ToList();
+
+            Menza m = menze.First(x => x.IdMenza == 4);
+            menze.Remove(m);
+
             return menze.ToList();
         }
 
