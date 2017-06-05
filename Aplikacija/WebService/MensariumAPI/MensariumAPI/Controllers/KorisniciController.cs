@@ -981,5 +981,37 @@ namespace MensariumAPI.Controllers
             }
         }
 
+
+        
+        //Kreiraje poziva, ne poziva nikoga
+        [HttpPost]
+        [Route("pozivi/kreiraj")]
+        public PozivanjaFullDto NapraviPoziv([FromBody] PozivanjaFullDto pfdto, [FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                PozivanjaFullDto s = ProvajderPodatakaKorisnika.NoviPoziv(pfdto, sid);
+
+                if (s == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Neuspesno kreiranje poziva") });
+                return s;
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+        
     }
 }

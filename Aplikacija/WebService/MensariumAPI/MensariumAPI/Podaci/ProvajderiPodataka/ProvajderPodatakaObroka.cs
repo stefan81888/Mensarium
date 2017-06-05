@@ -30,6 +30,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static bool UplatiObrok(int id, int brojObroka, int tipObroka)
         {
+            ISession s = SesijeProvajder.Sesija;
+
             if (brojObroka == 0)
                 return false;
 
@@ -50,12 +52,16 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                     DatumIskoriscenja = null,
                     Uplatilac = k,
                     Tip = ProvajderPodatakaTipovaObroka.VratiTipObroka(tipObroka),
-                    LokacijaIskoriscenja = null
+                    LokacijaIskoriscenja = null,
+                    LokacijaUplate = ProvajderPodatakaMenzi.VratiMenzu(4)
                 };
-
+              //  s.Save(o);
+               // s.Flush();
                 k.Obroci.Add(o);
-
             }
+
+            s.Save(k);
+            s.Flush();
             return true;
         }
 

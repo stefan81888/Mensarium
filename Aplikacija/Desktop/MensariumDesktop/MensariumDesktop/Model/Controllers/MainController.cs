@@ -26,6 +26,7 @@ namespace MensariumDesktop.Model.Controllers
         {
             Faculty.UpdateFacultyList(); 
             Mensa.UpdateMensaList();
+            Mensa.LoadPrices();
             MSettings.LoadSettings();
         }
         public static void Shutdown()
@@ -89,7 +90,6 @@ namespace MensariumDesktop.Model.Controllers
             return true;
         }
 
-
         public static bool ChangeServerIP(string newIP)
         {
             try
@@ -137,75 +137,67 @@ namespace MensariumDesktop.Model.Controllers
                     throw new Exception("Nalog nije studentski");
                 LoadedCardUser = MUtility.GenerateUserFromDTO(korisnik) as Student;
                 KorisnikStanjeDto stanje = Api.UserMealsCount(LoadedCardUser.UserID);
-                LoadedCardUser.BreakfastCount = stanje.BrojDorucka;
-                LoadedCardUser.LunchCount = stanje.BrojRuckova;
-                LoadedCardUser.DinnerCount = stanje.BrojVecera;
+                LoadedCardUser.BreakfastCount =  stanje.BrojDorucka;
+                LoadedCardUser.LunchCount =  stanje.BrojRuckova;
+                LoadedCardUser.DinnerCount =  stanje.BrojVecera;
             }
             catch(Exception ex)
             {
                 MUtility.ShowException(ex);
             }
         }
-        public static void AddUserMeals(Student s, int breakfast, int lunch, int dinner)
+        public static void AddUserMeal(Student s, Mensa.MealType type, int count)
         {
+            if (count <= 0)
+                return;
 
-            //OO GOSPODARU IFOVA - REFAKTORISI OVO SUTRA 
-            if (breakfast != 0)
+            ObrokUplataDto o = new ObrokUplataDto()
             {
-                ObrokUplataDto o = new ObrokUplataDto()
-                {
-                    BrojObroka = breakfast,
-                    IdLokacijeUplate = MSettings.CurrentMensa.MensaID,
-                    IdKorisnika = s.UserID,
-                    IdTipa = 1
-                };
-                try
-                {
-                    Api.AddMeal(o);
-                }
-                catch(Exception e)
-                {
-                    MUtility.ShowException(e);
-                }
+                BrojObroka = count,
+                IdLokacijeUplate = MSettings.CurrentMensa.MensaID,
+                IdKorisnika = s.UserID,
+                IdTipa = (int)type
+            };
+            try
+            {
+                Api.AddMeal(o);
             }
-            if (lunch != 0)
+            catch(Exception e)
             {
-                ObrokUplataDto o = new ObrokUplataDto()
-                {
-                    BrojObroka = lunch,
-                    IdLokacijeUplate = MSettings.CurrentMensa.MensaID,
-                    IdKorisnika = s.UserID,
-                    IdTipa = 2
-                };
-                try
-                {
-                    Api.AddMeal(o);
-                }
-                catch (Exception e)
-                {
-                    MUtility.ShowException(e);
-                }
-            }
-            if (dinner != 0)
-            {
-                ObrokUplataDto o = new ObrokUplataDto()
-                {
-                    BrojObroka = dinner,
-                    IdLokacijeUplate = MSettings.CurrentMensa.MensaID,
-                    IdKorisnika = s.UserID,
-                    IdTipa = 3
-                };
-                try
-                {
-                    Api.AddMeal(o);
-                }
-                catch (Exception e)
-                {
-                    MUtility.ShowException(e);
-                }
+                MUtility.ShowException(e);
             }
         }
+        public static void AddUserMeals(Student s, int breakfast, int lunch, int dinner)
+        {
+            AddUserMeal(s, Mensa.MealType.Dorucak, breakfast);
+            AddUserMeal(s, Mensa.MealType.Rucak, lunch);
+            AddUserMeal(s, Mensa.MealType.Vecera, dinner);
+        }
 
+        public static List<MealTodayAdded> GetReclamationMeals(Student s)
+        {
+            try
+            {
+                List<ObrokDanasUplacenDto> list = Api.TodayAddedMeals(s.UserID);
+                List<MealTodayAdded> rlist = new List<MealTodayAdded>();
+                foreach (var obrok in list)
+                {
+                    rlist.Add(new MealTodayAdded()
+                    {
+                        Id = obrok.IdObroka,
+                        DateAdded = obrok.DatumUplacivanja,
+                        Type = (Mensa.MealType)obrok.IdTipaObroka,
+                        MensaAdded = Mensa.Mensas.Find(x => x.MensaID == obrok.IdTipaObroka)
+                    });
+                }
+                return rlist;
+            }
+            catch(Exception e)
+            {
+                MUtility.ShowException(e);
+                return new List<MealTodayAdded>();
+            }
+        }
         public static void ShowError(string Message) {
             MessageBox.Show(Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
