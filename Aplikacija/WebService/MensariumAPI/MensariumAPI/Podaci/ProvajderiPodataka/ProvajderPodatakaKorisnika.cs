@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using MensariumAPI.Podaci.DTO;
@@ -10,12 +11,17 @@ using NHibernate.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Net;
+using System.Web.UI.WebControls;
+using EASendMail;
 using FluentNHibernate.Conventions;
 
 namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
     public class ProvajderPodatakaKorisnika
     {
+        private static string server_mail = "dalibor.aleksic.dacha@gmail.com";
+        private static string verifikacioni_link = "http://localhost:2244/api/korisnici/verifikacija";
+
         // TO DO: private delegates
         public delegate KorisnikKreiranjeDto KreiranjeKorisnika(KorisnikKreiranjeDto kkdto);
         public delegate List<KorisnikFollowDto> PretragaKorisnika(PretragaKriterijumDto pkdto);
@@ -473,7 +479,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 DatumVaziDo = DateTime.Now.AddYears(1),
                 StudiraFakultet = ProvajderPodatakaFakulteta.VratiFakultet(kkdto.IdFakulteta.Value), //uvek ima value jer kreiramo studenta
                 BrojIndeksa = kkdto.BrojIndeksa,
-                AktivanNalog = true,
+                AktivanNalog = false,
                 Obrisan = false,
                 TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(kkdto.IdTipaNaloga)
             };
@@ -739,14 +745,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return sifra == k.Sifra;
         }
 
-        public static SesijaDto RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto)
+        public static bool RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto)
         {
             ISession s = SesijeProvajder.Sesija;
 
-            Korisnik k = VratiKorisnika(czrdto.DodeljeniId);
+            Korisnik k = s.Load<Korisnik>(czrdto.DodeljeniId);
 
             if (k.KorisnickoIme != null)
-                return null;
+                return false;
 
             if (k == null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
@@ -768,6 +774,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent(" Morate uneti novu sifru") });
 
+            List<Korisnik> korisnici = s.Query<Korisnik>().Select(x => x).ToList();
+
+            Korisnik isto_korisnicko = korisnici.Find(x => x.KorisnickoIme == czrdto.KorisnickoIme);
+
+            if(isto_korisnicko != null)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Korisnicko ime vec postoji") }); 
+
             k.Email = czrdto.Email;
             k.KorisnickoIme = czrdto.KorisnickoIme;
             k.BrojTelefona = czrdto.Telefon;
@@ -776,27 +790,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Save(k);
             s.Flush();
 
-            Korisnik korisnik = VratiKorisnika(czrdto.DodeljeniId);
+            VerifikacijaNaloga(czrdto.Email, czrdto.DodeljeniId);
 
-            LoginSesija sesija = new LoginSesija()
-            {
-                KorisnikSesije = korisnik,
-                IdSesije = Guid.NewGuid().ToString(),
-                DatumPrijavljivanja = DateTime.Now,
-                ValidnaDo = DateTime.Now.AddYears(1)
-            };
-            s.Save(sesija);
-            s.Flush();
-
-            SesijaDto sdto = new SesijaDto()
-            {
-                IdSesije = sesija.IdSesije,
-                IdKorisnika = sesija.KorisnikSesije.IdKorisnika,
-                DatumPrijavljivanja = sesija.DatumPrijavljivanja,
-                ValidnaDo = sesija.ValidnaDo
-            };
-
-            return sdto;
+            return true;
         }
 
         
@@ -845,10 +841,59 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             pfdto.IdPoziva = po.IdPoziva;
             pfdto.IdPozivaoca = po.Pozivaoc.IdKorisnika;
-            
 
             return pfdto;
         }
-        
+
+        public static bool AktivirajNalog(int id)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Korisnik korisnik = s.Load<Korisnik>(id);
+            korisnik.AktivanNalog = true;
+            s.Save(korisnik);
+            s.Flush();
+
+            return true;
+        }
+
+
+        public static bool VerifikacijaNaloga(string email, int id)
+        {
+            EmailAddressAttribute mail_validator = new EmailAddressAttribute();
+
+            if (!mail_validator.IsValid(email))
+                return false;
+
+            SmtpMail oMail = new SmtpMail("TryIt");
+            SmtpClient oSmtp = new SmtpClient();
+
+            // Ko salje mail
+            oMail.From = server_mail; 
+
+            // Primalac
+            oMail.To = email;
+
+            oMail.HtmlBody = String.Format("Postovani, molimo Vas da aktivirate nalog na Mensarium sistemu pritiskom na link: {0}",
+                "<a href=\"http://localhost:2244/api/korisnici/verifikacija/" + id +"\">link</a>");
+
+            oMail.Subject = "Verifikacija naloga";
+          
+
+            SmtpServer oServer = new SmtpServer(""); 
+
+            try
+            {
+                oSmtp.SendMail(oServer, oMail);
+                return true;
+            }
+            catch (Exception e)
+            {
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                { Content = new StringContent("InternalError: " + e.Message) });
+            }
+        }
+
     }
 }

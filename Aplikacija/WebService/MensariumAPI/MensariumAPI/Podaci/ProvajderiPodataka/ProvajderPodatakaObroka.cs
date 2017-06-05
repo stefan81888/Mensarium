@@ -55,8 +55,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                     LokacijaIskoriscenja = null,
                     LokacijaUplate = ProvajderPodatakaMenzi.VratiMenzu(4)
                 };
-              //  s.Save(o);
-               // s.Flush();
+              
                 k.Obroci.Add(o);
             }
 
