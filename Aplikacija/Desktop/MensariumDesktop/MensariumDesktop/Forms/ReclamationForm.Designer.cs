@@ -309,7 +309,7 @@
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(203, 35);
             this.btnExecute.TabIndex = 15;
-            this.btnExecute.Text = "Obriši obrok";
+            this.btnExecute.Text = " Ispravi grešku";
             this.btnExecute.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnExecute.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExecute.UseVisualStyleBackColor = true;

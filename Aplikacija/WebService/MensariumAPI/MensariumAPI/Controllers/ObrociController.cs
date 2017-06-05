@@ -225,7 +225,7 @@ namespace MensariumAPI.Controllers
 
         [HttpGet]
         [Route("danasUplaceni")]
-        public List<ObrokDanasUplacenDto> DanasUplaceniObrociKorisnika([FromUri]int id, [FromUri]string sid)
+        public List<ObrokReklamacijaDto> DanasUplaceniObrociKorisnika([FromUri]int id, [FromUri]string sid)
         {
             try
             {
@@ -236,7 +236,7 @@ namespace MensariumAPI.Controllers
 
 
                 List<Obrok> danasUplaceniObrociOvogKorisnika = ProvajderPodatakaObroka.DanasUplaceniNeiskorisceniObrociKorisnika(id);
-                List<ObrokDanasUplacenDto> listaDanasUplacenihObroka = new List<ObrokDanasUplacenDto>(danasUplaceniObrociOvogKorisnika.Count);
+                List<ObrokReklamacijaDto> listaDanasUplacenihObroka = new List<ObrokReklamacijaDto>(danasUplaceniObrociOvogKorisnika.Count);
 
                 //if (danasUplaceniObrociOvogKorisnika.Count == 0)
                 //    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
@@ -244,10 +244,10 @@ namespace MensariumAPI.Controllers
 
                 foreach (Obrok o in danasUplaceniObrociOvogKorisnika)
                 {
-                    listaDanasUplacenihObroka.Add(new ObrokDanasUplacenDto()
+                    listaDanasUplacenihObroka.Add(new ObrokReklamacijaDto()
                     {
-                        DatumUplacivanja = o.DatumUplacivanja,
-                        IdLokacijeUplate = o.LokacijaUplate.IdMenza,
+                        Datum = o.DatumUplacivanja,
+                        idMenza = o.LokacijaUplate.IdMenza,
                         IdObroka = o.IdObroka,
                         IdTipaObroka = o.Tip.IdTipObroka
                     });
@@ -270,7 +270,7 @@ namespace MensariumAPI.Controllers
 
         [HttpGet]
         [Route("danasSkinuti")]
-        public List<ObrokDanasSkinutDto> DanasSkinutiObrociKorisnika([FromUri]int id, [FromUri]string sid)
+        public List<ObrokReklamacijaDto> DanasSkinutiObrociKorisnika([FromUri]int id, [FromUri]string sid)
         {
             try
             {
@@ -281,7 +281,7 @@ namespace MensariumAPI.Controllers
 
 
                 List<Obrok> danasSkinutiObrociOvogKorisnika = ProvajderPodatakaObroka.DanasSkinutiObrociKorisnika(id);
-                List<ObrokDanasSkinutDto> listaDanasSkinutihObroka = new List<ObrokDanasSkinutDto>(danasSkinutiObrociOvogKorisnika.Count);
+                List<ObrokReklamacijaDto> listaDanasSkinutihObroka = new List<ObrokReklamacijaDto>(danasSkinutiObrociOvogKorisnika.Count);
 
                 //if (danasSkinutiObrociOvogKorisnika.Count == 0)
                 //    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Obroci nisu pronadjeni") });
@@ -289,10 +289,10 @@ namespace MensariumAPI.Controllers
 
                 foreach (Obrok o in danasSkinutiObrociOvogKorisnika)
                 {
-                    listaDanasSkinutihObroka.Add(new ObrokDanasSkinutDto()
+                    listaDanasSkinutihObroka.Add(new ObrokReklamacijaDto()
                     {
-                        DatumIskoriscenja = (DateTime) o.DatumIskoriscenja,
-                        IdLokacijeIskoriscenja = o.LokacijaIskoriscenja.IdMenza,
+                        Datum = (DateTime) o.DatumIskoriscenja,
+                        idMenza = o.LokacijaIskoriscenja.IdMenza,
                         IdObroka = o.IdObroka,
                         IdTipaObroka = o.Tip.IdTipObroka
                     });

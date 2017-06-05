@@ -176,11 +176,51 @@ namespace MensariumDesktop.Model.Controllers
             AddUserMeal(s, MealType.Vecera, dinner);
         }
 
-        public static bool UndoAddMeals(MealTodayAdded meal)
+        public static List<MealReclamation> GetReclamationMeals(Student s, ReclamationForm.Mode m)
+        {
+            try
+            {
+                List<ObrokReklamacijaDto> list = (m == ReclamationForm.Mode.PogresnaUplata)
+                    ? Api.TodayAddedMeals(s.UserID)
+                    : Api.TodayUsedMeals(s.UserID);
+               
+                List<MealReclamation> rlist = new List<MealReclamation>();
+                foreach (var obrok in list)
+                {
+                    rlist.Add(new MealReclamation()
+                    {
+                        Id = obrok.IdObroka,
+                        DateAdded = obrok.Datum,
+                        Type = (MealType)obrok.IdTipaObroka,
+                        Mensa = Mensa.Mensas.Find(x => x.MensaID == obrok.IdTipaObroka)
+                    });
+                }
+                return rlist;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return new List<MealReclamation>();
+            }
+        }
+        public static bool UndoAddMeals(MealReclamation meal)
         {
             try
             {
                 Api.UndoAddMeals(meal.Id);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+        }
+        public static bool UndoUseMeals(MealReclamation meal)
+        {
+            try
+            {
+                Api.UndoUseMeals(meal.Id);
                 return true;
             }
             catch (Exception e)
@@ -211,30 +251,9 @@ namespace MensariumDesktop.Model.Controllers
             }
 
         }
-        public static List<MealTodayAdded> GetReclamationMeals(Student s)
-        {
-            try
-            {
-                List<ObrokDanasUplacenDto> list = Api.TodayAddedMeals(s.UserID);
-                List<MealTodayAdded> rlist = new List<MealTodayAdded>();
-                foreach (var obrok in list)
-                {
-                    rlist.Add(new MealTodayAdded()
-                    {
-                        Id = obrok.IdObroka,
-                        DateAdded = obrok.DatumUplacivanja,
-                        Type = (MealType)obrok.IdTipaObroka,
-                        MensaAdded = Mensa.Mensas.Find(x => x.MensaID == obrok.IdTipaObroka)
-                    });
-                }
-                return rlist;
-            }
-            catch(Exception e)
-            {
-                MUtility.ShowException(e);
-                return new List<MealTodayAdded>();
-            }
-        }
+        
+
+
         public static void ShowError(string Message) {
             MessageBox.Show(Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }

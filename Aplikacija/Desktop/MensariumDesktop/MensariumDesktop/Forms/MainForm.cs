@@ -288,7 +288,7 @@ namespace MensariumDesktop
                 return;
             }
 
-            ReclamationForm rf = new ReclamationForm(MainController.LoadedCardUser);
+            ReclamationForm rf = new ReclamationForm(MainController.LoadedCardUser, ReclamationForm.Mode.PogresnaUplata);
             rf.ShowDialog();
 
             OpStatusWorking();
@@ -377,6 +377,20 @@ namespace MensariumDesktop
         }
         private void NAPLATA_btnReclamation_Click(object sender, EventArgs e)
         {
+            Student s = MainController.LoadedCardUser;
+            if (s == null)
+            {
+                MUtility.ShowWarrning("Prvo ucitati korisnika");
+                return;
+            }
+
+            ReclamationForm rf = new ReclamationForm(MainController.LoadedCardUser, ReclamationForm.Mode.PogresnaNaplata);
+            rf.ShowDialog();
+
+            OpStatusWorking();
+            MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
+            UPLATA_RefreshCardInfo();
+            OpStatusIdle();
         }
 
 

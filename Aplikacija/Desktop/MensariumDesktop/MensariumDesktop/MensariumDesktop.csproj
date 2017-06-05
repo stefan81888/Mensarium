@@ -159,7 +159,7 @@
     <Compile Include="Model\Components\DTOs\ObjavaFullDto.cs" />
     <Compile Include="Model\Components\DTOs\ObjavaReadDto.cs" />
     <Compile Include="Model\Components\DTOs\ObrokDanasSkinutDto.cs" />
-    <Compile Include="Model\Components\DTOs\ObrokDanasUplacenDto.cs" />
+    <Compile Include="Model\Components\DTOs\ObrokReklamacijaDto.cs" />
     <Compile Include="Model\Components\DTOs\ObrokFullDto.cs" />
     <Compile Include="Model\Components\DTOs\ObrokNaplataDto.cs" />
     <Compile Include="Model\Components\DTOs\ObrokUplataDto.cs" />

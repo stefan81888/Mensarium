@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MensariumDesktop.Model.Components.DTOs
+namespace MensariumAPI.Podaci.DTO
 {
-    public class ObrokDanasUplacenDto
+    public class ObrokReklamacijaDto
     {
         public int IdObroka { get; set; }
-        public DateTime DatumUplacivanja { get; set; }
+        public DateTime Datum { get; set; }
         public int IdTipaObroka { get; set; }
-        public int IdLokacijeUplate { get; set; }
+        public int idMenza { get; set; }
     }
 }

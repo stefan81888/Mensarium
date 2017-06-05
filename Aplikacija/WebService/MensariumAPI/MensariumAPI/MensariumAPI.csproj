@@ -254,7 +254,7 @@
     <Compile Include="Podaci\DTO\ObjavaReadDto.cs" />
     <Compile Include="Podaci\DTO\ObrokFullDto.cs" />
     <Compile Include="Podaci\DTO\ObrokNaplataDto.cs" />
-    <Compile Include="Podaci\DTO\ObrokDanasSkinutDto.cs" />
+    <Compile Include="Podaci\DTO\ObrokReklamacijaDto.cs" />
     <Compile Include="Podaci\DTO\ObrokDanasUplacenDto.cs" />
     <Compile Include="Podaci\DTO\ObrokUplataDto.cs" />
     <Compile Include="Podaci\DTO\OdjavaDto.cs" />

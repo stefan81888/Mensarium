@@ -616,26 +616,26 @@ namespace MensariumDesktop.Model.Controllers
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
                 throw new Exception("UseMeal: Obrok nije naplacen." + "\n" + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
         }
-        public static List<ObrokDanasUplacenDto> TodayAddedMeals(int mealTypeId)
+        public static List<ObrokReklamacijaDto> TodayAddedMeals(int mealTypeId)
         {
             RestRequest request = new RestRequest(Method.GET);
             request.Resource = "obroci/danasUplaceni";
             request.AddParameter("id", mealTypeId, ParameterType.QueryString);
 
-            ApiResponse<List<ObrokDanasUplacenDto>> response = Execute<List<ObrokDanasUplacenDto>>(request);
+            ApiResponse<List<ObrokReklamacijaDto>> response = Execute<List<ObrokReklamacijaDto>>(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
                 throw new Exception("TodayAddedMeals: Neuspesno pribavljanje informacije o obrocima" + "\nServerResponse: " 
                     + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;
         }
-        public static List<ObrokDanasSkinutDto> TodayUsedMeals(int mealTypeId)
+        public static List<ObrokReklamacijaDto> TodayUsedMeals(int mealTypeId)
         {
             RestRequest request = new RestRequest(Method.GET);
             request.Resource = "obroci/danasSkinuti";
             request.AddParameter("id", mealTypeId, ParameterType.QueryString);
 
-            ApiResponse<List<ObrokDanasSkinutDto>> response = Execute<List<ObrokDanasSkinutDto>>(request);
+            ApiResponse<List<ObrokReklamacijaDto>> response = Execute<List<ObrokReklamacijaDto>>(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
                 throw new Exception("TodayAddedMeals: Neuspesno pribavljanje informacije o obrocima" + "\nServerResponse: " 
                     + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
