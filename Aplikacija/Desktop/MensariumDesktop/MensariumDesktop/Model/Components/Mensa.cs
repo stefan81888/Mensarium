@@ -10,13 +10,6 @@ namespace MensariumDesktop.Model.Components
 {
     public class Mensa
     {
-        public enum MealType
-        {
-            Dorucak = 1,
-            Rucak,
-            Vecera
-        }
-
         public static List<Mensa> Mensas { get; protected set; }
 
         public static void UpdateMensaList()

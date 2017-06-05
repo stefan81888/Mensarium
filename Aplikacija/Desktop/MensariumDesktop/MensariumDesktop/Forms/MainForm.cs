@@ -299,8 +299,86 @@ namespace MensariumDesktop
         #endregion
 
         #region NAPLATA_TAB
+        private void NAPLATA_picLoadedUser_Paint(object sender, PaintEventArgs e)
+        {
+            MUtility.RoundPictureBox(sender as PictureBox);
+        }
+        private void NAPLATA_btnLoadCard_Click(object sender, EventArgs e)
+        {
+            CardReaderEmulator creader = new CardReaderEmulator();
+            creader.ShowDialog();
+            OpStatusWorking();
+            MainController.LoadUserCard(creader.CardData);
+            OpStatusIdle();
+            NAPLATA_RefreshCardInfo();
+        }
+        private void NAPLATA_RefreshCardInfo(bool keepIcons = false)
+        {
+            if (MainController.LoadedCardUser == null)
+                return;
 
-        
+            NAPLATA_lblUserName.Text = MainController.LoadedCardUser.FullName;
+            NAPLATA_lblUserValidUntil.Text = MainController.LoadedCardUser.ValidUntil.ToShortDateString();
+            NAPLATA_lblUserBday.Text = MainController.LoadedCardUser.Birthday.ToShortDateString();
+            NAPLATA_lblUserFax.Text = MainController.LoadedCardUser.Faculty.Name;
+            NAPLATA_lblUserIndex.Text = MainController.LoadedCardUser.Index;
+            NAPLATA_picLoadedUser.Image = MainController.LoadedCardUser.ProfilePicture;
+
+            NAPLATA_lblBreakfastCount.Text = MainController.LoadedCardUser.BreakfastCount.ToString();
+            NAPLATA_lblLunchCount.Text = MainController.LoadedCardUser.LunchCount.ToString();
+            NAPLATA_lblDinnerCount.Text = MainController.LoadedCardUser.DinnerCount.ToString();
+            if (!keepIcons)
+            {
+                NAPLATA_picBminus.Visible = false;
+                NAPLATA_picLminus.Visible = false;
+                NAPLATA_picDminus.Visible = false;
+            }
+
+        }
+        private void NAPLATA_UseMeal(MealType type)
+        {
+            NAPLATA_picBminus.Visible = false;
+            NAPLATA_picLminus.Visible = false;
+            NAPLATA_picDminus.Visible = false;
+            bool ops = MainController.UseMeal(type);
+            if (ops)
+            {
+                switch (type)
+                {
+                    case MealType.Dorucak:
+                        NAPLATA_picBminus.Visible = true;
+                        break;
+                    case MealType.Rucak:
+                        NAPLATA_picLminus.Visible = true;
+                        break;
+                    case MealType.Vecera:
+                        NAPLATA_picDminus.Visible = true;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                }
+            }
+            MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
+        }
+        private void NAPLATA_btnUseBreakfast_Click(object sender, EventArgs e)
+        {
+            NAPLATA_UseMeal(MealType.Dorucak);
+            NAPLATA_RefreshCardInfo(true);
+        }
+        private void NAPLATA_btnUseLunch_Click(object sender, EventArgs e)
+        {
+            NAPLATA_UseMeal(MealType.Rucak);
+            NAPLATA_RefreshCardInfo(true);
+        }
+        private void NAPLATA_btnUseDinner_Click(object sender, EventArgs e)
+        {
+            NAPLATA_UseMeal(MealType.Vecera);
+            NAPLATA_RefreshCardInfo(true);
+        }
+        private void NAPLATA_btnReclamation_Click(object sender, EventArgs e)
+        {
+        }
+
 
         #endregion
         #region INIT_GUI
@@ -354,8 +432,10 @@ namespace MensariumDesktop
                 tabControls.TabPages.Insert(3, tabUsers);
             }  
         }
+
         #endregion
 
-        
+
+
     }
 }

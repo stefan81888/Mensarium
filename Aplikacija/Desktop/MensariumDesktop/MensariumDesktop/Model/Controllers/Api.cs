@@ -20,6 +20,10 @@ namespace MensariumDesktop.Model.Controllers
         #region INTERNAL
         static string BaseUrl = MSettings.Server.ServerURL + "api/";
 
+        public static void UpdateBaseUrl()
+        {
+            BaseUrl = MSettings.Server.ServerURL + "api/";
+        }
         private class ApiResponse<T>
         {
             public HttpStatusCode HttpStatusCode { get; set; }

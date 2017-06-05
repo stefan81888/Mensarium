@@ -71,14 +71,14 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(135, 173);
+            this.label1.Location = new System.Drawing.Point(3, 173);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(166, 45);
+            this.label1.Size = new System.Drawing.Size(428, 45);
             this.label1.TabIndex = 6;
             this.label1.Text = "Učitavanje";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LoadingForm
             // 
@@ -95,7 +95,6 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.LoadingForm_Load);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);

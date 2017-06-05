@@ -51,7 +51,7 @@ namespace MensariumDesktop.Forms
                 dgvMeals.DataSource = list;
             else
             {
-                Mensa.MealType t = (Mensa.MealType)fitem;
+                MealType t = (MealType)fitem;
                 dgvMeals.DataSource = list.FindAll(x => x.Type == t);
             }
         }
