@@ -87,7 +87,9 @@ namespace MensariumAPI.Controllers
                         Naziv = m.Naziv,
                         Lokacija = m.Lokacija,
                         RadnoVreme = m.RadnoVreme,
-                        VanrednoNeRadi = m.VanrednoNeRadi
+                        VanrednoNeRadi = m.VanrednoNeRadi,
+                        GpsLat = m.GpsLat,
+                        GpsLong = m.GpsLon
                     });
                 }
 
