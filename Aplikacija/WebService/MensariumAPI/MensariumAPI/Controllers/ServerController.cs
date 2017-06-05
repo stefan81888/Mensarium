@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using MensariumAPI.Podaci.DTO;
+using MensariumAPI.Podaci.Entiteti;
 using MensariumAPI.Podaci.ProvajderiPodataka;
 
 namespace MensariumAPI.Controllers
@@ -48,7 +50,17 @@ namespace MensariumAPI.Controllers
                 if (!status)
                     return Request.CreateResponse(HttpStatusCode.OK, "Greska: nevalidni parametri");
 
-                string odgovor = string.Format("Uspešno ste uplatili {0} obroka tipa {1}", brojObroka, tip.ToLower());
+                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+
+                KorisnikStanjeDto stanje = ProvajderPodatakaKorisnika.Stanje(k);
+
+                string odgovor = string.Format("Uspešno ste uplatili {0} obroka tipa {1}\n Stanje:\n " +
+                                               "Doručak: {2}\nRučak: {3}\n Večera: {4}",
+                    brojObroka, 
+                    tip.ToLower(),
+                    stanje.BrojDorucka,
+                    stanje.BrojRuckova,
+                    stanje.BrojVecera);
 
                 return Request.CreateResponse(HttpStatusCode.OK, odgovor);
             }
