@@ -54,8 +54,8 @@ namespace MensariumAPI.Controllers
 
                 KorisnikStanjeDto stanje = ProvajderPodatakaKorisnika.Stanje(k);
 
-                string odgovor = string.Format("Uspešno ste uplatili {0} obroka tipa {1}\n Stanje:\n " +
-                                               "Doručak: {2}\nRučak: {3}\n Večera: {4}",
+                string odgovor = string.Format("Uspešno ste uplatili {0} obroka tipa {1} Stanje:     " +
+                                               "Doručak:    {2}   Ručak:    {3}   Večera:   {4}",
                     brojObroka, 
                     tip.ToLower(),
                     stanje.BrojDorucka,
