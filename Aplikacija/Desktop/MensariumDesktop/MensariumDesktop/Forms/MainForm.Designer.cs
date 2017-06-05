@@ -137,9 +137,9 @@ namespace MensariumDesktop
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
+            this.NAPLATA_lblBreakfastCount = new System.Windows.Forms.Label();
+            this.NAPLATA_lblLunchCount = new System.Windows.Forms.Label();
+            this.NAPLATA_lblDinnerCount = new System.Windows.Forms.Label();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
@@ -154,12 +154,12 @@ namespace MensariumDesktop
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.NAPLATA_lblUserName = new System.Windows.Forms.Label();
+            this.NAPLATA_lblUserFax = new System.Windows.Forms.Label();
+            this.NAPLATA_lblUserBday = new System.Windows.Forms.Label();
+            this.NAPLATA_lblUserIndex = new System.Windows.Forms.Label();
+            this.NAPLATA_lblUserValidUntil = new System.Windows.Forms.Label();
+            this.NAPLATA_picLoadedUser = new System.Windows.Forms.PictureBox();
             this.tabUsers = new System.Windows.Forms.TabPage();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -245,7 +245,7 @@ namespace MensariumDesktop
             this.groupBox7.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NAPLATA_picLoadedUser)).BeginInit();
             this.tabUsers.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.panel8.SuspendLayout();
@@ -414,7 +414,6 @@ namespace MensariumDesktop
             this.STATUS_statbarOPStatus.Name = "STATUS_statbarOPStatus";
             this.STATUS_statbarOPStatus.ShowDropDownArrow = false;
             this.STATUS_statbarOPStatus.Size = new System.Drawing.Size(20, 25);
-            this.STATUS_statbarOPStatus.Visible = false;
             // 
             // tabControls
             // 
@@ -609,7 +608,7 @@ namespace MensariumDesktop
             this.HOME_btnSignOut.Text = " Odjavi se";
             this.HOME_btnSignOut.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.HOME_btnSignOut.UseVisualStyleBackColor = false;
-            this.HOME_btnSignOut.Click += new System.EventHandler(this.btnSignOut_Click);
+            this.HOME_btnSignOut.Click += new System.EventHandler(this.HOME_btnSignOut_Click);
             // 
             // groupBox4
             // 
@@ -888,8 +887,6 @@ namespace MensariumDesktop
             // 
             // tableLayoutPanel7
             // 
-            this.tableLayoutPanel7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel7.ColumnCount = 7;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
@@ -1102,7 +1099,7 @@ namespace MensariumDesktop
             this.UPLATA_txtLunchTotal.Size = new System.Drawing.Size(88, 26);
             this.UPLATA_txtLunchTotal.TabIndex = 14;
             this.UPLATA_txtLunchTotal.Text = "0";
-            this.UPLATA_txtLunchTotal.TextChanged += new System.EventHandler(this.UPLATA_txtLunchTotal_TextChanged);
+
             // 
             // UPLATA_txtDinnerTotal
             // 
@@ -1243,7 +1240,7 @@ namespace MensariumDesktop
             this.btnReclamation.Text = " Ispravi grešku";
             this.btnReclamation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnReclamation.UseVisualStyleBackColor = false;
-            this.btnReclamation.Click += new System.EventHandler(this.btnReclamation_Click);
+            this.btnReclamation.Click += new System.EventHandler(this.UPLATA_btnReclamation_Click);
             // 
             // groupBox3
             // 
@@ -1610,9 +1607,9 @@ namespace MensariumDesktop
             this.tableLayoutPanel6.Controls.Add(this.label11, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.label12, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.label13, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.label15, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label16, 1, 1);
-            this.tableLayoutPanel6.Controls.Add(this.label18, 1, 2);
+            this.tableLayoutPanel6.Controls.Add(this.NAPLATA_lblBreakfastCount, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.NAPLATA_lblLunchCount, 1, 1);
+            this.tableLayoutPanel6.Controls.Add(this.NAPLATA_lblDinnerCount, 1, 2);
             this.tableLayoutPanel6.Controls.Add(this.pictureBox6, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.pictureBox7, 2, 1);
             this.tableLayoutPanel6.Controls.Add(this.pictureBox8, 2, 2);
@@ -1663,44 +1660,44 @@ namespace MensariumDesktop
             this.label13.Text = "Večera";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label15
+            // NAPLATA_lblBreakfastCount
             // 
-            this.label15.AutoSize = true;
-            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.label15.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label15.Location = new System.Drawing.Point(103, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(44, 35);
-            this.label15.TabIndex = 5;
-            this.label15.Text = "7";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.NAPLATA_lblBreakfastCount.AutoSize = true;
+            this.NAPLATA_lblBreakfastCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NAPLATA_lblBreakfastCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.NAPLATA_lblBreakfastCount.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.NAPLATA_lblBreakfastCount.Location = new System.Drawing.Point(103, 0);
+            this.NAPLATA_lblBreakfastCount.Name = "NAPLATA_lblBreakfastCount";
+            this.NAPLATA_lblBreakfastCount.Size = new System.Drawing.Size(44, 35);
+            this.NAPLATA_lblBreakfastCount.TabIndex = 5;
+            this.NAPLATA_lblBreakfastCount.Text = "/";
+            this.NAPLATA_lblBreakfastCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label16
+            // NAPLATA_lblLunchCount
             // 
-            this.label16.AutoSize = true;
-            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.label16.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label16.Location = new System.Drawing.Point(103, 35);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(44, 35);
-            this.label16.TabIndex = 8;
-            this.label16.Text = "3";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.NAPLATA_lblLunchCount.AutoSize = true;
+            this.NAPLATA_lblLunchCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NAPLATA_lblLunchCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.NAPLATA_lblLunchCount.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.NAPLATA_lblLunchCount.Location = new System.Drawing.Point(103, 35);
+            this.NAPLATA_lblLunchCount.Name = "NAPLATA_lblLunchCount";
+            this.NAPLATA_lblLunchCount.Size = new System.Drawing.Size(44, 35);
+            this.NAPLATA_lblLunchCount.TabIndex = 8;
+            this.NAPLATA_lblLunchCount.Text = "/";
+            this.NAPLATA_lblLunchCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label18
+            // NAPLATA_lblDinnerCount
             // 
-            this.label18.AutoSize = true;
-            this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.label18.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label18.Location = new System.Drawing.Point(103, 70);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(44, 35);
-            this.label18.TabIndex = 9;
-            this.label18.Text = "12";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.NAPLATA_lblDinnerCount.AutoSize = true;
+            this.NAPLATA_lblDinnerCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NAPLATA_lblDinnerCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.NAPLATA_lblDinnerCount.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.NAPLATA_lblDinnerCount.Location = new System.Drawing.Point(103, 70);
+            this.NAPLATA_lblDinnerCount.Name = "NAPLATA_lblDinnerCount";
+            this.NAPLATA_lblDinnerCount.Size = new System.Drawing.Size(44, 35);
+            this.NAPLATA_lblDinnerCount.TabIndex = 9;
+            this.NAPLATA_lblDinnerCount.Text = "/";
+            this.NAPLATA_lblDinnerCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox6
             // 
@@ -1712,6 +1709,7 @@ namespace MensariumDesktop
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox6.TabIndex = 11;
             this.pictureBox6.TabStop = false;
+            this.pictureBox6.Visible = false;
             // 
             // pictureBox7
             // 
@@ -1723,6 +1721,7 @@ namespace MensariumDesktop
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox7.TabIndex = 12;
             this.pictureBox7.TabStop = false;
+            this.pictureBox7.Visible = false;
             // 
             // pictureBox8
             // 
@@ -1734,6 +1733,7 @@ namespace MensariumDesktop
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox8.TabIndex = 13;
             this.pictureBox8.TabStop = false;
+            this.pictureBox8.Visible = false;
             // 
             // groupBox8
             // 
@@ -1900,7 +1900,7 @@ namespace MensariumDesktop
             // 
             this.panel6.BackColor = System.Drawing.Color.Transparent;
             this.panel6.Controls.Add(this.tableLayoutPanel5);
-            this.panel6.Controls.Add(this.pictureBox2);
+            this.panel6.Controls.Add(this.NAPLATA_picLoadedUser);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(3, 35);
             this.panel6.Name = "panel6";
@@ -1913,13 +1913,13 @@ namespace MensariumDesktop
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel5.ColumnCount = 1;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel5.Controls.Add(this.label8, 0, 2);
-            this.tableLayoutPanel5.Controls.Add(this.label9, 0, 3);
-            this.tableLayoutPanel5.Controls.Add(this.label10, 0, 4);
+            this.tableLayoutPanel5.Controls.Add(this.NAPLATA_lblUserName, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.NAPLATA_lblUserFax, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.NAPLATA_lblUserBday, 0, 2);
+            this.tableLayoutPanel5.Controls.Add(this.NAPLATA_lblUserIndex, 0, 3);
+            this.tableLayoutPanel5.Controls.Add(this.NAPLATA_lblUserValidUntil, 0, 4);
             this.tableLayoutPanel5.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(118, 13);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(148, 13);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 5;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -1927,71 +1927,71 @@ namespace MensariumDesktop
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(964, 131);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(934, 131);
             this.tableLayoutPanel5.TabIndex = 6;
             // 
-            // label1
+            // NAPLATA_lblUserName
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(116, 25);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Ime Prezime";
+            this.NAPLATA_lblUserName.AutoSize = true;
+            this.NAPLATA_lblUserName.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NAPLATA_lblUserName.Location = new System.Drawing.Point(3, 0);
+            this.NAPLATA_lblUserName.Name = "NAPLATA_lblUserName";
+            this.NAPLATA_lblUserName.Size = new System.Drawing.Size(116, 25);
+            this.NAPLATA_lblUserName.TabIndex = 7;
+            this.NAPLATA_lblUserName.Text = "Ime Prezime";
             // 
-            // label2
+            // NAPLATA_lblUserFax
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 25);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Fakultet";
+            this.NAPLATA_lblUserFax.AutoSize = true;
+            this.NAPLATA_lblUserFax.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NAPLATA_lblUserFax.Location = new System.Drawing.Point(3, 25);
+            this.NAPLATA_lblUserFax.Name = "NAPLATA_lblUserFax";
+            this.NAPLATA_lblUserFax.Size = new System.Drawing.Size(77, 25);
+            this.NAPLATA_lblUserFax.TabIndex = 8;
+            this.NAPLATA_lblUserFax.Text = "Fakultet";
             // 
-            // label8
+            // NAPLATA_lblUserBday
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(3, 50);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(138, 25);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "Datum rođenja";
+            this.NAPLATA_lblUserBday.AutoSize = true;
+            this.NAPLATA_lblUserBday.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NAPLATA_lblUserBday.Location = new System.Drawing.Point(3, 50);
+            this.NAPLATA_lblUserBday.Name = "NAPLATA_lblUserBday";
+            this.NAPLATA_lblUserBday.Size = new System.Drawing.Size(138, 25);
+            this.NAPLATA_lblUserBday.TabIndex = 9;
+            this.NAPLATA_lblUserBday.Text = "Datum rođenja";
             // 
-            // label9
+            // NAPLATA_lblUserIndex
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(3, 75);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(58, 25);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "Index";
+            this.NAPLATA_lblUserIndex.AutoSize = true;
+            this.NAPLATA_lblUserIndex.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NAPLATA_lblUserIndex.Location = new System.Drawing.Point(3, 75);
+            this.NAPLATA_lblUserIndex.Name = "NAPLATA_lblUserIndex";
+            this.NAPLATA_lblUserIndex.Size = new System.Drawing.Size(58, 25);
+            this.NAPLATA_lblUserIndex.TabIndex = 10;
+            this.NAPLATA_lblUserIndex.Text = "Index";
             // 
-            // label10
+            // NAPLATA_lblUserValidUntil
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(3, 100);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(209, 25);
-            this.label10.TabIndex = 11;
-            this.label10.Text = "Validna do: dd.mm.yyyy";
+            this.NAPLATA_lblUserValidUntil.AutoSize = true;
+            this.NAPLATA_lblUserValidUntil.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NAPLATA_lblUserValidUntil.Location = new System.Drawing.Point(3, 100);
+            this.NAPLATA_lblUserValidUntil.Name = "NAPLATA_lblUserValidUntil";
+            this.NAPLATA_lblUserValidUntil.Size = new System.Drawing.Size(209, 25);
+            this.NAPLATA_lblUserValidUntil.TabIndex = 11;
+            this.NAPLATA_lblUserValidUntil.Text = "Validna do: dd.mm.yyyy";
             // 
-            // pictureBox2
+            // NAPLATA_picLoadedUser
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.BackgroundImage = global::MensariumDesktop.Properties.Resources.user_3;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox2.ErrorImage = global::MensariumDesktop.Properties.Resources.user_3;
-            this.pictureBox2.InitialImage = null;
-            this.pictureBox2.Location = new System.Drawing.Point(12, 13);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(100, 100);
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
+            this.NAPLATA_picLoadedUser.BackColor = System.Drawing.Color.Transparent;
+            this.NAPLATA_picLoadedUser.BackgroundImage = global::MensariumDesktop.Properties.Resources.user_3;
+            this.NAPLATA_picLoadedUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.NAPLATA_picLoadedUser.ErrorImage = global::MensariumDesktop.Properties.Resources.user_3;
+            this.NAPLATA_picLoadedUser.InitialImage = null;
+            this.NAPLATA_picLoadedUser.Location = new System.Drawing.Point(11, 13);
+            this.NAPLATA_picLoadedUser.Name = "NAPLATA_picLoadedUser";
+            this.NAPLATA_picLoadedUser.Size = new System.Drawing.Size(131, 131);
+            this.NAPLATA_picLoadedUser.TabIndex = 0;
+            this.NAPLATA_picLoadedUser.TabStop = false;
             // 
             // tabUsers
             // 
@@ -2590,7 +2590,7 @@ namespace MensariumDesktop
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.MinimumSize = new System.Drawing.Size(800, 725);
+            this.MinimumSize = new System.Drawing.Size(960, 725);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mensarium";
@@ -2647,7 +2647,7 @@ namespace MensariumDesktop
             this.panel6.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NAPLATA_picLoadedUser)).EndInit();
             this.tabUsers.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
@@ -2755,21 +2755,21 @@ namespace MensariumDesktop
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label NAPLATA_lblUserName;
+        private System.Windows.Forms.Label NAPLATA_lblUserFax;
+        private System.Windows.Forms.Label NAPLATA_lblUserBday;
+        private System.Windows.Forms.Label NAPLATA_lblUserIndex;
+        private System.Windows.Forms.Label NAPLATA_lblUserValidUntil;
+        private System.Windows.Forms.PictureBox NAPLATA_picLoadedUser;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label NAPLATA_lblBreakfastCount;
+        private System.Windows.Forms.Label NAPLATA_lblLunchCount;
+        private System.Windows.Forms.Label NAPLATA_lblDinnerCount;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Button button1;
