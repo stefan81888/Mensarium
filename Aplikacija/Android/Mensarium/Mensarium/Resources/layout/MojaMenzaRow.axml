@@ -84,5 +84,25 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="5dp" />
+        <TextView
+            android:id="@+id/GuzvaNaSalteruText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#a0a3a7"
+            android:textSize="15dp"
+            android:text="Guzva na salteru:"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp" />
+        <ProgressBar
+            android:id="@+id/GuzvaNaSalteruBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="10dip"
+            android:minHeight="10dip"
+            android:progress="50"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp" />
     </LinearLayout>
 </LinearLayout>
