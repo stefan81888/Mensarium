@@ -56,7 +56,7 @@ namespace Mensarium.Resources.activities
 
             MarkerOptions marker = new MarkerOptions()
                 .SetPosition(latlng)
-                .SetTitle(menzaZaPrikaz.Ime);
+                .SetTitle(menzaZaPrikaz.MenzaFull.Naziv);
 
             mapa.AddMarker(marker);
         }

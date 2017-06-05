@@ -15,6 +15,7 @@ using View = Android.Views.View;
 using Mensarium.Components;
 using Mensarium.Resources.activities;
 using MensariumDesktop.Model.Components.DTOs;
+using Android.Support.V4.Widget;
 
 namespace Mensarium
 {
@@ -23,6 +24,8 @@ namespace Mensarium
         private Android.Widget.Button sveMenze;
         public int omiljenaMenza = 0; //index u listi menzi
         private ListaMenzi listaMenzi = ListaMenzi.InstancaListaMenzi;
+
+        private SwipeRefreshLayout swipe;
 
         private LinearLayout obrociLayout;
 
@@ -47,8 +50,19 @@ namespace Mensarium
 
                 obrociLayout = view.FindViewById<LinearLayout>(Resource.Id.profilObrociLayout);
                 obrociLayout.Click += ObrociLayoutOnClick;
+
+                swipe = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swipeProfilPage);
+                swipe.Refresh += Swipe_Refresh;
             }
             return view;
+        }
+
+        private void Swipe_Refresh(object sender, EventArgs e)
+        {
+            NapuniLabeleSaObrocima();
+            SetujOmiljenuMenzu(omiljenaMenza);
+
+            swipe.Refreshing = false;
         }
 
         private void NapuniLabele()
@@ -89,19 +103,26 @@ namespace Mensarium
         public void SetujOmiljenuMenzu(int indexOmiljene)
         {
             MenzaItem item = listaMenzi.Lista[indexOmiljene];
-            view.FindViewById<TextView>(Resource.Id.ImeMojeMenze).Text = item.Ime;
-            view.FindViewById<TextView>(Resource.Id.LokacijaMojeMenze).Text = item.Lokacija;
-            if (item.Radi)
+            view.FindViewById<TextView>(Resource.Id.ImeMojeMenze).Text = item.MenzaFull.Naziv;
+            view.FindViewById<TextView>(Resource.Id.LokacijaMojeMenze).Text = item.MenzaFull.Lokacija;
+            if (item.MenzaFull.VanrednoNeRadi)
                 view.FindViewById<TextView>(Resource.Id.DaLiRadiMojaMenza).Text = "Trenutno otvorena!";
             else
                 view.FindViewById<TextView>(Resource.Id.DaLiRadiMojaMenza).Text = "Trenutno ne radi!";
 
-            view.FindViewById<TextView>(Resource.Id.GuzvaMojeMenzeText).Text = "Guzva u menzi: " + item.Popunjenost.ToString() + "%"; ;
+            view.FindViewById<TextView>(Resource.Id.GuzvaMojeMenzeText).Text = "Guzva u menzi: " + item.GuzvaFull.TrenutnaGuzvaZaJelo.ToString() + "%"; ;
+            view.FindViewById<TextView>(Resource.Id.GuzvaNaSalteruMojeMenzeText).Text = "Guzva na salteru: " +
+                                                                                        item.GuzvaFull.TrenutnaGuzvaZaUplatu.ToString() +
+                                                                                        "%";
   
             Android.Widget.ProgressBar bar =
                 view.FindViewById<Android.Widget.ProgressBar>(Resource.Id.ProfilMojaMenzaBar);
             bar.Max = 100;
-            bar.Progress = item.Popunjenost;
+            bar.Progress = item.GuzvaFull.TrenutnaGuzvaZaJelo;
+
+            bar = view.FindViewById<Android.Widget.ProgressBar>(Resource.Id.GuzvaNaSalteruMojaMenzaBar);
+            bar.Max = 100;
+            bar.Progress = item.GuzvaFull.TrenutnaGuzvaZaUplatu;
         }
 
         private void SveMenzeOnClick(object sender, EventArgs eventArgs)

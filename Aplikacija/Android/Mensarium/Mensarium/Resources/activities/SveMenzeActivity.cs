@@ -38,21 +38,28 @@ namespace Mensarium
             //event long click
             listaView.ItemLongClick += ListaViewOnItemLongClick;
 
-            //refresh
-            //listaView.i
+            //event short click
+            listaView.ItemClick += ListaViewOnItemClick;
+        }
+
+        private void ListaViewOnItemClick(object sender, AdapterView.ItemClickEventArgs itemClickEventArgs)
+        {
+            MenzaItem menza = listaMenzi.Lista[itemClickEventArgs.Position];
+
+            var alert = new AlertDialog.Builder(this);
+            alert.SetTitle("Informacije o menzi");
+            alert.SetPositiveButton("U redu", (o, args) => { alert.Dispose(); });
+
+            alert.SetMessage("Ime menze: " + menza.MenzaFull.Naziv + 
+                             "\nLokacija menze: " + menza.MenzaFull.Lokacija +
+                             "\nRadno vreme menze: " + menza.MenzaFull.RadnoVreme);
+
+            alert.Show();
+
         }
 
         private void ListaViewOnItemLongClick(object sender, AdapterView.ItemLongClickEventArgs itemLongClickEventArgs)
         {
-            /*
-            PopupMenu popup = new PopupMenu(this, listaView, GravityFlags.Center);
-
-            popup.MenuInflater.Inflate(Resource.Menu.popup_menu, popup.Menu);
-
-            popup.MenuItemClick += PopupOnMenuItemClick;
-
-            popup.Show();
-            */
 
             this.pos = itemLongClickEventArgs.Position;
 

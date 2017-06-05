@@ -18,6 +18,7 @@ namespace Mensarium
         private List<MenzaItem> listaMenzi;
         private SveMenzeActivity context;
         private ProgressBar bar;
+        private ProgressBar salterBar;
 
         public MenzeListAdapter(SveMenzeActivity con, List<MenzaItem> list)
         {
@@ -42,17 +43,23 @@ namespace Mensarium
                 view = context.LayoutInflater.Inflate(Resource.Layout.MojaMenzaRow, parent, false);
 
             MenzaItem item = this[position];
-            view.FindViewById<TextView>(Resource.Id.ImeMenze).Text = item.Ime;
-            view.FindViewById<TextView>(Resource.Id.LokacijaMenze).Text = item.Lokacija;
-            if (item.Radi)
+            view.FindViewById<TextView>(Resource.Id.ImeMenze).Text = item.MenzaFull.Naziv;
+            view.FindViewById<TextView>(Resource.Id.LokacijaMenze).Text = item.MenzaFull.Lokacija;
+            if (item.MenzaFull.VanrednoNeRadi)
                 view.FindViewById<TextView>(Resource.Id.DaLiRadiMenza).Text = "Trenutno otvorena!";
             else
                 view.FindViewById<TextView>(Resource.Id.DaLiRadiMenza).Text = "Trenutno ne radi!";
-            view.FindViewById<TextView>(Resource.Id.GuzvaText).Text = "Guzva u menzi: " + item.Popunjenost.ToString() + "%";
+            view.FindViewById<TextView>(Resource.Id.GuzvaText).Text = "Guzva u menzi: " + item.GuzvaFull.TrenutnaGuzvaZaJelo.ToString() + "%";
+            view.FindViewById<TextView>(Resource.Id.GuzvaNaSalteruText).Text = "Guzvna na salteru: " +
+                                                                               item.GuzvaFull.TrenutnaGuzvaZaUplatu.ToString() + "%";
 
             bar = view.FindViewById<ProgressBar>(Resource.Id.ProfilMenzaBar);
             bar.Max = 100;
-            bar.Progress = item.Popunjenost;
+            bar.Progress = item.GuzvaFull.TrenutnaGuzvaZaJelo;
+
+            salterBar = view.FindViewById<ProgressBar>(Resource.Id.GuzvaNaSalteruBar);
+            salterBar.Max = 100;
+            salterBar.Progress = item.GuzvaFull.TrenutnaGuzvaZaUplatu;
 
             return view;
         }
