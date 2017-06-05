@@ -368,3 +368,19 @@ Object name: 'ISession'.
    at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
    at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
    at NHibernate.Loader.Loader.LoadEntity(ISessionImplementor session, Object id, IType identifierType, Object optionalObject, String optionalEntityName, Object optionalIdentifier, IEntityPersister persister)
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+[6/5/2017 7:01:16 PM]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.Pozovi(PozivanjaFullDto pfdto) in d:\GitProjects\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 331
+   at MensariumAPI.Controllers.KorisniciController.Pozovi(PozivanjaFullDto pfdto, String sid) in d:\GitProjects\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 530
+[6/5/2017 7:02:25 PM]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.Pozovi(PozivanjaFullDto pfdto) in d:\GitProjects\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 331
+   at MensariumAPI.Controllers.KorisniciController.Pozovi(PozivanjaFullDto pfdto, String sid) in d:\GitProjects\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 530
+[6/5/2017 7:16:05 PM]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.Pozovi(PozivanjaFullDto pfdto) in d:\GitProjects\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 331
+   at MensariumAPI.Controllers.KorisniciController.Pozovi(PozivanjaFullDto pfdto, String sid) in d:\GitProjects\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 530
+[6/5/2017 7:17:34 PM]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.Pozovi(PozivanjaFullDto pfdto) in d:\GitProjects\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 331
+   at MensariumAPI.Controllers.KorisniciController.Pozovi(PozivanjaFullDto pfdto, String sid) in d:\GitProjects\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 530
+>>>>>>> Stashed changes
