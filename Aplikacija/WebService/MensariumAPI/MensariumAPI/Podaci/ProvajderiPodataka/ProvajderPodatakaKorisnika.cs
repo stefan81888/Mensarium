@@ -269,26 +269,10 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static KorisnikStanjeDto Stanje(Korisnik korisnik)
         {
             ISession s = SesijeProvajder.Sesija;
-            //List<Obrok> obr = ProvajderPodatakaObroka.VratiObroke().ToList();
 
             int doruckovi = korisnik.Obroci.Count(x => x.Iskoriscen == false && x.Tip.IdTipObroka == 1);
             int ruckovi = korisnik.Obroci.Count(x => x.Iskoriscen == false && x.Tip.IdTipObroka == 2);
             int vecere = korisnik.Obroci.Count(x => x.Iskoriscen == false && x.Tip.IdTipObroka == 3);
-            
-            //int doruckovi = (from o in obr
-            //    where (o.Uplatilac.IdKorisnika == korisnik.IdKorisnika && o.Tip.IdTipObroka == 1)
-            //    select o
-            //).Count();
-
-            //int ruckovi = (from o in obr
-            //    where (o.Uplatilac.IdKorisnika == korisnik.IdKorisnika && o.Tip.IdTipObroka == 2)
-            //    select o
-            //).Count();
-
-            //int vecere = (from o in obr
-            //    where (o.Uplatilac.IdKorisnika == korisnik.IdKorisnika && o.Tip.IdTipObroka == 3)
-            //    select o
-            //).Count();
 
             KorisnikStanjeDto k = new KorisnikStanjeDto();
 
@@ -299,11 +283,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return k;
         }
 
-        public static PozivanjaFullDto Pozovi(PozivanjaFullDto pfdto, string sid)
+        public static PozivanjaFullDto Pozovi(PozivanjaFullDto pfdto)
         {
             ISession s = SesijeProvajder.Sesija;
             
-            Korisnik pozivalac = VratiKorisnika(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
+            Korisnik pozivalac = VratiKorisnika(pfdto.IdPozivaoca);
             List<Korisnik> pozvani = new List<Korisnik>();
             Pozivanje poziv = new Pozivanje()
             {
@@ -353,8 +337,10 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (p.Count == 0)
                 return null;
 
-            Pozivanje po = p.Find(x => x.Pozivaoc.IdKorisnika == pozivalac.IdKorisnika && x.DatumPoziva == poziv.DatumPoziva);
+            Pozivanje po = p.Find(x => x.Pozivaoc == pozivalac && x.DatumPoziva == poziv.DatumPoziva);
 
+            if (po == null)
+                return null;
 
             pfdto.IdPoziva = po.IdPoziva;
 
@@ -891,6 +877,39 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 { Content = new StringContent("InternalError: " + e.Message) });
             }
+        }
+
+        public static bool DodajUPoziv(int idPoziva, int idPozvanog)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Pozivanje p = s.Load<Pozivanje>(idPoziva);
+
+            Korisnik pozvani = p.Pozivaoc.Prati.ToList().Find(x => x.IdKorisnika == idPozvanog);
+
+            if (pozvani == null)
+                return false; // nemoguce pozvati nekog koga ne pratimo
+           
+            PozivanjaPozvani pp = new PozivanjaPozvani()
+            {
+
+                IdPozivanjaPozvani =
+                {
+                    IdPoziva = p,
+                    IdPozvanog = pozvani
+                },
+                OdgovorPozvanog = false
+           };
+
+           pozvani.PozivanjaOd.Add(pp);
+           p.Pozvani.Add(pp);
+
+           s.Save(p);
+           s.Save(pp);
+           s.Flush();
+
+           return true;
+
         }
 
     }
