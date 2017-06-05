@@ -26,7 +26,7 @@ namespace Mensarium.Api
             public T ResponseObject { get; set; }
         }
         //static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        private static string BaseUrl = "http://8a717221.ngrok.io/api/";
+        private static string BaseUrl = "http://adb7647b.ngrok.io/api/";
 
         private static ApiResponse<byte[]> DownloadData(RestRequest request, bool includeSid = true)
         {

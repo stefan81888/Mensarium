@@ -25,7 +25,7 @@
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:background="@drawable/edittextrounded"
-        android:hint="email/username"
+        android:hint="email / korisnicko ime"
         android:textColorHint="@drawable/text_hint_selector"
         android:ellipsize="start"
         android:gravity="center"
@@ -40,7 +40,7 @@
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:background="@drawable/edittextrounded"
-        android:hint="password"
+        android:hint="sifra"
         android:textColorHint="@drawable/text_hint_selector"
         android:ellipsize="start"
         android:gravity="center"
@@ -48,7 +48,7 @@
         android:layout_below="@id/usernameText"
         android:layout_marginTop="8dp" />
     <Button
-        android:text="Sign In"
+        android:text="Prijavi se"
         android:textColor="@color/NaslovIImeButtona"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -69,11 +69,9 @@
         android:layout_marginTop="10dp"
         android:minWidth="25px"
         android:minHeight="25px"
-        android:layout_marginLeft="65dp"
-        android:gravity="center"
-        android:layout_marginRight="65dp">
+        android:gravity="center">
         <CheckBox
-            android:text="Remember"
+            android:text="Zapamti me"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/checkRemember"
@@ -91,8 +89,8 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp" />
         <TextView
-            android:text="Forgot password"
-            android:layout_width="match_parent"
+            android:text="Zaboravljena sifra"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/forgotPassword"
             android:layout_marginLeft="15dp"
@@ -112,7 +110,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp" />
     <Button
-        android:text="Activate account"
+        android:text="Aktiviraj nalog"
         android:textColor="@color/NaslovIImeButtona"
         android:layout_width="match_parent"
         android:layout_height="45dp"

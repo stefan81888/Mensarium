@@ -31,37 +31,21 @@ namespace Mensarium
             SetContentView(Resource.Layout.PozoviPrijatelja);
 
             SupportActionBar.SetDisplayShowHomeEnabled(true);
-
-            listaPrijatelja = new List<KorisnikFollowDto>();
-            listaPrijatelja.Add(new KorisnikFollowDto() { Fakultet = "Medicinski fakultet", Ime = "Nikola", Prezime = "Savic", KorisnickoIme = "savchaa1337"});
-            listaPrijatelja.Add(new KorisnikFollowDto() { Fakultet = "Pravni fakultet", Ime = "Pera", Prezime = "Peric", KorisnickoIme = "peraaa"});
-            listaPrijatelja.Add(new KorisnikFollowDto() { Fakultet = "Elektronski fakultet", Ime = "Zika", Prezime = "Zikic", KorisnickoIme = "zile"});
-
-            _listView = FindViewById<ListView>(Resource.Id.listaPrijatelja);
-            adapter = new PozoviPrijateljaAdapter(this, listaPrijatelja);
-            _listView.Adapter = adapter;
-
-            /*
-            toolbar.MenuItemClick += (object sender, Android.Support.V7.Widget.Toolbar.MenuItemClickEventArgs e) =>
-            {
-
-            };
-
-            var search = toolbar.Menu.FindItem(Resource.Id.action_search);
-            var searchView = search.ActionView.JavaCast<Android.Support.V7.Widget.SearchView>();
-
             
             try
             {
                 List<KorisnikFollowDto> listaPrijatelja = Api.Api.UsersThatFollows();
-                FindViewById<ListView>(Resource.Id.listaPrijatelja).Adapter = new PozoviPrijateljaAdapter(this, listaPrijatelja);
+                //FindViewById<ListView>(Resource.Id.listaPrijatelja).Adapter = new PozoviPrijateljaAdapter(this, listaPrijatelja);
+
+                _listView = FindViewById<ListView>(Resource.Id.listaPrijatelja);
+                adapter = new PozoviPrijateljaAdapter(this, listaPrijatelja);
+                _listView.Adapter = adapter;
             }
             catch (Exception ex)
             {
                 Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
             }
 
-            */
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
