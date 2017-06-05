@@ -23,7 +23,7 @@ namespace MensariumAPI.Controllers
         [Route("sms")]
         public HttpResponseMessage SMSServis(FormDataCollection data)
         {
-
+            
             string sms_text = data.Get("message");
             string secret = data.Get("secret");
 
@@ -38,13 +38,29 @@ namespace MensariumAPI.Controllers
             int id = int.Parse(sadraj[1]);
             string tip = sadraj[2];
             int brojObroka = int.Parse(sadraj[3]);
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
 
-            ProvajderPodatakaObroka.UplatiObrok(id, brojObroka,
-                ProvajderPodatakaObroka.SmsUplate[tip]);
+                bool status = ProvajderPodatakaObroka.UplatiObrok(id, brojObroka,
+                    ProvajderPodatakaObroka.SmsUplate[tip]);
 
-            string odgovor = string.Format("Uspešno ste uplatili {0} obroka tipa {1}", brojObroka, tip.ToLower());
+                if (!status)
+                    return Request.CreateResponse(HttpStatusCode.OK, "Greska: nevalidni parametri");
 
-            return Request.CreateResponse(HttpStatusCode.OK, odgovor);
+                string odgovor = string.Format("Uspešno ste uplatili {0} obroka tipa {1}", brojObroka, tip.ToLower());
+
+                return Request.CreateResponse(HttpStatusCode.OK, odgovor);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "SMS SERVIS INTERNA GRESKA. POKUSAJTE KASNIJE");
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+            
         }
 
     }
