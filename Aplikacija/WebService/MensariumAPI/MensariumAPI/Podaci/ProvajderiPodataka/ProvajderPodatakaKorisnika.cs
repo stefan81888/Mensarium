@@ -283,11 +283,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return k;
         }
 
-        public static PozivanjaFullDto Pozovi(PozivanjaFullDto pfdto)
+        public static PozivanjaFullDto Pozovi(PozivanjaFullDto pfdto, string sid)
         {
             ISession s = SesijeProvajder.Sesija;
             
-            Korisnik pozivalac = VratiKorisnika(pfdto.IdPozivaoca);
+            Korisnik pozivalac = VratiKorisnika(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
+            if (pozivalac == null)
+                return null; 
+
             List<Korisnik> pozvani = new List<Korisnik>();
             Pozivanje poziv = new Pozivanje()
             {
@@ -337,7 +340,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (p.Count == 0)
                 return null;
 
-            Pozivanje po = p.Find(x => x.Pozivaoc == pozivalac && x.DatumPoziva == poziv.DatumPoziva);
+            Pozivanje po = p.Find(x => x.Pozivaoc.IdKorisnika == pozivalac.IdKorisnika && x.DatumPoziva == poziv.DatumPoziva);
 
             if (po == null)
                 return null;
