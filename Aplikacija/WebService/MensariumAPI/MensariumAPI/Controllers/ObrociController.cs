@@ -312,7 +312,7 @@ namespace MensariumAPI.Controllers
             }
         }
 
-        [HttpPut]
+        [System.Web.Http.HttpPut]
         [Route("vratiPogresnoSkinute")]
         public IHttpActionResult VratiPogresnoSkinuteObroke([FromUri]int id, [FromUri]string sid)
         {
