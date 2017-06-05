@@ -16,6 +16,7 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Xamarin.Forms;
 using Android.Support.V7.App;
 using Mensarium.Components;
+using MensariumDesktop.Model.Components.DTOs;
 
 namespace Mensarium
 {
@@ -76,8 +77,28 @@ namespace Mensarium
         {
             switch (item.ItemId)
             {
+                //novi post
+                case Resource.Id.novipost:
+                    var inflater = LayoutInflater.From(this);
+                    var view = inflater.Inflate(Resource.Layout.noviPostDialog, null);
+
+                    var dialog = new Android.Support.V7.App.AlertDialog.Builder(this);
+                    dialog.SetView(view);
+
+                    dialog.SetPositiveButton("Kreiraj", (sender, args) =>
+                    {
+                        ObjavaCUDto objava = new ObjavaCUDto() { IdLokacije = 1, TekstObjave = view.FindViewById<EditText>(Resource.Id.dialogTextPost).Text};
+                        Api.Api.UserNewPost(MSettings.CurrentSession.LoggedUser.UserID, objava);
+                    });
+
+                    dialog.SetNegativeButton("Otkazi", (sender, args) => { dialog.Dispose();});
+
+                    dialog.Show();
+
+                    return true;
+
                 //search
-                case Resource.Id.action_search:
+                case Resource.Id.search:
                     Toast.MakeText(this, "Search", ToastLength.Short).Show();
                     return true;
 
