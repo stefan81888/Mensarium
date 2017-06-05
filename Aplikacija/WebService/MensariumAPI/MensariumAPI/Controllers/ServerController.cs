@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using MensariumAPI.Podaci.ProvajderiPodataka;
 
 namespace MensariumAPI.Controllers
 {
@@ -28,12 +29,22 @@ namespace MensariumAPI.Controllers
 
             if (secret != "secreta")
                 return Request.CreateResponse(HttpStatusCode.OK, "Mensarium SMS Servis GRESKA: Neuspela autentfikacija!");
+            
+            string[] sadraj = sms_text.Split(' ');
 
-            //Parsiraj sms_text
-            //oblik: MENSARIUM RUCAK _IDKORISNIKA_
-            //Vrati obican string...
+            if (sadraj[0] != "MENSARIUM")
+                return null;
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Mensarium SMS Servis: " + sms_text + " " + secret);
+            int id = int.Parse(sadraj[1]);
+            string tip = sadraj[2];
+            int brojObroka = int.Parse(sadraj[3]);
+
+            ProvajderPodatakaObroka.UplatiObrok(id, brojObroka,
+                ProvajderPodatakaObroka.SmsUplate[tip]);
+
+            string odgovor = string.Format("Uspešno ste uplatili {0} obroka tipa {1}", brojObroka, tip.ToLower());
+
+            return Request.CreateResponse(HttpStatusCode.OK, odgovor);
         }
 
     }

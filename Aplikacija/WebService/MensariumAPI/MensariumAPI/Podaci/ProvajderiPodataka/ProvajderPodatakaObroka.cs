@@ -17,7 +17,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             {"Dorucak", 1},
             {"dorucak", 1},
             {"Doručak", 1},
-            {"doručak", 2},
+            {"doručak", 1},
+            {"DORUCAK", 1},
+            {"DORUČAK", 1},
+            {"RUCAK", 2},
+            {"RUČAK", 2},
             {"Rucak", 2},
             {"Ručak", 2},
             {"rucak", 2},
@@ -25,7 +29,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             {"Vecera", 3},
             {"Večera", 3},
             {"vecera", 3},
-            {"večera", 3}
+            {"večera", 3},
+            {"VECERA", 3},
+            {"VEČERA", 3}
         };
 
         public static bool UplatiObrok(int id, int brojObroka, int tipObroka)
