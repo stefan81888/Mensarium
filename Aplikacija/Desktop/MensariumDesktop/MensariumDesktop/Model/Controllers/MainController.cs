@@ -174,6 +174,19 @@ namespace MensariumDesktop.Model.Controllers
             AddUserMeal(s, Mensa.MealType.Vecera, dinner);
         }
 
+        public static bool UndoAddMeals(MealTodayAdded meal)
+        {
+            try
+            {
+                Api.UndoAddMeals(meal.Id);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+        }
         public static List<MealTodayAdded> GetReclamationMeals(Student s)
         {
             try

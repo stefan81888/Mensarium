@@ -405,7 +405,7 @@ namespace MensariumDesktop
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(880, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(969, 22);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // STATUS_statbarOPStatus
@@ -1240,7 +1240,7 @@ namespace MensariumDesktop
             this.btnReclamation.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btnReclamation.Size = new System.Drawing.Size(219, 55);
             this.btnReclamation.TabIndex = 19;
-            this.btnReclamation.Text = " Reklamacije";
+            this.btnReclamation.Text = " Ispravi grešku";
             this.btnReclamation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnReclamation.UseVisualStyleBackColor = false;
             this.btnReclamation.Click += new System.EventHandler(this.btnReclamation_Click);

@@ -56,6 +56,8 @@ namespace MensariumDesktop
         {
             STATUS_statbarUser.Text = MSettings.CurrentSession.LoggedUser.FullName;
             STATUS_statbarMenza.Text = MSettings.CurrentMensa.Name;
+            HOME_lblCurrentLocation.Text = MSettings.CurrentMensa.Name;
+            HOME_lblCurrentLocationAddress.Text = MSettings.CurrentMensa.Location;
         }
         private void OpStatusWorking()
         {
@@ -100,6 +102,7 @@ namespace MensariumDesktop
             MensaChangerForm mc = new MensaChangerForm();
             mc.ShowDialog();
             RefreshStatusBarData();
+            
         }
         #region DEBUG
         private void showLoginFormToolStripMenuItem_Click(object sender, EventArgs e)
@@ -234,9 +237,6 @@ namespace MensariumDesktop
             UPLATA_RefreshCardInfo(true);
             OpStatusIdle();
 
-            UPLATA_txtBreakfast.Text = "0";
-            UPLATA_txtLunch.Text = "0";
-            UPLATA_txtDinner.Text = "0";
         }
         private void UPLATA_txtBreakfast_TextChanged(object sender, EventArgs e)
         {
@@ -351,6 +351,10 @@ namespace MensariumDesktop
             ReclamationForm rf = new ReclamationForm(MainController.LoadedCardUser);
             rf.ShowDialog();
 
+            OpStatusWorking();
+            MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
+            UPLATA_RefreshCardInfo();
+            OpStatusIdle();
         }
     }
 }

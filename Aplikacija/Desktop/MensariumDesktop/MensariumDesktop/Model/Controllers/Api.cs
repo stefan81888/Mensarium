@@ -638,22 +638,22 @@ namespace MensariumDesktop.Model.Controllers
 
             return response.ResponseObject;
         }
-        public static void UndoUseMeals(int[] mealsId) //netestirano
+        public static void UndoUseMeals(int mealsId) //netestirano
         {
             RestRequest request = new RestRequest(Method.PUT);
             request.Resource = "obroci/vratiPogresnoSkinute";
-            request.AddObject(mealsId);
+            request.AddParameter("id", mealsId, ParameterType.QueryString);
 
             var response = Execute(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
                 throw new Exception("UndoUseMeals: Error" + "\nServerResponse: " + response.ErrorResponse 
                     + "\nHttpStatus: " + response.HttpStatusCode);
         }
-        public static void UndoAddMeals(int[] mealsId) //netestirano
+        public static void UndoAddMeals(int mealsId) //netestirano
         {
             RestRequest request = new RestRequest(Method.PUT);
             request.Resource = "obroci/skiniPogresnoUplacene";
-            request.AddObject(mealsId);
+            request.AddParameter("id", mealsId, ParameterType.QueryString);
 
             var response = Execute(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
