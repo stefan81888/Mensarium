@@ -200,6 +200,7 @@
     <Compile Include="Resources\activities\MapActivity.cs" />
     <Compile Include="Resources\activities\UplacivanjeObroka.cs" />
     <Compile Include="Resources\adapters\PozoviPrijateljaAdapter.cs" />
+    <Compile Include="Resources\adapters\PretragaListAdapter.cs" />
     <Compile Include="Resources\adapters\ProfilItemAdapter.cs" />
     <Compile Include="Resources\fragments\EventsFragment.cs" />
     <Compile Include="Comp\FeedItem.cs" />
@@ -276,6 +277,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\noviPostDialog.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PretragaItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

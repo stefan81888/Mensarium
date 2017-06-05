@@ -45,7 +45,7 @@ namespace Mensarium
             {
                 Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
             }
-
+            
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

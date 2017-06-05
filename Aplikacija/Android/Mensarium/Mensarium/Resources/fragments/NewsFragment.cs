@@ -41,11 +41,20 @@ namespace Mensarium
 
         private void Swipe_Refresh(object sender, EventArgs e)
         {
-            lista = Api.Api.GetFollowedUsersPosts(MSettings.CurrentSession.LoggedUser.UserID);
+            try
+            {
+                lista = Api.Api.GetFollowedUsersPosts(MSettings.CurrentSession.LoggedUser.UserID);
 
-            listView.Adapter = new FeedListAdapter(this, lista);
+                listView.Adapter = new FeedListAdapter(this, lista);
 
-            swipe.Refreshing = false;
+                swipe.Refreshing = false;
+            }
+            catch (Exception ex)
+            {
+                swipe.Refreshing = false;
+
+                Toast.MakeText(this.Context, ex.Message, ToastLength.Long).Show();
+            }
         }
     }
 }

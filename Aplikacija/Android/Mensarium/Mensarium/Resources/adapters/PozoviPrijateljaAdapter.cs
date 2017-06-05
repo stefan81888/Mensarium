@@ -54,22 +54,12 @@ namespace Mensarium.Resources.adapters
             view.FindViewById<TextView>(Resource.Id.profilPrijateljaItemUsername).Text = "@" + korisnik.KorisnickoIme;
             view.FindViewById<TextView>(Resource.Id.profilPrijateljaItemFax).Text = korisnik.Fakultet;
 
-            view.FindViewById<Button>(Resource.Id.pozoviPrijateljaItemDugme).Click += PozoviPrijatelja;
+            Button dugmePozovi = view.FindViewById<Button>(Resource.Id.pozoviPrijateljaItemDugme);
+            dugmePozovi.Tag = korisnik.IdKorisnika;
+            dugmePozovi.SetOnClickListener(new ButtonClickListener(this.Context));
 
             return view;
   
-        }
-
-        private void PozoviPrijatelja(object sender, EventArgs eventArgs)
-        {
-            try
-            {
-                //Api.Api.
-            }
-            catch (System.Exception ex)
-            {
-                Toast.MakeText(Context, ex.Message, ToastLength.Short).Show();
-            }
         }
 
         public Filter Filter { get; private set; }
@@ -77,6 +67,23 @@ namespace Mensarium.Resources.adapters
         public override void NotifyDataSetChanged()
         {
             base.NotifyDataSetChanged();
+        }
+    }
+
+    public class ButtonClickListener : Java.Lang.Object, View.IOnClickListener
+    {
+        private Activity activity;
+
+        public ButtonClickListener(Activity activity)
+        {
+            this.activity = activity;
+        }
+
+        public void OnClick(View v)
+        {
+            string name = (string)v.Tag;
+            string text = string.Format("{0} Button Click.", name);
+            Toast.MakeText(this.activity, text, ToastLength.Short).Show();
         }
     }
 }

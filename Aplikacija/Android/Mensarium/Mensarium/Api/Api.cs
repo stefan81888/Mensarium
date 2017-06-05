@@ -26,7 +26,7 @@ namespace Mensarium.Api
             public T ResponseObject { get; set; }
         }
         //static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        private static string BaseUrl = "http://adb7647b.ngrok.io/api/";
+        private static string BaseUrl = "http://a48f3b23.ngrok.io/api/";
 
         private static ApiResponse<byte[]> DownloadData(RestRequest request, bool includeSid = true)
         {
@@ -308,6 +308,21 @@ namespace Mensarium.Api
 
             return response.ResponseObject;
         }
+
+        public static PozivanjaFullDto KreirajPrazanPoziv(PozivanjaFullDto m)
+        {
+            RestRequest request = new RestRequest(Method.POST);
+            request.Resource = "korisnici/pozivi/kreiraj";
+            request.AddObject(m);
+
+            ApiResponse<PozivanjaFullDto> response = Execute<PozivanjaFullDto>(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("Respond2InviteError" + "\nServerResponse: "
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
+
+            return response.ResponseObject;
+        }
+
         public static void Unfolow(int idFollowing)
         {
             RestRequest request = new RestRequest(Method.PUT);

@@ -1,329 +1,329 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/swipeProfilPage"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-  <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:fillViewport="true"
-      android:scrollbars="none">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#243236">
-      <LinearLayout
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:minWidth="25px"
-          android:minHeight="25px"
-          android:gravity="center"
-          android:layout_marginTop="30dp"
-          android:id="@+id/profilLayout">
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profilSlika"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/user"
-            app:civ_border_width="2dp"
-            app:civ_border_color="@color/SeparatorLine"
-            android:layout_marginRight="20dp" />
-        <LinearLayout
-            android:orientation="vertical"
+    android:id="@+id/swipeProfilPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout1"
-            android:layout_marginLeft="20dp"
-            android:gravity="center">
-          <TextView
-              android:text="Text"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/profilTextImeIPrezime"
-              android:textSize="25dp" />
-          <TextView
-              android:text="Text"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/profilTextFakultet"
-              android:textSize="15dp" />
-          <TextView
-              android:text="Text"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/profilTextBrIndexa"
-              android:textSize="15dp" />
-        </LinearLayout>
-      </LinearLayout>
-      <ImageView
-          android:id="@+id/profilSeparatorLine"
-          android:layout_width="match_parent"
-          android:layout_height="5dp"
-          android:src="@drawable/separator_line"
-          android:layerType="software"
-          android:layout_below="@id/profilLayout"
-          android:layout_marginTop="30dp"
-          android:layout_marginLeft="25dp"
-          android:layout_marginRight="25dp" />
-      <LinearLayout
-          android:orientation="vertical"
-          android:minWidth="25px"
-          android:minHeight="25px"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/profilObrociLayout"
-          android:layout_below="@id/profilSeparatorLine"
-          android:gravity="center"
-          android:layout_marginTop="15dp">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout2"
-            android:gravity="center">
-          <LinearLayout
-              android:orientation="vertical"
-              android:minWidth="25px"
-              android:minHeight="25px"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/profilObrociDorucakLayout"
-              android:gravity="center"
-              android:layout_marginRight="10dp">
-            <TextView
-                android:text="Dorucak"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profilDorucakIme"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:textStyle="bold" />
-            <TextView
-                android:text="Text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profilObrociBrojDorucka"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:layout_marginTop="5dp" />
-          </LinearLayout>
-          <ImageView
-              android:layout_width="1dp"
-              android:layout_height="match_parent"
-              android:src="@drawable/separator_line"
-              android:layerType="software"
-              android:background="@color/SeparatorLine"
-              android:layout_marginLeft="15dp"
-              android:layout_marginRight="15dp"
-              android:layout_marginTop="2dp"
-              android:layout_marginBottom="2dp" />
-          <LinearLayout
-              android:orientation="vertical"
-              android:minWidth="25px"
-              android:minHeight="25px"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/profilObrociRucakLayout"
-              android:gravity="center"
-              android:layout_marginLeft="10dp"
-              android:layout_marginRight="10dp">
-            <TextView
-                android:text="Rucak"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profilRucakIme"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:textStyle="bold" />
-            <TextView
-                android:text="Text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profilObrociBrojRucka"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:layout_marginTop="5dp" />
-          </LinearLayout>
-          <ImageView
-              android:layout_width="1dp"
-              android:layout_height="match_parent"
-              android:src="@drawable/separator_line"
-              android:layerType="software"
-              android:background="@color/SeparatorLine"
-              android:layout_marginLeft="15dp"
-              android:layout_marginRight="15dp"
-              android:layout_marginTop="2dp"
-              android:layout_marginBottom="2dp" />
-          <LinearLayout
-              android:orientation="vertical"
-              android:minWidth="25px"
-              android:minHeight="25px"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/profilObrociVeceraLayout"
-              android:gravity="center"
-              android:layout_marginLeft="10dp">
-            <TextView
-                android:text="Vecera"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/prfilVeceraIme"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:textStyle="bold" />
-            <TextView
-                android:text="Text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profilObrociBrojVecera"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:layout_marginTop="5dp" />
-          </LinearLayout>
-        </LinearLayout>
-      </LinearLayout>
-      <ImageView
-          android:id="@+id/profilSeparatorLine2"
-          android:layout_width="match_parent"
-          android:layout_height="5dp"
-          android:src="@drawable/separator_line"
-          android:layerType="software"
-          android:layout_below="@id/profilObrociLayout"
-          android:layout_marginTop="15dp"
-          android:layout_marginLeft="25dp"
-          android:layout_marginRight="25dp" />
-      <TextView
-          android:text="Moja menza:"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:id="@+id/textMojaMenza"
-          android:textSize="15dp"
-          android:layout_marginTop="25dp"
-          android:layout_below="@id/profilSeparatorLine2"
-          android:layout_marginLeft="25dp" />
-      <LinearLayout
-          android:id="@+id/MojaMenza"
-          android:orientation="vertical"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:minWidth="25px"
-          android:minHeight="25px"
-          android:background="#395056"
-          android:layout_marginLeft="20dp"
-          android:layout_marginRight="20dp"
-          android:layout_marginTop="10dp"
-          android:layout_marginBottom="10dp"
-          android:layout_below="@id/textMojaMenza">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp">
-          <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/ProfilMenzaSlika"
-              android:layout_width="52dp"
-              android:layout_height="52dp"
-              android:src="@drawable/menza"
-              app:civ_border_width="2dp"
-              app:civ_border_color="@color/SeparatorLine"
-              android:layout_marginLeft="10dp"
-              android:layout_marginRight="10dp" />
-          <LinearLayout
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:paddingLeft="10dp">
-            <TextView
-                android:id="@+id/ImeMojeMenze"
-                android:layout_width="fill_parent"
+            android:background="#243236">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="19dp"
-                android:textStyle="bold"
-                android:text="Ime Menze"
-                android:textColor="#c5c9cc" />
-            <TextView
-                android:id="@+id/LokacijaMojeMenze"
-                android:layout_width="fill_parent"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:id="@+id/profilLayout">
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profilSlika"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/user"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/SeparatorLine"
+                    android:layout_marginRight="20dp" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/linearLayout1"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center">
+                    <TextView
+                        android:text="Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profilTextImeIPrezime"
+                        android:textSize="25dp" />
+                    <TextView
+                        android:text="Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profilTextFakultet"
+                        android:textSize="15dp" />
+                    <TextView
+                        android:text="Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profilTextBrIndexa"
+                        android:textSize="15dp" />
+                </LinearLayout>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/profilSeparatorLine"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:src="@drawable/separator_line"
+                android:layerType="software"
+                android:layout_below="@id/profilLayout"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#a0a3a7"
+                android:id="@+id/profilObrociLayout"
+                android:layout_below="@id/profilSeparatorLine"
+                android:gravity="center"
+                android:layout_marginTop="15dp">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/linearLayout2"
+                    android:gravity="center">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profilObrociDorucakLayout"
+                        android:gravity="center"
+                        android:layout_marginRight="10dp">
+                        <TextView
+                            android:text="Dorucak"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profilDorucakIme"
+                            android:textSize="15dp"
+                            android:gravity="center"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:text="Text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profilObrociBrojDorucka"
+                            android:textSize="15dp"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/separator_line"
+                        android:layerType="software"
+                        android:background="@color/SeparatorLine"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profilObrociRucakLayout"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+                        <TextView
+                            android:text="Rucak"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profilRucakIme"
+                            android:textSize="15dp"
+                            android:gravity="center"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:text="Text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profilObrociBrojRucka"
+                            android:textSize="15dp"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/separator_line"
+                        android:layerType="software"
+                        android:background="@color/SeparatorLine"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profilObrociVeceraLayout"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp">
+                        <TextView
+                            android:text="Vecera"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/prfilVeceraIme"
+                            android:textSize="15dp"
+                            android:gravity="center"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:text="Text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profilObrociBrojVecera"
+                            android:textSize="15dp"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/profilSeparatorLine2"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:src="@drawable/separator_line"
+                android:layerType="software"
+                android:layout_below="@id/profilObrociLayout"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp" />
+            <TextView
+                android:text="Moja menza:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textMojaMenza"
                 android:textSize="15dp"
-                android:text="Lokacija" />
-            <TextView
-                android:id="@+id/DaLiRadiMojaMenza"
-                android:layout_width="fill_parent"
+                android:layout_marginTop="25dp"
+                android:layout_below="@id/profilSeparatorLine2"
+                android:layout_marginLeft="25dp" />
+            <LinearLayout
+                android:id="@+id/MojaMenza"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#a0a3a7"
-                android:textSize="15dp"
-                android:text="Radi/Ne radi" />
-          </LinearLayout>
-        </LinearLayout>
-        <TextView
-            android:id="@+id/GuzvaMojeMenzeText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#a0a3a7"
-            android:textSize="15dp"
-            android:text="Guzva u menzi:"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="15dp" />
-        <ProgressBar
-            android:id="@+id/ProfilMojaMenzaBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:maxHeight="10dip"
-            android:minHeight="10dip"
-            android:progress="50"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="5dp" />
-        <TextView
-            android:id="@+id/GuzvaNaSalteruMojeMenzeText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#a0a3a7"
-            android:textSize="15dp"
-            android:text="Guzva na salteru:"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp" />
-        <ProgressBar
-            android:id="@+id/GuzvaNaSalteruMojaMenzaBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:maxHeight="10dip"
-            android:minHeight="10dip"
-            android:progress="50"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="5dp" />
-      </LinearLayout>
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:layout_below="@id/MojaMenza">
-        <Button
-            android:text="Prikazi sve menze"
-            android:textColor="@color/NaslovIImeButtona"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:id="@+id/sveMenzeDugme"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_button"
-            android:textSize="18dp"
-            android:textAllCaps="false"
-            android:layout_marginBottom="10dp" />
-      </LinearLayout>
-    </RelativeLayout>
-  </ScrollView>
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:background="#395056"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/textMojaMenza">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:minWidth="25px"
+                    android:minHeight="25px"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/ProfilMenzaSlika"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:src="@drawable/menza"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="@color/SeparatorLine"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp" />
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp">
+                        <TextView
+                            android:id="@+id/ImeMojeMenze"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="19dp"
+                            android:textStyle="bold"
+                            android:text="Ime Menze"
+                            android:textColor="#c5c9cc" />
+                        <TextView
+                            android:id="@+id/LokacijaMojeMenze"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#a0a3a7"
+                            android:textSize="15dp"
+                            android:text="Lokacija" />
+                        <TextView
+                            android:id="@+id/DaLiRadiMojaMenza"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#a0a3a7"
+                            android:textSize="15dp"
+                            android:text="Radi/Ne radi" />
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/GuzvaMojeMenzeText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#a0a3a7"
+                    android:textSize="15dp"
+                    android:text="Guzva u menzi:"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp" />
+                <ProgressBar
+                    android:id="@+id/ProfilMojaMenzaBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="10dip"
+                    android:minHeight="10dip"
+                    android:progress="50"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="5dp" />
+                <TextView
+                    android:id="@+id/GuzvaNaSalteruMojeMenzeText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#a0a3a7"
+                    android:textSize="15dp"
+                    android:text="Guzva na salteru:"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="15dp" />
+                <ProgressBar
+                    android:id="@+id/GuzvaNaSalteruMojaMenzaBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="10dip"
+                    android:minHeight="10dip"
+                    android:progress="50"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="5dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/MojaMenza">
+                <Button
+                    android:text="Prikazi sve menze"
+                    android:textColor="@color/NaslovIImeButtona"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:id="@+id/sveMenzeDugme"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_button"
+                    android:textSize="18dp"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="10dp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 </android.support.v4.widget.SwipeRefreshLayout>
