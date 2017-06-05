@@ -70,7 +70,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 ObjavaReadDto objava = new ObjavaReadDto()
                 {
                     TekstObjave = v.Objava.TekstObjave,
-                    ImeKorisnika = v.Objava.IdKorisnik.KorisnickoIme,
+                    ImeKorisnika = v.Objava.IdKorisnik.Ime,
                     PrezimeKorisnika = v.Objava.IdKorisnik.Prezime,
                     IdKorisnika = v.IdKorisnika,
                     IdLokacije = v.Objava.Lokacija.IdMenza

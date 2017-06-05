@@ -16,12 +16,18 @@ namespace MensariumDesktop.Forms
     public partial class ReclamationForm : Form
     {
         private Student student;
-        private List<MealTodayAdded> list;
-
-        public ReclamationForm(Student s)
+        private List<MealReclamation> list;
+        private Mode mode;
+        public enum Mode
+        {
+            PogresnaUplata,
+            PogresnaNaplata
+        }
+        public ReclamationForm(Student s, Mode m)
         {
             InitializeComponent();
             student = s;
+            mode = m;
             LoadData();
         }
 
@@ -32,17 +38,18 @@ namespace MensariumDesktop.Forms
             txtUserLName.Text = student.LastName;
 
             dgvMeals.DataSource = list;
-            dgvMeals.Columns["MensaAdded"].Visible = false;
+            dgvMeals.Columns["Mensa"].Visible = false;
             dgvMeals.Columns["Id"].HeaderText = "ID Obroka";
-            dgvMeals.Columns["DateAdded"].HeaderText = "Datum uplacivanja";
+            dgvMeals.Columns["DateAdded"].HeaderText = "Datum " + ((mode == Mode.PogresnaUplata)? "uplacivanja" : "naplacivanja");
             dgvMeals.Columns["Type"].HeaderText = "Tip";
-            dgvMeals.Columns["MensaName"].HeaderText = "Mesto uplate";
+            dgvMeals.Columns["MensaName"].HeaderText = "Mesto " + ((mode == Mode.PogresnaUplata) ? "uplate" : "naplate");
             cmbFilter.SelectedIndex = 0;
+            
         }
 
         private void LoadData()
         {
-            list = MainController.GetReclamationMeals(student);
+            list = MainController.GetReclamationMeals(student, mode);
         }
         private void RefreshData()
         {
@@ -72,8 +79,8 @@ namespace MensariumDesktop.Forms
             if (dgvMeals.SelectedRows.Count == 0)
                 return;
 
-            MealTodayAdded selected = (MealTodayAdded)dgvMeals.SelectedRows[0].DataBoundItem;
-            bool ops = MainController.UndoAddMeals(selected);
+            MealReclamation selected = (MealReclamation)dgvMeals.SelectedRows[0].DataBoundItem;
+            bool ops = (mode == Mode.PogresnaUplata) ? MainController.UndoAddMeals(selected) : MainController.UndoUseMeals(selected);
             LoadData();
             
             RefreshData();
