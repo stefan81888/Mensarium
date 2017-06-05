@@ -1014,20 +1014,21 @@ namespace MensariumAPI.Controllers
 
 
         //Aktivacija naloga
-        [HttpPut]
-        [Route("verifikacija")]
-        public SesijaDto VerifikovanNalog([FromBody] int id)
+        [HttpGet]
+        [Route("verifikacija/{id:int}")]
+        public IHttpActionResult VerifikovanNalog(int id)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                SesijaDto s = ProvajderPodatakaKorisnika.AktivirajNalog(id);
+                bool status = ProvajderPodatakaKorisnika.AktivirajNalog(id);
 
-                if (s == null)
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                        { Content = new StringContent("Neuspesno kreiranje poziva") });
-                return s;
+                if (status)
+                    return Ok("Verifikacija uspesna");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Neispravna verifikacija") });
 
             }
             catch (Exception e)

@@ -749,7 +749,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
 
-            Korisnik k = VratiKorisnika(czrdto.DodeljeniId);
+            Korisnik k = s.Load<Korisnik>(czrdto.DodeljeniId);
 
             if (k.KorisnickoIme != null)
                 return false;
@@ -845,35 +845,16 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return pfdto;
         }
 
-        public static SesijaDto AktivirajNalog(int id)
+        public static bool AktivirajNalog(int id)
         {
             ISession s = SesijeProvajder.Sesija;
 
-            Korisnik korisnik = VratiKorisnika(id);
+            Korisnik korisnik = s.Load<Korisnik>(id);
             korisnik.AktivanNalog = true;
             s.Save(korisnik);
             s.Flush();
 
-            LoginSesija sesija = new LoginSesija()
-            {
-                KorisnikSesije = korisnik,
-                IdSesije = Guid.NewGuid().ToString(),
-                DatumPrijavljivanja = DateTime.Now,
-                ValidnaDo = DateTime.Now.AddYears(1)
-            };
-            s.Save(sesija);
-            s.Flush();
-
-            SesijaDto sdto = new SesijaDto()
-            {
-                IdSesije = sesija.IdSesije,
-                IdKorisnika = sesija.KorisnikSesije.IdKorisnika,
-                DatumPrijavljivanja = sesija.DatumPrijavljivanja,
-                ValidnaDo = sesija.ValidnaDo
-            };
-
-            return sdto;
-            
+            return true;
         }
 
 
@@ -893,14 +874,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             // Primalac
             oMail.To = email;
 
-            HyperLink link = new HyperLink();
-            link.Text = Guid.NewGuid().ToString();
-            link.Target = verifikacioni_link + id;
+            oMail.HtmlBody = String.Format("Postovani, molimo Vas da aktivirate nalog na Mensarium sistemu pritiskom na link: {0}",
+                "<a href=\"http://localhost:2244/api/korisnici/verifikacija/" + id +"\">link</a>");
 
             oMail.Subject = "Verifikacija naloga";
-            oMail.TextBody = "Poštovani, kreirali ste nalog na Mensarium sistemu." +
-                             " Molimo Vas, kliknite na link ispod da verifikujeete nalog\n" +
-                             link;
+          
 
             SmtpServer oServer = new SmtpServer(""); 
 

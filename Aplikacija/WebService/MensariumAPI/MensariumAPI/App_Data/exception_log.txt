@@ -332,3 +332,39 @@ Parameter name: index
    at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
    at NHibernate.Id.Insert.AbstractSelectingDelegate.PerformInsert(SqlCommandInfo insertSQL, ISessionImplementor session, IBinder binder)
 =======
+[5.6.2017 16:24:58]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 754
+   at MensariumAPI.Controllers.KorisniciController.RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 931
+[5.6.2017 16:37:38]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 754
+   at MensariumAPI.Controllers.KorisniciController.RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 931
+[5.6.2017 16:40:30]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 754
+   at MensariumAPI.Controllers.KorisniciController.RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 931
+[5.6.2017 16:46:33]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.SesijeProvajder.VratiSesiju() in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\SesijeProvajder.cs:line 54
+   at MensariumAPI.Podaci.ProvajderiPodataka.SesijeProvajder.OtvoriSesiju() in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\SesijeProvajder.cs:line 30
+   at MensariumAPI.Controllers.KorisniciController.RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 929
+[5.6.2017 17:34:53]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.AktivirajNalog(Int32 id) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 853
+   at MensariumAPI.Controllers.KorisniciController.VerifikovanNalog(Int32 id) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 1025
+[5.6.2017 17:39:47]	System.ObjectDisposedException: Session is closed!
+Object name: 'ISession'.
+   at NHibernate.Impl.AbstractSessionImpl.ErrorIfClosed()
+   at NHibernate.Impl.AbstractSessionImpl.CheckAndUpdateSessionStatus()
+   at NHibernate.Impl.SessionImpl.get_PersistenceContext()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.CascadeOnFlush(IEventSource session, IEntityPersister persister, Object key, Object anything)
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PrepareEntityFlushes(IEventSource session)
+   at NHibernate.Event.Default.AbstractFlushingEventListener.FlushEverythingToExecutions(FlushEvent event)
+   at NHibernate.Event.Default.DefaultFlushEventListener.OnFlush(FlushEvent event)
+   at NHibernate.Impl.SessionImpl.Flush()
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 791
+   at MensariumAPI.Controllers.KorisniciController.RegistracijaNaAndroid(ClientZaRegistracijuDto czrdto) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 931
+[5.6.2017 17:40:18]	System.ObjectDisposedException: Session is closed!
+Object name: 'ISession'.
+   at NHibernate.Impl.AbstractSessionImpl.ErrorIfClosed()
+   at NHibernate.Impl.AbstractSessionImpl.CheckAndUpdateSessionStatus()
+   at NHibernate.Impl.SessionImpl.get_Batcher()
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.LoadEntity(ISessionImplementor session, Object id, IType identifierType, Object optionalObject, String optionalEntityName, Object optionalIdentifier, IEntityPersister persister)
