@@ -2430,6 +2430,7 @@ namespace MensariumDesktop
             this.button10.Text = " Uređivanje";
             this.button10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // label24
             // 

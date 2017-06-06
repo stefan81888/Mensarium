@@ -447,9 +447,14 @@ namespace MensariumDesktop
             }  
         }
 
+
+
         #endregion
 
-
-
+        private void button10_Click(object sender, EventArgs e)
+        {
+            FacultyManagerForm fm = new FacultyManagerForm();
+            fm.ShowDialog();
+        }
     }
 }

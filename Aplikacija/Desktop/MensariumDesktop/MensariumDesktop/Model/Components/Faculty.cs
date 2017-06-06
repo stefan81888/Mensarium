@@ -14,6 +14,7 @@ namespace MensariumDesktop.Model.Components
         public static void UpdateFacultyList()
         {
             Faculties = MUtility.FacultyList_FromFakultetiFullDto(Api.GetAllFaculties());
+            Faculties.Sort((x,y) => x.FacultyID.CompareTo(y.FacultyID));
         }
         public int FacultyID { get; set; }
         public string Name { get; set; }
