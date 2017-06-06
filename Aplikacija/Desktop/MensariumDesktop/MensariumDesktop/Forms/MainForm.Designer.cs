@@ -32,17 +32,17 @@ namespace MensariumDesktop
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint10 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 15D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint11 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 23D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint12 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 75D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint13 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(3D, 53D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint14 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(4D, 63D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint15 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(5D, 25D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint16 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(6D, 3D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint17 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(7D, 17D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint18 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(8D, 53D);
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint55 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 15D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint56 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 23D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint57 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 75D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint58 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(3D, 53D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint59 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(4D, 63D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint60 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(5D, 25D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint61 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(6D, 3D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint62 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(7D, 17D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint63 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(8D, 53D);
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.STATUS_statbarUser = new System.Windows.Forms.ToolStripDropDownButton();
             this.STATUS_statbarUserProfile = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,9 +175,8 @@ namespace MensariumDesktop
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.panel8 = new System.Windows.Forms.Panel();
             this.KORSN_cbxAccTypeChooser = new System.Windows.Forms.ComboBox();
-            this.KORISN_dgvUsers = new System.Windows.Forms.DataGridView();
+            this.KORSN_dgvUsers = new System.Windows.Forms.DataGridView();
             this.KORSN_txtSearch = new System.Windows.Forms.TextBox();
-            this.KORSN_cbxSearchBy = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
@@ -253,7 +252,7 @@ namespace MensariumDesktop
             this.tabUsers.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.panel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.KORISN_dgvUsers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KORSN_dgvUsers)).BeginInit();
             this.groupBox10.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             this.tabAdmin.SuspendLayout();
@@ -2040,9 +2039,8 @@ namespace MensariumDesktop
             // 
             this.panel8.BackColor = System.Drawing.Color.Transparent;
             this.panel8.Controls.Add(this.KORSN_cbxAccTypeChooser);
-            this.panel8.Controls.Add(this.KORISN_dgvUsers);
+            this.panel8.Controls.Add(this.KORSN_dgvUsers);
             this.panel8.Controls.Add(this.KORSN_txtSearch);
-            this.panel8.Controls.Add(this.KORSN_cbxSearchBy);
             this.panel8.Controls.Add(this.label22);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -2066,28 +2064,30 @@ namespace MensariumDesktop
             this.KORSN_cbxAccTypeChooser.Name = "KORSN_cbxAccTypeChooser";
             this.KORSN_cbxAccTypeChooser.Size = new System.Drawing.Size(1081, 25);
             this.KORSN_cbxAccTypeChooser.TabIndex = 29;
+            this.KORSN_cbxAccTypeChooser.SelectedIndexChanged += new System.EventHandler(this.KORSN_cbxAccTypeChooser_SelectedIndexChanged);
             // 
-            // KORISN_dgvUsers
+            // KORSN_dgvUsers
             // 
-            this.KORISN_dgvUsers.AllowUserToAddRows = false;
-            this.KORISN_dgvUsers.AllowUserToDeleteRows = false;
-            this.KORISN_dgvUsers.AllowUserToResizeRows = false;
-            this.KORISN_dgvUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.KORSN_dgvUsers.AllowUserToAddRows = false;
+            this.KORSN_dgvUsers.AllowUserToDeleteRows = false;
+            this.KORSN_dgvUsers.AllowUserToOrderColumns = true;
+            this.KORSN_dgvUsers.AllowUserToResizeRows = false;
+            this.KORSN_dgvUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.KORISN_dgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.KORISN_dgvUsers.BackgroundColor = System.Drawing.Color.White;
-            this.KORISN_dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.KORISN_dgvUsers.Location = new System.Drawing.Point(3, 34);
-            this.KORISN_dgvUsers.MultiSelect = false;
-            this.KORISN_dgvUsers.Name = "KORISN_dgvUsers";
-            this.KORISN_dgvUsers.ReadOnly = true;
-            this.KORISN_dgvUsers.RowHeadersVisible = false;
-            this.KORISN_dgvUsers.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.KORISN_dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.KORISN_dgvUsers.ShowEditingIcon = false;
-            this.KORISN_dgvUsers.Size = new System.Drawing.Size(1081, 436);
-            this.KORISN_dgvUsers.TabIndex = 28;
+            this.KORSN_dgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.KORSN_dgvUsers.BackgroundColor = System.Drawing.Color.White;
+            this.KORSN_dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.KORSN_dgvUsers.Location = new System.Drawing.Point(3, 34);
+            this.KORSN_dgvUsers.MultiSelect = false;
+            this.KORSN_dgvUsers.Name = "KORSN_dgvUsers";
+            this.KORSN_dgvUsers.ReadOnly = true;
+            this.KORSN_dgvUsers.RowHeadersVisible = false;
+            this.KORSN_dgvUsers.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.KORSN_dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.KORSN_dgvUsers.ShowEditingIcon = false;
+            this.KORSN_dgvUsers.Size = new System.Drawing.Size(1081, 436);
+            this.KORSN_dgvUsers.TabIndex = 28;
             // 
             // KORSN_txtSearch
             // 
@@ -2095,19 +2095,9 @@ namespace MensariumDesktop
             | System.Windows.Forms.AnchorStyles.Right)));
             this.KORSN_txtSearch.Location = new System.Drawing.Point(70, 3);
             this.KORSN_txtSearch.Name = "KORSN_txtSearch";
-            this.KORSN_txtSearch.Size = new System.Drawing.Size(843, 25);
+            this.KORSN_txtSearch.Size = new System.Drawing.Size(1014, 25);
             this.KORSN_txtSearch.TabIndex = 27;
-            // 
-            // KORSN_cbxSearchBy
-            // 
-            this.KORSN_cbxSearchBy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.KORSN_cbxSearchBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.KORSN_cbxSearchBy.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.KORSN_cbxSearchBy.FormattingEnabled = true;
-            this.KORSN_cbxSearchBy.Location = new System.Drawing.Point(919, 3);
-            this.KORSN_cbxSearchBy.Name = "KORSN_cbxSearchBy";
-            this.KORSN_cbxSearchBy.Size = new System.Drawing.Size(165, 25);
-            this.KORSN_cbxSearchBy.TabIndex = 26;
+            this.KORSN_txtSearch.TextChanged += new System.EventHandler(this.KORSN_txtSearch_TextChanged);
             // 
             // label22
             // 
@@ -2166,6 +2156,7 @@ namespace MensariumDesktop
             this.KORSN_btnProfile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.KORSN_btnProfile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.KORSN_btnProfile.UseVisualStyleBackColor = false;
+            this.KORSN_btnProfile.Click += new System.EventHandler(this.KORSN_btnProfile_Click);
             // 
             // KORSN_btnAddNewUser
             // 
@@ -2231,6 +2222,7 @@ namespace MensariumDesktop
             this.KORSN_btnDeleteUser.Text = " Obriši";
             this.KORSN_btnDeleteUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.KORSN_btnDeleteUser.UseVisualStyleBackColor = false;
+            this.KORSN_btnDeleteUser.Click += new System.EventHandler(this.KORSN_btnDeleteUser_Click);
             // 
             // KORSN_btnRefreshList
             // 
@@ -2304,25 +2296,25 @@ namespace MensariumDesktop
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea7.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea7);
             this.chart1.Enabled = false;
             this.chart1.Location = new System.Drawing.Point(245, 59);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series2.Name = "Series1";
-            series2.Points.Add(dataPoint10);
-            series2.Points.Add(dataPoint11);
-            series2.Points.Add(dataPoint12);
-            series2.Points.Add(dataPoint13);
-            series2.Points.Add(dataPoint14);
-            series2.Points.Add(dataPoint15);
-            series2.Points.Add(dataPoint16);
-            series2.Points.Add(dataPoint17);
-            series2.Points.Add(dataPoint18);
-            this.chart1.Series.Add(series2);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series7.Name = "Series1";
+            series7.Points.Add(dataPoint55);
+            series7.Points.Add(dataPoint56);
+            series7.Points.Add(dataPoint57);
+            series7.Points.Add(dataPoint58);
+            series7.Points.Add(dataPoint59);
+            series7.Points.Add(dataPoint60);
+            series7.Points.Add(dataPoint61);
+            series7.Points.Add(dataPoint62);
+            series7.Points.Add(dataPoint63);
+            this.chart1.Series.Add(series7);
             this.chart1.Size = new System.Drawing.Size(844, 431);
             this.chart1.TabIndex = 20;
             this.chart1.Text = "chart1";
@@ -2679,7 +2671,7 @@ namespace MensariumDesktop
             this.groupBox11.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.KORISN_dgvUsers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KORSN_dgvUsers)).EndInit();
             this.groupBox10.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.tabAdmin.ResumeLayout(false);
@@ -2819,8 +2811,7 @@ namespace MensariumDesktop
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox KORSN_txtSearch;
-        private System.Windows.Forms.ComboBox KORSN_cbxSearchBy;
-        private System.Windows.Forms.DataGridView KORISN_dgvUsers;
+        private System.Windows.Forms.DataGridView KORSN_dgvUsers;
         private System.Windows.Forms.ToolStripMenuItem showUserFormToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showNewUserCreatedFormToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox12;

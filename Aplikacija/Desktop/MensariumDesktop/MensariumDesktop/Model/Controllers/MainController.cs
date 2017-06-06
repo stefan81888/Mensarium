@@ -248,6 +248,12 @@ namespace MensariumDesktop.Model.Controllers
         }
         public static bool UseMeal(MealType type)
         {
+            if (LoadedCardUser == null)
+            {
+                MUtility.ShowWarrning("Korisnik nije ucitan");
+                return false;
+            }
+
             try
             {
 
@@ -419,5 +425,20 @@ namespace MensariumDesktop.Model.Controllers
                 return false;
             }
         }
+
+        public static bool DeleteUser(User u)
+        {
+            try
+            {
+                Api.DeleteUser(u.UserID);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+        }
+
     }
 }

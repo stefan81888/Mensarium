@@ -41,8 +41,7 @@ namespace MensariumDesktop
             UPLATA_lblLunchPrice.Text = MSettings.PriceLunch.ToString();
             UPLATA_lblDinnerPrice.Text = MSettings.PriceDinner.ToString();
 
-            KORSN_cbxSearchBy.DataSource = Enum.GetValues(typeof(MUtility.FilterUsers));
-            KORSN_cbxAccTypeChooser.SelectedIndex = 0;
+            KORSN_cbxAccTypeChooser.SelectedIndex = 2;
             RefreshStatusBarData();
             
         }
@@ -358,8 +357,9 @@ namespace MensariumDesktop
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
                 }
+                MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
             }
-            MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
+            
         }
         private void NAPLATA_btnUseBreakfast_Click(object sender, EventArgs e)
         {
@@ -399,8 +399,102 @@ namespace MensariumDesktop
 
         #region KORISNICI_TAB
 
+        private void KORSN_TABINIT()
+        {
+            if (KORSN_dgvUsers.DataSource == null)
+                return;
+            try
+            {
+                KORSN_dgvUsers.Columns["UserID"].HeaderText = "ID";
+                KORSN_dgvUsers.Columns["Username"].HeaderText = "Korisnicko ime";
+                KORSN_dgvUsers.Columns["FirstName"].HeaderText = "Ime";
+                KORSN_dgvUsers.Columns["LastName"].HeaderText = "Prezime";
+                KORSN_dgvUsers.Columns["Birthday"].HeaderText = "DatumRodjenja";
+                KORSN_dgvUsers.Columns["RegistrationDate"].HeaderText = "DatumRegistracije";
+                KORSN_dgvUsers.Columns["PhoneNumber"].HeaderText = "Telefon";
+                KORSN_dgvUsers.Columns["AccountType"].HeaderText = "Tip";
+                KORSN_dgvUsers.Columns["ProfilePicture"].Visible = false;
+                KORSN_dgvUsers.Columns["ActiveAccount"].Visible = false;
+                KORSN_dgvUsers.Columns["Index"].HeaderText = "Indeks";
+                KORSN_dgvUsers.Columns["ValidUntil"].HeaderText = "VaziDo";
+                KORSN_dgvUsers.Columns["Faculty"].Visible = false;
+                KORSN_dgvUsers.Columns["FacultyDisplay"].HeaderText = "Fakultet";
+                KORSN_dgvUsers.Columns["BreakfastCount"].Visible = false;
+                KORSN_dgvUsers.Columns["LunchCount"].Visible = false;
+                KORSN_dgvUsers.Columns["DinnerCount"].Visible = false;
+                KORSN_dgvUsers.Columns["FullName"].Visible = false;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowError("Greska prilikom inicijalizacije tabele.");
+            }
+        }
+        private void KORSN_FilterList()
+        {
+            if (User.AllUsers == null)
+            {
+                KORSN_dgvUsers.DataSource = new List<User>();
+                KORSN_TABINIT();
+                return;
+            }
+            List<User> res = new List<User>();
 
+            string criteria = KORSN_txtSearch.Text.ToLower();
+            if (criteria != string.Empty)
+            {
+                res.AddRange(User.AllUsers.FindAll(x => 
+                            (x.UserID.ToString() == criteria) ||
+                            (x.FirstName.ToLower().StartsWith(criteria)) ||
+                            (x.LastName.ToLower().StartsWith(criteria)) ||
+                            (x.Faculty != null && x.Faculty.Name.ToLower().StartsWith(criteria)) ||
+                            (x.Email != null && x.Email.ToLower().StartsWith(criteria)) ||
+                            (x.Username != null && x.Username.ToLower().StartsWith(criteria)) ||
+                            (x.Index != null && x.Index.ToLower().StartsWith(criteria))
+                ));    
+            }
+            else
+            {
+                res.AddRange(User.AllUsers);
+            }
 
+            switch (KORSN_cbxAccTypeChooser.SelectedIndex)
+            {
+                case 0:
+                    res.RemoveAll(x => x.ActiveAccount == false);
+                    break;
+                case 1:
+                    res.RemoveAll(x => x.ActiveAccount == true);
+                    break;
+            }
+
+            KORSN_dgvUsers.DataSource = res;
+
+        }
+        private void KORSN_RefreshUsersGrid(bool ReloadData = false)
+        {
+            OpStatusWorking();
+            if (ReloadData) MainController.UpdateAllUsersList();
+            if (User.AllUsers == null)
+            {
+                MUtility.ShowError("Lista svih korisnika nije ucitana");
+                return;
+            }
+            KORSN_FilterList();
+            KORSN_TABINIT();
+            OpStatusIdle();
+        }
+        private void KORSN_btnRefreshList_Click(object sender, EventArgs e)
+        {
+            KORSN_RefreshUsersGrid(true);
+        }
+        private void KORSN_cbxAccTypeChooser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            KORSN_FilterList();
+        }
+        private void KORSN_txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            KORSN_FilterList();
+        }
         #endregion
 
         #region ADMIN_PANEL_TAB
@@ -472,46 +566,35 @@ namespace MensariumDesktop
 
         #endregion
 
-        private void KORSN_RefreshUsersGrid(bool ReloadData = false)
+        private void KORSN_btnProfile_Click(object sender, EventArgs e)
         {
-            if (ReloadData) MainController.UpdateAllUsersList();
-            if (User.AllUsers == null)
+            if (KORSN_dgvUsers.SelectedRows.Count == 0)
             {
-                MUtility.ShowError("Lista svih korisnika nije ucitana");
+                MUtility.ShowInformation("Odaberite korisnika");
                 return;
             }
-            //filtriranje liste
-            List<User> toDisplay;
 
-            KORISN_dgvUsers.DataSource = User.AllUsers;
+            User sel = (User) KORSN_dgvUsers.SelectedRows[0].DataBoundItem;
 
-
-            KORISN_dgvUsers.Columns["UserID"].HeaderText = "ID";
-            KORISN_dgvUsers.Columns["Username"].HeaderText = "Korisnicko ime";
-            KORISN_dgvUsers.Columns["FirstName"].HeaderText = "Ime";
-            KORISN_dgvUsers.Columns["LastName"].HeaderText = "Prezime";
-            KORISN_dgvUsers.Columns["Birthday"].HeaderText = "DatumRodjenja";
-            KORISN_dgvUsers.Columns["RegistrationDate"].HeaderText = "DatumRegistracije";
-            KORISN_dgvUsers.Columns["PhoneNumber"].HeaderText = "Telefon";
-            KORISN_dgvUsers.Columns["AccountType"].HeaderText = "Tip";
-            KORISN_dgvUsers.Columns["ProfilePicture"].Visible = false;
-            KORISN_dgvUsers.Columns["ActiveAccount"].Visible = false;
-            KORISN_dgvUsers.Columns["Index"].HeaderText = "Indeks";
-            KORISN_dgvUsers.Columns["ValidUntil"].HeaderText = "VaziDo";
-            KORISN_dgvUsers.Columns["Faculty"].Visible = false;
-            KORISN_dgvUsers.Columns["FacultyDisplay"].HeaderText = "Fakultet";
-            KORISN_dgvUsers.Columns["BreakfastCount"].Visible = false;
-            KORISN_dgvUsers.Columns["LunchCount"].Visible = false;
-            KORISN_dgvUsers.Columns["DinnerCount"].Visible = false;
-            KORISN_dgvUsers.Columns["FullName"].Visible = false;
-            
-            
+            ProfileForm pf = new ProfileForm(sel);
+            pf.ShowDialog();
         }
 
-
-        private void KORSN_btnRefreshList_Click(object sender, EventArgs e)
+        private void KORSN_btnDeleteUser_Click(object sender, EventArgs e)
         {
-            KORSN_RefreshUsersGrid(true);
+            if (KORSN_dgvUsers.SelectedRows.Count == 0)
+            {
+                MUtility.ShowWarrning("Odaberite korisnika");
+                return;
+            }
+
+            User u = KORSN_dgvUsers.SelectedRows[0].DataBoundItem as User;
+            bool ops = MainController.DeleteUser(u);
+            if (ops)
+            {
+                KORSN_RefreshUsersGrid(true);
+                MUtility.ShowInformation("Korisnik uspesno obrisan");
+            }
         }
     }
 }
