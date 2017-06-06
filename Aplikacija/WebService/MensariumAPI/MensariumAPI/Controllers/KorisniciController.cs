@@ -100,46 +100,23 @@ namespace MensariumAPI.Controllers
                             Content = new StringContent("Nemate privilegiju")
                         });
 
-                List<Korisnik> listaKorisnika = ProvajderPodatakaKorisnika.VratiKorisnike().ToList();
+                ProvajderPodatakaKorisnika ppk = new ProvajderPodatakaKorisnika();
+
+                Korisnik k =
+                    ProvajderPodatakaKorisnika.VratiKorisnika(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
+
+                if (k == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                    { Content = new StringContent("Korisnik je neaktivan ili obrisan") });
+
+                List<KorisnikFullDto> listaKorisnika = ppk.listaDelegataSvihKorisnika[k.TipNaloga.IdTip - 1].Invoke();
 
                 if (listaKorisnika.Count == 0)
                 {
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         {Content = new StringContent("Nema korisnika")});
                 }
-
-                List<KorisnikFullDto> listaKorisnikaFull = new List<KorisnikFullDto>(listaKorisnika.Count);
-
-                for (int i = 0; i < listaKorisnika.Count; ++i)
-                {
-                    KorisnikFullDto korisnik = new KorisnikFullDto();
-                    Korisnik k = listaKorisnika[i];
-
-                    korisnik.KorisnickoIme = k.KorisnickoIme;
-                    korisnik.Email = k.Email;
-                    korisnik.Ime = k.Ime;
-                    korisnik.Prezime = k.Prezime;
-                    korisnik.DatumRodjenja = k.DatumRodjenja;
-                    korisnik.DatumRegistracije = k.DatumRegistracije;
-                    korisnik.BrojTelefona = k.BrojTelefona;
-                    if (k.BrojIndeksa != null)
-                        korisnik.BrojIndeksa = k.BrojIndeksa;
-                    if (k.DatumVaziDo != null)
-                        korisnik.DatumVaziDo = k.DatumVaziDo;
-                    korisnik.AktivanNalog = k.AktivanNalog;
-                    korisnik.IdTipaNaloga = k.TipNaloga.IdTip;
-                    if (k.StudiraFakultet != null)
-                        korisnik.IdFakulteta = k.StudiraFakultet.IdFakultet;
-                    if (k.Objava != null)
-                        korisnik.IdObjave = k.Objava.IdObjave;
-                    //if (k.IdKorisnika != null)
-                    if (k.IdKorisnika != 0)
-                        korisnik.IdKorisnika = k.IdKorisnika;
-
-
-                    listaKorisnikaFull.Add(korisnik);
-                }
-                return listaKorisnikaFull;
+                return listaKorisnika;
             }
             catch (Exception e)
             {
@@ -1044,7 +1021,7 @@ namespace MensariumAPI.Controllers
             }
         }
 
-        //Poyivanje jednog korisnika
+        //Pozivanje jednog korisnika
         [HttpPut]
         [Route("pozovi/jednog")]
         public IHttpActionResult PozoviJednog([FromUri] int idPoziva, [FromUri]int idPozvanog)
@@ -1060,6 +1037,36 @@ namespace MensariumAPI.Controllers
 
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Pozivanje neuspesno") });
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Obavesti pozivaoca o odgovorima na poziv
+        [HttpGet]
+        [Route("pozivi/obavesti")]
+        public List<OgovorNaPozivDto> ObavestiOOdgovorima([FromUri] int idPoziva, [FromUri] string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                List<OgovorNaPozivDto> s = ProvajderPodatakaKorisnika.ObavestiOOdgovorima(idPoziva, sid);
+
+                if (s == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Neuspesan zahtev") });
+                return s;
 
             }
             catch (Exception e)

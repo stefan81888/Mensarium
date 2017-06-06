@@ -25,9 +25,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         // TO DO: private delegates
         public delegate KorisnikKreiranjeDto KreiranjeKorisnika(KorisnikKreiranjeDto kkdto);
         public delegate List<KorisnikFollowDto> PretragaKorisnika(PretragaKriterijumDto pkdto);
+        public delegate List<KorisnikFullDto> SviKorisnici();
 
         public List<KreiranjeKorisnika> listaDelegataKreiranja = new List<KreiranjeKorisnika>();
         public List<PretragaKorisnika> listaDelegataPretrage = new List<PretragaKorisnika>();
+        public List<SviKorisnici> listaDelegataSvihKorisnika = new List<SviKorisnici>();
 
         public ProvajderPodatakaKorisnika()
         {
@@ -48,6 +50,12 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             listaDelegataPretrage.Add(PretraziSveNaloge);
             listaDelegataPretrage.Add(PretraziSveNaloge);
             listaDelegataPretrage.Add(PretraziStudente);
+
+            listaDelegataSvihKorisnika.Add(VratiKorisnikeAdmin);
+            listaDelegataSvihKorisnika.Add(VratiKorisnikeOstali);
+            listaDelegataSvihKorisnika.Add(VratiKorisnikeOstali);
+            listaDelegataSvihKorisnika.Add(VratiKorisnikeOstali);
+            listaDelegataSvihKorisnika.Add(VratiKorisnikeStudent);
         }
 
         public static Korisnik VratiKorisnika(int id)
@@ -159,7 +167,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             s.Save(pratilac);
 
             s.Flush();
-
 
             return true;
         }
@@ -368,15 +375,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             {
                 int idPoziva = v.IdPozivanjaPozvani.IdPoziva.IdPoziva;
                 Pozivanje p = s.Get<Pozivanje>(idPoziva);
-                /*
-
-                if (DateTime.Compare(p.DatumPoziva, DateTime.Today) < 0)
-                    break;
-
-                if(DateTime.Compare(p.DatumPoziva, p.VaziDo) > 0)
-                    break;
-                    */
-
+              
                 Korisnik k = VratiKorisnika(p.Pozivaoc.IdKorisnika);
 
                 PozivanjaNewsFeedItemDto pnfidto = new PozivanjaNewsFeedItemDto()
@@ -661,10 +660,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             LoginSesija ses = lista.Find(x => x.IdSesije == sid);
 
-            //LoginSesija ses = s.Query<LoginSesija>()
-            //    .Where(x => x.IdSesije == sid)
-            //    .FirstOrDefault();
-
             if (ses == null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                 { Content = new StringContent("Nevalidna sesija") });
@@ -893,7 +888,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 "<a href=\"http://localhost:2244/api/korisnici/verifikacija/" + id +"\">link</a>");
 
             oMail.Subject = "Verifikacija naloga";
-          
 
             SmtpServer oServer = new SmtpServer(""); 
 
@@ -945,20 +939,70 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         //Korisnici koje admin sme da vidi - svi sem obrisanih
         public static List<KorisnikFullDto> VratiKorisnikeAdmin()
         {
-            return null;
+            ISession s = SesijeProvajder.Sesija;
+            List<Korisnik> korisnici = s.Query<Korisnik>().Select(x => x).ToList();
+            korisnici.RemoveAll(x => x.Obrisan);
+
+            List<KorisnikFullDto> rezultat = new List<KorisnikFullDto>();
+
+            foreach (var VARIABLE in korisnici)
+            {
+                KorisnikFullDto k = KorisnikToFullDto(VARIABLE);
+                rezultat.Add(k);
+            }
+            return rezultat;
         }
 
         //Korisnici koje student sme da vidi - aktivni studenti
         public static List<KorisnikFullDto> VratiKorisnikeStudent()
         {
-            return null;
+            List<KorisnikFullDto> rezultat = VratiKorisnikeOstali();
+            rezultat.RemoveAll(x => !x.AktivanNalog);
+            return rezultat;
         }
 
         //Korisnici koje menadzer, naplata i uplata smeju da vide - aktivni i neaktivni studenti
         public static List<KorisnikFullDto> VratiKorisnikeOstali()
         {
-            return null;
+            List<KorisnikFullDto> rezultat = VratiKorisnikeAdmin();
+            rezultat.RemoveAll(x => x.IdTipaNaloga != 5);
+            return rezultat;
         }
 
+        // TO DO - ceo poziv na osnovu id-a
+
+        public static List<OgovorNaPozivDto> ObavestiOOdgovorima(int idPoziva, string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Pozivanje p = s.Load<Pozivanje>(idPoziva);
+
+            if (p.VaziDo > DateTime.Now)
+                return null;
+
+            List<PozivanjaPozvani> pp = s.Query<PozivanjaPozvani>().Select(x => x).ToList();
+            List<PozivanjaPozvani> poziv = pp.FindAll(x => x.IdPozivanjaPozvani.IdPoziva.IdPoziva == idPoziva);
+
+            if (poziv.Count == 0)
+                return null;
+
+            List<OgovorNaPozivDto> rezultat = new List<OgovorNaPozivDto>();
+
+            foreach (var v in poziv)
+            {
+                OgovorNaPozivDto o = new OgovorNaPozivDto()
+                {
+                    OdgovorPozvanog = v.OdgovorPozvanog.Value,
+                    IdPozvanog = v.IdPozivanjaPozvani.IdPozvanog.IdKorisnika,
+                    Ime = v.IdPozivanjaPozvani.IdPozvanog.Ime,
+                    Prezime = v.IdPozivanjaPozvani.IdPozvanog.Prezime,
+                    KorisnickoIme = v.IdPozivanjaPozvani.IdPozvanog.KorisnickoIme,
+                    IdPoziva = v.IdPozivanjaPozvani.IdPoziva.IdPoziva
+                };
+                rezultat.Add(o);
+            }
+            rezultat.Sort((x, y) => y.OdgovorPozvanog.CompareTo(x.OdgovorPozvanog));
+
+            return rezultat;
+        }
     }
 }
