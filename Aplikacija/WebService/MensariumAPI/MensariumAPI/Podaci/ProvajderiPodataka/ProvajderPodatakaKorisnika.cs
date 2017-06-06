@@ -358,6 +358,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (pozivalac == null)
                 return null;
 
+            if (pozivalac.PozivanjaOd.ToList().Count == 0)
+                return null;
+
             List<PozivanjaNewsFeedItemDto> sviPozivi = new List<PozivanjaNewsFeedItemDto>();
 
 
@@ -432,12 +435,21 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (pratilac == null)
                 return false;
 
+            if (pratilac.TipNaloga.IdTip != 5)
+                return false;
+
             Korisnik praceni = VratiKorisnika(idPraceni);
 
             if (praceni == null)
                 return false;
 
-            if (!praceni.PracenOd.Contains(pratilac))
+            if (praceni.TipNaloga.IdTip != 5)
+                return false;
+
+            if (!praceni.PracenOd.ToList().Contains(pratilac))
+                return false;
+
+            if (!pratilac.Prati.ToList().Contains(praceni))
                 return false;
 
             praceni.PracenOd.Remove(pratilac);
