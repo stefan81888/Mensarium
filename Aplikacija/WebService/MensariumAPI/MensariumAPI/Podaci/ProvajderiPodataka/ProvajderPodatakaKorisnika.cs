@@ -21,8 +21,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
     {
         private static string server_mail = "dalibor.aleksic.dacha@gmail.com";
         private static string verifikacioni_link = "http://localhost:2244/api/korisnici/verifikacija";
-
-        // TO DO: private delegates
+        
         public delegate KorisnikKreiranjeDto KreiranjeKorisnika(KorisnikKreiranjeDto kkdto);
         public delegate List<KorisnikFollowDto> PretragaKorisnika(PretragaKriterijumDto pkdto);
         public delegate List<KorisnikFullDto> SviKorisnici();
@@ -141,7 +140,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return sdto;
         }
-
 
         public static bool Zaprati(int idPratioca, int idPracenog)
         {
@@ -805,7 +803,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return true;
         }
-
         
         public static PozivanjaFullDto NoviPoziv(PozivanjaFullDto pfdto, string sid)
         {
@@ -867,7 +864,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return true;
         }
-
 
         public static bool VerifikacijaNaloga(string email, int id)
         {
@@ -1027,5 +1023,16 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return rezultat;
         }
+
+        public static bool SesijaValidna(string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            List<LoginSesija> lista = s.Query<LoginSesija>().Select(x => x).ToList();
+
+            LoginSesija se = lista.First(x => x.IdSesije == sid);
+
+            return se != null;
+        }
+
     }
 }

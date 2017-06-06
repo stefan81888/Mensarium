@@ -14,7 +14,6 @@ namespace MensariumAPI.Controllers
     [RoutePrefix("api/server")]
     public class ServerController : ApiController
     {
-
         [HttpGet]
         public HttpResponseMessage TestPovezivanje()
         {

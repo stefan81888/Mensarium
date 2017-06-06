@@ -386,3 +386,7 @@ Object name: 'ISession'.
 >>>>>>> Stashed changes
 [6.6.2017 17:20:33]	System.NullReferenceException: Object reference not set to an instance of an object.
    at MensariumAPI.Controllers.KorisniciController.VratiSveKorisnikeFull(String sid) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 114
+[7.6.2017 0:01:05]	System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.SesijaValidna(String sid)
+   at MensariumAPI.Controllers.KorisniciController.VratiKorisnikaFull(Int32 id, String sid)
