@@ -456,5 +456,11 @@ namespace MensariumDesktop
             FacultyManagerForm fm = new FacultyManagerForm();
             fm.ShowDialog();
         }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            MenzaManagerForm mf = new MenzaManagerForm();
+            mf.ShowDialog();
+        }
     }
 }

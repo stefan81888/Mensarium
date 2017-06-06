@@ -238,6 +238,9 @@ namespace MensariumAPI.Controllers
                 m.Lokacija = mdto.Lokacija;
                 m.RadnoVreme = mdto.RadnoVreme;
                 m.VanrednoNeRadi = mdto.VanrednoNeRadi;
+                m.GpsLat = mdto.GpsLat;
+                m.GpsLon = mdto.GpsLong;
+
                 ProvajderPodatakaMenzi.UpdateMenzu(m);
                 return Ok("Menza uspesno modifikovana");
             }

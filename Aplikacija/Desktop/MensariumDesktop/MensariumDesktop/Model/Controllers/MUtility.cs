@@ -66,7 +66,10 @@ namespace MensariumDesktop.Model.Controllers
                 Name = mensa.Naziv,
                 Location = mensa.Lokacija,
                 CurrentlyClosed = mensa.VanrednoNeRadi,
-                WorkTime = mensa.RadnoVreme
+                WorkTime = mensa.RadnoVreme,
+                GPSLong = mensa.GpsLong,
+                GPSLat = mensa.GpsLat
+                
             };
         }
         public static List<Mensa> MensaList_FromMensaFullDto(List<MenzaFullDto> mlist)

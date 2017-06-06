@@ -49,7 +49,6 @@ namespace MensariumDesktop.Forms
                 return;
             dgvFacultyList.DataSource = Faculty.Faculties;
             newFac = null;
-            //dgvFacultyList.Sort(dgvFacultyList.Columns[0], ListSortDirection.Ascending);
         }
 
         private void dgvFacultyList_CellClick(object sender, DataGridViewCellEventArgs e)

@@ -104,6 +104,36 @@ namespace MensariumDesktop.Model.Controllers
                 return false;
             }
         }
+
+        internal static bool AddMensa(Mensa m)
+        {
+            try
+            {
+                if (Mensa.Mensas.Exists(x => x.Name == m.Name))
+                {
+                    MUtility.ShowError("Menza sa tim nazivom vec postoji");
+                    return false;
+                }
+
+                MenzaFullDto mdto = new MenzaFullDto();
+                mdto.Naziv = m.Name;
+                mdto.Lokacija = m.Location;
+                mdto.GpsLat = m.GPSLat;
+                mdto.GpsLong = m.GPSLong;
+                mdto.RadnoVreme = m.WorkTime;
+                mdto.VanrednoNeRadi = m.CurrentlyClosed;
+
+                Api.AddNewMensa(mdto);
+                Mensa.UpdateMensaList();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MUtility.ShowException(ex);
+                return false;
+            }
+        }
+
         public static bool ChangeServerPort(string newPort)
         {
             try
@@ -325,6 +355,46 @@ namespace MensariumDesktop.Model.Controllers
         }
         public static void ShowInformation(string message) {
             MessageBox.Show(message, "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public static bool UpdateMensa(Mensa m)
+        {
+            try
+            {
+                MenzaFullDto mdto = new MenzaFullDto();
+                mdto.IdMenze = m.MensaID;
+                mdto.GpsLat = m.GPSLat;
+                mdto.GpsLong = m.GPSLong;
+                mdto.Lokacija = m.Location;
+                mdto.RadnoVreme = m.WorkTime;
+                mdto.VanrednoNeRadi = m.CurrentlyClosed;
+                mdto.Naziv = m.Name;
+
+                Api.UpdateMenza(mdto);
+                Mensa.UpdateMensaList();
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+
+        }
+
+        public static bool DeleteMensa(Mensa m)
+        {
+            try
+            {
+                Api.DeleteMensa(m.MensaID);
+                Mensa.UpdateMensaList();
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
         }
     }
 }
