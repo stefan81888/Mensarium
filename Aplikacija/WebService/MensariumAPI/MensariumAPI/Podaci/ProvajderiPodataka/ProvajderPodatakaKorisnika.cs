@@ -1033,6 +1033,5 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return se != null;
         }
-
     }
 }
