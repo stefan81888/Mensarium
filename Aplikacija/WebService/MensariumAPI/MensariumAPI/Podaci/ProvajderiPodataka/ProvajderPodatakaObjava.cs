@@ -14,7 +14,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static ObjavaFullDto VratiObjavuDto(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik k = s.Get<Korisnik>(id);
+            Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+
+            if (k == null)
+                return null;
+
+            if (k.TipNaloga.IdTip != 5)
+                return null;
+
             Objava o = k.Objava;
             ObjavaFullDto odto = new ObjavaFullDto()
             {
@@ -32,7 +39,13 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
            
             ISession s = SesijeProvajder.Sesija;
-            Korisnik ko = s.Get<Korisnik>(id);
+            Korisnik ko = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+
+            if (ko == null)
+                return null;
+
+            if (ko.TipNaloga.IdTip != 5)
+                return null;
 
             Objava o;
             if (ko.Objava != null)
@@ -59,7 +72,13 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static List<ObjavaReadDto> SveObjave(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik ko = s.Get<Korisnik>(id);
+            Korisnik ko = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+
+            if (ko == null)
+                return null;
+
+            if (ko.TipNaloga.IdTip != 5)
+                return null;
 
             List<ObjavaReadDto> listaObjava = new List<ObjavaReadDto>();
 
@@ -82,7 +101,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 listaObjava.Add(objava);
             }
 
-           listaObjava.Sort((x,y) => y.DatumObjave.CompareTo(x.DatumObjave));
+            listaObjava.RemoveAll(x => x.IdKorisnika != 5);
+            listaObjava.Sort((x,y) => y.DatumObjave.CompareTo(x.DatumObjave));
 
             return listaObjava;
         }
