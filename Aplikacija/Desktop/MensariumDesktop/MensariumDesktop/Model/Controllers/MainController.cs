@@ -425,5 +425,20 @@ namespace MensariumDesktop.Model.Controllers
                 return false;
             }
         }
+
+        public static bool DeleteUser(User u)
+        {
+            try
+            {
+                Api.DeleteUser(u.UserID);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+        }
+
     }
 }
