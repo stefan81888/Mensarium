@@ -358,8 +358,9 @@ namespace MensariumDesktop
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
                 }
+                MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
             }
-            MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
+            
         }
         private void NAPLATA_btnUseBreakfast_Click(object sender, EventArgs e)
         {

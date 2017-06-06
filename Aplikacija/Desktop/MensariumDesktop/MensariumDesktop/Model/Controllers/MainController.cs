@@ -248,6 +248,12 @@ namespace MensariumDesktop.Model.Controllers
         }
         public static bool UseMeal(MealType type)
         {
+            if (LoadedCardUser == null)
+            {
+                MUtility.ShowWarrning("Korisnik nije ucitan");
+                return false;
+            }
+
             try
             {
 
