@@ -14,9 +14,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Mensarium.Components;
+using Mensarium.Resources.adapters;
 using MensariumDesktop.Model.Components.DTOs;
 using RestSharp;
 using Xamarin.Forms;
+using MensariumAPI.Podaci.DTO;
 
 namespace Mensarium.Api
 {
@@ -30,7 +32,7 @@ namespace Mensarium.Api
             public T ResponseObject { get; set; }
         }
         //static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        private static string BaseUrl = "http://daea6d00.ngrok.io/api/";
+        private static string BaseUrl = "http://242fbe73.ngrok.io/api/";
 
         private static ApiResponse<byte[]> DownloadData(RestRequest request, bool includeSid = true)
         {
@@ -300,6 +302,21 @@ namespace Mensarium.Api
 
             return response.ResponseObject;
         }
+
+        public static PozivanjaFullDto PozivNaOsnovuIda(int IdPoziva)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/poziv";
+            request.AddParameter("idPoziva", IdPoziva, ParameterType.QueryString);
+
+            ApiResponse<PozivanjaFullDto> response = Execute<PozivanjaFullDto>(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetMeal: Neuspesno pribavljanje informacije o obroku" + "\nServerResponse: "
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
+
+            return response.ResponseObject;
+        }
+
         public static PozivanjaPozvaniDto Respond2Invite(PozivanjaPozvaniDto m)
         {
             RestRequest request = new RestRequest(Method.PUT);
@@ -309,6 +326,20 @@ namespace Mensarium.Api
             ApiResponse<PozivanjaPozvaniDto> response = Execute<PozivanjaPozvaniDto>(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
                 throw new Exception("Respond2InviteError" + "\nServerResponse: "
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
+
+            return response.ResponseObject;
+        }
+
+        public static List<OgovorNaPozivDto> ObavestiOOdgovorima(int idPoziva)
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/pozivi/obavesti";
+            request.AddParameter("idPoziva", idPoziva, ParameterType.QueryString);
+
+            ApiResponse<List<OgovorNaPozivDto>> response = Execute<List<OgovorNaPozivDto>>(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("LoginUser: Neispravno korisnicko ime ili lozinka" + "\nServerResponse: "
                     + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
             return response.ResponseObject;

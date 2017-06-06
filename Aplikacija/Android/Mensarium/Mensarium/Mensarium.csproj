@@ -175,6 +175,7 @@
     <Compile Include="Comp\DTOs\ObrokNaplataDto.cs" />
     <Compile Include="Comp\DTOs\ObrokUplataDto.cs" />
     <Compile Include="Comp\DTOs\OdjavaDto.cs" />
+    <Compile Include="Comp\DTOs\OgovorNaPozivDto.cs" />
     <Compile Include="Comp\DTOs\PozivanjaFullDto.cs" />
     <Compile Include="Comp\DTOs\PozivanjaNewsFeedItemDto.cs" />
     <Compile Include="Comp\DTOs\PozivanjaPozvaniDto.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Comp\DTOs\TipObrokaFullDto.cs" />
     <Compile Include="Comp\Faculty.cs" />
     <Compile Include="Comp\FullUser.cs" />
+    <Compile Include="Comp\ImageManager.cs" />
     <Compile Include="Comp\ListaMenzi.cs" />
     <Compile Include="Comp\Mensa.cs" />
     <Compile Include="Comp\MSettings.cs" />
@@ -196,13 +198,20 @@
     <Compile Include="Comp\Server.cs" />
     <Compile Include="Comp\Session.cs" />
     <Compile Include="Comp\User.cs" />
+    <Compile Include="Comp\ViewHolderEvents.cs" />
+    <Compile Include="Comp\ViewHolderMojiPrijatelji.cs" />
+    <Compile Include="Comp\ViewHolderNovosti.cs" />
+    <Compile Include="Comp\ViewHolderPrihvatio.cs" />
+    <Compile Include="Resources\activities\ActivityPozvanSam.cs" />
     <Compile Include="Resources\activities\CreateAccDrugiActivity.cs" />
     <Compile Include="Resources\activities\CreateAccPrviActivity.cs" />
     <Compile Include="Resources\activities\MapActivity.cs" />
     <Compile Include="Resources\activities\MojiPrijateljiActivity.cs" />
     <Compile Include="Resources\activities\UplacivanjeObroka.cs" />
     <Compile Include="Resources\adapters\MojiPrijateljiAdapter.cs" />
+    <Compile Include="Resources\adapters\OdgovorListAdapter.cs" />
     <Compile Include="Resources\adapters\PozoviPrijateljaAdapter.cs" />
+    <Compile Include="Resources\adapters\PozvanSamAdapter.cs" />
     <Compile Include="Resources\adapters\PretragaListAdapter.cs" />
     <Compile Include="Resources\adapters\ProfilItemAdapter.cs" />
     <Compile Include="Resources\fragments\EventsFragment.cs" />
@@ -283,6 +292,15 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\PretragaItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\pozvanSamItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\OdgovoriNaPozive.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\odgovorItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

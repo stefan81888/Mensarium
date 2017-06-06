@@ -206,5 +206,36 @@ namespace Mensarium
                     return base.OnOptionsItemSelected(item);
             }
         }
+
+        public override void OnBackPressed()
+        {
+            //base.OnBackPressed();
+
+            var logalert = new Android.Support.V7.App.AlertDialog.Builder(this);
+            logalert.SetTitle("Upozorenje!");
+            logalert.SetMessage("Da li ste sigurni da zelite da se odjavite?");
+
+            logalert.SetPositiveButton("Da", (sender, args) =>
+            {
+                try
+                {
+                    Api.Api.LogoutUser(MSettings.CurrentSession.SessionID);
+                    var intent = new Intent(this, typeof(MainActivity));
+                    intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
+                    StartActivity(intent);
+                    this.Finish();
+        
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(this, ex.Message, ToastLength.Long).Show();
+                }
+            });
+
+            logalert.SetNegativeButton("Ne", (sender, args) => logalert.Dispose());
+
+            logalert.Show();
+        }
+
     }
 }

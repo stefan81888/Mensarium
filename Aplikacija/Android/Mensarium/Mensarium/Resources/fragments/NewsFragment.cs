@@ -29,6 +29,9 @@ namespace Mensarium
             //lista.Add(new FeedItem() { feedIme = "Nikola Savic", feedVreme = "18h", status = "Pomfrit sada. Brzo!"});
             //lista.Add(new FeedItem() { feedIme = "Petar Peric", feedVreme = "14h", status = "Pasulj njah!"});
 
+            swipe = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swipeContainer);
+            swipe.Refresh += Swipe_Refresh;
+
             try
             {
                 lista = Api.Api.GetFollowedUsersPosts(MSettings.CurrentSession.LoggedUser.UserID);
@@ -36,8 +39,6 @@ namespace Mensarium
                 listView = view.FindViewById<ListView>(Resource.Id.FeedListView);
                 listView.Adapter = new FeedListAdapter(this, lista);
 
-                swipe = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swipeContainer);
-                swipe.Refresh += Swipe_Refresh;
                 return view;
             }
             catch (Exception ex)

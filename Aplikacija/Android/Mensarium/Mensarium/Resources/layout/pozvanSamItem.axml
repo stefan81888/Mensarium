@@ -13,47 +13,133 @@
         android:background="#395056"
         android:orientation="vertical"
         android:paddingBottom="10dp"
-        android:paddingTop="20dp"
-        android:layout_marginBottom="10dp">
+        android:paddingTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:minWidth="25px"
+        android:minHeight="25px">
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:id="@+id/linearLayout1">
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingTop="5dp">
+                android:id="@+id/linearLayout2"
+                android:gravity="center"
+                android:layout_marginTop="5dp">
                 <TextView
-                    android:id="@+id/FeedIme"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="19dp"
-                    android:textStyle="bold"
-                    android:text="Ime Prezime"
-                    android:textColor="#c5c9cc" />
-                <TextView
-                    android:id="@+id/FeedVreme"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#a0a3a7"
-                    android:textSize="15dp"
-                    android:text="Vreme" />
+                    android:text="Poziv kreirao: "
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textView1"
+                    android:layout_marginRight="37dp"
+                    android:textSize="18dp"
+                    android:gravity="center" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/linearLayout3"
+                    android:gravity="center">
+                    <TextView
+                        android:text="Ime Prezime"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pozvanSamIme"
+                        android:textStyle="bold"
+                        android:textSize="18dp"
+                        android:gravity="center" />
+                    <TextView
+                        android:text="username"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pozvanSamUsername"
+                        android:textStyle="bold"
+                        android:gravity="center" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-        <TextView
-            android:id="@+id/FeedStatus"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="15dp"
-            android:paddingTop="20dp"
-            android:text="STATUS"
-            android:textSize="18dp"
-            android:textColor="#c5c9cc" />
+            android:id="@+id/linearLayout4">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout5"
+                android:gravity="center"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="2dp">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/linearLayout6"
+                    android:gravity="center"
+                    android:layout_marginRight="50dp">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/linearLayout7">
+                        <TextView
+                            android:text="Vazi od:"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/textView7" />
+                        <TextView
+                            android:text="00:00"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/pozvanSamVaziOd"
+                            android:layout_marginLeft="5dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/linearLayout7">
+                        <TextView
+                            android:text="Vazi do:"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/textView7" />
+                        <TextView
+                            android:text="00:00"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/pozvanSamVaziDo"
+                            android:layout_marginLeft="5dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+                <Button
+                    android:text="Odgovori"
+                    android:textColor="@color/NaslovIImeButtona"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/odgovoriItemDugme"
+                    android:background="@drawable/rounded_button"
+                    android:textSize="14dp"
+                    android:textAllCaps="false"
+                    android:layout_marginLeft="4dp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

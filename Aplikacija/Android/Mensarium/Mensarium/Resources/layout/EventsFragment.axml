@@ -1,181 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeEvents"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#243236">
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:id="@+id/pozivNijeKreiran"
-        android:visibility="visible">
-        <TimePicker
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/timePicker1" />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout1"
-            android:gravity="center"
-            android:minWidth="25px"
-            android:minHeight="25px" />
-        <Button
-            android:text="Kreiraj poziv"
-            android:textColor="@color/NaslovIImeButtona"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:id="@+id/kreirajPozivDugme"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_button"
-            android:textSize="18dp"
-            android:textAllCaps="false"
-            android:layout_marginBottom="10dp" />
-    </LinearLayout>
-    <RelativeLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/pozivJeKreiran"
-        android:visibility="gone"
-        android:layout_marginTop="10dp">
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/statusPozivaLayout"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:minWidth="25px"
-            android:minHeight="25px">
-            <TextView
-                android:text="Status poziva: "
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="16dp"
-                android:textColor="@color/NaslovIImeButtona"
-                android:id="@+id/textView1" />
-            <TextView
-                android:id="@+id/statusPoziva"
-                android:text="Aktivan"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="#4ee07d" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/vremeKreiranjaLayout"
-            android:layout_below="@id/statusPozivaLayout"
-            android:layout_alignLeft="@id/statusPozivaLayout"
-            android:layout_alignRight="@id/statusPozivaLayout">
-            <TextView
-                android:text="Vreme kreiranja poziva: "
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="16dp"
-                android:textColor="@color/NaslovIImeButtona" />
-            <TextView
-                android:id="@+id/vremeKreiranjaPoziva"
-                android:text="00:00"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:textSize="16dp"
-                android:textStyle="bold" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/pozivTrajeLayout"
-            android:layout_below="@id/vremeKreiranjaLayout"
-            android:layout_alignLeft="@id/statusPozivaLayout"
-            android:layout_alignRight="@id/statusPozivaLayout">
-            <TextView
-                android:text="Poziv traje do: "
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="16dp"
-                android:textColor="@color/NaslovIImeButtona" />
-            <TextView
-                android:id="@+id/vremeTrajanjaPoziva"
-                android:text="00:00"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:textStyle="bold"
-                android:textSize="16dp" />
-        </LinearLayout>
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/pozvaniListViewLayout"
-            android:layout_below="@id/pozivTrajeLayout">
-            <ListView
-                android:minWidth="25px"
-                android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/PozvaniListView" />
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:id="@+id/pozivNijeKreiran"
+                android:visibility="visible">
+                <TimePicker
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/timePicker1" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout1"
+                    android:gravity="center"
+                    android:minWidth="25px"
+                    android:minHeight="25px" />
+                <Button
+                    android:text="Kreiraj poziv"
+                    android:textColor="@color/NaslovIImeButtona"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:id="@+id/kreirajPozivDugme"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_button"
+                    android:textSize="18dp"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="10dp" />
+            </LinearLayout>
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/pozivJeKreiran"
+                android:visibility="gone"
+                android:layout_marginTop="10dp">
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/statusPozivaLayout"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:minWidth="25px"
+                    android:minHeight="25px">
+                    <TextView
+                        android:text="Status poziva: "
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="16dp"
+                        android:textColor="@color/NaslovIImeButtona"
+                        android:id="@+id/textView1" />
+                    <TextView
+                        android:id="@+id/statusPoziva"
+                        android:text="Aktivan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:textColor="#4ee07d" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/vremeKreiranjaLayout"
+                    android:layout_below="@id/statusPozivaLayout"
+                    android:layout_alignLeft="@id/statusPozivaLayout"
+                    android:layout_alignRight="@id/statusPozivaLayout">
+                    <TextView
+                        android:text="Vreme kreiranja poziva: "
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="16dp"
+                        android:textColor="@color/NaslovIImeButtona" />
+                    <TextView
+                        android:id="@+id/vremeKreiranjaPoziva"
+                        android:text="00:00"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pozivTrajeLayout"
+                    android:layout_below="@id/vremeKreiranjaLayout"
+                    android:layout_alignLeft="@id/statusPozivaLayout"
+                    android:layout_alignRight="@id/statusPozivaLayout">
+                    <TextView
+                        android:text="Poziv traje do: "
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="16dp"
+                        android:textColor="@color/NaslovIImeButtona" />
+                    <TextView
+                        android:id="@+id/vremeTrajanjaPoziva"
+                        android:text="00:00"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textStyle="bold"
+                        android:textSize="16dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pozvaniListViewLayout"
+                    android:layout_below="@id/pozivTrajeLayout">
+                    <ListView
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/PozvaniListView" />
+                </LinearLayout>
+                <Button
+                    android:text="Pozovi"
+                    android:textColor="@color/NaslovIImeButtona"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:id="@+id/posaljiPozivDugme"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_button"
+                    android:textSize="18dp"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@id/pozvaniListViewLayout" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ponistiPozivLayout"
+                    android:layout_below="@id/posaljiPozivDugme"
+                    android:gravity="center"
+                    android:minWidth="25px"
+                    android:minHeight="25px">
+                    <TextView
+                        android:text="PONISTI POZIV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="@color/NaslovIImeButtona"
+                        android:id="@+id/textView2"
+                        android:typeface="sans" />
+                </LinearLayout>
+            </RelativeLayout>
+            <ImageView
+                android:id="@+id/eventsSeparator"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:src="@drawable/separator_line"
+                android:layerType="software"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp" />
+            <Button
+                android:text="Odgovori na pozive"
+                android:textColor="@color/NaslovIImeButtona"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:id="@+id/odgovoriNaPoziveDugme"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_button"
+                android:textSize="18dp"
+                android:textAllCaps="false"
+                android:layout_marginBottom="10dp" />
         </LinearLayout>
-        <Button
-            android:text="Pozovi"
-            android:textColor="@color/NaslovIImeButtona"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:id="@+id/posaljiPozivDugme"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_button"
-            android:textSize="18dp"
-            android:textAllCaps="false"
-            android:layout_marginBottom="10dp"
-            android:layout_below="@id/pozvaniListViewLayout" />
-    </RelativeLayout>
-    <ImageView
-        android:id="@+id/eventsSeparator"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:src="@drawable/separator_line"
-        android:layerType="software"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp" />
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/pozvanSamLayout"
-        android:layout_below="@id/eventsSeparator">
-        <TextView
-            android:text="Pozvan sam: "
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="16dp" />
-      <ListView
-          android:layout_marginTop="10dp"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/pozvanSamListView" />
-    </LinearLayout>
-</LinearLayout>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

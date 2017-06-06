@@ -2,56 +2,173 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using Java.Util;
+using Mensarium.Comp;
 using Mensarium.Components;
+using Mensarium.Resources.activities;
+using Mensarium.Resources.adapters;
+using MensariumAPI.Podaci.DTO;
 using MensariumDesktop.Model.Components.DTOs;
 
 namespace Mensarium
 {
     class EventsFragment : Android.Support.V4.App.Fragment
     {
-        private Spinner spinerMinutaza;
-        private Button kreirajPoziv;
-        private Button pozovi;
         private PozivanjaFullDto poziv;
-        private TimePicker time;
-        private ListView pozvanSam;
+
+        private ViewHolderEvents holder;
 
         private View view = null;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            if(view == null)
+            if (view == null)
+            {
                 view = inflater.Inflate(Resource.Layout.EventsFragment, container, false);
 
+                var time = view.FindViewById<TimePicker>(Resource.Id.timePicker1);
+                var DugmeZaKreiranjePoziva = view.FindViewById<Button>(Resource.Id.kreirajPozivDugme);
+                var DugmePozovi = view.FindViewById<Button>(Resource.Id.posaljiPozivDugme);
+                var DugmeOdgovori = view.FindViewById<Button>(Resource.Id.odgovoriNaPoziveDugme);
+                var Swipe = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swipeEvents);
+
+                var vh = new ViewHolderEvents()
+                {
+                    EvenTimePicker = time,
+                    Kreiraj = DugmeZaKreiranjePoziva,
+                    Pozovi = DugmePozovi,
+                    Odgovori = DugmeOdgovori,
+                    Swipe = Swipe
+                };
+
+                view.Tag = vh;
+
+                ObnoviPoziv();
+            }
+
+            holder = (ViewHolderEvents) view.Tag;
+
             //prebaci time u 24h
-            time = view.FindViewById<TimePicker>(Resource.Id.timePicker1);
-            time.SetIs24HourView(Java.Lang.Boolean.True);
+            holder.EvenTimePicker.SetIs24HourView(Java.Lang.Boolean.True);
 
             //nadji button za kreiranje i dodeli click
-            kreirajPoziv = view.FindViewById<Button>(Resource.Id.kreirajPozivDugme);
-            kreirajPoziv.Click += KreirajPozivOnClick;
+            holder.Kreiraj.Click += KreirajPozivOnClick;
 
-            pozovi = view.FindViewById<Button>(Resource.Id.posaljiPozivDugme);
-            pozovi.Click += PozoviOnClick;
+            holder.Pozovi.Click += PozoviOnClick;
 
-            pozvanSam = view.FindViewById<ListView>(Resource.Id.pozvanSamListView);
-            SetujPozanSamListu();
+            holder.Odgovori.Click += OdgovoriNaPoziveOnClick;
+
+            holder.Swipe.Refresh += SwipeOnRefresh;
+
+            view.FindViewById<LinearLayout>(Resource.Id.ponistiPozivLayout).Click += PonistiPozivClick;
 
             return view;
         }
 
-        private void SetujPozanSamListu()
+        private void ObnoviPoziv()
         {
-            List<PozivanjaNewsFeedItemDto> lista = Api.Api.UserCalledBy();
+            var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
 
+            int idpoziva = prefs.GetInt("idPoziva", -1);
+
+            if (idpoziva != -1)
+            {
+                try
+                {
+                    poziv = Api.Api.PozivNaOsnovuIda(idpoziva);
+                    SetujNoviLayout();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(this.Context, ex.Message, ToastLength.Long).Show();
+                }
+            }
+        }
+
+        public override void OnPause()
+        {
+            base.OnPause();
+
+            if (poziv != null)
+            {
+                var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
+                var prefEditor = prefs.Edit();
+                prefEditor.PutInt("idPoziva", poziv.IdPoziva);
+                prefEditor.Commit();
+            }
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            if (poziv != null)
+            {
+                var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
+                var prefEditor = prefs.Edit();
+                prefEditor.PutInt("idPoziva", poziv.IdPoziva);
+                prefEditor.Commit();
+            }
+        }
+
+        private void PonistiPozivClick(object sender, EventArgs eventArgs)
+        {
+            var alert = new AlertDialog.Builder(this.Context);
+            alert.SetTitle("Ponisti poziv?");
+            alert.SetMessage("Da li ste sigurni da zelite da ponistite poziv?");
+
+            alert.SetPositiveButton("Da", (o, args) =>
+            {
+
+                this.poziv = null;
+
+                view.FindViewById<RelativeLayout>(Resource.Id.pozivJeKreiran).Visibility = ViewStates.Gone;
+                view.FindViewById<LinearLayout>(Resource.Id.pozivNijeKreiran).Visibility = ViewStates.Visible;
+
+                var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
+                var prefEditor = prefs.Edit();
+                prefEditor.PutInt("idPoziva", -1);
+                prefEditor.Commit();
+            });
+
+            alert.SetNegativeButton("Ne", (o, args) => alert.Dispose());
+
+            alert.Show();
+        }
+
+        private void SwipeOnRefresh(object sender, EventArgs eventArgs)
+        {
+            var lista = view.FindViewById<ListView>(Resource.Id.PozvaniListView);
+            try
+            {
+                List<OgovorNaPozivDto> listaOdgovora;
+                if (poziv != null)
+                {
+                    listaOdgovora = Api.Api.ObavestiOOdgovorima(poziv.IdPoziva);
+                    lista.Adapter = new OdgovorListAdapter(this, listaOdgovora);
+                }
+                holder.Swipe.Refreshing = false;
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this.Context, ex.Message, ToastLength.Long).Show();
+                holder.Swipe.Refreshing = false;
+            }
+        }
+
+        private void OdgovoriNaPoziveOnClick(object sender, EventArgs eventArgs)
+        {
+            var intent = new Intent(this.Context, typeof(ActivityPozvanSam));
+            StartActivity(intent);
         }
 
         private void PozoviOnClick(object sender, EventArgs eventArgs)
@@ -64,38 +181,77 @@ namespace Mensarium
 
         private void KreirajPozivOnClick(object sender, EventArgs eventArgs)
         {
+            NapuniPoziv();
+            
+            if ((poziv.VaziDo - DateTime.Now).Ticks > 0 && ValidnoVreme(poziv.VaziDo))
+            {
+                try
+                {
+                    poziv = Api.Api.KreirajPrazanPoziv(poziv);
 
+                    var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
+                    var prefEditor = prefs.Edit();
+                    prefEditor.PutInt("idPoziva", poziv.IdPoziva);
+                    prefEditor.Commit();
+
+                    //setuje novi layout
+                    SetujNoviLayout();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(this.Context, ex.Message, ToastLength.Long);
+                }
+            }
+            else
+            {
+                Toast.MakeText(this.Context, "Nije validno vreme poziva!", ToastLength.Long).Show();
+            }
+        }
+
+        private void NapuniPoziv()
+        {
             poziv = new PozivanjaFullDto();
 
             poziv.DatumPoziva = DateTime.Now;
-            poziv.VaziDo = new DateTime(2017, 1, 1, time.CurrentHour.IntValue(), time.CurrentMinute.IntValue(), 0);
+            poziv.VaziDo = DateTime.Now;
+            poziv.VaziDo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, holder.EvenTimePicker.CurrentHour.IntValue(), holder.EvenTimePicker.CurrentMinute.IntValue(), 0);
 
             poziv.IdPozivaoca = MSettings.CurrentSession.LoggedUser.UserID;
+        }
 
-            try
-            {
-                poziv = Api.Api.KreirajPrazanPoziv(poziv);
+        private bool ValidnoVreme(DateTime p)
+        {
+            DateTime dorucakP = new DateTime(p.Year, p.Month, p.Day, 7, 30, 0);
+            DateTime dorucakZ = new DateTime(p.Year, p.Month, p.Day, 9, 30, 0);
 
-                //nadje layout i sakrije ga
-                view.FindViewById<LinearLayout>(Resource.Id.pozivNijeKreiran).Visibility = ViewStates.Gone;
+            DateTime rucakP = new DateTime(p.Year, p.Month, p.Day, 12, 30, 0);
+            DateTime rucakZ = new DateTime(p.Year, p.Month, p.Day, 15, 30, 0);
 
-                //setuje novi layout
-                SetujNoviLayout();
-            }
-            catch (Exception ex)
-            {
-                Toast.MakeText(this.Context, ex.Message, ToastLength.Long);
-            }
+            DateTime veceraP = new DateTime(p.Year, p.Month, p.Day, 17, 00, 0);
+            DateTime veceraZ = new DateTime(p.Year, p.Month, p.Day, 20, 00, 0);
+
+            if ((p >= dorucakP && p <= dorucakZ) || (p >= rucakP && p <= rucakZ) || (p >= veceraP && p <= veceraZ))
+                return true;
+
+            return false;
         }
 
         private void SetujNoviLayout()
         {
+            view.FindViewById<LinearLayout>(Resource.Id.pozivNijeKreiran).Visibility = ViewStates.Gone;
             view.FindViewById<RelativeLayout>(Resource.Id.pozivJeKreiran).Visibility = ViewStates.Visible;
+            var tx = view.FindViewById<TextView>(Resource.Id.statusPoziva);
 
-            if ((DateTime.Now - poziv.VaziDo).Ticks > 0)
-                view.FindViewById<TextView>(Resource.Id.statusPoziva).Text = "Aktivan";
+            if ((poziv.VaziDo - DateTime.Now).Ticks > 0)
+            {
+                tx.Text = "Aktivan";
+                tx.SetTextColor(Color.ParseColor("#4ee07d"));
+            }
             else
-                view.FindViewById<TextView>(Resource.Id.statusPoziva).Text = "Nije aktivan";
+            {
+                tx.Text = "Nije aktivan";
+                tx.SetTextColor(Color.ParseColor("#ba1d1d"));
+            }
 
             view.FindViewById<TextView>(Resource.Id.vremeKreiranjaPoziva).Text = poziv.DatumPoziva.ToShortTimeString();
             view.FindViewById<TextView>(Resource.Id.vremeTrajanjaPoziva).Text = poziv.VaziDo.ToShortTimeString();
