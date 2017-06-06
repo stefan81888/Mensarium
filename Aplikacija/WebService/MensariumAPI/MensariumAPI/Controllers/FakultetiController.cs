@@ -23,7 +23,12 @@ namespace MensariumAPI.Controllers
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
-				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+
+			    if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+			        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+			            { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
 					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
 				Fakultet f = null;
@@ -57,7 +62,12 @@ namespace MensariumAPI.Controllers
 			try
 			{
 				SesijeProvajder.OtvoriSesiju();
-				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+
+			    if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+			        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+			            { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
 					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 				
 				List<Fakultet> listaFakulteta = ProvajderPodatakaFakulteta.VratiFakultete();
@@ -99,7 +109,11 @@ namespace MensariumAPI.Controllers
 			{
 				SesijeProvajder.OtvoriSesiju();
 
-				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+			    if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+			        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+			            { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
 					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 				
 				Fakultet f = new Fakultet()
@@ -132,7 +146,11 @@ namespace MensariumAPI.Controllers
 			{
 				SesijeProvajder.OtvoriSesiju();
 
-				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaFakultet))
+			    if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+			        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+			            { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaFakultet))
 					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
 				Fakultet f = ProvajderPodatakaFakulteta.VratiFakultet(fdto.IdFakultet);
@@ -167,7 +185,11 @@ namespace MensariumAPI.Controllers
 			{
 				SesijeProvajder.OtvoriSesiju();
 
-				if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.BrisanjeFakultet))
+			    if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+			        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+			            { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.BrisanjeFakultet))
 					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 
 				Fakultet f = null;
@@ -191,8 +213,5 @@ namespace MensariumAPI.Controllers
 				SesijeProvajder.ZatvoriSesiju();
 			}
 		}
-		
-
-		
 	}
 }

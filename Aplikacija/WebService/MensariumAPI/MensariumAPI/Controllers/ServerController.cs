@@ -14,7 +14,6 @@ namespace MensariumAPI.Controllers
     [RoutePrefix("api/server")]
     public class ServerController : ApiController
     {
-
         [HttpGet]
         public HttpResponseMessage TestPovezivanje()
         {
@@ -32,14 +31,14 @@ namespace MensariumAPI.Controllers
             if (secret != "secreta")
                 return Request.CreateResponse(HttpStatusCode.OK, "Mensarium SMS Servis GRESKA: Neuspela autentfikacija!");
             
-            string[] sadraj = sms_text.Split(' ');
+            string[] sadrzaj = sms_text.Split(' ');
 
-            if (sadraj[0] != "MENSARIUM")
+            if (sadrzaj[0] != "MENSARIUM")
                 return null;
 
-            int id = int.Parse(sadraj[1]);
-            string tip = sadraj[2];
-            int brojObroka = int.Parse(sadraj[3]);
+            int id = int.Parse(sadrzaj[1]);
+            string tip = sadrzaj[2];
+            int brojObroka = int.Parse(sadrzaj[3]);
             try
             {
                 SesijeProvajder.OtvoriSesiju();
@@ -54,8 +53,8 @@ namespace MensariumAPI.Controllers
 
                 KorisnikStanjeDto stanje = ProvajderPodatakaKorisnika.Stanje(k);
 
-                string odgovor = string.Format("Uspešno ste uplatili {0} obroka tipa {1} Stanje:     " +
-                                               "Doručak:    {2}   Ručak:    {3}   Večera:   {4}",
+                string odgovor = string.Format("Uspešno ste uplatili {0} obroka tipa {1}. Stanje:  " +
+                                               "Doručak:  {2}   Ručak:  {3}  Večera:  {4}",
                     brojObroka, 
                     tip.ToLower(),
                     stanje.BrojDorucka,
