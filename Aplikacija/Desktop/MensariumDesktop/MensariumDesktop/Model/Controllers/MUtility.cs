@@ -14,6 +14,16 @@ namespace MensariumDesktop.Model.Controllers
 {
     public static class MUtility
     {
+        public enum FilterUsers
+        {
+            ImePrezime,
+            ID,
+            KorisnickoIme,
+            Email,
+            Index,
+            Fakultet
+        }
+
         public static User GenerateUserFromDTO(KorisnikFullDto korisnik, bool loadImage = true)
         {
             User u = new User();

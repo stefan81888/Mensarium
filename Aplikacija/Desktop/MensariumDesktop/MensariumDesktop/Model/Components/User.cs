@@ -74,7 +74,9 @@ namespace MensariumDesktop.Model.Components
         public int BreakfastCount { get; set; }
         public int LunchCount { get; set; }
         public int DinnerCount { get; set; }
-        public string FullName { get { return FirstName + " " + LastName; } }
+        public string FullName => FirstName + " " + LastName;
+        public string FacultyDisplay => (Faculty != null) ? Faculty.Name : "/";
+
         public User()
         {
             UserPrivilegeses = new List<UserPrivileges>();

@@ -34,14 +34,15 @@ namespace MensariumDesktop
             HOME_lblCurrentUserLName.Text = MSettings.CurrentSession.LoggedUser.LastName;
             HOME_lblCurrentUserAccType.Text = MSettings.CurrentSession.LoggedUser.AccountType.ToString();
             HOME_picCurrentUser.Image = MSettings.CurrentSession.LoggedUser.ProfilePicture;
+            HOME_lblCurrentLocation.Text = MSettings.CurrentMensa.Name;
+            HOME_lblCurrentLocationAddress.Text = MSettings.CurrentMensa.Location;
+
             UPLATA_lblBreakfastPrice.Text = MSettings.PriceBreakfast.ToString();
             UPLATA_lblLunchPrice.Text = MSettings.PriceLunch.ToString();
             UPLATA_lblDinnerPrice.Text = MSettings.PriceDinner.ToString();
 
-            //TO-DO: CURRENT MENSA
-            HOME_lblCurrentLocation.Text = MSettings.CurrentMensa.Name;
-            HOME_lblCurrentLocationAddress.Text = MSettings.CurrentMensa.Location;
-
+            KORSN_cbxSearchBy.DataSource = Enum.GetValues(typeof(MUtility.FilterUsers));
+            KORSN_cbxAccTypeChooser.SelectedIndex = 0;
             RefreshStatusBarData();
             
         }
@@ -395,6 +396,26 @@ namespace MensariumDesktop
 
 
         #endregion
+
+        #region KORISNICI_TAB
+
+
+
+        #endregion
+
+        #region ADMIN_PANEL_TAB
+        private void button10_Click(object sender, EventArgs e)
+        {
+            FacultyManagerForm fm = new FacultyManagerForm();
+            fm.ShowDialog();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            MenzaManagerForm mf = new MenzaManagerForm();
+            mf.ShowDialog();
+        }
+        #endregion
         #region INIT_GUI
         private void bgWorkerLoading_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -451,26 +472,46 @@ namespace MensariumDesktop
 
         #endregion
 
-        private void button10_Click(object sender, EventArgs e)
+        private void KORSN_RefreshUsersGrid(bool ReloadData = false)
         {
-            FacultyManagerForm fm = new FacultyManagerForm();
-            fm.ShowDialog();
-        }
+            if (ReloadData) MainController.UpdateAllUsersList();
+            if (User.AllUsers == null)
+            {
+                MUtility.ShowError("Lista svih korisnika nije ucitana");
+                return;
+            }
+            //filtriranje liste
+            List<User> toDisplay;
 
-        private void button11_Click(object sender, EventArgs e)
-        {
-            MenzaManagerForm mf = new MenzaManagerForm();
-            mf.ShowDialog();
-        }
+            KORISN_dgvUsers.DataSource = User.AllUsers;
 
-        private void button13_Click(object sender, EventArgs e)
-        {
+
+            KORISN_dgvUsers.Columns["UserID"].HeaderText = "ID";
+            KORISN_dgvUsers.Columns["Username"].HeaderText = "Korisnicko ime";
+            KORISN_dgvUsers.Columns["FirstName"].HeaderText = "Ime";
+            KORISN_dgvUsers.Columns["LastName"].HeaderText = "Prezime";
+            KORISN_dgvUsers.Columns["Birthday"].HeaderText = "DatumRodjenja";
+            KORISN_dgvUsers.Columns["RegistrationDate"].HeaderText = "DatumRegistracije";
+            KORISN_dgvUsers.Columns["PhoneNumber"].HeaderText = "Telefon";
+            KORISN_dgvUsers.Columns["AccountType"].HeaderText = "Tip";
+            KORISN_dgvUsers.Columns["ProfilePicture"].Visible = false;
+            KORISN_dgvUsers.Columns["ActiveAccount"].Visible = false;
+            KORISN_dgvUsers.Columns["Index"].HeaderText = "Indeks";
+            KORISN_dgvUsers.Columns["ValidUntil"].HeaderText = "VaziDo";
+            KORISN_dgvUsers.Columns["Faculty"].Visible = false;
+            KORISN_dgvUsers.Columns["FacultyDisplay"].HeaderText = "Fakultet";
+            KORISN_dgvUsers.Columns["BreakfastCount"].Visible = false;
+            KORISN_dgvUsers.Columns["LunchCount"].Visible = false;
+            KORISN_dgvUsers.Columns["DinnerCount"].Visible = false;
+            KORISN_dgvUsers.Columns["FullName"].Visible = false;
+            
             
         }
 
+
         private void KORSN_btnRefreshList_Click(object sender, EventArgs e)
         {
-
+            KORSN_RefreshUsersGrid(true);
         }
     }
 }

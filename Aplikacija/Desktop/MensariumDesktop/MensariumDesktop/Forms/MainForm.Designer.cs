@@ -174,18 +174,8 @@ namespace MensariumDesktop
             this.tabUsers = new System.Windows.Forms.TabPage();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.cbxAccTypeChooser = new System.Windows.Forms.ComboBox();
-            this.dgvMeals = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Birthdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DReg = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgFaculty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.KORSN_cbxAccTypeChooser = new System.Windows.Forms.ComboBox();
+            this.KORISN_dgvUsers = new System.Windows.Forms.DataGridView();
             this.KORSN_txtSearch = new System.Windows.Forms.TextBox();
             this.KORSN_cbxSearchBy = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
@@ -194,11 +184,16 @@ namespace MensariumDesktop
             this.KORSN_btnProfile = new System.Windows.Forms.Button();
             this.KORSN_btnAddNewUser = new System.Windows.Forms.Button();
             this.KORSN_btnChangeUser = new System.Windows.Forms.Button();
-            this.KORSN_btnRefreshList = new System.Windows.Forms.Button();
             this.KORSN_btnDeleteUser = new System.Windows.Forms.Button();
+            this.KORSN_btnRefreshList = new System.Windows.Forms.Button();
             this.tabAdmin = new System.Windows.Forms.TabPage();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.label27 = new System.Windows.Forms.Label();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
@@ -214,11 +209,6 @@ namespace MensariumDesktop
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bgWorkerLoading = new System.ComponentModel.BackgroundWorker();
             this.imageListOPStatus = new System.Windows.Forms.ImageList(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.statusStrip.SuspendLayout();
             this.tabControls.SuspendLayout();
             this.tabHome.SuspendLayout();
@@ -263,17 +253,17 @@ namespace MensariumDesktop
             this.tabUsers.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.panel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMeals)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KORISN_dgvUsers)).BeginInit();
             this.groupBox10.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             this.tabAdmin.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.groupBox12.SuspendLayout();
             this.flowLayoutPanel5.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -2049,8 +2039,8 @@ namespace MensariumDesktop
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.Transparent;
-            this.panel8.Controls.Add(this.cbxAccTypeChooser);
-            this.panel8.Controls.Add(this.dgvMeals);
+            this.panel8.Controls.Add(this.KORSN_cbxAccTypeChooser);
+            this.panel8.Controls.Add(this.KORISN_dgvUsers);
             this.panel8.Controls.Add(this.KORSN_txtSearch);
             this.panel8.Controls.Add(this.KORSN_cbxSearchBy);
             this.panel8.Controls.Add(this.label22);
@@ -2061,115 +2051,43 @@ namespace MensariumDesktop
             this.panel8.Size = new System.Drawing.Size(1087, 499);
             this.panel8.TabIndex = 16;
             // 
-            // cbxAccTypeChooser
+            // KORSN_cbxAccTypeChooser
             // 
-            this.cbxAccTypeChooser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.KORSN_cbxAccTypeChooser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxAccTypeChooser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxAccTypeChooser.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cbxAccTypeChooser.FormattingEnabled = true;
-            this.cbxAccTypeChooser.Items.AddRange(new object[] {
+            this.KORSN_cbxAccTypeChooser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.KORSN_cbxAccTypeChooser.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.KORSN_cbxAccTypeChooser.FormattingEnabled = true;
+            this.KORSN_cbxAccTypeChooser.Items.AddRange(new object[] {
             "Prikaži samo aktivne naloge",
             "Prikaži samo neaktivne naloge",
             "Prikaži i aktivne i neaktivne naloge"});
-            this.cbxAccTypeChooser.Location = new System.Drawing.Point(3, 471);
-            this.cbxAccTypeChooser.Name = "cbxAccTypeChooser";
-            this.cbxAccTypeChooser.Size = new System.Drawing.Size(1081, 25);
-            this.cbxAccTypeChooser.TabIndex = 29;
+            this.KORSN_cbxAccTypeChooser.Location = new System.Drawing.Point(3, 471);
+            this.KORSN_cbxAccTypeChooser.Name = "KORSN_cbxAccTypeChooser";
+            this.KORSN_cbxAccTypeChooser.Size = new System.Drawing.Size(1081, 25);
+            this.KORSN_cbxAccTypeChooser.TabIndex = 29;
             // 
-            // dgvMeals
+            // KORISN_dgvUsers
             // 
-            this.dgvMeals.AllowUserToAddRows = false;
-            this.dgvMeals.AllowUserToDeleteRows = false;
-            this.dgvMeals.AllowUserToResizeRows = false;
-            this.dgvMeals.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.KORISN_dgvUsers.AllowUserToAddRows = false;
+            this.KORISN_dgvUsers.AllowUserToDeleteRows = false;
+            this.KORISN_dgvUsers.AllowUserToResizeRows = false;
+            this.KORISN_dgvUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvMeals.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvMeals.BackgroundColor = System.Drawing.Color.White;
-            this.dgvMeals.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMeals.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.Username,
-            this.FName,
-            this.LName,
-            this.Email,
-            this.Birthdate,
-            this.DReg,
-            this.Phone,
-            this.dgFaculty,
-            this.Index});
-            this.dgvMeals.Location = new System.Drawing.Point(3, 34);
-            this.dgvMeals.MultiSelect = false;
-            this.dgvMeals.Name = "dgvMeals";
-            this.dgvMeals.ReadOnly = true;
-            this.dgvMeals.RowHeadersVisible = false;
-            this.dgvMeals.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dgvMeals.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMeals.ShowEditingIcon = false;
-            this.dgvMeals.Size = new System.Drawing.Size(1081, 436);
-            this.dgvMeals.TabIndex = 28;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Username
-            // 
-            this.Username.HeaderText = "Korisničko ime";
-            this.Username.Name = "Username";
-            this.Username.ReadOnly = true;
-            // 
-            // FName
-            // 
-            this.FName.HeaderText = "Ime";
-            this.FName.Name = "FName";
-            this.FName.ReadOnly = true;
-            // 
-            // LName
-            // 
-            this.LName.HeaderText = "Prezime";
-            this.LName.Name = "LName";
-            this.LName.ReadOnly = true;
-            // 
-            // Email
-            // 
-            this.Email.HeaderText = "Email";
-            this.Email.Name = "Email";
-            this.Email.ReadOnly = true;
-            // 
-            // Birthdate
-            // 
-            this.Birthdate.HeaderText = "Datum rodjenja";
-            this.Birthdate.Name = "Birthdate";
-            this.Birthdate.ReadOnly = true;
-            // 
-            // DReg
-            // 
-            this.DReg.HeaderText = "Datum registracije";
-            this.DReg.Name = "DReg";
-            this.DReg.ReadOnly = true;
-            // 
-            // Phone
-            // 
-            this.Phone.HeaderText = "Telefon";
-            this.Phone.Name = "Phone";
-            this.Phone.ReadOnly = true;
-            // 
-            // dgFaculty
-            // 
-            this.dgFaculty.HeaderText = "Fakultet";
-            this.dgFaculty.Name = "dgFaculty";
-            this.dgFaculty.ReadOnly = true;
-            // 
-            // Index
-            // 
-            this.Index.HeaderText = "Indeks";
-            this.Index.Name = "Index";
-            this.Index.ReadOnly = true;
+            this.KORISN_dgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.KORISN_dgvUsers.BackgroundColor = System.Drawing.Color.White;
+            this.KORISN_dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.KORISN_dgvUsers.Location = new System.Drawing.Point(3, 34);
+            this.KORISN_dgvUsers.MultiSelect = false;
+            this.KORISN_dgvUsers.Name = "KORISN_dgvUsers";
+            this.KORISN_dgvUsers.ReadOnly = true;
+            this.KORISN_dgvUsers.RowHeadersVisible = false;
+            this.KORISN_dgvUsers.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.KORISN_dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.KORISN_dgvUsers.ShowEditingIcon = false;
+            this.KORISN_dgvUsers.Size = new System.Drawing.Size(1081, 436);
+            this.KORISN_dgvUsers.TabIndex = 28;
             // 
             // KORSN_txtSearch
             // 
@@ -2186,13 +2104,6 @@ namespace MensariumDesktop
             this.KORSN_cbxSearchBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.KORSN_cbxSearchBy.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.KORSN_cbxSearchBy.FormattingEnabled = true;
-            this.KORSN_cbxSearchBy.Items.AddRange(new object[] {
-            "ID",
-            "Ime i prezime",
-            "Korisnicko ime",
-            "Email",
-            "Broj telefona",
-            "Fakultet"});
             this.KORSN_cbxSearchBy.Location = new System.Drawing.Point(919, 3);
             this.KORSN_cbxSearchBy.Name = "KORSN_cbxSearchBy";
             this.KORSN_cbxSearchBy.Size = new System.Drawing.Size(165, 25);
@@ -2300,6 +2211,27 @@ namespace MensariumDesktop
             this.KORSN_btnChangeUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.KORSN_btnChangeUser.UseVisualStyleBackColor = false;
             // 
+            // KORSN_btnDeleteUser
+            // 
+            this.KORSN_btnDeleteUser.BackColor = System.Drawing.Color.White;
+            this.KORSN_btnDeleteUser.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
+            this.KORSN_btnDeleteUser.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.KORSN_btnDeleteUser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.KORSN_btnDeleteUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.KORSN_btnDeleteUser.Font = new System.Drawing.Font("Segoe UI", 14F);
+            this.KORSN_btnDeleteUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.KORSN_btnDeleteUser.ImageKey = "user-22.png";
+            this.KORSN_btnDeleteUser.ImageList = this.imageListMainForm;
+            this.KORSN_btnDeleteUser.Location = new System.Drawing.Point(4, 215);
+            this.KORSN_btnDeleteUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.KORSN_btnDeleteUser.Name = "KORSN_btnDeleteUser";
+            this.KORSN_btnDeleteUser.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.KORSN_btnDeleteUser.Size = new System.Drawing.Size(219, 55);
+            this.KORSN_btnDeleteUser.TabIndex = 21;
+            this.KORSN_btnDeleteUser.Text = " Obriši";
+            this.KORSN_btnDeleteUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.KORSN_btnDeleteUser.UseVisualStyleBackColor = false;
+            // 
             // KORSN_btnRefreshList
             // 
             this.KORSN_btnRefreshList.BackColor = System.Drawing.Color.White;
@@ -2322,27 +2254,6 @@ namespace MensariumDesktop
             this.KORSN_btnRefreshList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.KORSN_btnRefreshList.UseVisualStyleBackColor = false;
             this.KORSN_btnRefreshList.Click += new System.EventHandler(this.KORSN_btnRefreshList_Click);
-            // 
-            // KORSN_btnDeleteUser
-            // 
-            this.KORSN_btnDeleteUser.BackColor = System.Drawing.Color.White;
-            this.KORSN_btnDeleteUser.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
-            this.KORSN_btnDeleteUser.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.KORSN_btnDeleteUser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.KORSN_btnDeleteUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.KORSN_btnDeleteUser.Font = new System.Drawing.Font("Segoe UI", 14F);
-            this.KORSN_btnDeleteUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.KORSN_btnDeleteUser.ImageKey = "user-22.png";
-            this.KORSN_btnDeleteUser.ImageList = this.imageListMainForm;
-            this.KORSN_btnDeleteUser.Location = new System.Drawing.Point(4, 215);
-            this.KORSN_btnDeleteUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.KORSN_btnDeleteUser.Name = "KORSN_btnDeleteUser";
-            this.KORSN_btnDeleteUser.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.KORSN_btnDeleteUser.Size = new System.Drawing.Size(219, 55);
-            this.KORSN_btnDeleteUser.TabIndex = 21;
-            this.KORSN_btnDeleteUser.Text = " Obriši";
-            this.KORSN_btnDeleteUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.KORSN_btnDeleteUser.UseVisualStyleBackColor = false;
             // 
             // tabAdmin
             // 
@@ -2387,6 +2298,118 @@ namespace MensariumDesktop
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(1092, 493);
             this.panel9.TabIndex = 7;
+            // 
+            // chart1
+            // 
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            this.chart1.Enabled = false;
+            this.chart1.Location = new System.Drawing.Point(245, 59);
+            this.chart1.Name = "chart1";
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series2.Name = "Series1";
+            series2.Points.Add(dataPoint10);
+            series2.Points.Add(dataPoint11);
+            series2.Points.Add(dataPoint12);
+            series2.Points.Add(dataPoint13);
+            series2.Points.Add(dataPoint14);
+            series2.Points.Add(dataPoint15);
+            series2.Points.Add(dataPoint16);
+            series2.Points.Add(dataPoint17);
+            series2.Points.Add(dataPoint18);
+            this.chart1.Series.Add(series2);
+            this.chart1.Size = new System.Drawing.Size(844, 431);
+            this.chart1.TabIndex = 20;
+            this.chart1.Text = "chart1";
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.White;
+            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
+            this.button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button4.ImageKey = "garbage-1.png";
+            this.button4.ImageList = this.imageListMainForm;
+            this.button4.Location = new System.Drawing.Point(19, 254);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button4.Name = "button4";
+            this.button4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.button4.Size = new System.Drawing.Size(219, 55);
+            this.button4.TabIndex = 19;
+            this.button4.Text = "Očisti cache";
+            this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button4.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.White;
+            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
+            this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button3.ImageKey = "browser-10.png";
+            this.button3.ImageList = this.imageListMainForm;
+            this.button3.Location = new System.Drawing.Point(19, 189);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button3.Name = "button3";
+            this.button3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.button3.Size = new System.Drawing.Size(219, 55);
+            this.button3.TabIndex = 18;
+            this.button3.Text = "Hard Disk";
+            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
+            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.ImageKey = "browser-8.png";
+            this.button2.ImageList = this.imageListMainForm;
+            this.button2.Location = new System.Drawing.Point(19, 124);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button2.Name = "button2";
+            this.button2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.button2.Size = new System.Drawing.Size(219, 55);
+            this.button2.TabIndex = 17;
+            this.button2.Text = "Upotreba RAM-a";
+            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.ImageKey = "server-15.png";
+            this.button1.ImageList = this.imageListMainForm;
+            this.button1.Location = new System.Drawing.Point(19, 59);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button1.Name = "button1";
+            this.button1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.button1.Size = new System.Drawing.Size(219, 55);
+            this.button1.TabIndex = 16;
+            this.button1.Text = " Restartuj";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // label27
             // 
@@ -2521,7 +2544,6 @@ namespace MensariumDesktop
             this.button13.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button13.UseVisualStyleBackColor = false;
             this.button13.Visible = false;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // labelTitle
             // 
@@ -2581,118 +2603,6 @@ namespace MensariumDesktop
             this.imageListOPStatus.Images.SetKeyName(1, "success.png");
             this.imageListOPStatus.Images.SetKeyName(2, "working.png");
             this.imageListOPStatus.Images.SetKeyName(3, "internet.png");
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.ImageKey = "server-15.png";
-            this.button1.ImageList = this.imageListMainForm;
-            this.button1.Location = new System.Drawing.Point(19, 59);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.button1.Size = new System.Drawing.Size(219, 55);
-            this.button1.TabIndex = 16;
-            this.button1.Text = " Restartuj";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button1.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
-            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.ImageKey = "browser-8.png";
-            this.button2.ImageList = this.imageListMainForm;
-            this.button2.Location = new System.Drawing.Point(19, 124);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button2.Name = "button2";
-            this.button2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.button2.Size = new System.Drawing.Size(219, 55);
-            this.button2.TabIndex = 17;
-            this.button2.Text = "Upotreba RAM-a";
-            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.White;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
-            this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button3.ImageKey = "browser-10.png";
-            this.button3.ImageList = this.imageListMainForm;
-            this.button3.Location = new System.Drawing.Point(19, 189);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button3.Name = "button3";
-            this.button3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.button3.Size = new System.Drawing.Size(219, 55);
-            this.button3.TabIndex = 18;
-            this.button3.Text = "Hard Disk";
-            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.White;
-            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
-            this.button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button4.ImageKey = "garbage-1.png";
-            this.button4.ImageList = this.imageListMainForm;
-            this.button4.Location = new System.Drawing.Point(19, 254);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button4.Name = "button4";
-            this.button4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.button4.Size = new System.Drawing.Size(219, 55);
-            this.button4.TabIndex = 19;
-            this.button4.Text = "Očisti cache";
-            this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button4.UseVisualStyleBackColor = false;
-            // 
-            // chart1
-            // 
-            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            this.chart1.Enabled = false;
-            this.chart1.Location = new System.Drawing.Point(245, 59);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series2.Name = "Series1";
-            series2.Points.Add(dataPoint10);
-            series2.Points.Add(dataPoint11);
-            series2.Points.Add(dataPoint12);
-            series2.Points.Add(dataPoint13);
-            series2.Points.Add(dataPoint14);
-            series2.Points.Add(dataPoint15);
-            series2.Points.Add(dataPoint16);
-            series2.Points.Add(dataPoint17);
-            series2.Points.Add(dataPoint18);
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(844, 431);
-            this.chart1.TabIndex = 20;
-            this.chart1.Text = "chart1";
             // 
             // MainForm
             // 
@@ -2769,20 +2679,20 @@ namespace MensariumDesktop
             this.groupBox11.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMeals)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KORISN_dgvUsers)).EndInit();
             this.groupBox10.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.tabAdmin.ResumeLayout(false);
             this.groupBox13.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.groupBox12.ResumeLayout(false);
             this.flowLayoutPanel5.ResumeLayout(false);
             this.flowLayoutPanel5.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2910,7 +2820,7 @@ namespace MensariumDesktop
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox KORSN_txtSearch;
         private System.Windows.Forms.ComboBox KORSN_cbxSearchBy;
-        private System.Windows.Forms.DataGridView dgvMeals;
+        private System.Windows.Forms.DataGridView KORISN_dgvUsers;
         private System.Windows.Forms.ToolStripMenuItem showUserFormToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showNewUserCreatedFormToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox12;
@@ -2925,18 +2835,8 @@ namespace MensariumDesktop
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Button KORSN_btnDeleteUser;
-        private System.Windows.Forms.ComboBox cbxAccTypeChooser;
+        private System.Windows.Forms.ComboBox KORSN_cbxAccTypeChooser;
         private System.Windows.Forms.ToolStripMenuItem dEBUGMEToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Username;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Birthdate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DReg;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Phone;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgFaculty;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Index;
         private System.ComponentModel.BackgroundWorker bgWorkerLoading;
         private System.Windows.Forms.ImageList imageListOPStatus;
         private System.Windows.Forms.GroupBox groupBox14;

@@ -405,14 +405,19 @@ namespace MensariumDesktop.Model.Controllers
             }
         }
 
-        //public static bool UpdateAllUsersList()
-        //{
-        //    try
-        //    {
-        //        List<KorisnikFullDto> uf = Api.GetUsersFullInfo();
-        //        User.AllUsers = MUtility.Student_FromKorisnikFullDto()
-                
-        //    }
-        //}
+        public static bool UpdateAllUsersList()
+        {
+            try
+            {
+                List<KorisnikFullDto> l = Api.GetUsersFullInfo();
+                User.AllUsers = MUtility.GenerateUsersFromDTOs(l);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+        }
     }
 }
