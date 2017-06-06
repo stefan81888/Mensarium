@@ -680,10 +680,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 return false; // Korisnik ne postoji, nemoguce brisanje iz baze
 
             ISession s = SesijeProvajder.Sesija;
-
+            try { 
             s.Delete(obrisani);
             s.Flush();
-
+            } 
+            catch(Exception e) { }
             return true;
         }
 
