@@ -29,7 +29,7 @@ namespace MensariumAPI.Controllers
 
                 if(o == null)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                    { Content = new StringContent("Fakultet nije pronadjen") });
+                    { Content = new StringContent("Objava ne postoji") });
 
                 return o;
             }

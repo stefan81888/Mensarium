@@ -482,7 +482,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 Obrisan = false,
                 TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(kkdto.IdTipaNaloga)
             };
-            
+           
             s.Save(k);
             s.Flush();
 
@@ -493,6 +493,15 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             Korisnik kreirani =  lista.Find(x => x.BrojIndeksa == kkdto.BrojIndeksa 
                 && x.StudiraFakultet.IdFakultet == kkdto.IdFakulteta
                 && x.Sifra == sifra);
+
+            Objava o = new Objava()
+            {
+                Lokacija = ProvajderPodatakaMenzi.VratiMenzu(4),
+                IdKorisnik = kreirani
+            };
+
+            s.Save(o);
+            s.Flush();
 
             kkdto.IdKorisnika = kreirani.IdKorisnika;
             kkdto.Sifra = sifra;
