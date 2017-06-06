@@ -968,15 +968,13 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             rezultat.RemoveAll(x => x.IdTipaNaloga != 5);
             return rezultat;
         }
-
-        // TO DO - ceo poziv na osnovu id-a
-
+        
         public static List<OgovorNaPozivDto> ObavestiOOdgovorima(int idPoziva, string sid)
         {
             ISession s = SesijeProvajder.Sesija;
-            Pozivanje p = s.Load<Pozivanje>(idPoziva);
+            Pozivanje p = s.Get<Pozivanje>(idPoziva);
 
-            if (p.VaziDo > DateTime.Now)
+            if (p.VaziDo < DateTime.Now)
                 return null;
 
             List<PozivanjaPozvani> pp = s.Query<PozivanjaPozvani>().Select(x => x).ToList();
@@ -1001,6 +999,30 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 rezultat.Add(o);
             }
             rezultat.Sort((x, y) => y.OdgovorPozvanog.CompareTo(x.OdgovorPozvanog));
+
+            return rezultat;
+        }
+
+        public static PozivanjaFullDto Poziv(int idPoziva, string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Pozivanje p = s.Get<Pozivanje>(idPoziva);
+
+            if (p.VaziDo < DateTime.Now)
+                return null;
+
+            PozivanjaFullDto rezultat = new PozivanjaFullDto()
+            {
+                IdPoziva = p.IdPoziva,
+                DatumPoziva = p.DatumPoziva,
+                VaziDo = p.VaziDo,
+                IdPozivaoca = p.Pozivaoc.IdKorisnika
+            };
+
+            foreach (var v in p.Pozvani.ToList())
+            {
+                rezultat.Pozvani.Add(v.IdPozivanjaPozvani.IdPozvanog.IdKorisnika);
+            }
 
             return rezultat;
         }
