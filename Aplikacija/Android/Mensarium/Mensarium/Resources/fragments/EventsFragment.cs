@@ -22,6 +22,7 @@ namespace Mensarium
         private Button pozovi;
         private PozivanjaFullDto poziv;
         private TimePicker time;
+        private ListView pozvanSam;
 
         private View view = null;
 
@@ -41,13 +42,23 @@ namespace Mensarium
             pozovi = view.FindViewById<Button>(Resource.Id.posaljiPozivDugme);
             pozovi.Click += PozoviOnClick;
 
+            pozvanSam = view.FindViewById<ListView>(Resource.Id.pozvanSamListView);
+            SetujPozanSamListu();
+
             return view;
+        }
+
+        private void SetujPozanSamListu()
+        {
+            List<PozivanjaNewsFeedItemDto> lista = Api.Api.UserCalledBy();
+
         }
 
         private void PozoviOnClick(object sender, EventArgs eventArgs)
         {
             //setujemo intent i startujemo activity
             var intent = new Intent(this.Activity, typeof(PozoviPrijateljaActivity));
+            intent.PutExtra("IdPoziva", poziv.IdPoziva);
             StartActivity(intent);
         }
 

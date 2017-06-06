@@ -26,7 +26,7 @@ namespace Mensarium.Api
             public T ResponseObject { get; set; }
         }
         //static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        private static string BaseUrl = "http://a48f3b23.ngrok.io/api/";
+        private static string BaseUrl = "http://9f08aef9.ngrok.io/api/";
 
         private static ApiResponse<byte[]> DownloadData(RestRequest request, bool includeSid = true)
         {
@@ -271,11 +271,12 @@ namespace Mensarium.Api
 
             return response.ResponseObject;
         }
-        public static void InviteUser(PozivanjaFullDto m)
+        public static void InviteUser(int idPoziva, int idPozvanog)
         {
             RestRequest request = new RestRequest(Method.PUT);
-            request.Resource = "korisnici/pozovi";
-            request.AddObject(m);
+            request.Resource = "korisnici/pozovi/jednog";
+            request.AddParameter("idPoziva", idPoziva, ParameterType.QueryString);
+            request.AddParameter("idPozvanog", idPozvanog, ParameterType.QueryString);
 
             var response = Execute(request);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))

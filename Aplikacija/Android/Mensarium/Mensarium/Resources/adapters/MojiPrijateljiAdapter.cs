@@ -9,25 +9,25 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Java.Lang;
 using Mensarium.Comp;
 using MensariumDesktop.Model.Components.DTOs;
+using System.Threading;
 
 namespace Mensarium.Resources.adapters
 {
-    public class PozoviPrijateljaAdapter : BaseAdapter<KorisnikFollowDto>, IFilterable
+    public class MojiPrijateljiAdapter : BaseAdapter<KorisnikFollowDto>, IFilterable
     {
         private Activity Context;
         public List<KorisnikFollowDto> listaPrijatelja;
         public List<KorisnikFollowDto> orgPodaci;
         private KorisnikFollowDto korisnik;
 
-        public PozoviPrijateljaAdapter(Activity con, List<KorisnikFollowDto> lista)
+        public MojiPrijateljiAdapter(Activity con, List<KorisnikFollowDto> lista)
         {
             this.Context = con;
             this.listaPrijatelja = lista;
 
-            Filter = new PronadjiFilter(this);
+            Filter = new PronadjiPrijatelja(this);
         }
 
         public override KorisnikFollowDto this[int positon] { get { return this.listaPrijatelja[positon]; } }
@@ -43,7 +43,7 @@ namespace Mensarium.Resources.adapters
         {
             View view = convertView;
 
-            if(view == null)
+            if (view == null)
                 view = Context.LayoutInflater.Inflate(Resource.Layout.pozoviItem, parent, false);
 
             korisnik = this[position];
@@ -55,11 +55,12 @@ namespace Mensarium.Resources.adapters
             view.FindViewById<TextView>(Resource.Id.profilPrijateljaItemFax).Text = korisnik.Fakultet;
 
             Button dugmePozovi = view.FindViewById<Button>(Resource.Id.pozoviPrijateljaItemDugme);
-            dugmePozovi.Tag = korisnik.IdKorisnika;
-            dugmePozovi.SetOnClickListener(new ButtonPozoviClickListener(this.Context));
+            dugmePozovi.Text = "Otprati";
+            dugmePozovi.Tag = korisnik.IdKorisnika + " " + korisnik.Ime + " " + korisnik.Prezime;
+            dugmePozovi.SetOnClickListener(new ButtonOtpratiClickListener(this.Context));
 
             return view;
-  
+
         }
 
         public Filter Filter { get; private set; }
@@ -70,26 +71,51 @@ namespace Mensarium.Resources.adapters
         }
     }
 
-    public class ButtonPozoviClickListener : Java.Lang.Object, View.IOnClickListener
+    public class ButtonOtpratiClickListener : Java.Lang.Object, View.IOnClickListener
     {
         private Activity activity;
+        private AlertDialog alertObrada;
+        private AlertDialog alertUspesno;
 
-        public ButtonPozoviClickListener(Activity activity)
+        public ButtonOtpratiClickListener(Activity activity)
         {
             this.activity = activity;
         }
 
         public void OnClick(View v)
         {
-            string id = (string)v.Tag;
+            string tag = (string)v.Tag;
+            string[] split = tag.Split(null);
 
+            alertUspesno = new AlertDialog.Builder(this.activity).Create();
+            alertUspesno.SetTitle("Obavestenje!");
+            alertUspesno.SetMessage("Uspesno ste otpratili korisnika: " + split[1] + " " + split[2]);
+
+            alertUspesno.SetButton("U redu",
+                delegate (object sender, DialogClickEventArgs args) { alertUspesno.Dispose(); });
+
+            alertObrada = new AlertDialog.Builder(this.activity).Create();
+            alertObrada.SetTitle("Obrada!");
+            alertObrada.SetMessage("Molimo sacekajte!");
+            alertObrada.Show();
+
+            Thread novaNit = new Thread(() => FuncijaNoveNiti(split[0]));
+            novaNit.Start();
+        }
+
+        private void FuncijaNoveNiti(string s)
+        {
             try
             {
-                Api.Api.InviteUser(activity.Intent.GetIntExtra("IdPoziva", 0), Int32.Parse(id));
+                Api.Api.Unfolow(Int32.Parse(s));
+
+                this.activity.RunOnUiThread(() => alertObrada.Dismiss());
+                this.activity.RunOnUiThread(() => alertUspesno.Show());
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                Toast.MakeText(activity, ex.Message, ToastLength.Long).Show();
+                this.activity.RunOnUiThread(() => alertObrada.Dismiss());
+                this.activity.RunOnUiThread(() => Toast.MakeText(this.activity, ex.Message, ToastLength.Short).Show());
             }
         }
     }

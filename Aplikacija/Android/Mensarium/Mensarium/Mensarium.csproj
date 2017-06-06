@@ -192,13 +192,16 @@
     <Compile Include="Comp\MSettings.cs" />
     <Compile Include="Comp\ObjectExtensions.cs" />
     <Compile Include="Comp\PronadjiFilter.cs" />
+    <Compile Include="Comp\PronadjiPrijatelja.cs" />
     <Compile Include="Comp\Server.cs" />
     <Compile Include="Comp\Session.cs" />
     <Compile Include="Comp\User.cs" />
     <Compile Include="Resources\activities\CreateAccDrugiActivity.cs" />
     <Compile Include="Resources\activities\CreateAccPrviActivity.cs" />
     <Compile Include="Resources\activities\MapActivity.cs" />
+    <Compile Include="Resources\activities\MojiPrijateljiActivity.cs" />
     <Compile Include="Resources\activities\UplacivanjeObroka.cs" />
+    <Compile Include="Resources\adapters\MojiPrijateljiAdapter.cs" />
     <Compile Include="Resources\adapters\PozoviPrijateljaAdapter.cs" />
     <Compile Include="Resources\adapters\PretragaListAdapter.cs" />
     <Compile Include="Resources\adapters\ProfilItemAdapter.cs" />

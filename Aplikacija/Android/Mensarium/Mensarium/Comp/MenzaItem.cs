@@ -17,8 +17,5 @@ namespace Mensarium
     {
         public MenzaFullDto MenzaFull { get; set; }
         public MenzaGuzvaDto GuzvaFull { get; set; }
-
-        public double latiCoo { get; set; }
-        public double longCoo { get; set; }
     }
 }

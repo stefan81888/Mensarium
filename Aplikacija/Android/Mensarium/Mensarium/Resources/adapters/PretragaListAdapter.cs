@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -60,6 +60,9 @@ namespace Mensarium.Resources.adapters
     {
         private Activity activity;
 
+        private AlertDialog alertObrada;
+        private AlertDialog alertUspesno;
+
         public DugmeZapratiClickListener(Activity activity)
         {
             this.activity = activity;
@@ -70,21 +73,34 @@ namespace Mensarium.Resources.adapters
             string tag = (string)v.Tag;
             string[] split = tag.Split(null);
 
+            alertUspesno = new AlertDialog.Builder(this.activity).Create();
+            alertUspesno.SetTitle("Obavestenje!");
+            alertUspesno.SetMessage("Uspesno ste zapratili korisnika: " + split[1] + " " + split[2]);
+
+            alertUspesno.SetButton("U redu",
+                delegate(object sender, DialogClickEventArgs args) { alertUspesno.Dispose(); });
+
+            alertObrada = new AlertDialog.Builder(this.activity).Create();
+            alertObrada.SetTitle("Obrada!");
+            alertObrada.SetMessage("Molimo sacekajte!");
+            alertObrada.Show();
+
+            Thread novaNit = new Thread(() => FuncijaNoveNiti(split[0]));
+            novaNit.Start();
+        }
+
+        private void FuncijaNoveNiti(string s)
+        {
             try
             {
-                Api.Api.FollowUser(Int32.Parse(split[0]));
+                Api.Api.FollowUser(Int32.Parse(s));
 
-                var alert = new AlertDialog.Builder(this.activity);
-                alert.SetTitle("Obavestenje!");
-                alert.SetMessage("Uspesno ste zapratili korisnika: " + split[1] + " " + split[2]);
-
-                alert.SetPositiveButton("U redu",
-                    delegate(object sender, DialogClickEventArgs args) { alert.Dispose(); });
-
-                alert.Show();
+                this.activity.RunOnUiThread(() => alertObrada.Dismiss());
+                this.activity.RunOnUiThread(() => alertUspesno.Show());
             }
             catch (Exception ex)
             {
+                this.activity.RunOnUiThread(() => alertObrada.Dismiss());
                 Toast.MakeText(this.activity, ex.Message, ToastLength.Short).Show();
             }
         }

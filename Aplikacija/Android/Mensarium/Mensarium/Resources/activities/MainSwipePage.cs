@@ -196,6 +196,12 @@ namespace Mensarium
                     StartActivity(intent);
                     this.Finish();
                     return true;
+
+                case Resource.Id.prijatelji:
+                    var intent2 = new Intent(this, typeof(MojiPrijateljiActivity));
+                    StartActivity(intent2);
+                    return true;
+
                 default:
                     return base.OnOptionsItemSelected(item);
             }
