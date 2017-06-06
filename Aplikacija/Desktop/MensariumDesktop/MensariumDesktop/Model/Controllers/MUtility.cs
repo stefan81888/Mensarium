@@ -14,33 +14,49 @@ namespace MensariumDesktop.Model.Controllers
 {
     public static class MUtility
     {
-        public static User GenerateUserFromDTO(KorisnikFullDto korisnik)
+        public enum FilterUsers
+        {
+            ImePrezime,
+            ID,
+            KorisnickoIme,
+            Email,
+            Index,
+            Fakultet
+        }
+
+        public static User GenerateUserFromDTO(KorisnikFullDto korisnik, bool loadImage = true)
         {
             User u = new User();
 
-            u.AccountType = (User.UserAccountType)korisnik.IdTipaNaloga;
-            u.Birthday = korisnik.DatumRodjenja;
-            if (korisnik.Email != null) u.Email = korisnik.Email;
+            u.UserID = korisnik.IdKorisnika;
+            u.Username = korisnik.KorisnickoIme;
+            u.Email = korisnik.Email;
             u.FirstName = korisnik.Ime;
             u.LastName = korisnik.Prezime;
-            u.PhoneNumber = korisnik.BrojTelefona;
+            u.Birthday = korisnik.DatumRodjenja;
             u.RegistrationDate = korisnik.DatumRegistracije;
-            u.UserID = korisnik.IdKorisnika;
-            if (korisnik.KorisnickoIme != null) u.Username = korisnik.KorisnickoIme;
+            u.PhoneNumber = korisnik.BrojTelefona;
+            u.ActiveAccount = korisnik.AktivanNalog;
+            u.AccountType = (User.UserAccountType)korisnik.IdTipaNaloga;
             u.ActiveAccount = korisnik.AktivanNalog;
 
-            u.ProfilePicture = Api.GetUserImage(u.UserID);
-
+            if (loadImage) u.ProfilePicture = Api.GetUserImage(u.UserID);
             if (u.AccountType == User.UserAccountType.Student)
             {
-                Student us = new Student(u);
-                us.ValidUntil = (DateTime)korisnik.DatumVaziDo;
-                us.Index = korisnik.BrojIndeksa;
-                us.Faculty = Faculty.Faculties.Find(x => x.FacultyID == korisnik.IdFakulteta);
-
-                return us;
+                u.ValidUntil = (DateTime) korisnik.DatumVaziDo;
+                u.Index = korisnik.BrojIndeksa;
+                u.Faculty = Faculty.Faculties.Find(x => x.FacultyID == korisnik.IdFakulteta);
             }
             return u;
+        }
+        public static List<User> GenerateUsersFromDTOs(List<KorisnikFullDto> list, bool loadImage = false)
+        {
+            List<User> res = new List<User>();
+            foreach (KorisnikFullDto k in list)
+            {
+                res.Add(GenerateUserFromDTO(k, loadImage));
+            }
+            return res;
         }
         public static Faculty Faculty_From_FakultetFullDto(FakultetFullDto f)
         {
@@ -57,7 +73,6 @@ namespace MensariumDesktop.Model.Controllers
 
             return fl;
         }
-
         public static Mensa Mensa_From_MenzaFullDto(MenzaFullDto mensa)
         {
             return new Mensa()
@@ -66,7 +81,10 @@ namespace MensariumDesktop.Model.Controllers
                 Name = mensa.Naziv,
                 Location = mensa.Lokacija,
                 CurrentlyClosed = mensa.VanrednoNeRadi,
-                WorkTime = mensa.RadnoVreme
+                WorkTime = mensa.RadnoVreme,
+                GPSLong = mensa.GpsLong,
+                GPSLat = mensa.GpsLat
+                
             };
         }
         public static List<Mensa> MensaList_FromMensaFullDto(List<MenzaFullDto> mlist)

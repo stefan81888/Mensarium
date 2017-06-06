@@ -14,4 +14,5 @@
     <string name="mapsApiKey">AIzaSyAsPi99LMpLs8YgV1ee-i1czJsIpLqXJr8</string>
   <string name="action_settings">Pomoc</string>
   <string name="action_settings2">Odjavi se</string>
+  <string name="titlePrijatelji">Moji prijatelji</string>
 </resources>

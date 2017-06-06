@@ -184,7 +184,7 @@ namespace MensariumAPI.Controllers
 				if (e is HttpResponseException)
 					throw e;
 				DnevnikIzuzetaka.Zabelezi(e);
-				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("Fakultet nije moguce obrisati") });
 			}
 			finally
 			{

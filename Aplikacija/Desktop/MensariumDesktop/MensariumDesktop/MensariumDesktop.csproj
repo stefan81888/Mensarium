@@ -54,6 +54,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -158,7 +159,6 @@
     <Compile Include="Model\Components\DTOs\ObjavaCUDto.cs" />
     <Compile Include="Model\Components\DTOs\ObjavaFullDto.cs" />
     <Compile Include="Model\Components\DTOs\ObjavaReadDto.cs" />
-    <Compile Include="Model\Components\DTOs\ObrokDanasSkinutDto.cs" />
     <Compile Include="Model\Components\DTOs\ObrokReklamacijaDto.cs" />
     <Compile Include="Model\Components\DTOs\ObrokFullDto.cs" />
     <Compile Include="Model\Components\DTOs\ObrokNaplataDto.cs" />

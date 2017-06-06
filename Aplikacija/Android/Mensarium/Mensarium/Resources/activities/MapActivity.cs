@@ -50,7 +50,7 @@ namespace Mensarium.Resources.activities
             mapa = googleMap;
             mapa.MapType = GoogleMap.MapTypeNormal;
 
-            LatLng latlng = new LatLng(menzaZaPrikaz.latiCoo, menzaZaPrikaz.longCoo);
+            LatLng latlng = new LatLng(menzaZaPrikaz.MenzaFull.GpsLat, menzaZaPrikaz.MenzaFull.GpsLong);
 
             mapa.MoveCamera(CameraUpdateFactory.NewLatLngZoom(latlng, 13));
 

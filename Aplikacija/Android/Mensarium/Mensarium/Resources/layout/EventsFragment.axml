@@ -21,19 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout1"
-            android:gravity="center">
-            <TextView
-                android:text="Koliko minuta poziv vazi:"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/textView1"
-                android:layout_marginRight="10dp" />
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/comboBox" />
-        </LinearLayout>
+            android:gravity="center"
+            android:minWidth="25px"
+            android:minHeight="25px" />
         <Button
             android:text="Kreiraj poziv"
             android:textColor="@color/NaslovIImeButtona"
@@ -53,45 +43,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pozivJeKreiran"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_marginTop="10dp">
         <LinearLayout
             android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/vremePozivaLayout"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp">
-            <TextView
-                android:text="Vreme poziva: "
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="16dp"
-                android:textColor="@color/NaslovIImeButtona" />
-            <TextView
-                android:id="@+id/vremePoziva"
-                android:text="00:00"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:textStyle="bold"
-                android:textSize="16dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/statusPozivaLayout"
-            android:layout_below="@id/vremePozivaLayout"
-            android:layout_alignLeft="@id/vremePozivaLayout"
-            android:layout_alignRight="@id/vremePozivaLayout">
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:minWidth="25px"
+            android:minHeight="25px">
             <TextView
                 android:text="Status poziva: "
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="16dp"
-                android:textColor="@color/NaslovIImeButtona" />
+                android:textColor="@color/NaslovIImeButtona"
+                android:id="@+id/textView1" />
             <TextView
                 android:id="@+id/statusPoziva"
                 android:text="Aktivan"
@@ -99,8 +69,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
+                android:textStyle="bold"
                 android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textColor="#4ee07d" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -108,8 +79,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/vremeKreiranjaLayout"
             android:layout_below="@id/statusPozivaLayout"
-            android:layout_alignLeft="@id/vremePozivaLayout"
-            android:layout_alignRight="@id/vremePozivaLayout">
+            android:layout_alignLeft="@id/statusPozivaLayout"
+            android:layout_alignRight="@id/statusPozivaLayout">
             <TextView
                 android:text="Vreme kreiranja poziva: "
                 android:layout_width="wrap_content"
@@ -123,8 +94,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:textStyle="bold"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -132,8 +103,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/pozivTrajeLayout"
             android:layout_below="@id/vremeKreiranjaLayout"
-            android:layout_alignRight="@id/vremePozivaLayout"
-            android:layout_alignLeft="@id/vremePozivaLayout">
+            android:layout_alignLeft="@id/statusPozivaLayout"
+            android:layout_alignRight="@id/statusPozivaLayout">
             <TextView
                 android:text="Poziv traje do: "
                 android:layout_width="wrap_content"
@@ -179,7 +150,7 @@
             android:layout_below="@id/pozvaniListViewLayout" />
     </RelativeLayout>
     <ImageView
-        android:id="@+id/profilSeparatorLine"
+        android:id="@+id/eventsSeparator"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:src="@drawable/separator_line"
@@ -187,4 +158,24 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp" />
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pozvanSamLayout"
+        android:layout_below="@id/eventsSeparator">
+        <TextView
+            android:text="Pozvan sam: "
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="16dp" />
+      <ListView
+          android:layout_marginTop="10dp"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pozvanSamListView" />
+    </LinearLayout>
 </LinearLayout>
