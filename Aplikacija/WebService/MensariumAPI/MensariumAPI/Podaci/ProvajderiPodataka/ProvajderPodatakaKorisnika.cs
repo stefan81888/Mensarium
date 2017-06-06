@@ -25,9 +25,11 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         // TO DO: private delegates
         public delegate KorisnikKreiranjeDto KreiranjeKorisnika(KorisnikKreiranjeDto kkdto);
         public delegate List<KorisnikFollowDto> PretragaKorisnika(PretragaKriterijumDto pkdto);
+        public delegate List<KorisnikFullDto> SviKorisnici();
 
         public List<KreiranjeKorisnika> listaDelegataKreiranja = new List<KreiranjeKorisnika>();
         public List<PretragaKorisnika> listaDelegataPretrage = new List<PretragaKorisnika>();
+        public List<SviKorisnici> listaDelegataSvihKorisnika = new List<SviKorisnici>();
 
         public ProvajderPodatakaKorisnika()
         {
@@ -48,6 +50,12 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             listaDelegataPretrage.Add(PretraziSveNaloge);
             listaDelegataPretrage.Add(PretraziSveNaloge);
             listaDelegataPretrage.Add(PretraziStudente);
+
+            listaDelegataSvihKorisnika.Add(VratiKorisnikeAdmin);
+            listaDelegataSvihKorisnika.Add(VratiKorisnikeOstali);
+            listaDelegataSvihKorisnika.Add(VratiKorisnikeOstali);
+            listaDelegataSvihKorisnika.Add(VratiKorisnikeOstali);
+            listaDelegataSvihKorisnika.Add(VratiKorisnikeStudent);
         }
 
         public static Korisnik VratiKorisnika(int id)
@@ -368,15 +376,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             {
                 int idPoziva = v.IdPozivanjaPozvani.IdPoziva.IdPoziva;
                 Pozivanje p = s.Get<Pozivanje>(idPoziva);
-                /*
-
-                if (DateTime.Compare(p.DatumPoziva, DateTime.Today) < 0)
-                    break;
-
-                if(DateTime.Compare(p.DatumPoziva, p.VaziDo) > 0)
-                    break;
-                    */
-
+              
                 Korisnik k = VratiKorisnika(p.Pozivaoc.IdKorisnika);
 
                 PozivanjaNewsFeedItemDto pnfidto = new PozivanjaNewsFeedItemDto()
@@ -945,20 +945,34 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         //Korisnici koje admin sme da vidi - svi sem obrisanih
         public static List<KorisnikFullDto> VratiKorisnikeAdmin()
         {
-            return null;
+            ISession s = SesijeProvajder.Sesija;
+            List<Korisnik> korisnici = s.Query<Korisnik>().Select(x => x).ToList();
+            korisnici.RemoveAll(x => x.Obrisan);
+
+            List<KorisnikFullDto> rezultat = new List<KorisnikFullDto>();
+
+            foreach (var VARIABLE in korisnici)
+            {
+                KorisnikFullDto k = KorisnikToFullDto(VARIABLE);
+                rezultat.Add(k);
+            }
+            return rezultat;
         }
 
         //Korisnici koje student sme da vidi - aktivni studenti
         public static List<KorisnikFullDto> VratiKorisnikeStudent()
         {
+            List<KorisnikFullDto> rezultat = VratiKorisnikeOstali();
+            rezultat.RemoveAll(x => !x.AktivanNalog);
             return null;
         }
 
         //Korisnici koje menadzer, naplata i uplata smeju da vide - aktivni i neaktivni studenti
         public static List<KorisnikFullDto> VratiKorisnikeOstali()
         {
-            return null;
+            List<KorisnikFullDto> rezultat = VratiKorisnikeAdmin();
+            rezultat.RemoveAll(x => x.IdTipaNaloga != 5);
+            return rezultat;
         }
-
     }
 }

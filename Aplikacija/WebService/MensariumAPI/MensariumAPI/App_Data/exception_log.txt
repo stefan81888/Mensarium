@@ -384,3 +384,5 @@ Object name: 'ISession'.
    at MensariumAPI.Podaci.ProvajderiPodataka.ProvajderPodatakaKorisnika.Pozovi(PozivanjaFullDto pfdto) in d:\GitProjects\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Podaci\ProvajderiPodataka\ProvajderPodatakaKorisnika.cs:line 331
    at MensariumAPI.Controllers.KorisniciController.Pozovi(PozivanjaFullDto pfdto, String sid) in d:\GitProjects\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 530
 >>>>>>> Stashed changes
+[6.6.2017 17:20:33]	System.NullReferenceException: Object reference not set to an instance of an object.
+   at MensariumAPI.Controllers.KorisniciController.VratiSveKorisnikeFull(String sid) in D:\fax\III  godina\VI semestar\Softversko\Projekat\Bitbucket\si17.mensarium\Aplikacija\WebService\MensariumAPI\MensariumAPI\Controllers\KorisniciController.cs:line 114
