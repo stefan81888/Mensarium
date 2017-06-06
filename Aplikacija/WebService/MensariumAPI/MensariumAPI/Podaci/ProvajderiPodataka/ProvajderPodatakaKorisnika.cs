@@ -368,12 +368,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             {
                 int idPoziva = v.IdPozivanjaPozvani.IdPoziva.IdPoziva;
                 Pozivanje p = s.Get<Pozivanje>(idPoziva);
+                /*
 
                 if (DateTime.Compare(p.DatumPoziva, DateTime.Today) < 0)
                     break;
 
                 if(DateTime.Compare(p.DatumPoziva, p.VaziDo) > 0)
                     break;
+                    */
 
                 Korisnik k = VratiKorisnika(p.Pozivaoc.IdKorisnika);
 
@@ -390,17 +392,22 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 sviPozivi.Add(pnfidto);
             }
 
+            sviPozivi.RemoveAll(x => x.DatumPoziva < DateTime.Today);
+            sviPozivi.RemoveAll(x => x.DatumPoziva > x.VaziDo);
             sviPozivi.Sort((x, y) => y.DatumPoziva.CompareTo(x.DatumPoziva));
 
             return sviPozivi;
         }
 
-        public static PozivanjaPozvaniDto OdogovoriNaPoziv(PozivanjaPozvaniDto ppdto)
+        public static PozivanjaPozvaniDto OdogovoriNaPoziv(PozivanjaPozvaniDto ppdto, string sid)
         {
             ISession s = SesijeProvajder.Sesija;
 
-            Korisnik k = VratiKorisnika(ppdto.IdPozvanog);
+            Korisnik k = VratiKorisnika(KorisnikIDizSesijaID(sid));
             if (k == null)
+                return null;
+
+            if (k.TipNaloga.IdTip != 5)
                 return null;
 
             Pozivanje p = s.Get<Pozivanje>(ppdto.IdPoziva);
@@ -933,7 +940,24 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
            s.Flush();
 
            return true;
+        }
 
+        //Korisnici koje admin sme da vidi - svi sem obrisanih
+        public static List<KorisnikFullDto> VratiKorisnikeAdmin()
+        {
+            return null;
+        }
+
+        //Korisnici koje student sme da vidi - aktivni studenti
+        public static List<KorisnikFullDto> VratiKorisnikeStudent()
+        {
+            return null;
+        }
+
+        //Korisnici koje menadzer, naplata i uplata smeju da vide - aktivni i neaktivni studenti
+        public static List<KorisnikFullDto> VratiKorisnikeOstali()
+        {
+            return null;
         }
 
     }

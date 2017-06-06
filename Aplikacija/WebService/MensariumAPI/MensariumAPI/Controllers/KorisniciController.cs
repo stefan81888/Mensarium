@@ -597,7 +597,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                         { Content = new StringContent("Nemate privilegiju") });
 
-                PozivanjaPozvaniDto odgovor = ProvajderPodatakaKorisnika.OdogovoriNaPoziv(poziv);
+                PozivanjaPozvaniDto odgovor = ProvajderPodatakaKorisnika.OdogovoriNaPoziv(poziv, sid);
 
                 if(odgovor == null)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
