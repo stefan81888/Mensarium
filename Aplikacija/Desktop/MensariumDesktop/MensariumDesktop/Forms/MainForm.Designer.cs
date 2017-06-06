@@ -32,6 +32,17 @@ namespace MensariumDesktop
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 15D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 23D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 75D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(3D, 53D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(4D, 63D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(5D, 25D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint7 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(6D, 3D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint8 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(7D, 17D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(8D, 53D);
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.STATUS_statbarUser = new System.Windows.Forms.ToolStripDropDownButton();
             this.STATUS_statbarUserProfile = new System.Windows.Forms.ToolStripMenuItem();
@@ -195,8 +206,6 @@ namespace MensariumDesktop
             this.button10 = new System.Windows.Forms.Button();
             this.label24 = new System.Windows.Forms.Label();
             this.button11 = new System.Windows.Forms.Button();
-            this.label25 = new System.Windows.Forms.Label();
-            this.button12 = new System.Windows.Forms.Button();
             this.label26 = new System.Windows.Forms.Label();
             this.button13 = new System.Windows.Forms.Button();
             this.labelTitle = new System.Windows.Forms.Label();
@@ -205,6 +214,11 @@ namespace MensariumDesktop
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bgWorkerLoading = new System.ComponentModel.BackgroundWorker();
             this.imageListOPStatus = new System.Windows.Forms.ImageList(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.statusStrip.SuspendLayout();
             this.tabControls.SuspendLayout();
             this.tabHome.SuspendLayout();
@@ -259,6 +273,7 @@ namespace MensariumDesktop
             this.flowLayoutPanel5.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -537,6 +552,10 @@ namespace MensariumDesktop
             this.imageListMainForm.Images.SetKeyName(27, "building.png");
             this.imageListMainForm.Images.SetKeyName(28, "shuffle-1.png");
             this.imageListMainForm.Images.SetKeyName(29, "play-button-1.png");
+            this.imageListMainForm.Images.SetKeyName(30, "browser-8.png");
+            this.imageListMainForm.Images.SetKeyName(31, "browser-10.png");
+            this.imageListMainForm.Images.SetKeyName(32, "garbage-1.png");
+            this.imageListMainForm.Images.SetKeyName(33, "server-15.png");
             // 
             // HOME_btnMensaChanger
             // 
@@ -2343,10 +2362,11 @@ namespace MensariumDesktop
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox13.Controls.Add(this.panel9);
+            this.groupBox13.Enabled = false;
             this.groupBox13.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold);
             this.groupBox13.Location = new System.Drawing.Point(241, 3);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(1098, 537);
+            this.groupBox13.Size = new System.Drawing.Size(1098, 531);
             this.groupBox13.TabIndex = 23;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Status servera";
@@ -2354,21 +2374,26 @@ namespace MensariumDesktop
             // panel9
             // 
             this.panel9.BackColor = System.Drawing.Color.Transparent;
+            this.panel9.Controls.Add(this.chart1);
+            this.panel9.Controls.Add(this.button4);
+            this.panel9.Controls.Add(this.button3);
+            this.panel9.Controls.Add(this.button2);
+            this.panel9.Controls.Add(this.button1);
             this.panel9.Controls.Add(this.label27);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(3, 35);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(1092, 499);
+            this.panel9.Size = new System.Drawing.Size(1092, 493);
             this.panel9.TabIndex = 7;
             // 
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(15, 15);
+            this.label27.Location = new System.Drawing.Point(13, 9);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(234, 32);
+            this.label27.Size = new System.Drawing.Size(219, 32);
             this.label27.TabIndex = 0;
-            this.label27.Text = "PRO VERSION ONLY";
+            this.label27.Text = "KUPI PRO VERZIJU";
             // 
             // groupBox12
             // 
@@ -2389,8 +2414,6 @@ namespace MensariumDesktop
             this.flowLayoutPanel5.Controls.Add(this.button10);
             this.flowLayoutPanel5.Controls.Add(this.label24);
             this.flowLayoutPanel5.Controls.Add(this.button11);
-            this.flowLayoutPanel5.Controls.Add(this.label25);
-            this.flowLayoutPanel5.Controls.Add(this.button12);
             this.flowLayoutPanel5.Controls.Add(this.label26);
             this.flowLayoutPanel5.Controls.Add(this.button13);
             this.flowLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2464,46 +2487,16 @@ namespace MensariumDesktop
             this.button11.UseVisualStyleBackColor = false;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
-            this.label25.Location = new System.Drawing.Point(3, 195);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(154, 25);
-            this.label25.TabIndex = 25;
-            this.label25.Text = "Objave korisnika";
-            // 
-            // button12
-            // 
-            this.button12.BackColor = System.Drawing.Color.White;
-            this.button12.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
-            this.button12.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.button12.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
-            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button12.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button12.ImageKey = "speech-bubble-12.png";
-            this.button12.ImageList = this.imageListMainForm;
-            this.button12.Location = new System.Drawing.Point(4, 225);
-            this.button12.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button12.Name = "button12";
-            this.button12.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.button12.Size = new System.Drawing.Size(219, 55);
-            this.button12.TabIndex = 19;
-            this.button12.Text = " Uređivanje";
-            this.button12.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button12.UseVisualStyleBackColor = false;
-            // 
             // label26
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
-            this.label26.Location = new System.Drawing.Point(3, 285);
+            this.label26.Location = new System.Drawing.Point(3, 195);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(142, 25);
             this.label26.TabIndex = 26;
             this.label26.Text = "Sesije korisnika";
+            this.label26.Visible = false;
             // 
             // button13
             // 
@@ -2516,7 +2509,7 @@ namespace MensariumDesktop
             this.button13.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button13.ImageKey = "shuffle-1.png";
             this.button13.ImageList = this.imageListMainForm;
-            this.button13.Location = new System.Drawing.Point(4, 315);
+            this.button13.Location = new System.Drawing.Point(4, 225);
             this.button13.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button13.Name = "button13";
             this.button13.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
@@ -2525,6 +2518,8 @@ namespace MensariumDesktop
             this.button13.Text = " Uređivanje";
             this.button13.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button13.UseVisualStyleBackColor = false;
+            this.button13.Visible = false;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // labelTitle
             // 
@@ -2584,6 +2579,118 @@ namespace MensariumDesktop
             this.imageListOPStatus.Images.SetKeyName(1, "success.png");
             this.imageListOPStatus.Images.SetKeyName(2, "working.png");
             this.imageListOPStatus.Images.SetKeyName(3, "internet.png");
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.ImageKey = "server-15.png";
+            this.button1.ImageList = this.imageListMainForm;
+            this.button1.Location = new System.Drawing.Point(19, 59);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button1.Name = "button1";
+            this.button1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.button1.Size = new System.Drawing.Size(219, 55);
+            this.button1.TabIndex = 16;
+            this.button1.Text = " Restartuj";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
+            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.ImageKey = "browser-8.png";
+            this.button2.ImageList = this.imageListMainForm;
+            this.button2.Location = new System.Drawing.Point(19, 124);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button2.Name = "button2";
+            this.button2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.button2.Size = new System.Drawing.Size(219, 55);
+            this.button2.TabIndex = 17;
+            this.button2.Text = "Upotreba RAM-a";
+            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.White;
+            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
+            this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button3.ImageKey = "browser-10.png";
+            this.button3.ImageList = this.imageListMainForm;
+            this.button3.Location = new System.Drawing.Point(19, 189);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button3.Name = "button3";
+            this.button3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.button3.Size = new System.Drawing.Size(219, 55);
+            this.button3.TabIndex = 18;
+            this.button3.Text = "Hard Disk";
+            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.White;
+            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(108)))), ((int)(((byte)(98)))));
+            this.button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(166)))), ((int)(((byte)(156)))));
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button4.ImageKey = "garbage-1.png";
+            this.button4.ImageList = this.imageListMainForm;
+            this.button4.Location = new System.Drawing.Point(19, 254);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button4.Name = "button4";
+            this.button4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.button4.Size = new System.Drawing.Size(219, 55);
+            this.button4.TabIndex = 19;
+            this.button4.Text = "Očisti cache";
+            this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button4.UseVisualStyleBackColor = false;
+            // 
+            // chart1
+            // 
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.Enabled = false;
+            this.chart1.Location = new System.Drawing.Point(245, 59);
+            this.chart1.Name = "chart1";
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series1.Name = "Series1";
+            series1.Points.Add(dataPoint1);
+            series1.Points.Add(dataPoint2);
+            series1.Points.Add(dataPoint3);
+            series1.Points.Add(dataPoint4);
+            series1.Points.Add(dataPoint5);
+            series1.Points.Add(dataPoint6);
+            series1.Points.Add(dataPoint7);
+            series1.Points.Add(dataPoint8);
+            series1.Points.Add(dataPoint9);
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(844, 431);
+            this.chart1.TabIndex = 20;
+            this.chart1.Text = "chart1";
             // 
             // MainForm
             // 
@@ -2673,6 +2780,7 @@ namespace MensariumDesktop
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2809,8 +2917,6 @@ namespace MensariumDesktop
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.GroupBox groupBox13;
@@ -2853,6 +2959,11 @@ namespace MensariumDesktop
         private System.Windows.Forms.Label UPLATA_lblDinnerPrice;
         private System.Windows.Forms.Label UPLATA_lblTotalPrice;
         private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }
 

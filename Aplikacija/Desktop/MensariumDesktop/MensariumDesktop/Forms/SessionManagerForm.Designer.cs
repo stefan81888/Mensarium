@@ -31,8 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SessionManagerForm));
             this.btnDelete = new System.Windows.Forms.Button();
+            this.imageListButtonIconsReclamation = new System.Windows.Forms.ImageList(this.components);
             this.btnFinish = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.dgvMensaList = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TipObroka = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,10 +47,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.imageListButtonIconsReclamation = new System.Windows.Forms.ImageList(this.components);
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMensaList)).BeginInit();
             this.panel1.SuspendLayout();
@@ -68,6 +68,17 @@
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // imageListButtonIconsReclamation
+            // 
+            this.imageListButtonIconsReclamation.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListButtonIconsReclamation.ImageStream")));
+            this.imageListButtonIconsReclamation.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListButtonIconsReclamation.Images.SetKeyName(0, "save.png");
+            this.imageListButtonIconsReclamation.Images.SetKeyName(1, "error.png");
+            this.imageListButtonIconsReclamation.Images.SetKeyName(2, "success.png");
+            this.imageListButtonIconsReclamation.Images.SetKeyName(3, "garbage-2.png");
+            this.imageListButtonIconsReclamation.Images.SetKeyName(4, "plus.png");
+            this.imageListButtonIconsReclamation.Images.SetKeyName(5, "edit.png");
             // 
             // btnFinish
             // 
@@ -102,7 +113,43 @@
             this.groupBox1.Size = new System.Drawing.Size(597, 372);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = " Lista menza";
+            this.groupBox1.Text = "Lista sesija";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(72, 23);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(376, 22);
+            this.textBox1.TabIndex = 30;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "ID",
+            "Ime i prezime",
+            "Korisnicko ime",
+            "Email",
+            "Broj telefona",
+            "Fakultet"});
+            this.comboBox1.Location = new System.Drawing.Point(454, 22);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(135, 25);
+            this.comboBox1.TabIndex = 29;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(6, 26);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(60, 16);
+            this.label22.TabIndex = 28;
+            this.label22.Text = "Pretraga";
             // 
             // dgvMensaList
             // 
@@ -193,11 +240,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Humnst777 Blk BT", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(68, 14);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(183, 36);
+            this.label2.Size = new System.Drawing.Size(160, 33);
             this.label2.TabIndex = 3;
             this.label2.Text = "Mensarium";
             // 
@@ -210,53 +257,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
-            // 
-            // imageListButtonIconsReclamation
-            // 
-            this.imageListButtonIconsReclamation.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListButtonIconsReclamation.ImageStream")));
-            this.imageListButtonIconsReclamation.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListButtonIconsReclamation.Images.SetKeyName(0, "save.png");
-            this.imageListButtonIconsReclamation.Images.SetKeyName(1, "error.png");
-            this.imageListButtonIconsReclamation.Images.SetKeyName(2, "success.png");
-            this.imageListButtonIconsReclamation.Images.SetKeyName(3, "garbage-2.png");
-            this.imageListButtonIconsReclamation.Images.SetKeyName(4, "plus.png");
-            this.imageListButtonIconsReclamation.Images.SetKeyName(5, "edit.png");
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(72, 23);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(376, 22);
-            this.textBox1.TabIndex = 30;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "ID",
-            "Ime i prezime",
-            "Korisnicko ime",
-            "Email",
-            "Broj telefona",
-            "Fakultet"});
-            this.comboBox1.Location = new System.Drawing.Point(454, 22);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(135, 25);
-            this.comboBox1.TabIndex = 29;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(6, 26);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(60, 16);
-            this.label22.TabIndex = 28;
-            this.label22.Text = "Pretraga";
             // 
             // SessionManagerForm
             // 
