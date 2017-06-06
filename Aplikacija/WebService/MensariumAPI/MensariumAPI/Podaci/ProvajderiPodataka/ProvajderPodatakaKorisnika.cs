@@ -437,7 +437,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (praceni == null)
                 return false;
 
-            if (praceni.PracenOd.Contains(pratilac))
+            if (!praceni.PracenOd.Contains(pratilac))
                 return false;
 
             praceni.PracenOd.Remove(pratilac);
