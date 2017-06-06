@@ -14,15 +14,15 @@ using Android.Widget;
 using Mensarium.Resources.adapters;
 using MensariumDesktop.Model.Components.DTOs;
 
-namespace Mensarium
+namespace Mensarium.Resources.activities
 {
-    [Activity(Label = "Pozovi prijatelja", Theme = "@style/Theme.AppCompat")]
-    public class PozoviPrijateljaActivity : ActionBarActivity
+    [Activity(Label = "Moji prijatelji", Theme = "@style/Theme.AppCompat")]
+    public class MojiPrijateljiActivity : ActionBarActivity
     {
         private List<KorisnikFollowDto> listaPrijatelja;
         private Android.Support.V7.Widget.SearchView _searchView;
         private ListView _listView;
-        private PozoviPrijateljaAdapter adapter;
+        private MojiPrijateljiAdapter adapter;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -31,21 +31,21 @@ namespace Mensarium
             SetContentView(Resource.Layout.PozoviPrijatelja);
 
             SupportActionBar.SetDisplayShowHomeEnabled(true);
-            
+
             try
             {
                 List<KorisnikFollowDto> listaPrijatelja = Api.Api.UsersThatFollows();
                 //FindViewById<ListView>(Resource.Id.listaPrijatelja).Adapter = new PozoviPrijateljaAdapter(this, listaPrijatelja);
 
                 _listView = FindViewById<ListView>(Resource.Id.listaPrijatelja);
-                adapter = new PozoviPrijateljaAdapter(this, listaPrijatelja);
+                adapter = new MojiPrijateljiAdapter(this, listaPrijatelja);
                 _listView.Adapter = adapter;
             }
             catch (Exception ex)
             {
                 Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
             }
-            
+
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

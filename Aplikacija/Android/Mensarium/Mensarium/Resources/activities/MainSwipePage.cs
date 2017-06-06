@@ -15,8 +15,15 @@ using Android.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Xamarin.Forms;
 using Android.Support.V7.App;
+using Android.Support.V7.View.Menu;
 using Mensarium.Components;
+using Mensarium.Resources.activities;
+using Mensarium.Resources.adapters;
 using MensariumDesktop.Model.Components.DTOs;
+using Animation = Android.Views.Animations.Animation;
+using SearchView = Android.Support.V7.Widget.SearchView;
+using View = Android.Views.View;
+using System.Threading;
 
 namespace Mensarium
 {
@@ -24,6 +31,14 @@ namespace Mensarium
     [Activity(Theme = "@style/Theme.MyTheme", Label = "Mensarium")]
     class MainSwipePage : ActionBarActivity
     {
+        private TabLayout tabLayout;
+        private ViewPager viewPager;
+        private List<KorisnikFollowDto> listaPretrage = new List<KorisnikFollowDto>();
+        private Android.Widget.ListView listView;
+        private LinearLayout layoutPretrage;
+        private Android.App.AlertDialog alert;
+        private Android.App.AlertDialog alertGreska;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -56,21 +71,93 @@ namespace Mensarium
                     "Pozivanja",
                 });
 
-            var viewPager = FindViewById<Android.Support.V4.View.ViewPager>(Resource.Id.viewPager);
-
+            viewPager = FindViewById<Android.Support.V4.View.ViewPager>(Resource.Id.viewPager);
             viewPager.Adapter = new MainSwipePageAdapter(base.SupportFragmentManager, fragments, titles);
 
-            TabLayout tabLayout = FindViewById<TabLayout>(Resource.Id.sliding_tabs);
+            tabLayout = FindViewById<TabLayout>(Resource.Id.sliding_tabs);
             tabLayout.SetupWithViewPager(viewPager);
+
+            layoutPretrage = FindViewById<LinearLayout>(Resource.Id.LayoutZaListuPretrage);
+            listView = FindViewById<Android.Widget.ListView>(Resource.Id.listaPretrage);
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.bottom_menu, menu);
 
-            
+            var searchItem = menu.FindItem(Resource.Id.search);
+
+            var searchView = MenuItemCompat.GetActionView(searchItem);
+            var _searchView = searchView.JavaCast<Android.Support.V7.Widget.SearchView>();
+
+            _searchView.QueryTextChange += (s, e) =>
+            {
+                if (e.NewText.Equals(String.Empty))
+                {
+                    tabLayout.Visibility = ViewStates.Visible;
+                    viewPager.Visibility = ViewStates.Visible;
+                    listView.Adapter = null;
+                    layoutPretrage.Visibility = ViewStates.Gone;
+                }
+                else
+                {
+                    tabLayout.Visibility = ViewStates.Gone;
+                    viewPager.Visibility = ViewStates.Gone;
+                    layoutPretrage.Visibility = ViewStates.Visible;
+                }
+            };
+
+            _searchView.QueryTextSubmit += (s, e) =>
+            {
+                _searchView.ClearFocus();
+
+                alert = new Android.App.AlertDialog.Builder(this).Create();
+                alert.SetTitle("Vrsi se pretraga!");
+                alert.SetMessage("Molimo sacekajte!");
+                alert.SetCancelable(false);
+
+                alert.Show();
+
+                alertGreska = new Android.App.AlertDialog.Builder(this).Create();
+                alertGreska.SetTitle("Pretraga neuspesna!");
+                alertGreska.SetMessage("Nije pronadjeno nijedno poklapanje sa: " + e.Query);
+                alertGreska.SetButton("U redu", delegate (object sender, DialogClickEventArgs args) { alert.Dismiss(); });
+
+                Thread novaNit = new Thread(() => FuncijaZaNoviNit(e.Query));
+                novaNit.Start();
+
+                e.Handled = true;
+            };
 
             return true;
+        }
+
+        private void FuncijaZaNoviNit(string s)
+        {
+            PretragaKriterijumDto pretraga = new PretragaKriterijumDto();
+            pretraga.IdKorisnika = MSettings.CurrentSession.LoggedUser.UserID;
+            pretraga.Kriterijum = s;
+
+            try
+            {
+                this.listaPretrage = Api.Api.SearchUsers(pretraga);
+
+                layoutPretrage.Visibility = ViewStates.Visible;
+
+                RunOnUiThread(() => listView.Adapter = new PretragaListAdapter(this, listaPretrage));
+                alert.Dismiss();
+            }
+            catch (Exception ex)
+            {
+                RunOnUiThread(() => alert.Dismiss());
+
+                RunOnUiThread(() => alertGreska.Show());
+            }
+        }
+
+        private void ActionView_FocusChange(object sender, View.FocusChangeEventArgs e)
+        {
+            Toast.MakeText(this, "rad", ToastLength.Short).Show();
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -99,7 +186,6 @@ namespace Mensarium
 
                 //search
                 case Resource.Id.search:
-                    Toast.MakeText(this, "Search", ToastLength.Short).Show();
                     return true;
 
                     //odjava
@@ -110,6 +196,12 @@ namespace Mensarium
                     StartActivity(intent);
                     this.Finish();
                     return true;
+
+                case Resource.Id.prijatelji:
+                    var intent2 = new Intent(this, typeof(MojiPrijateljiActivity));
+                    StartActivity(intent2);
+                    return true;
+
                 default:
                     return base.OnOptionsItemSelected(item);
             }

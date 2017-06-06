@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#243236"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#395056"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="20dp"
+        android:layout_marginBottom="10dp">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp">
+                <TextView
+                    android:id="@+id/FeedIme"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="19dp"
+                    android:textStyle="bold"
+                    android:text="Ime Prezime"
+                    android:textColor="#c5c9cc" />
+                <TextView
+                    android:id="@+id/FeedVreme"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#a0a3a7"
+                    android:textSize="15dp"
+                    android:text="Vreme" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/FeedStatus"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="15dp"
+            android:paddingTop="20dp"
+            android:text="STATUS"
+            android:textSize="18dp"
+            android:textColor="#c5c9cc" />
+    </LinearLayout>
+</LinearLayout>

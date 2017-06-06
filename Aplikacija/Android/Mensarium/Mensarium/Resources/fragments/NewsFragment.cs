@@ -29,23 +29,40 @@ namespace Mensarium
             //lista.Add(new FeedItem() { feedIme = "Nikola Savic", feedVreme = "18h", status = "Pomfrit sada. Brzo!"});
             //lista.Add(new FeedItem() { feedIme = "Petar Peric", feedVreme = "14h", status = "Pasulj njah!"});
 
-            lista = Api.Api.GetFollowedUsersPosts(MSettings.CurrentSession.LoggedUser.UserID);
+            try
+            {
+                lista = Api.Api.GetFollowedUsersPosts(MSettings.CurrentSession.LoggedUser.UserID);
 
-            listView = view.FindViewById<ListView>(Resource.Id.FeedListView);
-            listView.Adapter = new FeedListAdapter(this, lista);
+                listView = view.FindViewById<ListView>(Resource.Id.FeedListView);
+                listView.Adapter = new FeedListAdapter(this, lista);
 
-            swipe = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swipeContainer);
-            swipe.Refresh += Swipe_Refresh;
-            return view;
+                swipe = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swipeContainer);
+                swipe.Refresh += Swipe_Refresh;
+                return view;
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this.Context, ex.Message, ToastLength.Long).Show();
+                return view;
+            }
         }
 
         private void Swipe_Refresh(object sender, EventArgs e)
         {
-            lista = Api.Api.GetFollowedUsersPosts(MSettings.CurrentSession.LoggedUser.UserID);
+            try
+            {
+                lista = Api.Api.GetFollowedUsersPosts(MSettings.CurrentSession.LoggedUser.UserID);
 
-            listView.Adapter = new FeedListAdapter(this, lista);
+                listView.Adapter = new FeedListAdapter(this, lista);
 
-            swipe.Refreshing = false;
+                swipe.Refreshing = false;
+            }
+            catch (Exception ex)
+            {
+                swipe.Refreshing = false;
+
+                Toast.MakeText(this.Context, ex.Message, ToastLength.Long).Show();
+            }
         }
     }
 }
