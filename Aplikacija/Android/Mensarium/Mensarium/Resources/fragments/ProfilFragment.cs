@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -16,6 +17,7 @@ using Mensarium.Components;
 using Mensarium.Resources.activities;
 using MensariumDesktop.Model.Components.DTOs;
 using Android.Support.V4.Widget;
+using DE.Hdodenhof.Circleimageview;
 
 namespace Mensarium
 {
@@ -53,8 +55,25 @@ namespace Mensarium
 
                 swipe = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swipeProfilPage);
                 swipe.Refresh += Swipe_Refresh;
+
+                SetujSliku();
             }
             return view;
+        }
+
+        private void SetujSliku()
+        {
+            try
+            {
+                var slika = view.FindViewById<CircleImageView>(Resource.Id.profilSlika);
+
+                var bitmap = Api.Api.GetCurrentUserImage();
+                slika.SetImageBitmap(bitmap);
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this.Activity, ex.Message, ToastLength.Long).Show();
+            }
         }
 
         private void Swipe_Refresh(object sender, EventArgs e)

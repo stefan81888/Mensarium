@@ -12,6 +12,7 @@ using Android.Widget;
 using Mensarium.Comp;
 using MensariumDesktop.Model.Components.DTOs;
 using System.Threading;
+using DE.Hdodenhof.Circleimageview;
 
 namespace Mensarium.Resources.adapters
 {
@@ -44,17 +45,39 @@ namespace Mensarium.Resources.adapters
             View view = convertView;
 
             if (view == null)
+            {
                 view = Context.LayoutInflater.Inflate(Resource.Layout.pozoviItem, parent, false);
+
+                var PIme = view.FindViewById<TextView>(Resource.Id.profilPrijateljaItemIme);
+                var PUsername = view.FindViewById<TextView>(Resource.Id.profilPrijateljaItemFax);
+                var PFax = view.FindViewById<TextView>(Resource.Id.profilPrijateljaItemFax);
+                var PButton = view.FindViewById<Button>(Resource.Id.pozoviPrijateljaItemDugme);
+                var PSlika = view.FindViewById<CircleImageView>(Resource.Id.profilPrijateljaItemSlika);
+
+                var vh = new ViewHolderMojiPrijatelji()
+                {
+                    Dugme = PButton,
+                    PrijateljUsername = PUsername,
+                    PrijateljIme = PIme,
+                    PrijateljFax = PFax,
+                    PrijateljSlika = PSlika
+                };
+
+                view.Tag = vh;
+            }
+
+            var holder = (ViewHolderMojiPrijatelji) view.Tag;
 
             korisnik = this[position];
 
-            view.FindViewById<TextView>(Resource.Id.profilPrijateljaItemIme).Text = korisnik.Ime + " " +
-                                                                                    korisnik.Prezime;
+            holder.PrijateljIme.Text = korisnik.Ime + " " + korisnik.Prezime;
+            holder.PrijateljUsername.Text = "@" + korisnik.KorisnickoIme;
+            holder.PrijateljFax.Text = korisnik.Fakultet;
 
-            view.FindViewById<TextView>(Resource.Id.profilPrijateljaItemUsername).Text = "@" + korisnik.KorisnickoIme;
-            view.FindViewById<TextView>(Resource.Id.profilPrijateljaItemFax).Text = korisnik.Fakultet;
+            var slika = holder.PrijateljSlika;
+            slika.SetImageBitmap(ImageManager.Get(this.Context, korisnik.IdKorisnika));
 
-            Button dugmePozovi = view.FindViewById<Button>(Resource.Id.pozoviPrijateljaItemDugme);
+            Button dugmePozovi = holder.Dugme;
             dugmePozovi.Text = "Otprati";
             dugmePozovi.Tag = korisnik.IdKorisnika + " " + korisnik.Ime + " " + korisnik.Prezime;
             dugmePozovi.SetOnClickListener(new ButtonOtpratiClickListener(this.Context));

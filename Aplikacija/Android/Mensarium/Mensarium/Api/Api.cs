@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Drawing;
 using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -13,6 +16,7 @@ using Android.Widget;
 using Mensarium.Components;
 using MensariumDesktop.Model.Components.DTOs;
 using RestSharp;
+using Xamarin.Forms;
 
 namespace Mensarium.Api
 {
@@ -26,7 +30,7 @@ namespace Mensarium.Api
             public T ResponseObject { get; set; }
         }
         //static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        private static string BaseUrl = "http://9f08aef9.ngrok.io/api/";
+        private static string BaseUrl = "http://daea6d00.ngrok.io/api/";
 
         private static ApiResponse<byte[]> DownloadData(RestRequest request, bool includeSid = true)
         {
@@ -368,7 +372,7 @@ namespace Mensarium.Api
                     + response.HttpStatusCode);
 
         }
-        /*
+        
         public static void SetUserImage(int userId, FileInfo image)
         {
             SetUserImage(userId, image.FullName);
@@ -385,7 +389,7 @@ namespace Mensarium.Api
                 throw new Exception("SetUserImage Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
                     + response.HttpStatusCode);
         }
-        public static Image GetCurrentUserImage()
+        public static Bitmap GetCurrentUserImage()
         {
             RestRequest request = new RestRequest(Method.GET);
             request.Resource = "korisnici/slika";
@@ -395,11 +399,15 @@ namespace Mensarium.Api
                 throw new Exception("GetUserImage Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
                     + response.HttpStatusCode);
             byte[] imgBytes = response.ResponseObject;
-            MemoryStream ms = new MemoryStream(imgBytes);
-            Image im = Image.FromStream(ms);
-            return im;
+
+            //Image im = new Image();
+            //im.Source = ImageSource.FromStream(ms);
+            //im.Source = ImageSource.FromStream(() => new MemoryStream(imgBytes));
+            //return im;
+            Bitmap bmp = BitmapFactory.DecodeByteArray(imgBytes, 0, imgBytes.Length);
+            return bmp;
         }
-        public static Image GetUserImage(int userId)
+        public static Bitmap GetUserImage(int userId)
         {
             RestRequest request = new RestRequest(Method.GET);
             request.Resource = "korisnici/slika";
@@ -411,11 +419,15 @@ namespace Mensarium.Api
                     + response.HttpStatusCode);
 
             byte[] imgBytes = response.ResponseObject;
-            MemoryStream ms = new MemoryStream(imgBytes);
-            Image im = Image.FromStream(ms);
-            return im;
+
+            //radi
+            //Image im = new Image();
+            //im.Source = ImageSource.FromStream(() => new MemoryStream(imgBytes));
+            //return im;
+            Bitmap bmp = BitmapFactory.DecodeByteArray(imgBytes, 0, imgBytes.Length);
+            return bmp;
         }
-        */
+        
         #endregion
 
         #region FAKULTETI
