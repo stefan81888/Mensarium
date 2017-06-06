@@ -150,8 +150,12 @@ namespace MensariumDesktop.Model.Controllers
         }
         public static void AddUserMeal(Student s, MealType type, int count)
         {
-            if (count <= 0)
+            if (count < 0)
+            {
+                MUtility.ShowWarrning("Broj obroka je negativan broj!");
                 return;
+            }
+            if (count == 0) return;
 
             ObrokUplataDto o = new ObrokUplataDto()
             {
@@ -251,8 +255,64 @@ namespace MensariumDesktop.Model.Controllers
             }
 
         }
-        
 
+        public static bool UpdateFaculty(Faculty f)
+        {
+            try
+            {
+                FakultetFullDto fdto = new FakultetFullDto();
+                fdto.IdFakultet = f.FacultyID;
+                fdto.Naziv = f.Name;
+
+                Api.UpdateFaculty(fdto);
+                Faculty.UpdateFacultyList();
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+        }
+
+        public static bool AddFaculty(Faculty f)
+        {
+            try
+            {
+                if (Faculty.Faculties.Exists(x => x.Name == f.Name))
+                {
+                    MUtility.ShowError("Fakultet sa tim nazivom vec postoji");
+                    return false;
+                }
+
+                FakultetFullDto fdto = new FakultetFullDto();
+                fdto.Naziv = f.Name;
+
+
+                Api.AddNewFaculty(fdto);
+                Faculty.UpdateFacultyList();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MUtility.ShowException(ex);
+                return false;
+            }
+        }
+        public static bool DeleteFaculty(Faculty f)
+        {
+            try
+            {
+                Api.DeleteFaculty(f.FacultyID);
+                Faculty.UpdateFacultyList();
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+        }
 
         public static void ShowError(string Message) {
             MessageBox.Show(Message, "Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
