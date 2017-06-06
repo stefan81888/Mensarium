@@ -15,7 +15,7 @@ namespace MensariumDesktop.Forms
 {
     public partial class ReclamationForm : Form
     {
-        private Student student;
+        private User student;
         private List<MealReclamation> list;
         private Mode mode;
         public enum Mode
@@ -23,7 +23,7 @@ namespace MensariumDesktop.Forms
             PogresnaUplata,
             PogresnaNaplata
         }
-        public ReclamationForm(Student s, Mode m)
+        public ReclamationForm(User s, Mode m)
         {
             InitializeComponent();
             student = s;

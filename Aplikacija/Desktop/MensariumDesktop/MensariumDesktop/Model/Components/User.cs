@@ -11,6 +11,7 @@ namespace MensariumDesktop.Model.Components
     
     public class User
     {
+        public static List<User> AllUsers;
         //TO-DO Dinamicki preuzmi iz baze podataka
         public enum UserAccountType
         {
@@ -66,6 +67,13 @@ namespace MensariumDesktop.Model.Components
         public Image ProfilePicture { get; set; }
         public bool ActiveAccount { get; set; }
 
+        //Student
+        public string Index { get; set; }
+        public DateTime ValidUntil { get; set; }
+        public Faculty Faculty { get; set; }
+        public int BreakfastCount { get; set; }
+        public int LunchCount { get; set; }
+        public int DinnerCount { get; set; }
         public string FullName { get { return FirstName + " " + LastName; } }
         public User()
         {

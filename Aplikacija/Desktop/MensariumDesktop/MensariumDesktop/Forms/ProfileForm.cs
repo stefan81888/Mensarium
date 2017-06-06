@@ -20,6 +20,15 @@ namespace MensariumDesktop.Forms
         {
             InitializeComponent();
             user = u;
+
+            try
+            {
+                if (user.ProfilePicture == null)
+                    user.ProfilePicture = Api.GetUserImage(user.UserID);
+            }
+            catch(Exception e)
+            { }
+
             RefreshData();
         }
 
@@ -30,7 +39,7 @@ namespace MensariumDesktop.Forms
 
         private void RefreshData()
         {
-            picUserImage.Image = user.ProfilePicture;
+            if (user.ProfilePicture != null) picUserImage.Image = user.ProfilePicture;
             txtID.Text = user.UserID.ToString();
             txtUsername.Text = user.Username;
             txtEmail.Text = user.Email;
@@ -41,12 +50,12 @@ namespace MensariumDesktop.Forms
             txtRegistrationDate.Text = user.RegistrationDate.ToShortDateString();
             txtAccType.Text = user.AccountType.ToString();
             txtAccActive.Text = user.ActiveAccount ? "Aktivan" : "Neaktivan";
-            if (user is Student)
+            if (user.AccountType == User.UserAccountType.Student)
             {
-                Student s = user as Student;
-                txtFaculty.Text = s.Faculty.Name;
-                txtIndex.Text = s.Index;
-                txtCardValid.Text = s.ValidUntil.ToShortDateString();
+                
+                txtFaculty.Text = user.Faculty.Name;
+                txtIndex.Text = user.Index;
+                txtCardValid.Text = user.ValidUntil.ToShortDateString();
             }
         }
         

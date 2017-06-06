@@ -281,7 +281,7 @@ namespace MensariumDesktop
         }
         private void UPLATA_btnReclamation_Click(object sender, EventArgs e)
         {
-            Student s = MainController.LoadedCardUser;
+            User s = MainController.LoadedCardUser;
             if (s == null)
             {
                 MUtility.ShowWarrning("Prvo ucitati korisnika");
@@ -377,7 +377,7 @@ namespace MensariumDesktop
         }
         private void NAPLATA_btnReclamation_Click(object sender, EventArgs e)
         {
-            Student s = MainController.LoadedCardUser;
+            User s = MainController.LoadedCardUser;
             if (s == null)
             {
                 MUtility.ShowWarrning("Prvo ucitati korisnika");
@@ -466,6 +466,11 @@ namespace MensariumDesktop
         private void button13_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void KORSN_btnRefreshList_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

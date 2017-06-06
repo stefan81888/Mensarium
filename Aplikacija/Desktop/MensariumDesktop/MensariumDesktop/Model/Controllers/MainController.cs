@@ -14,7 +14,8 @@ namespace MensariumDesktop.Model.Controllers
 {
     public static class MainController
     {
-        public static Student LoadedCardUser;
+        public static User LoadedCardUser;
+
 
         public static void InitApplication()
         {
@@ -105,34 +106,7 @@ namespace MensariumDesktop.Model.Controllers
             }
         }
 
-        internal static bool AddMensa(Mensa m)
-        {
-            try
-            {
-                if (Mensa.Mensas.Exists(x => x.Name == m.Name))
-                {
-                    MUtility.ShowError("Menza sa tim nazivom vec postoji");
-                    return false;
-                }
 
-                MenzaFullDto mdto = new MenzaFullDto();
-                mdto.Naziv = m.Name;
-                mdto.Lokacija = m.Location;
-                mdto.GpsLat = m.GPSLat;
-                mdto.GpsLong = m.GPSLong;
-                mdto.RadnoVreme = m.WorkTime;
-                mdto.VanrednoNeRadi = m.CurrentlyClosed;
-
-                Api.AddNewMensa(mdto);
-                Mensa.UpdateMensaList();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MUtility.ShowException(ex);
-                return false;
-            }
-        }
 
         public static bool ChangeServerPort(string newPort)
         {
@@ -167,7 +141,7 @@ namespace MensariumDesktop.Model.Controllers
                 KorisnikFullDto korisnik = Api.GetUserFullInfo(cardId);
                 if (korisnik.IdTipaNaloga != (int)User.UserAccountType.Student)
                     throw new Exception("Nalog nije studentski");
-                LoadedCardUser = MUtility.GenerateUserFromDTO(korisnik) as Student;
+                LoadedCardUser = MUtility.GenerateUserFromDTO(korisnik);
                 KorisnikStanjeDto stanje = Api.UserMealsCount(LoadedCardUser.UserID);
                 LoadedCardUser.BreakfastCount =  stanje.BrojDorucka;
                 LoadedCardUser.LunchCount =  stanje.BrojRuckova;
@@ -178,7 +152,7 @@ namespace MensariumDesktop.Model.Controllers
                 MUtility.ShowException(ex);
             }
         }
-        public static void AddUserMeal(Student s, MealType type, int count)
+        public static void AddUserMeal(User s, MealType type, int count)
         {
             if (count < 0)
             {
@@ -186,7 +160,11 @@ namespace MensariumDesktop.Model.Controllers
                 return;
             }
             if (count == 0) return;
-
+            if (s.AccountType != User.UserAccountType.Student)
+            {
+                MUtility.ShowWarrning("Nalog nije studentski");
+                return;
+            }
             ObrokUplataDto o = new ObrokUplataDto()
             {
                 BrojObroka = count,
@@ -203,14 +181,19 @@ namespace MensariumDesktop.Model.Controllers
                 MUtility.ShowException(e);
             }
         }
-        public static void AddUserMeals(Student s, int breakfast, int lunch, int dinner)
+        public static void AddUserMeals(User s, int breakfast, int lunch, int dinner)
         {
+            if (s.AccountType != User.UserAccountType.Student)
+            {
+                MUtility.ShowWarrning("Nalog nije studentski");
+                return;
+            }
+
             AddUserMeal(s, MealType.Dorucak, breakfast);
             AddUserMeal(s, MealType.Rucak, lunch);
             AddUserMeal(s, MealType.Vecera, dinner);
         }
-
-        public static List<MealReclamation> GetReclamationMeals(Student s, ReclamationForm.Mode m)
+        public static List<MealReclamation> GetReclamationMeals(User s, ReclamationForm.Mode m)
         {
             try
             {
@@ -263,7 +246,6 @@ namespace MensariumDesktop.Model.Controllers
                 return false;
             }
         }
-
         public static bool UseMeal(MealType type)
         {
             try
@@ -304,7 +286,6 @@ namespace MensariumDesktop.Model.Controllers
                 return false;
             }
         }
-
         public static bool AddFaculty(Faculty f)
         {
             try
@@ -357,6 +338,34 @@ namespace MensariumDesktop.Model.Controllers
             MessageBox.Show(message, "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        public static bool AddMensa(Mensa m)
+        {
+            try
+            {
+                if (Mensa.Mensas.Exists(x => x.Name == m.Name))
+                {
+                    MUtility.ShowError("Menza sa tim nazivom vec postoji");
+                    return false;
+                }
+
+                MenzaFullDto mdto = new MenzaFullDto();
+                mdto.Naziv = m.Name;
+                mdto.Lokacija = m.Location;
+                mdto.GpsLat = m.GPSLat;
+                mdto.GpsLong = m.GPSLong;
+                mdto.RadnoVreme = m.WorkTime;
+                mdto.VanrednoNeRadi = m.CurrentlyClosed;
+
+                Api.AddNewMensa(mdto);
+                Mensa.UpdateMensaList();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MUtility.ShowException(ex);
+                return false;
+            }
+        }
         public static bool UpdateMensa(Mensa m)
         {
             try
@@ -381,7 +390,6 @@ namespace MensariumDesktop.Model.Controllers
             }
 
         }
-
         public static bool DeleteMensa(Mensa m)
         {
             try
@@ -396,5 +404,15 @@ namespace MensariumDesktop.Model.Controllers
                 return false;
             }
         }
+
+        //public static bool UpdateAllUsersList()
+        //{
+        //    try
+        //    {
+        //        List<KorisnikFullDto> uf = Api.GetUsersFullInfo();
+        //        User.AllUsers = MUtility.Student_FromKorisnikFullDto()
+                
+        //    }
+        //}
     }
 }
