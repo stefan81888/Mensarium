@@ -956,8 +956,6 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.ZatvoriSesiju();
             }
         }
-
-
         
         //Kreiraje poziva, ne poziva nikoga
         [HttpPost]
@@ -988,7 +986,6 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.ZatvoriSesiju();
             }
         }
-
 
         //Aktivacija naloga
         [HttpGet]
@@ -1021,7 +1018,7 @@ namespace MensariumAPI.Controllers
             }
         }
 
-        //Poyivanje jednog korisnika
+        //Pozivanje jednog korisnika
         [HttpPut]
         [Route("pozovi/jednog")]
         public IHttpActionResult PozoviJednog([FromUri] int idPoziva, [FromUri]int idPozvanog)
@@ -1037,6 +1034,66 @@ namespace MensariumAPI.Controllers
 
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Pozivanje neuspesno") });
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Obavesti pozivaoca o odgovorima na poziv
+        [HttpGet]
+        [Route("pozivi/obavesti")]
+        public List<OgovorNaPozivDto> ObavestiOOdgovorima([FromUri] int idPoziva, [FromUri] string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                List<OgovorNaPozivDto> s = ProvajderPodatakaKorisnika.ObavestiOOdgovorima(idPoziva, sid);
+
+                if (s == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Neuspesan zahtev") });
+                return s;
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Poziv na osnovu id-a
+        [HttpGet]
+        [Route("poziv")]
+        public PozivanjaFullDto Poziv([FromUri] int idPoziva, [FromUri] string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                PozivanjaFullDto s = ProvajderPodatakaKorisnika.Poziv(idPoziva, sid);
+
+                if (s == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Neuspesan zahtev") });
+                return s;
 
             }
             catch (Exception e)
