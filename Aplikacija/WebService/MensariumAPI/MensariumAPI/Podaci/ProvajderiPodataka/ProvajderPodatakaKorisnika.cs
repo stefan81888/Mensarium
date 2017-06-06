@@ -168,7 +168,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             s.Flush();
 
-
             return true;
         }
 
@@ -661,10 +660,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             LoginSesija ses = lista.Find(x => x.IdSesije == sid);
 
-            //LoginSesija ses = s.Query<LoginSesija>()
-            //    .Where(x => x.IdSesije == sid)
-            //    .FirstOrDefault();
-
             if (ses == null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                 { Content = new StringContent("Nevalidna sesija") });
@@ -893,7 +888,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 "<a href=\"http://localhost:2244/api/korisnici/verifikacija/" + id +"\">link</a>");
 
             oMail.Subject = "Verifikacija naloga";
-          
 
             SmtpServer oServer = new SmtpServer(""); 
 
@@ -964,7 +958,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             List<KorisnikFullDto> rezultat = VratiKorisnikeOstali();
             rezultat.RemoveAll(x => !x.AktivanNalog);
-            return null;
+            return rezultat;
         }
 
         //Korisnici koje menadzer, naplata i uplata smeju da vide - aktivni i neaktivni studenti
@@ -972,6 +966,42 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             List<KorisnikFullDto> rezultat = VratiKorisnikeAdmin();
             rezultat.RemoveAll(x => x.IdTipaNaloga != 5);
+            return rezultat;
+        }
+
+        // TO DO - ceo poziv na osnovu id-a
+
+        public static List<OgovorNaPozivDto> ObavestiOOdgovorima(int idPoziva, string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Pozivanje p = s.Load<Pozivanje>(idPoziva);
+
+            if (p.VaziDo > DateTime.Now)
+                return null;
+
+            List<PozivanjaPozvani> pp = s.Query<PozivanjaPozvani>().Select(x => x).ToList();
+            List<PozivanjaPozvani> poziv = pp.FindAll(x => x.IdPozivanjaPozvani.IdPoziva.IdPoziva == idPoziva);
+
+            if (poziv.Count == 0)
+                return null;
+
+            List<OgovorNaPozivDto> rezultat = new List<OgovorNaPozivDto>();
+
+            foreach (var v in poziv)
+            {
+                OgovorNaPozivDto o = new OgovorNaPozivDto()
+                {
+                    OdgovorPozvanog = v.OdgovorPozvanog.Value,
+                    IdPozvanog = v.IdPozivanjaPozvani.IdPozvanog.IdKorisnika,
+                    Ime = v.IdPozivanjaPozvani.IdPozvanog.Ime,
+                    Prezime = v.IdPozivanjaPozvani.IdPozvanog.Prezime,
+                    KorisnickoIme = v.IdPozivanjaPozvani.IdPozvanog.KorisnickoIme,
+                    IdPoziva = v.IdPozivanjaPozvani.IdPoziva.IdPoziva
+                };
+                rezultat.Add(o);
+            }
+            rezultat.Sort((x, y) => y.OdgovorPozvanog.CompareTo(x.OdgovorPozvanog));
+
             return rezultat;
         }
     }
