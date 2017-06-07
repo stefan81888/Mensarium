@@ -26,7 +26,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
@@ -64,7 +64,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
@@ -102,15 +102,15 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                         { Content = new StringContent("Nemate privilegiju") });
 
                 List<ObjavaReadDto> o = ProvajderPodatakaObjava.SveObjave(id);
 
-                if (o.Count == 0)
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                        { Content = new StringContent("Korisnik nema objavu") });
+                //if (o.Count == 0)
+                //    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                //        { Content = new StringContent("Korisnik nema objavu") });
 
                 return o;
             }

@@ -44,7 +44,7 @@
             this.dateTimeValid = new System.Windows.Forms.DateTimePicker();
             this.txtID = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.picProfilePicture = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtFName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -53,7 +53,6 @@
             this.dateTimeBirthday = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.txtFaculty = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.txtIndex = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -69,11 +68,13 @@
             this.lblPass = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
+            this.cbxFaculty = new System.Windows.Forms.ComboBox();
+            this.openImageFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picProfilePicture)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -93,7 +94,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(70, 44);
+            this.label3.Location = new System.Drawing.Point(70, 39);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(84, 20);
             this.label3.TabIndex = 5;
@@ -105,7 +106,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(68, 14);
+            this.label5.Location = new System.Drawing.Point(68, 9);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(160, 33);
             this.label5.TabIndex = 3;
@@ -114,7 +115,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::MensariumDesktop.Properties.Resources.MensariumIconWhite;
-            this.pictureBox2.Location = new System.Drawing.Point(12, 14);
+            this.pictureBox2.Location = new System.Drawing.Point(14, 9);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(50, 50);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -130,7 +131,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 68);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(464, 594);
+            this.panel1.Size = new System.Drawing.Size(464, 593);
             this.panel1.TabIndex = 9;
             // 
             // btnSave
@@ -139,7 +140,7 @@
             this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ImageKey = "user-40.png";
             this.btnSave.ImageList = this.imageListButtonIconsUser;
-            this.btnSave.Location = new System.Drawing.Point(193, 550);
+            this.btnSave.Location = new System.Drawing.Point(193, 553);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(138, 35);
@@ -164,7 +165,7 @@
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ImageKey = "error.png";
             this.btnCancel.ImageList = this.imageListButtonIconsUser;
-            this.btnCancel.Location = new System.Drawing.Point(339, 550);
+            this.btnCancel.Location = new System.Drawing.Point(339, 553);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(112, 35);
@@ -186,7 +187,7 @@
             this.tableLayoutPanel2.Controls.Add(this.dateTimeValid, 1, 11);
             this.tableLayoutPanel2.Controls.Add(this.txtID, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.label4, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.picProfilePicture, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.label6, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.txtFName, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.label8, 0, 3);
@@ -195,7 +196,6 @@
             this.tableLayoutPanel2.Controls.Add(this.dateTimeBirthday, 1, 4);
             this.tableLayoutPanel2.Controls.Add(this.label2, 0, 8);
             this.tableLayoutPanel2.Controls.Add(this.label12, 0, 5);
-            this.tableLayoutPanel2.Controls.Add(this.txtFaculty, 1, 5);
             this.tableLayoutPanel2.Controls.Add(this.label13, 0, 6);
             this.tableLayoutPanel2.Controls.Add(this.txtIndex, 1, 6);
             this.tableLayoutPanel2.Controls.Add(this.label10, 0, 7);
@@ -211,10 +211,11 @@
             this.tableLayoutPanel2.Controls.Add(this.lblPass, 0, 10);
             this.tableLayoutPanel2.Controls.Add(this.txtEmail, 1, 9);
             this.tableLayoutPanel2.Controls.Add(this.txtPassword, 1, 10);
+            this.tableLayoutPanel2.Controls.Add(this.cbxFaculty, 1, 5);
             this.tableLayoutPanel2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 6);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 18;
+            this.tableLayoutPanel2.RowCount = 19;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 76F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -232,9 +233,10 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(458, 543);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(458, 544);
             this.tableLayoutPanel2.TabIndex = 10;
             // 
             // label1
@@ -254,7 +256,7 @@
             this.label14.AutoSize = true;
             this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label14.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label14.Location = new System.Drawing.Point(3, 415);
+            this.label14.Location = new System.Drawing.Point(3, 411);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(150, 31);
             this.label14.TabIndex = 27;
@@ -266,7 +268,7 @@
             this.dateTimeValid.CalendarFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimeValid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dateTimeValid.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.dateTimeValid.Location = new System.Drawing.Point(159, 418);
+            this.dateTimeValid.Location = new System.Drawing.Point(159, 414);
             this.dateTimeValid.Name = "dateTimeValid";
             this.dateTimeValid.Size = new System.Drawing.Size(296, 25);
             this.dateTimeValid.TabIndex = 33;
@@ -282,7 +284,7 @@
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(296, 22);
             this.txtID.TabIndex = 8;
-            this.txtID.Text = "1231231";
+            this.txtID.Text = "/";
             // 
             // label4
             // 
@@ -296,15 +298,18 @@
             this.label4.Text = "ID";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // pictureBox1
+            // picProfilePicture
             // 
-            this.pictureBox1.BackgroundImage = global::MensariumDesktop.Properties.Resources.plus;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(159, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox1.TabIndex = 10;
-            this.pictureBox1.TabStop = false;
+            this.picProfilePicture.BackgroundImage = global::MensariumDesktop.Properties.Resources.plus;
+            this.picProfilePicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.picProfilePicture.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picProfilePicture.Location = new System.Drawing.Point(159, 3);
+            this.picProfilePicture.Name = "picProfilePicture";
+            this.picProfilePicture.Size = new System.Drawing.Size(70, 70);
+            this.picProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picProfilePicture.TabIndex = 10;
+            this.picProfilePicture.TabStop = false;
+            this.picProfilePicture.Click += new System.EventHandler(this.picProfilePicture_Click);
             // 
             // label6
             // 
@@ -326,7 +331,7 @@
             this.txtFName.Name = "txtFName";
             this.txtFName.Size = new System.Drawing.Size(296, 29);
             this.txtFName.TabIndex = 11;
-            this.txtFName.Text = "Nikola";
+            this.txtFName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowOnlyLetters_KeyPress);
             // 
             // label8
             // 
@@ -348,7 +353,7 @@
             this.txtLName.Name = "txtLName";
             this.txtLName.Size = new System.Drawing.Size(296, 29);
             this.txtLName.TabIndex = 19;
-            this.txtLName.Text = "Nikolić";
+            this.txtLName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowOnlyLetters_KeyPress);
             // 
             // label9
             // 
@@ -377,7 +382,7 @@
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(3, 310);
+            this.label2.Location = new System.Drawing.Point(3, 306);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(150, 35);
             this.label2.TabIndex = 1;
@@ -391,27 +396,17 @@
             this.label12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.label12.Location = new System.Drawing.Point(3, 205);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(150, 35);
+            this.label12.Size = new System.Drawing.Size(150, 31);
             this.label12.TabIndex = 17;
             this.label12.Text = "Fakultet";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // txtFaculty
-            // 
-            this.txtFaculty.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtFaculty.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFaculty.Location = new System.Drawing.Point(159, 208);
-            this.txtFaculty.Name = "txtFaculty";
-            this.txtFaculty.Size = new System.Drawing.Size(296, 29);
-            this.txtFaculty.TabIndex = 21;
-            this.txtFaculty.Text = "Elektronski fakultet";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label13.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label13.Location = new System.Drawing.Point(3, 240);
+            this.label13.Location = new System.Drawing.Point(3, 236);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(150, 35);
             this.label13.TabIndex = 18;
@@ -422,18 +417,18 @@
             // 
             this.txtIndex.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtIndex.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIndex.Location = new System.Drawing.Point(159, 243);
+            this.txtIndex.Location = new System.Drawing.Point(159, 239);
             this.txtIndex.Name = "txtIndex";
             this.txtIndex.Size = new System.Drawing.Size(296, 29);
             this.txtIndex.TabIndex = 23;
-            this.txtIndex.Text = "165014";
+            this.txtIndex.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowOnlyAlphaNumeric_KeyPress);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label10.Location = new System.Drawing.Point(3, 275);
+            this.label10.Location = new System.Drawing.Point(3, 271);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(150, 35);
             this.label10.TabIndex = 16;
@@ -444,28 +439,26 @@
             // 
             this.txtPhone.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtPhone.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtPhone.Location = new System.Drawing.Point(159, 278);
+            this.txtPhone.Location = new System.Drawing.Point(159, 274);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(296, 29);
             this.txtPhone.TabIndex = 22;
-            this.txtPhone.Text = "064222333";
             // 
             // txtUsername
             // 
             this.txtUsername.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtUsername.Location = new System.Drawing.Point(159, 313);
+            this.txtUsername.Location = new System.Drawing.Point(159, 309);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(296, 29);
             this.txtUsername.TabIndex = 9;
-            this.txtUsername.Text = "starwars555";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label11.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label11.Location = new System.Drawing.Point(3, 446);
+            this.label11.Location = new System.Drawing.Point(3, 442);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(150, 31);
             this.label11.TabIndex = 15;
@@ -477,7 +470,7 @@
             this.dateTimeRegistration.CalendarFont = new System.Drawing.Font("Segoe UI", 12F);
             this.dateTimeRegistration.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dateTimeRegistration.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.dateTimeRegistration.Location = new System.Drawing.Point(159, 449);
+            this.dateTimeRegistration.Location = new System.Drawing.Point(159, 445);
             this.dateTimeRegistration.Name = "dateTimeRegistration";
             this.dateTimeRegistration.Size = new System.Drawing.Size(296, 25);
             this.dateTimeRegistration.TabIndex = 32;
@@ -487,9 +480,9 @@
             this.label16.AutoSize = true;
             this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label16.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label16.Location = new System.Drawing.Point(3, 508);
+            this.label16.Location = new System.Drawing.Point(3, 504);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(150, 45);
+            this.label16.Size = new System.Drawing.Size(150, 30);
             this.label16.TabIndex = 28;
             this.label16.Text = "Stanje naloga";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -499,7 +492,7 @@
             this.label15.AutoSize = true;
             this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label15.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label15.Location = new System.Drawing.Point(3, 477);
+            this.label15.Location = new System.Drawing.Point(3, 473);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(150, 31);
             this.label15.TabIndex = 30;
@@ -514,8 +507,8 @@
             this.cbxStanje.FormattingEnabled = true;
             this.cbxStanje.Items.AddRange(new object[] {
             "Aktivan",
-            "Naktivan"});
-            this.cbxStanje.Location = new System.Drawing.Point(159, 511);
+            "Neaktivan"});
+            this.cbxStanje.Location = new System.Drawing.Point(159, 507);
             this.cbxStanje.Name = "cbxStanje";
             this.cbxStanje.Size = new System.Drawing.Size(296, 25);
             this.cbxStanje.TabIndex = 35;
@@ -526,23 +519,18 @@
             this.cbxTip.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxTip.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cbxTip.FormattingEnabled = true;
-            this.cbxTip.Items.AddRange(new object[] {
-            "Student",
-            "Administrator",
-            "Menadzer",
-            "Uplata",
-            "Naplata"});
-            this.cbxTip.Location = new System.Drawing.Point(159, 480);
+            this.cbxTip.Location = new System.Drawing.Point(159, 476);
             this.cbxTip.Name = "cbxTip";
             this.cbxTip.Size = new System.Drawing.Size(296, 25);
             this.cbxTip.TabIndex = 34;
+            this.cbxTip.SelectedIndexChanged += new System.EventHandler(this.cbxTip_SelectedIndexChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(3, 345);
+            this.label7.Location = new System.Drawing.Point(3, 341);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(150, 35);
             this.label7.TabIndex = 7;
@@ -554,7 +542,7 @@
             this.lblPass.AutoSize = true;
             this.lblPass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPass.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.lblPass.Location = new System.Drawing.Point(3, 380);
+            this.lblPass.Location = new System.Drawing.Point(3, 376);
             this.lblPass.Name = "lblPass";
             this.lblPass.Size = new System.Drawing.Size(150, 35);
             this.lblPass.TabIndex = 37;
@@ -565,39 +553,53 @@
             // 
             this.txtEmail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtEmail.Location = new System.Drawing.Point(159, 348);
+            this.txtEmail.Location = new System.Drawing.Point(159, 344);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(296, 29);
             this.txtEmail.TabIndex = 10;
-            this.txtEmail.Text = "mail@gmail.com";
+            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating);
             // 
             // txtPassword
             // 
             this.txtPassword.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtPassword.Location = new System.Drawing.Point(159, 383);
+            this.txtPassword.Location = new System.Drawing.Point(159, 379);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(296, 29);
             this.txtPassword.TabIndex = 38;
-            this.txtPassword.Text = "password123";
+            // 
+            // cbxFaculty
+            // 
+            this.cbxFaculty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxFaculty.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cbxFaculty.FormattingEnabled = true;
+            this.cbxFaculty.Location = new System.Drawing.Point(159, 208);
+            this.cbxFaculty.Name = "cbxFaculty";
+            this.cbxFaculty.Size = new System.Drawing.Size(296, 25);
+            this.cbxFaculty.TabIndex = 39;
+            // 
+            // openImageFileDialog
+            // 
+            this.openImageFileDialog.Filter = "JPG image|*.jpg";
+            this.openImageFileDialog.Title = "Odaberi sliku";
             // 
             // UserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 662);
+            this.ClientSize = new System.Drawing.Size(464, 661);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.MaximumSize = new System.Drawing.Size(480, 765);
+            this.MaximumSize = new System.Drawing.Size(480, 700);
             this.MinimumSize = new System.Drawing.Size(480, 700);
             this.Name = "UserForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "<Novi korisnik>";
+            this.Text = "Uređivanje korisnika";
             this.Load += new System.EventHandler(this.UserForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -605,7 +607,7 @@
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picProfilePicture)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -638,18 +640,19 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.DateTimePicker dateTimeRegistration;
-        private System.Windows.Forms.TextBox txtFaculty;
         private System.Windows.Forms.TextBox txtIndex;
         private System.Windows.Forms.DateTimePicker dateTimeValid;
         private System.Windows.Forms.ComboBox cbxTip;
         private System.Windows.Forms.ComboBox cbxStanje;
         private System.Windows.Forms.TextBox txtPhone;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picProfilePicture;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ImageList imageListButtonIconsUser;
         private System.Windows.Forms.Label lblPass;
         private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.ComboBox cbxFaculty;
+        private System.Windows.Forms.OpenFileDialog openImageFileDialog;
     }
 }

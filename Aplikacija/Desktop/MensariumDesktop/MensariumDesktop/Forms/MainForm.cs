@@ -390,7 +390,7 @@ namespace MensariumDesktop
 
             OpStatusWorking();
             MainController.LoadUserCard(MainController.LoadedCardUser.UserID);
-            UPLATA_RefreshCardInfo();
+            NAPLATA_RefreshCardInfo();
             OpStatusIdle();
         }
 
@@ -589,12 +589,44 @@ namespace MensariumDesktop
             }
 
             User u = KORSN_dgvUsers.SelectedRows[0].DataBoundItem as User;
+
+            DialogResult dr = MessageBox.Show(
+                string.Format("Da li ste sigurni da zelite da obrisete korisnika {0}?", u.FullName),
+                "Brisanje korisnika",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (dr != DialogResult.OK)
+                return;
+
+            
             bool ops = MainController.DeleteUser(u);
             if (ops)
             {
                 KORSN_RefreshUsersGrid(true);
                 MUtility.ShowInformation("Korisnik uspesno obrisan");
             }
+        }
+
+        private void KORSN_btnAddNewUser_Click(object sender, EventArgs e)
+        {
+            UserForm uf = new UserForm();
+            uf.ShowDialog();
+        }
+
+        private void KORSN_btnChangeUser_Click(object sender, EventArgs e)
+        {
+            if (KORSN_dgvUsers.SelectedRows.Count == 0)
+            {
+                MUtility.ShowWarrning("Odaberite korisnika");
+                return;
+            }
+
+            User u = KORSN_dgvUsers.SelectedRows[0].DataBoundItem as User;
+            UserForm uf = new UserForm(u);
+            uf.ShowDialog();
+            
+            //MainController.AddUserMeal(u);
         }
     }
 }

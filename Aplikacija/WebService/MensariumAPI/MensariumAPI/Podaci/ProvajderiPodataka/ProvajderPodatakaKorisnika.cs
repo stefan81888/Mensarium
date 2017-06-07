@@ -389,8 +389,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 sviPozivi.Add(pnfidto);
             }
 
-            sviPozivi.RemoveAll(x => x.DatumPoziva < DateTime.Today);
+            sviPozivi.RemoveAll(x => x.DatumPoziva < DateTime.Now);
             sviPozivi.RemoveAll(x => x.DatumPoziva > x.VaziDo);
+            sviPozivi.RemoveAll(x => x.VaziDo < DateTime.Now);
             sviPozivi.Sort((x, y) => y.DatumPoziva.CompareTo(x.DatumPoziva));
 
             return sviPozivi;
@@ -745,11 +746,17 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static bool PrvaPrijava(int id, string sifra)
         {
-            Korisnik k = VratiKorisnika(id);
+            ISession s = SesijeProvajder.VratiSesiju();
+            Korisnik k = s.Get<Korisnik>(id);
 
+            
             if (k == null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Student ne postoji") });
+
+            if (k.TipNaloga.IdTip != 5)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Greska: Nalog nije studentski") });
 
             return sifra == k.Sifra;
         }
@@ -761,6 +768,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             Korisnik k = s.Load<Korisnik>(czrdto.DodeljeniId);
 
             if (k.KorisnickoIme != null)
+                return false;
+
+            if (k.Email != null)
                 return false;
 
             if (k == null)
@@ -790,6 +800,17 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if(isto_korisnicko != null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Korisnicko ime vec postoji") }); 
+
+            Korisnik isti_mail = korisnici.Find(x => x.Email == czrdto.Email);
+
+            if (isti_mail != null)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Email već u upotrebi") });
+
+            EmailAddressAttribute mail_validator = new EmailAddressAttribute();
+
+            if (!mail_validator.IsValid(k.Email))
+                return false;
 
             k.Email = czrdto.Email;
             k.KorisnickoIme = czrdto.KorisnickoIme;

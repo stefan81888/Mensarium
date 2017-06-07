@@ -32,17 +32,17 @@ namespace MensariumDesktop
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint55 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 15D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint56 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 23D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint57 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 75D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint58 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(3D, 53D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint59 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(4D, 63D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint60 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(5D, 25D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint61 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(6D, 3D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint62 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(7D, 17D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint63 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(8D, 53D);
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint73 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 15D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint74 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 23D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint75 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 75D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint76 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(3D, 53D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint77 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(4D, 63D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint78 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(5D, 25D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint79 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(6D, 3D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint80 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(7D, 17D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint81 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(8D, 53D);
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.STATUS_statbarUser = new System.Windows.Forms.ToolStripDropDownButton();
             this.STATUS_statbarUserProfile = new System.Windows.Forms.ToolStripMenuItem();
@@ -2179,6 +2179,7 @@ namespace MensariumDesktop
             this.KORSN_btnAddNewUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.KORSN_btnAddNewUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.KORSN_btnAddNewUser.UseVisualStyleBackColor = false;
+            this.KORSN_btnAddNewUser.Click += new System.EventHandler(this.KORSN_btnAddNewUser_Click);
             // 
             // KORSN_btnChangeUser
             // 
@@ -2201,6 +2202,7 @@ namespace MensariumDesktop
             this.KORSN_btnChangeUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.KORSN_btnChangeUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.KORSN_btnChangeUser.UseVisualStyleBackColor = false;
+            this.KORSN_btnChangeUser.Click += new System.EventHandler(this.KORSN_btnChangeUser_Click);
             // 
             // KORSN_btnDeleteUser
             // 
@@ -2296,25 +2298,25 @@ namespace MensariumDesktop
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea7.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea7);
+            chartArea9.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea9);
             this.chart1.Enabled = false;
             this.chart1.Location = new System.Drawing.Point(245, 59);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series7.Name = "Series1";
-            series7.Points.Add(dataPoint55);
-            series7.Points.Add(dataPoint56);
-            series7.Points.Add(dataPoint57);
-            series7.Points.Add(dataPoint58);
-            series7.Points.Add(dataPoint59);
-            series7.Points.Add(dataPoint60);
-            series7.Points.Add(dataPoint61);
-            series7.Points.Add(dataPoint62);
-            series7.Points.Add(dataPoint63);
-            this.chart1.Series.Add(series7);
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series9.Name = "Series1";
+            series9.Points.Add(dataPoint73);
+            series9.Points.Add(dataPoint74);
+            series9.Points.Add(dataPoint75);
+            series9.Points.Add(dataPoint76);
+            series9.Points.Add(dataPoint77);
+            series9.Points.Add(dataPoint78);
+            series9.Points.Add(dataPoint79);
+            series9.Points.Add(dataPoint80);
+            series9.Points.Add(dataPoint81);
+            this.chart1.Series.Add(series9);
             this.chart1.Size = new System.Drawing.Size(844, 431);
             this.chart1.TabIndex = 20;
             this.chart1.Text = "chart1";
