@@ -1273,5 +1273,36 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.ZatvoriSesiju();
             }
         }
+
+        //Pozivanje jednog korisnika
+        [HttpPut]
+        [Route("obroci/posalji")]
+        public IHttpActionResult PosaljiObroke([FromUri]int idPrimaoca, [FromBody]KorisnikStanjeDto kdsto, [FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                bool status = ProvajderPodatakaKorisnika.PosaljiObroke(idPrimaoca, kdsto, sid);
+
+                if (status)
+                    return Ok("Pozivanje uspesno");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Pozivanje neuspesno") });
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
     }
 }

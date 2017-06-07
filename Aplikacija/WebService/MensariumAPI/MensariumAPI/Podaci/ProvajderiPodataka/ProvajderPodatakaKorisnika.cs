@@ -1106,5 +1106,63 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             return p;
         }
+
+        public static bool PosaljiObroke(int idPrimaoca, KorisnikStanjeDto kdsto, string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Korisnik salje = VratiKorisnika(KorisnikIDizSesijaID(sid));
+
+            if (salje == null)
+                return false;
+
+            if (salje.TipNaloga.IdTip != 5)
+                return false;
+
+            Korisnik primalac = VratiKorisnika(idPrimaoca);
+
+            if (primalac == null)
+                return false;
+
+            if (primalac.TipNaloga.IdTip != 5)
+                return false;
+
+            List<Obrok> obroci = s.Query<Obrok>().Select(x => x).ToList();
+            List<Obrok> dorucak = obroci.FindAll(x => x.Uplatilac.IdKorisnika == salje.IdKorisnika &&
+                                                      x.Tip.IdTipObroka == 1);
+            if (dorucak.Count < kdsto.BrojDorucka)
+                return false;
+
+            List<Obrok> rucak = obroci.FindAll(x => x.Uplatilac.IdKorisnika == salje.IdKorisnika &&
+                                                      x.Tip.IdTipObroka == 2);
+            if (rucak.Count < kdsto.BrojRuckova)
+                return false;
+
+            List<Obrok> vecera = obroci.FindAll(x => x.Uplatilac.IdKorisnika == salje.IdKorisnika &&
+                                                      x.Tip.IdTipObroka == 3);
+            if (vecera.Count < kdsto.BrojVecera)
+                return false;
+
+            for (int i = 0; i < kdsto.BrojDorucka; i++)
+            {
+                dorucak[i].Uplatilac = primalac;
+                s.Save(dorucak[i]);
+            }
+
+            for (int i = 0; i < kdsto.BrojRuckova; i++)
+            {
+                rucak[i].Uplatilac = primalac;
+                s.Save(rucak[i]);
+            }
+
+            for (int i = 0; i < kdsto.BrojVecera; i++)
+            {
+                vecera[i].Uplatilac = primalac;
+                s.Save(vecera[i]);
+            }
+
+            s.Flush();
+
+            return true;
+        }
     }
 }
