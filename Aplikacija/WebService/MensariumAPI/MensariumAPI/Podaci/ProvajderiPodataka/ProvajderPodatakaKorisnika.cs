@@ -1086,18 +1086,26 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (k == null)
                 return null;
 
-            if (k.IdKorisnika != 5)
+            if (k.TipNaloga.IdTip != 5)
                 return null;
 
             List<Pozivanje> lista = k.Pozivi.ToList();
-            lista.Sort((x, y) => x.DatumPoziva.CompareTo(y.DatumPoziva));
 
-            PozivanjaFullDto p = new PozivanjaFullDto()
+            PozivanjaFullDto p = new PozivanjaFullDto();
+
+            if (lista.Count == 0)
             {
-                IdPoziva = lista[0].IdPoziva,
-                DatumPoziva = lista[0].DatumPoziva,
-                VaziDo = lista[0].VaziDo
-            };
+                p.IdPoziva = -1;
+                p.DatumPoziva = DateTime.MinValue;
+                p.VaziDo = DateTime.MinValue;
+            }
+            else
+            {
+                lista.Sort((x, y) => x.DatumPoziva.CompareTo(y.DatumPoziva));
+                p.IdPoziva = lista[0].IdPoziva;
+                p.DatumPoziva = lista[0].DatumPoziva;
+                p.VaziDo = lista[0].VaziDo;
+            }
 
             foreach (var v in lista[0].Pozvani.ToList())
             {
