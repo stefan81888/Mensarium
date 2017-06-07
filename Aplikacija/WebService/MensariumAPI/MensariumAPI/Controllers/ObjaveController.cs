@@ -108,10 +108,6 @@ namespace MensariumAPI.Controllers
 
                 List<ObjavaReadDto> o = ProvajderPodatakaObjava.SveObjave(id);
 
-                //if (o.Count == 0)
-                //    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                //        { Content = new StringContent("Korisnik nema objavu") });
-
                 return o;
             }
             catch (Exception e)

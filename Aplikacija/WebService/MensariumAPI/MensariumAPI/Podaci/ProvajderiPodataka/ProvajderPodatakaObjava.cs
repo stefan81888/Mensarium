@@ -102,9 +102,22 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
                 listaObjava.Add(objava);
             }
-
             
             listaObjava.Sort((x,y) => y.DatumObjave.CompareTo(x.DatumObjave));
+
+            ObjavaReadDto o = new ObjavaReadDto()
+            {
+                TekstObjave = ko.Objava.TekstObjave,
+                ImeKorisnika = ko.Objava.IdKorisnik.Ime,
+                PrezimeKorisnika = ko.Objava.IdKorisnik.Prezime,
+                IdKorisnika = ko.IdKorisnika,
+                IdLokacije = ko.Objava.Lokacija.IdMenza
+            };
+
+            if (ko.Objava.DatumObjave.HasValue)
+                o.DatumObjave = ko.Objava.DatumObjave.Value;
+
+            listaObjava.Insert(0,o);
 
             return listaObjava;
         }
