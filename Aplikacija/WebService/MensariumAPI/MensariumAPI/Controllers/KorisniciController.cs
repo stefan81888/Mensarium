@@ -1099,6 +1099,7 @@ namespace MensariumAPI.Controllers
         }
 
         //Aktivacija naloga
+        //Do ove rute se dolazi iz emaila
         [HttpGet]
         [Route("verifikacija/{id:int}")]
         public IHttpActionResult VerifikovanNalog(int id)
@@ -1283,13 +1284,22 @@ namespace MensariumAPI.Controllers
             {
                 SesijeProvajder.OtvoriSesiju();
 
+
+                if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
                 bool status = ProvajderPodatakaKorisnika.PosaljiObroke(idPrimaoca, kdsto, sid);
 
                 if (status)
-                    return Ok("Pozivanje uspesno");
+                    return Ok("Slanje uspesno");
 
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
-                    { Content = new StringContent("Pozivanje neuspesno") });
+                    { Content = new StringContent("Slanje neuspesno") });
 
             }
             catch (Exception e)
@@ -1304,5 +1314,78 @@ namespace MensariumAPI.Controllers
                 SesijeProvajder.ZatvoriSesiju();
             }
         }
+
+        //Zahtev za promenu maila
+        [HttpPut]
+        [Route("email/zahtev")]
+        public IHttpActionResult ZahtevajPromenuEmaila([FromUri]string noviMail, [FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+
+                if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
+                bool status = ProvajderPodatakaKorisnika.PromeniEmail(noviMail, sid);
+
+                if (status)
+                    return Ok("Zahtev poslat");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Zahtev neuspesan") });
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Menja email korisniku
+        //Do ove rute se dolazi iz emaila
+        [HttpGet]
+        [Route("mail/reset/")]
+        public IHttpActionResult ResetujEmail([FromUri]string pin, [FromUri] int id)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                bool status = ProvajderPodatakaKorisnika.ResetujEmail(pin, id);
+
+                if (status)
+                    return Ok("Resetovanje uspesno");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Resetovanje neuspesno") });
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
     }
 }
