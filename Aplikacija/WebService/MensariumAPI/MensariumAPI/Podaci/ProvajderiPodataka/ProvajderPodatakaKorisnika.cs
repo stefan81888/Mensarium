@@ -391,6 +391,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             sviPozivi.RemoveAll(x => x.DatumPoziva < DateTime.Today);
             sviPozivi.RemoveAll(x => x.DatumPoziva > x.VaziDo);
+            sviPozivi.RemoveAll(x => x.VaziDo < DateTime.Now);
             sviPozivi.Sort((x, y) => y.DatumPoziva.CompareTo(x.DatumPoziva));
 
             return sviPozivi;
