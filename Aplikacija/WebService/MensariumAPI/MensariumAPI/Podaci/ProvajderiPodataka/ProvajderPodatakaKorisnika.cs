@@ -101,8 +101,10 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static SesijaDto PrijavaKorisnika(ClientLoginDto cdto)
         {
             ISession s = SesijeProvajder.Sesija;
+            
             List<Korisnik> korisnici = s.Query<Korisnik>().Select(k => k).ToList();
-
+            
+            /*
             List<Korisnik> ko = (from k in korisnici
                 where k.KorisnickoIme == cdto.KIme_Mail
                 || k.Email == cdto.KIme_Mail
@@ -119,10 +121,26 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             if (!ko[0].AktivanNalog)
                 return null;
-            
+            */
+
+            Korisnik ko = korisnici.Find(x => x.KorisnickoIme == cdto.KIme_Mail
+                                         || x.Email == cdto.KIme_Mail);
+
+            if (ko == null)
+                return null;
+
+            if (ko.Obrisan)
+                return null;
+
+            if (!ko.AktivanNalog)
+                return null;
+
+            if (ko.Sifra != cdto.Sifra)
+                return null;
+
             LoginSesija sesija = new LoginSesija()
             {
-                KorisnikSesije = ko[0],
+                KorisnikSesije = ko,
                 IdSesije = Guid.NewGuid().ToString(),
                 DatumPrijavljivanja = DateTime.Now,
                 ValidnaDo = DateTime.Now.AddYears(1)
