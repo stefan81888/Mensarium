@@ -69,6 +69,7 @@
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.cbxFaculty = new System.Windows.Forms.ComboBox();
+            this.openImageFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -93,7 +94,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(70, 44);
+            this.label3.Location = new System.Drawing.Point(70, 39);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(84, 20);
             this.label3.TabIndex = 5;
@@ -105,7 +106,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(68, 14);
+            this.label5.Location = new System.Drawing.Point(68, 9);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(160, 33);
             this.label5.TabIndex = 3;
@@ -114,7 +115,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::MensariumDesktop.Properties.Resources.MensariumIconWhite;
-            this.pictureBox2.Location = new System.Drawing.Point(12, 14);
+            this.pictureBox2.Location = new System.Drawing.Point(14, 9);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(50, 50);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -130,7 +131,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 68);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(464, 594);
+            this.panel1.Size = new System.Drawing.Size(464, 593);
             this.panel1.TabIndex = 9;
             // 
             // btnSave
@@ -139,7 +140,7 @@
             this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ImageKey = "user-40.png";
             this.btnSave.ImageList = this.imageListButtonIconsUser;
-            this.btnSave.Location = new System.Drawing.Point(193, 550);
+            this.btnSave.Location = new System.Drawing.Point(193, 553);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(138, 35);
@@ -164,7 +165,7 @@
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ImageKey = "error.png";
             this.btnCancel.ImageList = this.imageListButtonIconsUser;
-            this.btnCancel.Location = new System.Drawing.Point(339, 550);
+            this.btnCancel.Location = new System.Drawing.Point(339, 553);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(112, 35);
@@ -308,6 +309,7 @@
             this.picProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picProfilePicture.TabIndex = 10;
             this.picProfilePicture.TabStop = false;
+            this.picProfilePicture.Click += new System.EventHandler(this.picProfilePicture_Click);
             // 
             // label6
             // 
@@ -329,6 +331,7 @@
             this.txtFName.Name = "txtFName";
             this.txtFName.Size = new System.Drawing.Size(296, 29);
             this.txtFName.TabIndex = 11;
+            this.txtFName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowOnlyLetters_KeyPress);
             // 
             // label8
             // 
@@ -350,6 +353,7 @@
             this.txtLName.Name = "txtLName";
             this.txtLName.Size = new System.Drawing.Size(296, 29);
             this.txtLName.TabIndex = 19;
+            this.txtLName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowOnlyLetters_KeyPress);
             // 
             // label9
             // 
@@ -417,6 +421,7 @@
             this.txtIndex.Name = "txtIndex";
             this.txtIndex.Size = new System.Drawing.Size(296, 29);
             this.txtIndex.TabIndex = 23;
+            this.txtIndex.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowOnlyAlphaNumeric_KeyPress);
             // 
             // label10
             // 
@@ -552,6 +557,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(296, 29);
             this.txtEmail.TabIndex = 10;
+            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating);
             // 
             // txtPassword
             // 
@@ -572,17 +578,23 @@
             this.cbxFaculty.Size = new System.Drawing.Size(296, 25);
             this.cbxFaculty.TabIndex = 39;
             // 
+            // openImageFileDialog
+            // 
+            this.openImageFileDialog.Filter = "JPG image|*.jpg";
+            this.openImageFileDialog.Title = "Odaberi sliku";
+            // 
             // UserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 662);
+            this.ClientSize = new System.Drawing.Size(464, 661);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.MaximumSize = new System.Drawing.Size(480, 765);
+            this.MaximumSize = new System.Drawing.Size(480, 700);
             this.MinimumSize = new System.Drawing.Size(480, 700);
             this.Name = "UserForm";
             this.ShowInTaskbar = false;
@@ -641,5 +653,6 @@
         private System.Windows.Forms.Label lblPass;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.ComboBox cbxFaculty;
+        private System.Windows.Forms.OpenFileDialog openImageFileDialog;
     }
 }

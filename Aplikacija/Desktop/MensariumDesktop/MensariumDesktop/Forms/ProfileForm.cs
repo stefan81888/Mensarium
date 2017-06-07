@@ -21,13 +21,8 @@ namespace MensariumDesktop.Forms
             InitializeComponent();
             user = u;
 
-            try
-            {
-                if (user.ProfilePicture == null)
-                    user.ProfilePicture = Api.GetUserImage(user.UserID);
-            }
-            catch(Exception e)
-            { }
+            if (user.ProfilePicture == null)
+                MainController.LoadProfilePicture(u);
 
             RefreshData();
         }

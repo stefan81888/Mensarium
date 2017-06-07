@@ -808,10 +808,28 @@ namespace MensariumAPI.Controllers
         [Route("slika")]
         public HttpResponseMessage SlikaKorisnika([FromUri]int id, [FromUri]string sid)
         {
-            if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                    { Content = new StringContent("Sesija istekla") });
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
 
+                if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        {Content = new StringContent("Sesija istekla")});
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent("ServerGreska: Neuspelo pribavljanje slike")
+                };
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
             return ProvajderPodatakaSlike.VratiSliku(id);                           
         }
 
@@ -848,6 +866,8 @@ namespace MensariumAPI.Controllers
         {
             try
             {
+                SesijeProvajder.OtvoriSesiju();
+
                 if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });

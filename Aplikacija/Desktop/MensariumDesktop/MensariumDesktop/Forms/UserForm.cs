@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MensariumDesktop.Model.Components;
+using MensariumDesktop.Model.Controllers;
 
 namespace MensariumDesktop.Forms
 {
@@ -25,7 +27,6 @@ namespace MensariumDesktop.Forms
             user.AccountType = User.UserAccountType.Student;
             MyInitForm();
         }
-
         public UserForm(User u)
         {
             InitializeComponent();
@@ -34,7 +35,6 @@ namespace MensariumDesktop.Forms
             CreateMode = false;
             MyInitForm();
         }
-
         public void MyInitForm()
         {
             cbxTip.DataSource = Enum.GetValues(typeof(User.UserAccountType));
@@ -49,10 +49,11 @@ namespace MensariumDesktop.Forms
             btnSave.Text = CreateMode? "Dodaj" : "Sacuvaj";
 
         }
-
-
         private void FillData()
         {
+            if (!CreateMode && user.ProfilePicture == null)
+                MainController.LoadProfilePicture(user);
+
             picProfilePicture.Image = user.ProfilePicture;
             txtID.Text = (user.UserID == 0 )? "/" : user.UserID.ToString();
             txtFName.Text = user.FirstName ?? "";
@@ -73,12 +74,10 @@ namespace MensariumDesktop.Forms
             cbxTip.SelectedItem = user.AccountType;
             cbxStanje.SelectedIndex = user.ActiveAccount ? 0 : 1;
         }
-
         private void UserForm_Load(object sender, EventArgs e)
         {
             FillData();
         }
-
         private void cbxTip_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CreateMode && (User.UserAccountType)cbxTip.SelectedItem == User.UserAccountType.Student)
@@ -106,6 +105,49 @@ namespace MensariumDesktop.Forms
                 txtIndex.Enabled = true;
                 dateTimeValid.Enabled = true;
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+        private void AllowOnlyLetters_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+        }
+        private void AllowOnlyAlphaNumeric_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back || char.IsNumber(e.KeyChar));
+        }
+        private void AllowOnlyNumbers_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsNumber(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+        }
+        private void txtEmail_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtEmail.Text == string.Empty) return;
+            if (!MainController.IsValidEmail(txtEmail.Text))
+            {
+                MUtility.ShowWarrning("Unet je nevalidan email");
+                return;
+            }
+        }
+
+        private void picProfilePicture_Click(object sender, EventArgs e)
+        {
+            openImageFileDialog.ShowDialog();
+
+            string filename = openImageFileDialog.FileName;
+            long filesize = (new FileInfo(filename)).Length;
+
+            if (filesize >= (1024 * 1024 * 1))
+            {
+                MUtility.ShowWarrning("Prevelika slika. Slika mora da bude manje od 1MB");
+                return;
+            }
+            picProfilePicture.Image = Image.FromFile(openImageFileDialog.FileName);
+            
         }
     }
 }
