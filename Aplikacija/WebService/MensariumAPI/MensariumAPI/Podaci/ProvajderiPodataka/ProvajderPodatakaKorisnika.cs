@@ -20,7 +20,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
     public class ProvajderPodatakaKorisnika
     {
         private static string server_mail = "dalibor.aleksic.dacha@gmail.com";
-        private static string verifikacioni_link = "http://localhost:2244/api/korisnici/verifikacija";
+        private static string verifikacioni_link = "http://160.99.38.140:2244/api/korisnici/verifikacija";
         
         public delegate KorisnikKreiranjeDto KreiranjeKorisnika(KorisnikKreiranjeDto kkdto);
         public delegate List<KorisnikFollowDto> PretragaKorisnika(PretragaKriterijumDto pkdto);
@@ -201,9 +201,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 };
                 praceni.Add(kdto);
             }
-
-            
-
             return praceni;
         }
 
@@ -591,7 +588,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static KorisnikKreiranjeDto Azuriraj(KorisnikKreiranjeDto kkdto)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik korisnik = VratiKorisnika(kkdto.IdKorisnika);
+            Korisnik korisnik = s.Get<Korisnik>(kkdto.IdKorisnika);
 
             if (korisnik == null)
                 return null;
@@ -599,7 +596,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             korisnik.KorisnickoIme = kkdto.KorisnickoIme;
             korisnik.Ime = kkdto.Ime;
             korisnik.Prezime = kkdto.Prezime;
-            korisnik.Sifra = kkdto.Sifra;
+            if(kkdto.Sifra != null)
+                korisnik.Sifra = kkdto.Sifra;
             korisnik.BrojTelefona = kkdto.BrojTelefona;
             korisnik.DatumRodjenja = kkdto.DatumRodjenja;
             korisnik.Email = kkdto.Email;
@@ -902,8 +900,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             // Primalac
             oMail.To = email;
 
-            oMail.HtmlBody = String.Format("Postovani, molimo Vas da aktivirate nalog na Mensarium sistemu pritiskom na link: {0}",
-                "<a href=\"http://localhost:2244/api/korisnici/verifikacija/" + id +"\">link</a>");
+            string link = Guid.NewGuid().ToString();
+
+            oMail.HtmlBody = String.Format("Poštovani, " +
+                "dobro došli na Mensarium sistem!" +
+                "Molimo Vas da aktivirate nalog pritiskom na link: <br> {0}",
+                "<a href=\"" + 
+                verifikacioni_link + id +"\">"
+                + link + "</a>");
 
             oMail.Subject = "Verifikacija naloga";
 
@@ -1053,6 +1057,36 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             LoginSesija se = lista.First(x => x.IdSesije == sid);
 
             return se != null;
+        }
+
+        public static PozivanjaFullDto PoslednjiPoziv(string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Korisnik k = VratiKorisnika(KorisnikIDizSesijaID(sid));
+
+            if (k == null)
+                return null;
+
+            if (k.IdKorisnika != 5)
+                return null;
+
+            List<Pozivanje> lista = k.Pozivi.ToList();
+            lista.Sort((x, y) => x.DatumPoziva.CompareTo(y.DatumPoziva));
+
+            PozivanjaFullDto p = new PozivanjaFullDto()
+            {
+                IdPoziva = lista[0].IdPoziva,
+                DatumPoziva = lista[0].DatumPoziva,
+                VaziDo = lista[0].VaziDo
+            };
+
+            foreach (var v in lista[0].Pozvani.ToList())
+            {
+                p.Pozvani.Add(v.IdPozivanjaPozvani.IdPozvanog.IdKorisnika);
+            }
+
+            return p;
         }
     }
 }
