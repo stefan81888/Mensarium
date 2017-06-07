@@ -764,6 +764,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if (k.KorisnickoIme != null)
                 return false;
 
+            if (k.Email != null)
+                return false;
+
             if (k == null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Student ne postoji") });
@@ -791,6 +794,17 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             if(isto_korisnicko != null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Korisnicko ime vec postoji") }); 
+
+            Korisnik isti_mail = korisnici.Find(x => x.Email == czrdto.Email);
+
+            if (isti_mail != null)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Email već u upotrebi") });
+
+            EmailAddressAttribute mail_validator = new EmailAddressAttribute();
+
+            if (!mail_validator.IsValid(k.Email))
+                return false;
 
             k.Email = czrdto.Email;
             k.KorisnickoIme = czrdto.KorisnickoIme;
