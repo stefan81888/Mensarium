@@ -62,6 +62,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             o.TekstObjave = ocudto.TekstObjave;
             o.Lokacija = m;
+            o.DatumObjave = DateTime.Now;
+            
 
             s.Save(o);
             s.Flush();
@@ -83,7 +85,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             List<ObjavaReadDto> listaObjava = new List<ObjavaReadDto>();
 
             List<Korisnik> lista = ko.Prati.ToList();
-
+            lista.RemoveAll(x => x.TipNaloga.IdTip != 5);
             foreach (var v in lista )
             {
                 ObjavaReadDto objava = new ObjavaReadDto()
@@ -101,7 +103,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 listaObjava.Add(objava);
             }
 
-            listaObjava.RemoveAll(x => x.IdKorisnika != 5);
+            
             listaObjava.Sort((x,y) => y.DatumObjave.CompareTo(x.DatumObjave));
 
             return listaObjava;
