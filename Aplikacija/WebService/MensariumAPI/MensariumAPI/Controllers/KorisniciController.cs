@@ -592,9 +592,9 @@ namespace MensariumAPI.Controllers
 
                 List<PozivanjaNewsFeedItemDto> listaPoziva = ProvajderPodatakaKorisnika.SviPozivi(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
 
-                if(listaPoziva.Count == 0)
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                    { Content = new StringContent("Nema poziva") });
+                //if(listaPoziva.Count == 0)
+                //    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                //    { Content = new StringContent("Nema poziva") });
 
                 return listaPoziva;
             }

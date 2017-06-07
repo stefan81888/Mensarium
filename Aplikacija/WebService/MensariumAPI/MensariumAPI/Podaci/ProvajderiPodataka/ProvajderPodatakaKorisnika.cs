@@ -389,7 +389,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 sviPozivi.Add(pnfidto);
             }
 
-            sviPozivi.RemoveAll(x => x.DatumPoziva < DateTime.Today);
+            sviPozivi.RemoveAll(x => x.DatumPoziva < DateTime.Now);
             sviPozivi.RemoveAll(x => x.DatumPoziva > x.VaziDo);
             sviPozivi.RemoveAll(x => x.VaziDo < DateTime.Now);
             sviPozivi.Sort((x, y) => y.DatumPoziva.CompareTo(x.DatumPoziva));
@@ -746,11 +746,17 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static bool PrvaPrijava(int id, string sifra)
         {
-            Korisnik k = VratiKorisnika(id);
+            ISession s = SesijeProvajder.VratiSesiju();
+            Korisnik k = s.Get<Korisnik>(id);
 
+            
             if (k == null)
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Student ne postoji") });
+
+            if (k.TipNaloga.IdTip != 5)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Greska: Nalog nije studentski") });
 
             return sifra == k.Sifra;
         }
