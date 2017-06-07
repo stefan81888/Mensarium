@@ -73,7 +73,8 @@ namespace Mensarium
             catch (Exception ex)
             {
                 //Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
-                RunOnUiThread(() => Toast.MakeText(this, ex.Message, ToastLength.Short).Show());
+                RunOnUiThread(() => Toast.MakeText(this, ex.Message, ToastLength.Long).Show());
+                RunOnUiThread(() => dialogCekaj.Dismiss());
             }
         }
 

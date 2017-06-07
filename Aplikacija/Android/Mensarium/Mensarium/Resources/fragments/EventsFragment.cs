@@ -183,7 +183,7 @@ namespace Mensarium
         {
             NapuniPoziv();
             
-            if ((poziv.VaziDo - DateTime.Now).Ticks > 0 && ValidnoVreme(poziv.VaziDo))
+            if (true)//(poziv.VaziDo - DateTime.Now).Ticks > 0 && ValidnoVreme(poziv.VaziDo))
             {
                 try
                 {
@@ -212,9 +212,10 @@ namespace Mensarium
         {
             poziv = new PozivanjaFullDto();
 
-            poziv.DatumPoziva = DateTime.Now;
-            poziv.VaziDo = DateTime.Now;
-            poziv.VaziDo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, holder.EvenTimePicker.CurrentHour.IntValue(), holder.EvenTimePicker.CurrentMinute.IntValue(), 0);
+            poziv.DatumPoziva = DateTime.Now.ToUniversalTime();
+            
+            //poziv.VaziDo = DateTime.Now;
+            poziv.VaziDo = new DateTime(DateTime.Now.Year, DateTime.Now.Day, DateTime.Now.Month, holder.EvenTimePicker.CurrentHour.IntValue(), holder.EvenTimePicker.CurrentMinute.IntValue(), 0).ToUniversalTime();
 
             poziv.IdPozivaoca = MSettings.CurrentSession.LoggedUser.UserID;
         }
@@ -242,7 +243,7 @@ namespace Mensarium
             view.FindViewById<RelativeLayout>(Resource.Id.pozivJeKreiran).Visibility = ViewStates.Visible;
             var tx = view.FindViewById<TextView>(Resource.Id.statusPoziva);
 
-            if ((poziv.VaziDo - DateTime.Now).Ticks > 0)
+            if (poziv.VaziDo > DateTime.Now)
             {
                 tx.Text = "Aktivan";
                 tx.SetTextColor(Color.ParseColor("#4ee07d"));

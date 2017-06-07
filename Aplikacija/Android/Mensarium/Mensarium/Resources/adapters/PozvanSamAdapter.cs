@@ -46,8 +46,8 @@ namespace Mensarium.Resources.adapters
             view.FindViewById<TextView>(Resource.Id.pozvanSamIme).Text = p.ImePozivaoca + " " + p.PrezimePozivaoca;
             view.FindViewById<TextView>(Resource.Id.pozvanSamUsername).Text = "@" + p.KorisnickoImePozivaoca;
 
-            view.FindViewById<TextView>(Resource.Id.pozvanSamVaziOd).Text = p.DatumPoziva.ToShortTimeString();
-            view.FindViewById<TextView>(Resource.Id.pozvanSamVaziDo).Text = p.VaziDo.ToShortTimeString();
+            view.FindViewById<TextView>(Resource.Id.pozvanSamVaziOd).Text = p.DatumPoziva.ToShortTimeString() + p.DatumPoziva.ToShortDateString();
+            view.FindViewById<TextView>(Resource.Id.pozvanSamVaziDo).Text = p.VaziDo.ToShortTimeString() + p.VaziDo.ToShortDateString();
 
             Button dugme = view.FindViewById<Button>(Resource.Id.odgovoriItemDugme);
             dugme.Tag = p.IdPoziva;

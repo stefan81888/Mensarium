@@ -32,7 +32,8 @@ namespace Mensarium.Api
             public T ResponseObject { get; set; }
         }
         //static string BaseUrl = MSettings.Server.ServerURL + "api/";
-        private static string BaseUrl = "http://242fbe73.ngrok.io/api/";
+        //private static string BaseUrl = "http://7461f14b.ngrok.io/api/";
+        private static string BaseUrl = "http://10.10.0.5:2244/api/";
 
         private static ApiResponse<byte[]> DownloadData(RestRequest request, bool includeSid = true)
         {
@@ -183,18 +184,18 @@ namespace Mensarium.Api
 
             return response.ResponseObject;
         }
-        public static KorisnikFullDto AndroidUserRegistration(ClientZaRegistracijuDto c)
+        public static void AndroidUserRegistration(ClientZaRegistracijuDto c)
         {
             RestRequest request = new RestRequest(Method.PUT);
-            request.Resource = "korisnici/update";
+            request.Resource = "korisnici/registracija/android";
             request.AddObject(c);
 
-            var response = Execute<KorisnikFullDto>(request, false);
+            var response = Execute(request, false);
             if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
                 throw new Exception("AndroidUserRegistrationError" + "\nServerResponse: "
                     + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
 
-            return response.ResponseObject;
+            
         }
 
         public static KorisnikFullDto AndroidPrvaPrijava(ClientZaRegistracijuDto c)
@@ -619,12 +620,43 @@ namespace Mensarium.Api
             request.Resource = "korisnici/stanje";
             request.AddParameter("id", id, ParameterType.QueryString);
 
-            ApiResponse<KorisnikStanjeDto> response = Execute<KorisnikStanjeDto>(request);
-            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
-                throw new Exception("GetMeal: Neuspesno pribavljanje informacije o obroku" + "\nServerResponse: "
-                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
+            RestClient client = new RestClient();
+            client.BaseUrl = new Uri(BaseUrl);
+            request.AddQueryParameter("sid", MSettings.CurrentSession.SessionID);
 
-            return response.ResponseObject;
+            Console.WriteLine("RequestedURL: " + client.BuildUri(request).ToString());
+
+            var response = client.Execute(request);
+            if (response.ResponseStatus != ResponseStatus.Completed) //nastala greska na mreznom nivou
+            {
+                string message = "Greska u komuniciranju sa serverom.\nProveri internet konekciju.\n\n" +
+                                 "ErrorReason: " + response.ErrorMessage;
+                throw new ApplicationException(message, response.ErrorException);
+            }
+
+            if (!(response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetMeal: Neuspesno pribavljanje informacije o obroku" + "\nServerResponse: "
+                    + response.Content + "\nHttpStatus: " + response.StatusCode);
+
+            string odg = response.Content;
+            
+            //dirty hack
+            int idd = odg.IndexOf(":");
+            int ir = odg.IndexOf(":", idd + 1);
+            int il = odg.IndexOf(":", ir + 1);
+            int cd = odg.IndexOf(",");
+            int cr = odg.IndexOf(",", cd + 1);
+            int cl = odg.IndexOf("}", cr + 1);
+
+            int lend = cd - idd;
+            int lenr = cr - ir;
+            int lenl = cl - il;
+
+            string dorucak = odg.Substring(idd+1, lend-1);
+            string rucak = odg.Substring(ir+1, lenr-1);
+            string vecera = odg.Substring(il+1, lenl-1);
+
+            return new KorisnikStanjeDto() {BrojVecera = vecera, BrojRuckova = rucak, BrojDorucka = dorucak};
         }
 
         public static ObrokFullDto GetMealInfo(int id)

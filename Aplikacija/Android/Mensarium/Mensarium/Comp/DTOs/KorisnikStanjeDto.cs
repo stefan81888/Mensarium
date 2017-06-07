@@ -8,8 +8,8 @@ namespace MensariumDesktop.Model.Components.DTOs
     public class KorisnikStanjeDto
     {
         //public int IDKorisnika;
-        public int BrojDorucka;
-        public int BrojRuckova;
-        public int BrojVecera;
+        public string BrojDorucka;
+        public string BrojRuckova;
+        public string BrojVecera;
     }
 }

@@ -1,126 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbg"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true">
-    <TextView
-        android:text="MENSARIUM"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:background="@drawable/loginbg">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/naslov"
-        android:textColor="@color/NaslovIImeButtona"
-        android:textSize="54dp"
-        android:textStyle="italic"
-        android:gravity="center"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="60dp" />
-    <EditText
-        android:inputType="textEmailAddress"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/usernameText"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:background="@drawable/edittextrounded"
-        android:hint="email / korisnicko ime"
-        android:textColorHint="@drawable/text_hint_selector"
-        android:ellipsize="start"
-        android:gravity="center"
-        android:textSize="16dp"
-        android:layout_below="@id/naslov"
-        android:layout_marginTop="60dp" />
-    <EditText
-        android:inputType="textPassword"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/passwordText"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:background="@drawable/edittextrounded"
-        android:hint="sifra"
-        android:textColorHint="@drawable/text_hint_selector"
-        android:ellipsize="start"
-        android:gravity="center"
-        android:textSize="16dp"
-        android:layout_below="@id/usernameText"
-        android:layout_marginTop="8dp" />
-    <Button
-        android:text="Prijavi se"
-        android:textColor="@color/NaslovIImeButtona"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:id="@+id/signInDugme"
-        android:layout_below="@id/passwordText"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/rounded_button"
-        android:textSize="18dp"
-        android:textAllCaps="false" />
-    <LinearLayout
-        android:id="@+id/stuffUnderSignInLayout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/signInDugme"
-        android:layout_marginTop="10dp"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:gravity="center">
-        <CheckBox
-            android:text="Zapamti me"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/checkRemember"
-            android:scaleX="0.9"
-            android:scaleY="0.9"
+        android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
+        <LinearLayout
+            android:id="@+id/naslov"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:gravity="center">
+            <ImageView
+                android:src="@drawable/fulllogowhite"
+                android:layout_width="wrap_content"
+                android:layout_height="230dp"
+                android:id="@+id/logo" />
+        </LinearLayout>
+        <EditText
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/usernameText"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/edittextrounded"
+            android:hint="email / korisnicko ime"
+            android:textColorHint="@drawable/text_hint_selector"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:layout_below="@id/naslov"
+            android:layout_marginTop="15dp" />
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/passwordText"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/edittextrounded"
+            android:hint="sifra"
+            android:textColorHint="@drawable/text_hint_selector"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:layout_below="@id/usernameText"
+            android:layout_marginTop="8dp" />
+        <Button
+            android:text="Prijavi se"
             android:textColor="@color/NaslovIImeButtona"
-            android:textStyle="bold" />
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:id="@+id/signInDugme"
+            android:layout_below="@id/passwordText"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded_button"
+            android:textSize="18dp"
+            android:textAllCaps="false" />
+        <LinearLayout
+            android:id="@+id/stuffUnderSignInLayout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/signInDugme"
+            android:layout_marginTop="10dp"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:gravity="center">
+            <CheckBox
+                android:text="Zapamti me"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/checkRemember"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                android:textColor="@color/NaslovIImeButtona"
+                android:textStyle="bold" />
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/separator_line"
+                android:layerType="software"
+                android:background="@color/SeparatorLine"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp" />
+            <TextView
+                android:text="Zaboravljena sifra"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/forgotPassword"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="12dp"
+                android:textColor="@color/NaslovIImeButtona" />
+        </LinearLayout>
         <ImageView
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:id="@+id/separatorLine"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
             android:src="@drawable/separator_line"
             android:layerType="software"
-            android:background="@color/SeparatorLine"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp" />
-        <TextView
-            android:text="Zaboravljena sifra"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/forgotPassword"
-            android:layout_marginLeft="15dp"
-            android:gravity="center_vertical"
-            android:textStyle="bold"
-            android:textSize="12dp"
-            android:textColor="@color/NaslovIImeButtona" />
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/separatorLine"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:src="@drawable/separator_line"
-        android:layerType="software"
-        android:layout_below="@id/stuffUnderSignInLayout"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp" />
-    <Button
-        android:text="Aktiviraj nalog"
-        android:textColor="@color/NaslovIImeButtona"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:id="@+id/activateDugme"
-        android:layout_below="@id/separatorLine"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/rounded_button"
-        android:textSize="18dp"
-        android:layout_centerHorizontal="true"
-        android:textAllCaps="false" />
-</RelativeLayout>
+            android:layout_below="@id/stuffUnderSignInLayout"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp" />
+        <Button
+            android:text="Aktiviraj nalog"
+            android:textColor="@color/NaslovIImeButtona"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:id="@+id/activateDugme"
+            android:layout_below="@id/separatorLine"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded_button"
+            android:textSize="18dp"
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="false"
+            android:layout_marginBottom="20dp" />
+    </RelativeLayout>
+</ScrollView>

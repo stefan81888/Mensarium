@@ -15,7 +15,7 @@ using MensariumDesktop.Model.Components.DTOs;
 
 namespace Mensarium.Resources.activities
 {
-    [Activity(Label = "Odgovri na pozive", Theme = "@style/Theme.AppCompat")]
+    [Activity(Label = "Odgovori na pozive")]
     public class ActivityPozvanSam : Activity
     {
         private ListView pozvanSam;
@@ -60,6 +60,10 @@ namespace Mensarium.Resources.activities
             catch (Exception ex)
             {
                 this.RunOnUiThread(() => Toast.MakeText(this, ex.Message, ToastLength.Long).Show());
+            }
+            finally
+            {
+                //this.RunOnUiThread(() => pozvanSam.Adapter = new PozvanSamAdapter(this, lista));
             }
         }
     }

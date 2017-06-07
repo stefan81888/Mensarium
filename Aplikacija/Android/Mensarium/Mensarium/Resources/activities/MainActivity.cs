@@ -29,9 +29,9 @@ namespace Mensarium
             SetContentView(Resource.Layout.login);
 
             //font za naslov
-            var txtView = FindViewById<TextView>(Resource.Id.naslov);
-            Typeface tf = Typeface.CreateFromAsset(Assets, "rage.ttf");
-            txtView.SetTypeface(tf, TypefaceStyle.Normal);
+            //var txtView = FindViewById<TextView>(Resource.Id.naslov);
+            //Typeface tf = Typeface.CreateFromAsset(Assets, "rage.ttf");
+            //txtView.SetTypeface(tf, TypefaceStyle.Normal);
 
             this.loginButton = FindViewById<Button>(Resource.Id.signInDugme);
             this.loginButton.Click += LoginButton_Click;

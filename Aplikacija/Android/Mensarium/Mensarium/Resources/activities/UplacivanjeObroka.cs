@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Telephony;
 using Android.Views;
 using Android.Widget;
+using Mensarium.Components;
 
 namespace Mensarium.Resources.activities
 {
@@ -99,11 +100,34 @@ namespace Mensarium.Resources.activities
 
         private void DugmeOnClick(object sender, EventArgs eventArgs)
         {
-            string formatPoruke = "DORUCAK " + this.brojDorucka.ToString() + " RUCAK " + this.brojRucka.ToString() +
-                                  " VECERA " + this.brojVecera.ToString();
+            string formatPoruke;
 
-            //SmsManager.Default.SendTextMessage("123456790", null, formatPoruke, null, null);
-            Toast.MakeText(this, formatPoruke, ToastLength.Long).Show();
+            if (this.brojDorucka != 0)
+            {
+                formatPoruke = "MENSARIUM " + MSettings.CurrentSession.LoggedUser.UserID + " DORUCAK " +
+                               this.brojDorucka.ToString();
+
+                SmsManager.Default.SendTextMessage("062719720", null, formatPoruke, null, null);
+                Toast.MakeText(this, formatPoruke, ToastLength.Long).Show();
+            }
+
+            if (this.brojRucka != 0)
+            {
+                formatPoruke = "MENSARIUM " + MSettings.CurrentSession.LoggedUser.UserID + " RUCAK " +
+                               this.brojRucka.ToString();
+
+                SmsManager.Default.SendTextMessage("062719720", null, formatPoruke, null, null);
+                Toast.MakeText(this, formatPoruke, ToastLength.Long).Show();
+            }
+
+            if (this.brojVecera != 0)
+            {
+                formatPoruke = "MENSARIUM " + MSettings.CurrentSession.LoggedUser.UserID + " VECERA " +
+                               this.brojVecera.ToString();
+
+                SmsManager.Default.SendTextMessage("062719720", null, formatPoruke, null, null);
+                Toast.MakeText(this, formatPoruke, ToastLength.Long).Show();
+            }
         }
 
         //za back dugme gore
