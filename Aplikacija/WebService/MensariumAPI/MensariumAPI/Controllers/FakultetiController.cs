@@ -48,7 +48,6 @@ namespace MensariumAPI.Controllers
 					throw e;
 				DnevnikIzuzetaka.Zabelezi(e);
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
-				//throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Fakultet nije napravljen!") });
 			}
 			finally
 			{
@@ -113,7 +112,7 @@ namespace MensariumAPI.Controllers
 			        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
 			            { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.DodavanjeFakultet))
 					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden) { Content = new StringContent("Nemate privilegiju") });
 				
 				Fakultet f = new Fakultet()

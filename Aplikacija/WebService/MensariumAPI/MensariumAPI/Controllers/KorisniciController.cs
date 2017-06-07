@@ -31,7 +31,7 @@ namespace MensariumAPI.Controllers
                         { Content = new StringContent("Sesija istekla") });
 
                 if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid,
-                    ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    ValidatorPrivilegija.UserPrivilegies.CitanjeKorisnik))
                     throw new HttpResponseException(
                         new HttpResponseMessage(HttpStatusCode.Forbidden)
                         {
@@ -102,7 +102,7 @@ namespace MensariumAPI.Controllers
 
 
                 if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid,
-                    ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    ValidatorPrivilegija.UserPrivilegies.CitanjeKorisnik))
                     throw new HttpResponseException(
                         new HttpResponseMessage(HttpStatusCode.Forbidden)
                         {
@@ -158,7 +158,7 @@ namespace MensariumAPI.Controllers
                         { Content = new StringContent("Sesija istekla") });
 
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
@@ -200,7 +200,7 @@ namespace MensariumAPI.Controllers
                         { Content = new StringContent("Sesija istekla") });
 
                 if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid,
-                    ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                    ValidatorPrivilegija.UserPrivilegies.DodavanjeKorisnik))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                         {Content = new StringContent("Nemate privilegiju")});
 
@@ -322,6 +322,11 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
                 List<KorisnikFollowDto> pracenja = ProvajderPodatakaKorisnika.SvaPracenja(ProvajderPodatakaKorisnika.KorisnikIDizSesijaID(sid));
 
                 if(pracenja == null)
@@ -361,7 +366,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeKorisnik))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
@@ -403,7 +408,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
@@ -445,7 +450,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeObrok))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
@@ -488,7 +493,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PregledPrivilegija))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
@@ -541,7 +546,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
@@ -581,7 +586,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
@@ -619,7 +624,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                         { Content = new StringContent("Nemate privilegiju") });
 
@@ -659,7 +664,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                         { Content = new StringContent("Nemate privilegiju") });
 
@@ -698,10 +703,6 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
-                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
-                    { Content = new StringContent("Nemate privilegiju") });
-
                 bool uspesno = ProvajderPodatakaKorisnika.OdjaviSe(sid);
 
                 if(uspesno)
@@ -737,7 +738,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.ModifikacijaKorisnik))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                     { Content = new StringContent("Nemate privilegiju") });
 
@@ -776,7 +777,7 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
-                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.CitanjeFakultet))
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.BrisanjeKorisnik))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
                         { Content = new StringContent("Nemate privilegiju") });
 
@@ -1052,6 +1053,10 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
                 PozivanjaFullDto s = ProvajderPodatakaKorisnika.NoviPoziv(pfdto, sid);
 
                 if (s == null)
@@ -1148,6 +1153,10 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
 
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
                 List<OgovorNaPozivDto> s = ProvajderPodatakaKorisnika.ObavestiOOdgovorima(idPoziva, sid);
 
                 if (s == null)
@@ -1181,6 +1190,10 @@ namespace MensariumAPI.Controllers
                 if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
 
                 PozivanjaFullDto s = ProvajderPodatakaKorisnika.Poziv(idPoziva, sid);
 

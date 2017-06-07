@@ -58,6 +58,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             CitanjeMenza,
             CitanjeGuzvaMenza,
 
+            PracenjeKorisnika,
+            PregledPrivilegija
+
         }
 
         public static bool KorisnikImaPrivilegiju(string idSesije, UserPrivilegies privilegija)
