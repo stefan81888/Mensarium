@@ -903,7 +903,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             string link = Guid.NewGuid().ToString();
 
             oMail.HtmlBody = String.Format("Poštovani, " +
-                "dobro došli na Mensarium sistem!" +
+                "dobro došli na <span style=\"color:green\">Mensarium</span> sistem!" +
                 "Molimo Vas da aktivirate nalog pritiskom na link: <br> {0}",
                 "<a href=\"" + 
                 verifikacioni_link + id +"\">"
