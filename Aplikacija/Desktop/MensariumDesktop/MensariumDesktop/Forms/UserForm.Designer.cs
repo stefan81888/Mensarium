@@ -149,6 +149,7 @@
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // imageListButtonIconsUser
             // 
@@ -174,6 +175,7 @@
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -469,6 +471,7 @@
             // 
             this.dateTimeRegistration.CalendarFont = new System.Drawing.Font("Segoe UI", 12F);
             this.dateTimeRegistration.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dateTimeRegistration.Enabled = false;
             this.dateTimeRegistration.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.dateTimeRegistration.Location = new System.Drawing.Point(159, 445);
             this.dateTimeRegistration.Name = "dateTimeRegistration";

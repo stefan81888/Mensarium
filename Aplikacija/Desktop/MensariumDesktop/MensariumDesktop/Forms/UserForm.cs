@@ -27,6 +27,7 @@ namespace MensariumDesktop.Forms
             user.AccountType = User.UserAccountType.Student;
             MyInitForm();
         }
+
         public UserForm(User u)
         {
             InitializeComponent();
@@ -35,6 +36,7 @@ namespace MensariumDesktop.Forms
             CreateMode = false;
             MyInitForm();
         }
+
         public void MyInitForm()
         {
             cbxTip.DataSource = Enum.GetValues(typeof(User.UserAccountType));
@@ -45,17 +47,18 @@ namespace MensariumDesktop.Forms
             if (MSettings.CurrentSession.LoggedUser.AccountType == User.UserAccountType.Menadzer)
                 cbxTip.Enabled = false;
 
-            cbxStanje.SelectedIndex = 0;
-            btnSave.Text = CreateMode? "Dodaj" : "Sacuvaj";
+            cbxStanje.SelectedIndex = 1;
+            btnSave.Text = CreateMode ? "Dodaj" : "Sacuvaj";
 
         }
+
         private void FillData()
         {
             if (!CreateMode && user.ProfilePicture == null)
                 MainController.LoadProfilePicture(user);
 
             picProfilePicture.Image = user.ProfilePicture;
-            txtID.Text = (user.UserID == 0 )? "/" : user.UserID.ToString();
+            txtID.Text = (user.UserID == 0) ? "/" : user.UserID.ToString();
             txtFName.Text = user.FirstName ?? "";
             txtLName.Text = user.LastName ?? "";
             if (user.Birthday != DateTime.MinValue)
@@ -70,30 +73,34 @@ namespace MensariumDesktop.Forms
                 dateTimeRegistration.Value = user.RegistrationDate;
             else
                 dateTimeRegistration.Value = DateTime.Now;
-            
+
             cbxTip.SelectedItem = user.AccountType;
             cbxStanje.SelectedIndex = user.ActiveAccount ? 0 : 1;
         }
+
         private void UserForm_Load(object sender, EventArgs e)
         {
             FillData();
         }
+
         private void cbxTip_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CreateMode && (User.UserAccountType)cbxTip.SelectedItem == User.UserAccountType.Student)
+            if (CreateMode && (User.UserAccountType) cbxTip.SelectedItem == User.UserAccountType.Student)
             {
                 txtUsername.Enabled = false;
                 txtEmail.Enabled = false;
                 txtPassword.Enabled = false;
+                cbxStanje.Enabled = false;
             }
             else
             {
                 txtUsername.Enabled = true;
                 txtEmail.Enabled = true;
                 txtPassword.Enabled = true;
+                cbxStanje.Enabled = true;
             }
-            
-            if ((User.UserAccountType)cbxTip.SelectedItem != User.UserAccountType.Student)
+
+            if ((User.UserAccountType) cbxTip.SelectedItem != User.UserAccountType.Student)
             {
                 cbxFaculty.Enabled = false;
                 txtIndex.Enabled = false;
@@ -107,23 +114,16 @@ namespace MensariumDesktop.Forms
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
         private void AllowOnlyLetters_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char) Keys.Back);
         }
+
         private void AllowOnlyAlphaNumeric_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back || char.IsNumber(e.KeyChar));
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char) Keys.Back || char.IsNumber(e.KeyChar));
         }
-        private void AllowOnlyNumbers_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !(char.IsNumber(e.KeyChar) || e.KeyChar == (char)Keys.Back);
-        }
+
         private void txtEmail_Validating(object sender, CancelEventArgs e)
         {
             if (txtEmail.Text == string.Empty) return;
@@ -136,9 +136,12 @@ namespace MensariumDesktop.Forms
 
         private void picProfilePicture_Click(object sender, EventArgs e)
         {
-            openImageFileDialog.ShowDialog();
+            DialogResult dr = openImageFileDialog.ShowDialog();
+            if (dr != DialogResult.OK)
+                return;
 
             string filename = openImageFileDialog.FileName;
+            
             long filesize = (new FileInfo(filename)).Length;
 
             if (filesize >= (1024 * 1024 * 1))
@@ -147,7 +150,55 @@ namespace MensariumDesktop.Forms
                 return;
             }
             picProfilePicture.Image = Image.FromFile(openImageFileDialog.FileName);
+
+        }
+
+        private bool ValidateData()
+        {
+            if (txtFName.Text == string.Empty) return false;
+            if (txtLName.Text == string.Empty) return false;
+            if (dateTimeBirthday.Value >= DateTime.Now) return false;
+            if (txtIndex.Enabled && txtIndex.Text == string.Empty) return false;
+            if (txtPhone.Text == string.Empty) return false;
+            if (txtUsername.Enabled && txtUsername.Text == string.Empty && cbxStanje.SelectedIndex == 0) return false;
+            if (txtEmail.Enabled && txtEmail.Text == string.Empty && cbxStanje.SelectedIndex == 0) return false;
+            if (dateTimeValid.Enabled && dateTimeValid.Value < user.RegistrationDate) return false;
+            return true;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (!ValidateData())
+            {
+                MUtility.ShowWarrning("Proverite sva polja");
+                return;
+            }
             
+            user.ProfilePicture = picProfilePicture.Image;
+            user.FirstName = txtFName.Text;
+            user.LastName = txtLName.Text;
+            user.Birthday = dateTimeBirthday.Value;
+            if (user.AccountType == User.UserAccountType.Student)
+            {
+                user.Faculty = cbxFaculty.SelectedItem as Faculty;
+                user.Index = txtIndex.Text;
+            }
+            user.PhoneNumber = txtPhone.Text;
+
+            user.Username = txtUsername.Text;
+            user.Email = txtEmail.Text;
+            user.Password = txtPassword.Text;
+            user.ValidUntil = dateTimeValid.Value;
+            user.RegistrationDate = dateTimeRegistration.Value;
+            user.AccountType = (User.UserAccountType) cbxTip.SelectedItem;
+            user.ActiveAccount = cbxStanje.SelectedIndex == 0;
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
