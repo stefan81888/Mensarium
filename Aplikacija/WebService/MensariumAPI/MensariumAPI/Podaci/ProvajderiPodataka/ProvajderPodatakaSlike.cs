@@ -35,7 +35,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static string PostaviSliku(int id)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(id);
+            Korisnik k = s.Get<Korisnik>(id);
+            if(k == null)
+                throw new Exception("ServerGreska: Korisnik nije pronadjen prilikom postavljanje slike");
             k.Slika = k.IdKorisnika + ".jpg";
             s.Save(k);
             s.Flush();

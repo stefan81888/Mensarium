@@ -375,12 +375,12 @@ namespace MensariumDesktop.Model.Controllers
         {
             SetUserImage(userId, image.FullName);
         }
-        public static void SetUserImage(int userId, string imagePath)
+        public static void SetUserImage(int userId,string imagePath)
         {
             RestRequest request = new RestRequest(Method.PUT);
             request.Resource = "korisnici/postaviSliku";
             request.AddParameter("id", userId, ParameterType.QueryString);
-            request.AddFile(userId.ToString(), imagePath, "image/jpg");
+            request.AddFile(imagePath, imagePath, "image/jpg");
 
             var response = Execute(request);
             if (!(response.HttpStatusCode == HttpStatusCode.Created || response.HttpStatusCode == HttpStatusCode.Redirect))

@@ -229,47 +229,38 @@ namespace MensariumAPI.Controllers
 
         }
 
-        //Ažuriranje korisnika -> registracija na android aplikaciju
+        //Ažuriranje korisnika -> mail, sifra i/ili telefon
         [HttpPut]
         [Route("update")]
-        public IHttpActionResult UpdateKorisnika([FromBody]ClientZaRegistracijuDto klijentReg)
+        public IHttpActionResult UpdateKorisnika([FromBody] StudentAzuriranjeDto sadto, [FromUri] string sid)
         {
             try
             {
                 SesijeProvajder.OtvoriSesiju();
 
-                Korisnik k = ProvajderPodatakaKorisnika.VratiKorisnika(klijentReg.DodeljeniId);                
+                if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Sesija istekla") });
 
-                if (ValidatorKorisnika.KorisnikPostoji(k))
-                {
-                    if (k.Sifra == klijentReg.DodeljenaLozinka)
-                    {
-                        if (!ValidatorKorisnika.PostojiUsername(klijentReg.NovaLozinka))
-                        {
-                            if (k.TipNaloga.IdTip == 5)
-                            {
-                                k.KorisnickoIme = klijentReg.KorisnickoIme;
-                                k.Email = klijentReg.Email;
-                                k.Sifra = klijentReg.NovaLozinka;
-                                k.BrojTelefona = klijentReg.Telefon;
-                            }
-                        }
-                        ProvajderPodatakaKorisnika.UpdateKorisnika(k);
 
-                        return Ok("Korisnik je registrovan na aplikaciju");
-                    }
-                }
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                { Content = new StringContent("Korisnik nije pronadjen u bazi") });
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
 
+                bool status = ProvajderPodatakaKorisnika.AndroidUpdate(sadto, sid);
+
+                if (status)
+                    return Ok("Korisnik azuriran");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Korisnik nije azuriran") });
             }
             catch (Exception e)
             {
                 if (e is HttpResponseException)
                     throw e;
                 DnevnikIzuzetaka.Zabelezi(e);
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
-                { Content = new StringContent("InternalError: " + e.Message) });
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
             }
             finally
             {
@@ -1099,6 +1090,7 @@ namespace MensariumAPI.Controllers
         }
 
         //Aktivacija naloga
+        //Do ove rute se dolazi iz emaila
         [HttpGet]
         [Route("verifikacija/{id:int}")]
         public IHttpActionResult VerifikovanNalog(int id)
@@ -1221,6 +1213,219 @@ namespace MensariumAPI.Controllers
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
                         { Content = new StringContent("Neuspesan zahtev") });
                 return s;
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Poslednji poziv koji je uputio korisnik
+        [HttpGet]
+        [Route("pozivi/poslednji")]
+        public PozivanjaFullDto PoslednjiPoziv([FromUri] string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
+               PozivanjaFullDto s = ProvajderPodatakaKorisnika.PoslednjiPoziv(sid);
+
+                if (s == null)
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Neuspesan zahtev") });
+                return s;
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Slanje obroka
+        [HttpPut]
+        [Route("obroci/posalji")]
+        public IHttpActionResult PosaljiObroke([FromUri]int idPrimaoca, [FromUri]int D, [FromUri]int R, [FromUri]int V, [FromUri]string sid)
+        {
+            KorisnikStanjeDto kdsto = new KorisnikStanjeDto(){ BrojDorucka = D, BrojRuckova = R, BrojVecera = V};
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+
+                if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
+                bool status = ProvajderPodatakaKorisnika.PosaljiObroke(idPrimaoca, kdsto, sid);
+
+                if (status)
+                    return Ok("Slanje uspesno");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Slanje neuspesno") });
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Zahtev za promenu maila
+        [HttpPut]
+        [Route("email/zahtev")]
+        public IHttpActionResult ZahtevajPromenuEmaila([FromUri]string noviMail, [FromUri]string sid)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+
+                if (!ProvajderPodatakaKorisnika.SesijaValidna(sid))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
+                        { Content = new StringContent("Sesija istekla") });
+
+                if (!ValidatorPrivilegija.KorisnikImaPrivilegiju(sid, ValidatorPrivilegija.UserPrivilegies.PracenjeKorisnika))
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        { Content = new StringContent("Nemate privilegiju") });
+
+                bool status = ProvajderPodatakaKorisnika.PromeniEmail(noviMail, sid);
+
+                if (status)
+                    return Ok("Zahtev poslat");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Zahtev neuspesan") });
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Menja email korisniku
+        //Do ove rute se dolazi iz emaila
+        [HttpGet]
+        [Route("mail/reset")]
+        public IHttpActionResult ResetujEmail([FromUri]string pin, [FromUri] int id)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                bool status = ProvajderPodatakaKorisnika.ResetujEmail(pin, id);
+
+                if (status)
+                    return Ok("Resetovanje uspesno");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Resetovanje neuspesno") });
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+        
+        //Zahteva promenu sifre, pin se salje na mail
+        [HttpPut]
+        [Route("sifra/zahtevaj")]
+        public IHttpActionResult ZahtevajPromenuSifre([FromUri]string korisnickoIme)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                bool status = ProvajderPodatakaKorisnika.SifraRecoverySend(korisnickoIme);
+
+                if (status)
+                    return Ok("Zahtev poslat");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Zahtev neuspesan") });
+
+            }
+            catch (Exception e)
+            {
+                if (e is HttpResponseException)
+                    throw e;
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent("InternalError: " + e.Message) });
+            }
+            finally
+            {
+                SesijeProvajder.ZatvoriSesiju();
+            }
+        }
+
+        //Slanje nove sifre uz pin
+        [HttpPut]
+        [Route("sifra/oporavi")]
+        public IHttpActionResult OporavakSifre([FromBody]PassRecoveryDto prdto)
+        {
+            try
+            {
+                SesijeProvajder.OtvoriSesiju();
+
+                bool status = ProvajderPodatakaKorisnika.SifraRecoveryConfirm(prdto);
+
+                if (status)
+                    return Ok("Sifra promenjena");
+
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    { Content = new StringContent("Promena sifre neuspesna") });
 
             }
             catch (Exception e)

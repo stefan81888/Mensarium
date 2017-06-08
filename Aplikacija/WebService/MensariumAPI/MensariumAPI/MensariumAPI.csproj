@@ -259,6 +259,7 @@
     <Compile Include="Podaci\DTO\ObrokUplataDto.cs" />
     <Compile Include="Podaci\DTO\OdjavaDto.cs" />
     <Compile Include="Podaci\DTO\OgovorNaPozivDto.cs" />
+    <Compile Include="Podaci\DTO\PassRecoveryDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaFullDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaNewsFeedItemDto.cs" />
     <Compile Include="Podaci\DTO\PozivanjaPozvaniDto.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="Podaci\DTO\PrivilegijaFullDto.cs" />
     <Compile Include="Podaci\DTO\ServerLoginDto.cs" />
     <Compile Include="Podaci\DTO\SesijaDto.cs" />
+    <Compile Include="Podaci\DTO\StudentAzuriranjeDto.cs" />
     <Compile Include="Podaci\DTO\TipNalogaFullDto.cs" />
     <Compile Include="Podaci\DTO\TipObrokaFullDto.cs" />
     <Compile Include="Podaci\Entiteti\Fakultet.cs" />

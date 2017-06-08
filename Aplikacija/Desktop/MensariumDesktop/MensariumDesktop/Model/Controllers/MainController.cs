@@ -422,7 +422,6 @@ namespace MensariumDesktop.Model.Controllers
                 return false;
             }
         }
-
         public static bool UpdateAllUsersList()
         {
             try
@@ -438,6 +437,7 @@ namespace MensariumDesktop.Model.Controllers
             }
         }
 
+
         public static bool DeleteUser(User u)
         {
             try
@@ -452,7 +452,23 @@ namespace MensariumDesktop.Model.Controllers
             }
         }
 
-
+        public static bool ChangeUserImage(User u)
+        {
+            try
+            {
+                string tmpf = System.IO.Path.GetTempFileName();
+                tmpf = tmpf.Replace(".tmp", ".jpg");
+                u.ProfilePicture.Save(tmpf);
+                Api.SetUserImage(u.UserID, tmpf);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+        }
+    
         //Email Validator
         private static bool invalidEmail;
         public static bool IsValidEmail(string strIn)
@@ -503,6 +519,79 @@ namespace MensariumDesktop.Model.Controllers
                 invalidEmail = true;
             }
             return match.Groups[1].Value + domainName;
+        }
+
+        internal static bool AddNewUser(User u)
+        {
+            try
+            {
+                KorisnikKreiranjeDto k = new KorisnikKreiranjeDto()
+                {
+                    IdKorisnika = u.UserID,
+                    Ime = u.FirstName,
+                    Prezime = u.LastName,
+                    DatumRodjenja = u.Birthday,
+                    KorisnickoIme = u.Username,
+                    Email = u.Email,
+                    Sifra = u.Password,
+                    IdFakulteta = (u.Faculty != null) ? u.Faculty.FacultyID : 0,
+                    BrojIndeksa = u.Index,
+                    BrojTelefona = u.PhoneNumber,
+                    DatumVaziDo = u.ValidUntil,
+                    IdTipaNaloga = (int) u.AccountType,
+                    AktivanNalog = u.ActiveAccount
+                };
+                KorisnikKreiranjeDto result = Api.AddNewUser(k);
+                if (result != null)
+                {
+                    if (u.AccountType == User.UserAccountType.Student)
+                        (new NewUserCreatedForm(result.IdKorisnika.ToString(), result.Sifra)).ShowDialog();
+                    else
+                    {
+                        MUtility.ShowInformation(u.AccountType.ToString() + " nalog je uspesno kreiran");
+                    }
+                    u.UserID = result.IdKorisnika;
+                    MainController.ChangeUserImage(u);
+                }
+                
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
+        }
+
+        public static bool UpdateUser(User u)
+        {
+            try
+            {
+                KorisnikKreiranjeDto k = new KorisnikKreiranjeDto()
+                {
+                    IdKorisnika = u.UserID,
+                    Ime = u.FirstName,
+                    Prezime = u.LastName,
+                    DatumRodjenja = u.Birthday,
+                    KorisnickoIme = u.Username,
+                    Email = u.Email,
+                    Sifra = u.Password,
+                    IdFakulteta = (u.Faculty != null) ? u.Faculty.FacultyID : 0,
+                    BrojIndeksa = u.Index,
+                    BrojTelefona = u.PhoneNumber,
+                    DatumVaziDo = u.ValidUntil,
+                    IdTipaNaloga = (int) u.AccountType,
+                    AktivanNalog = u.ActiveAccount
+                };
+                Api.UpdateUser(k);
+                MainController.ChangeUserImage(u);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MUtility.ShowException(e);
+                return false;
+            }
         }
     }
 }

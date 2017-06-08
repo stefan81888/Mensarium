@@ -33,15 +33,15 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblID = new System.Windows.Forms.Label();
+            this.lblPIN = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.imageListButtonIconsNewUser = new System.Windows.Forms.ImageList(this.components);
+            this.btnCancel = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -73,23 +73,13 @@
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Humnst777 Blk BT", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(68, 14);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(183, 36);
+            this.label5.Size = new System.Drawing.Size(160, 33);
             this.label5.TabIndex = 3;
             this.label5.Text = "Mensarium";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(57, 96);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(315, 25);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Novi korisnik je uspešno napravljen";
             // 
             // pictureBox2
             // 
@@ -100,6 +90,16 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 4;
             this.pictureBox2.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(57, 96);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(315, 25);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Novi korisnik je uspešno napravljen";
             // 
             // label2
             // 
@@ -121,25 +121,25 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "PIN:";
             // 
-            // label6
+            // lblID
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(119, 127);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(132, 32);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "813548648";
+            this.lblID.AutoSize = true;
+            this.lblID.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblID.Location = new System.Drawing.Point(119, 127);
+            this.lblID.Name = "lblID";
+            this.lblID.Size = new System.Drawing.Size(131, 32);
+            this.lblID.TabIndex = 11;
+            this.lblID.Text = "813548648";
             // 
-            // label7
+            // lblPIN
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(119, 159);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(194, 32);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "91564a31dfd987";
+            this.lblPIN.AutoSize = true;
+            this.lblPIN.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPIN.Location = new System.Drawing.Point(119, 159);
+            this.lblPIN.Name = "lblPIN";
+            this.lblPIN.Size = new System.Drawing.Size(189, 32);
+            this.lblPIN.TabIndex = 12;
+            this.lblPIN.Text = "91564a31dfd987";
             // 
             // btnSave
             // 
@@ -157,6 +157,13 @@
             this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSave.UseVisualStyleBackColor = true;
             // 
+            // imageListButtonIconsNewUser
+            // 
+            this.imageListButtonIconsNewUser.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListButtonIconsNewUser.ImageStream")));
+            this.imageListButtonIconsNewUser.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListButtonIconsNewUser.Images.SetKeyName(0, "success.png");
+            this.imageListButtonIconsNewUser.Images.SetKeyName(1, "print.png");
+            // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -172,24 +179,18 @@
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // imageListButtonIconsNewUser
-            // 
-            this.imageListButtonIconsNewUser.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListButtonIconsNewUser.ImageStream")));
-            this.imageListButtonIconsNewUser.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListButtonIconsNewUser.Images.SetKeyName(0, "success.png");
-            this.imageListButtonIconsNewUser.Images.SetKeyName(1, "print.png");
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // NewUserCreatedForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(429, 262);
+            this.ClientSize = new System.Drawing.Size(429, 261);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lblPIN);
+            this.Controls.Add(this.lblID);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -220,8 +221,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblID;
+        private System.Windows.Forms.Label lblPIN;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ImageList imageListButtonIconsNewUser;

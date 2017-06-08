@@ -14,14 +14,17 @@ using System.Net;
 using System.Web.UI.WebControls;
 using EASendMail;
 using FluentNHibernate.Conventions;
+using NHibernate.Mapping;
 
 namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
     public class ProvajderPodatakaKorisnika
     {
+        #region Podaci
         private static string server_mail = "dalibor.aleksic.dacha@gmail.com";
-        private static string verifikacioni_link = "http://localhost:2244/api/korisnici/verifikacija";
-        
+        private static string verifikacioni_link = "http://160.99.38.140:2244/api/korisnici/verifikacija";
+        private static string promena_emaila_link = "http://160.99.38.140:2244/api/korisnici/mail/reset";
+
         public delegate KorisnikKreiranjeDto KreiranjeKorisnika(KorisnikKreiranjeDto kkdto);
         public delegate List<KorisnikFollowDto> PretragaKorisnika(PretragaKriterijumDto pkdto);
         public delegate List<KorisnikFullDto> SviKorisnici();
@@ -29,6 +32,16 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public List<KreiranjeKorisnika> listaDelegataKreiranja = new List<KreiranjeKorisnika>();
         public List<PretragaKorisnika> listaDelegataPretrage = new List<PretragaKorisnika>();
         public List<SviKorisnici> listaDelegataSvihKorisnika = new List<SviKorisnici>();
+        
+       //GUID adresira dictionari sa parom id-novi mail 
+       //Promena email adrese
+        public static Dictionary<string, Dictionary<int, string>> promenaMaila =
+            new Dictionary<string, Dictionary<int, string>>();
+        
+        //Pamti par username-pin(privremena sifra)
+        public static Dictionary<string, string> passRecovery = new Dictionary<string, string>();
+
+        #endregion
 
         public ProvajderPodatakaKorisnika()
         {
@@ -101,8 +114,10 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static SesijaDto PrijavaKorisnika(ClientLoginDto cdto)
         {
             ISession s = SesijeProvajder.Sesija;
+            
             List<Korisnik> korisnici = s.Query<Korisnik>().Select(k => k).ToList();
-
+            
+            /*
             List<Korisnik> ko = (from k in korisnici
                 where k.KorisnickoIme == cdto.KIme_Mail
                 || k.Email == cdto.KIme_Mail
@@ -119,10 +134,26 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             if (!ko[0].AktivanNalog)
                 return null;
-            
+            */
+
+            Korisnik ko = korisnici.Find(x => x.KorisnickoIme == cdto.KIme_Mail
+                                         || x.Email == cdto.KIme_Mail);
+
+            if (ko == null)
+                return null;
+
+            if (ko.Obrisan)
+                return null;
+
+            if (!ko.AktivanNalog)
+                return null;
+
+            if (ko.Sifra != cdto.Sifra)
+                return null;
+
             LoginSesija sesija = new LoginSesija()
             {
-                KorisnikSesije = ko[0],
+                KorisnikSesije = ko,
                 IdSesije = Guid.NewGuid().ToString(),
                 DatumPrijavljivanja = DateTime.Now,
                 ValidnaDo = DateTime.Now.AddYears(1)
@@ -143,6 +174,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
         public static bool Zaprati(int idPratioca, int idPracenog)
         {
+            if (idPracenog == idPratioca)
+                return false;
+
             ISession s = SesijeProvajder.Sesija;
 
             Korisnik pratilac = VratiKorisnika(idPratioca);
@@ -201,9 +235,6 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 };
                 praceni.Add(kdto);
             }
-
-            
-
             return praceni;
         }
 
@@ -228,11 +259,10 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
 
             lista.RemoveAll(x => x.Obrisan);
             lista.RemoveAll(x => !x.AktivanNalog);
+            lista.RemoveAll(x => x.IdKorisnika == pkdto.IdKorisnika);
 
             foreach (var v in lista)
             {
-                if(v.IdKorisnika == pkdto.IdKorisnika)
-                    break;
                 KorisnikFollowDto kdto = new KorisnikFollowDto()
                 {
                     KorisnickoIme = v.KorisnickoIme,
@@ -472,7 +502,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
 
-            string sifra = Guid.NewGuid().ToString().Substring(0, 10);
+            string sifra = Guid.NewGuid().ToString().Substring(0, 8);
             Korisnik k = new Korisnik()
             {
                 Ime = kkdto.Ime,
@@ -485,6 +515,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 BrojIndeksa = kkdto.BrojIndeksa,
                 AktivanNalog = false,
                 Obrisan = false,
+                BrojTelefona = kkdto.BrojTelefona,
                 TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(kkdto.IdTipaNaloga)
             };
            
@@ -591,7 +622,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         public static KorisnikKreiranjeDto Azuriraj(KorisnikKreiranjeDto kkdto)
         {
             ISession s = SesijeProvajder.Sesija;
-            Korisnik korisnik = VratiKorisnika(kkdto.IdKorisnika);
+            Korisnik korisnik = s.Get<Korisnik>(kkdto.IdKorisnika);
 
             if (korisnik == null)
                 return null;
@@ -599,7 +630,8 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             korisnik.KorisnickoIme = kkdto.KorisnickoIme;
             korisnik.Ime = kkdto.Ime;
             korisnik.Prezime = kkdto.Prezime;
-            korisnik.Sifra = kkdto.Sifra;
+            if(kkdto.Sifra != null)
+                korisnik.Sifra = kkdto.Sifra;
             korisnik.BrojTelefona = kkdto.BrojTelefona;
             korisnik.DatumRodjenja = kkdto.DatumRodjenja;
             korisnik.Email = kkdto.Email;
@@ -902,8 +934,14 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             // Primalac
             oMail.To = email;
 
-            oMail.HtmlBody = String.Format("Postovani, molimo Vas da aktivirate nalog na Mensarium sistemu pritiskom na link: {0}",
-                "<a href=\"http://localhost:2244/api/korisnici/verifikacija/" + id +"\">link</a>");
+            string link = Guid.NewGuid().ToString();
+
+            oMail.HtmlBody = String.Format("Poštovani, " +
+                "dobro došli na <span style=\"color:green\">Mensarium</span> sistem!" +
+                "Molimo Vas da aktivirate nalog pritiskom na link: <br> {0}",
+                "<a href=\"" + 
+                verifikacioni_link + id +"\">"
+                + link + "</a>");
 
             oMail.Subject = "Verifikacija naloga";
 
@@ -1053,6 +1091,276 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             LoginSesija se = lista.First(x => x.IdSesije == sid);
 
             return se != null;
+        }
+
+        public static PozivanjaFullDto PoslednjiPoziv(string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Korisnik k = VratiKorisnika(KorisnikIDizSesijaID(sid));
+
+            if (k == null)
+                return null;
+
+            if (k.TipNaloga.IdTip != 5)
+                return null;
+
+            List<Pozivanje> lista = k.Pozivi.ToList();
+
+            PozivanjaFullDto p = new PozivanjaFullDto();
+
+            if (lista.Count == 0)
+            {
+                p.IdPoziva = -1;
+                p.DatumPoziva = DateTime.MinValue;
+                p.VaziDo = DateTime.MinValue;
+            }
+            else
+            {
+                lista.Sort((x, y) => x.DatumPoziva.CompareTo(y.DatumPoziva));
+                p.IdPoziva = lista[lista.Count - 1].IdPoziva;
+                p.DatumPoziva = lista[lista.Count - 1].DatumPoziva;
+                p.VaziDo = lista[lista.Count - 1].VaziDo;
+            }
+
+            foreach (var v in lista[lista.Count - 1].Pozvani.ToList())
+            {
+                p.Pozvani.Add(v.IdPozivanjaPozvani.IdPozvanog.IdKorisnika);
+            }
+
+            return p;
+        }
+
+        public static bool PosaljiObroke(int idPrimaoca, KorisnikStanjeDto kdsto, string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+            Korisnik salje = VratiKorisnika(KorisnikIDizSesijaID(sid));
+
+            if (salje == null)
+                return false;
+
+            if (salje.TipNaloga.IdTip != 5)
+                return false;
+
+            Korisnik primalac = VratiKorisnika(idPrimaoca);
+
+            if (primalac == null)
+                return false;
+
+            if (primalac.TipNaloga.IdTip != 5)
+                return false;
+
+            List<Obrok> obroci = s.Query<Obrok>().Select(x => x).ToList();
+            List<Obrok> dorucak = obroci.FindAll(x => x.Uplatilac.IdKorisnika == salje.IdKorisnika &&
+                                                      x.Tip.IdTipObroka == 1);
+            if (dorucak.Count < kdsto.BrojDorucka)
+                return false;
+
+            List<Obrok> rucak = obroci.FindAll(x => x.Uplatilac.IdKorisnika == salje.IdKorisnika &&
+                                                      x.Tip.IdTipObroka == 2);
+            if (rucak.Count < kdsto.BrojRuckova)
+                return false;
+
+            List<Obrok> vecera = obroci.FindAll(x => x.Uplatilac.IdKorisnika == salje.IdKorisnika &&
+                                                      x.Tip.IdTipObroka == 3);
+            if (vecera.Count < kdsto.BrojVecera)
+                return false;
+
+            for (int i = 0; i < kdsto.BrojDorucka; i++)
+            {
+                dorucak[i].Uplatilac = primalac;
+                s.Save(dorucak[i]);
+            }
+
+            for (int i = 0; i < kdsto.BrojRuckova; i++)
+            {
+                rucak[i].Uplatilac = primalac;
+                s.Save(rucak[i]);
+            }
+
+            for (int i = 0; i < kdsto.BrojVecera; i++)
+            {
+                vecera[i].Uplatilac = primalac;
+                s.Save(vecera[i]);
+            }
+
+            s.Flush();
+
+            return true;
+        }
+
+        //Promena email-a
+        public static bool PromeniEmail(string noviMail, string sid)
+        {
+            EmailAddressAttribute mail_validator = new EmailAddressAttribute();
+
+            if (!mail_validator.IsValid(noviMail))
+                return false;
+
+            Korisnik k = VratiKorisnika(KorisnikIDizSesijaID(sid));
+
+            if (k == null)
+                return false;
+
+            Dictionary<int, string> mail = new Dictionary<int, string>();
+            mail.Add(k.IdKorisnika, noviMail);
+            string pin = Guid.NewGuid().ToString();
+
+            promenaMaila.Add(pin,mail);
+
+            SmtpMail oMail = new SmtpMail("TryIt");
+            SmtpClient oSmtp = new SmtpClient();
+
+            // Ko salje mail
+            oMail.From = server_mail;
+
+            // Primalac
+            oMail.To = noviMail;
+
+            string link = Guid.NewGuid().ToString();
+
+            oMail.HtmlBody = String.Format("Poštovani, " +
+                                           "molimo Vas kliknite na link kako biste resetovali email adresu" +
+                                           " na <span style=\"color:green\">Mensarium</span> sistemu:" +
+                                           "<br> {0}",
+                "<a href=\"" +
+                promena_emaila_link + 
+                "?pin=" +
+                pin + 
+                "&id=" +
+                k.IdKorisnika +
+                "\">"
+                + link + "</a>");
+
+            oMail.Subject = "Promena email-a";
+
+            SmtpServer oServer = new SmtpServer("");
+
+            try
+            {
+                oSmtp.SendMail(oServer, oMail);
+                return true;
+            }
+            catch (Exception e)
+            {
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                    { Content = new StringContent("InternalError: " + e.Message) });
+            }
+        }
+
+        public static bool ResetujEmail(string pin, int id)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Dictionary<int,string> id_noviMail = promenaMaila[pin];
+
+            Korisnik k = VratiKorisnika(id);
+
+            if (k == null)
+                return false;
+
+            k.Sifra = id_noviMail[id];
+
+            s.Save(k);
+            s.Flush();
+
+            return false;
+        }
+
+        public static bool AndroidUpdate(StudentAzuriranjeDto sadto, string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Korisnik k = VratiKorisnika(KorisnikIDizSesijaID(sid));
+
+            if (k == null)
+                return false;
+
+            if (k.TipNaloga.IdTip != 5)
+                return false;
+
+            if (k.Sifra != sadto.StaraSifra)
+                return false;
+
+            if (sadto.Mail != null)
+                k.Email = sadto.Mail;
+
+            if (sadto.NovaSifra != null)
+                k.Sifra = sadto.NovaSifra;
+
+            if (sadto.Telefon != null)
+                k.BrojTelefona = sadto.Telefon;
+
+            s.Save(k);
+            s.Flush();
+
+            return true;
+        }
+
+        public static bool SifraRecoverySend(string korisnickoIme)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            List<Korisnik> ko = s.Query<Korisnik>().Select(x => x).ToList();
+
+            Korisnik k = ko.First(x => x.KorisnickoIme == korisnickoIme);
+
+            if (k == null)
+                return false;
+
+            string privremenaSifra = Guid.NewGuid().ToString().Substring(0, 5);
+                
+            passRecovery.Add(k.KorisnickoIme, privremenaSifra);
+
+            SmtpMail oMail = new SmtpMail("TryIt");
+            SmtpClient oSmtp = new SmtpClient();
+
+            // Ko salje mail
+            oMail.From = server_mail;
+
+            // Primalac
+            oMail.To = k.Email;
+
+            oMail.HtmlBody = String.Format("Poštovani, " +
+                                           "Vaša privremena šifra je" +
+                                           "<br> {0}", privremenaSifra);
+
+            oMail.Subject = "Resetovanje šifre";
+
+            SmtpServer oServer = new SmtpServer("");
+
+            try
+            {
+                oSmtp.SendMail(oServer, oMail);
+                return true;
+            }
+            catch (Exception e)
+            {
+                DnevnikIzuzetaka.Zabelezi(e);
+                //throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                //    { Content = new StringContent("InternalError: " + e.Message) });
+                return true; //DEBUG CONFICKER
+            }
+        }
+
+        public static bool SifraRecoveryConfirm(PassRecoveryDto prdto)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            string pin = passRecovery[prdto.KorisnickoIme];
+
+            if (pin != prdto.Pin)
+                return false;
+
+            List<Korisnik> ko = s.Query<Korisnik>().Select(x => x).ToList();
+            Korisnik k = ko.First(x => x.KorisnickoIme == prdto.KorisnickoIme);
+            k.Sifra = prdto.NovaSifra;
+
+            s.Save(k);
+            s.Flush();
+
+            return true;
         }
     }
 }
