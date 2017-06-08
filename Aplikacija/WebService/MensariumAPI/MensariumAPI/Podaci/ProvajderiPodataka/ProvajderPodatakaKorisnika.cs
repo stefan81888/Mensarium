@@ -14,6 +14,7 @@ using System.Net;
 using System.Web.UI.WebControls;
 using EASendMail;
 using FluentNHibernate.Conventions;
+using NHibernate.Mapping;
 
 namespace MensariumAPI.Podaci.ProvajderiPodataka
 {
@@ -1117,12 +1118,12 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             else
             {
                 lista.Sort((x, y) => x.DatumPoziva.CompareTo(y.DatumPoziva));
-                p.IdPoziva = lista[0].IdPoziva;
-                p.DatumPoziva = lista[0].DatumPoziva;
-                p.VaziDo = lista[0].VaziDo;
+                p.IdPoziva = lista[lista.Count - 1].IdPoziva;
+                p.DatumPoziva = lista[lista.Count - 1].DatumPoziva;
+                p.VaziDo = lista[lista.Count - 1].VaziDo;
             }
 
-            foreach (var v in lista[0].Pozvani.ToList())
+            foreach (var v in lista[lista.Count - 1].Pozvani.ToList())
             {
                 p.Pozvani.Add(v.IdPozivanjaPozvani.IdPozvanog.IdKorisnika);
             }
