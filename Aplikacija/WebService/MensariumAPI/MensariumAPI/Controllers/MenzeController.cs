@@ -176,7 +176,7 @@ namespace MensariumAPI.Controllers
                 if (m == null)
                     throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Menza nije pronadjena") });
 
-                int procenatGuzveZaJelo = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaSkinutihUPoslednjihPetMinuta(id) * 0.3);
+                int procenatGuzveZaJelo = Convert.ToInt32(ProvajderPodatakaMenzi.BrojObrokaSkinutihUPoslednjihPetMinuta(id) * 0.3)*10;
                 if (procenatGuzveZaJelo > 100)
                     procenatGuzveZaJelo = 100;
                 return procenatGuzveZaJelo;

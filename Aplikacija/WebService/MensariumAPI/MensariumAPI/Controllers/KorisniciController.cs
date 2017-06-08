@@ -1266,11 +1266,12 @@ namespace MensariumAPI.Controllers
             }
         }
 
-        //Pozivanje jednog korisnika
+        //Slanje obroka
         [HttpPut]
         [Route("obroci/posalji")]
-        public IHttpActionResult PosaljiObroke([FromUri]int idPrimaoca, [FromBody]KorisnikStanjeDto kdsto, [FromUri]string sid)
+        public IHttpActionResult PosaljiObroke([FromUri]int idPrimaoca, [FromUri]int D, [FromUri]int R, [FromUri]int V, [FromUri]string sid)
         {
+            KorisnikStanjeDto kdsto = new KorisnikStanjeDto(){ BrojDorucka = D, BrojRuckova = R, BrojVecera = V};
             try
             {
                 SesijeProvajder.OtvoriSesiju();
@@ -1349,7 +1350,7 @@ namespace MensariumAPI.Controllers
         //Menja email korisniku
         //Do ove rute se dolazi iz emaila
         [HttpGet]
-        [Route("mail/reset/")]
+        [Route("mail/reset")]
         public IHttpActionResult ResetujEmail([FromUri]string pin, [FromUri] int id)
         {
             try

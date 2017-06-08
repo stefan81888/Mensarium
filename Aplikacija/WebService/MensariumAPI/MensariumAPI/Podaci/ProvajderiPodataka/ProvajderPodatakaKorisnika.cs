@@ -1338,8 +1338,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             catch (Exception e)
             {
                 DnevnikIzuzetaka.Zabelezi(e);
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
-                    { Content = new StringContent("InternalError: " + e.Message) });
+                //throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                //    { Content = new StringContent("InternalError: " + e.Message) });
+                return true; //DEBUG CONFICKER
             }
         }
 
