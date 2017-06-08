@@ -36,6 +36,9 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
        //Promena email adrese
         public static Dictionary<string, Dictionary<int, string>> promenaMaila =
             new Dictionary<string, Dictionary<int, string>>();
+        
+        //Pamti par username-pin(privremena sifra)
+        public static Dictionary<string, string> passRecovery = new Dictionary<string, string>();
 
         #endregion
 
@@ -1227,7 +1230,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 "\">"
                 + link + "</a>");
 
-            oMail.Subject = "Verifikacija naloga";
+            oMail.Subject = "Promena email-a";
 
             SmtpServer oServer = new SmtpServer("");
 
@@ -1263,5 +1266,98 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
             return false;
         }
 
+        public static bool AndroidUpdate(StudentAzuriranjeDto sadto, string sid)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            Korisnik k = VratiKorisnika(KorisnikIDizSesijaID(sid));
+
+            if (k == null)
+                return false;
+
+            if (k.TipNaloga.IdTip != 5)
+                return false;
+
+            if (k.Sifra != sadto.StaraSifra)
+                return false;
+
+            if (sadto.Mail != null)
+                k.Email = sadto.Mail;
+
+            if (sadto.NovaSifra != null)
+                k.Sifra = sadto.NovaSifra;
+
+            if (sadto.Telefon != null)
+                k.BrojTelefona = sadto.Telefon;
+
+            s.Save(k);
+            s.Flush();
+
+            return true;
+        }
+
+        public static bool SifraRecoverySend(string korisnickoIme)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            List<Korisnik> ko = s.Query<Korisnik>().Select(x => x).ToList();
+
+            Korisnik k = ko.First(x => x.KorisnickoIme == korisnickoIme);
+
+            if (k == null)
+                return false;
+
+            string privremenaSifra = Guid.NewGuid().ToString().Substring(0, 5);
+                
+            passRecovery.Add(k.KorisnickoIme, privremenaSifra);
+
+            SmtpMail oMail = new SmtpMail("TryIt");
+            SmtpClient oSmtp = new SmtpClient();
+
+            // Ko salje mail
+            oMail.From = server_mail;
+
+            // Primalac
+            oMail.To = k.Email;
+
+            oMail.HtmlBody = String.Format("Poštovani, " +
+                                           "Vaša privremena šifra je" +
+                                           "<br> {0}", privremenaSifra);
+
+            oMail.Subject = "Resetovanje šifre";
+
+            SmtpServer oServer = new SmtpServer("");
+
+            try
+            {
+                oSmtp.SendMail(oServer, oMail);
+                return true;
+            }
+            catch (Exception e)
+            {
+                DnevnikIzuzetaka.Zabelezi(e);
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                    { Content = new StringContent("InternalError: " + e.Message) });
+            }
+        }
+
+        public static bool SifraRecoveryConfirm(PassRecoveryDto prdto)
+        {
+            ISession s = SesijeProvajder.Sesija;
+
+            string pin = passRecovery[prdto.KorisnickoIme];
+
+            if (pin != prdto.Pin)
+                return false;
+
+            List<Korisnik> ko = s.Query<Korisnik>().Select(x => x).ToList();
+            Korisnik k = ko.First(x => x.KorisnickoIme == prdto.KorisnickoIme);
+            k.Sifra = prdto.NovaSifra;
+
+            s.Save(k);
+            s.Flush();
+
+            return true;
+        }
     }
 }

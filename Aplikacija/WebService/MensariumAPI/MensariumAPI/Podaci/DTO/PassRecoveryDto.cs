@@ -5,11 +5,10 @@ using System.Web;
 
 namespace MensariumAPI.Podaci.DTO
 {
-    public class StudentAzuriranjeDto
+    public class PassRecoveryDto
     {
-        public string Mail { get; set; }
-        public string Telefon { get; set; }
-        public string StaraSifra { get; set; }
+        public string Pin { get; set; }
         public string NovaSifra { get; set; }
+        public string KorisnickoIme { get; set; }
     }
 }
