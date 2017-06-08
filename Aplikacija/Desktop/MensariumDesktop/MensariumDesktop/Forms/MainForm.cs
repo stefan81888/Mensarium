@@ -43,6 +43,25 @@ namespace MensariumDesktop
 
             KORSN_cbxAccTypeChooser.SelectedIndex = 2;
             RefreshStatusBarData();
+
+            switch (MSettings.CurrentSession.LoggedUser.AccountType)
+            {
+                case User.UserAccountType.Menadzer:
+                    tabControls.TabPages.Remove(tabAdmin);
+                    tabControls.TabPages.Remove(tabNaplata);
+                    tabControls.TabPages.Remove(tabUplata);
+                    break;
+                case User.UserAccountType.Uplata:
+                    tabControls.TabPages.Remove(tabAdmin);
+                    tabControls.TabPages.Remove(tabNaplata);
+                    tabControls.TabPages.Remove(tabUsers);
+                    break;
+                case User.UserAccountType.Naplata:
+                    tabControls.TabPages.Remove(tabAdmin);
+                    tabControls.TabPages.Remove(tabUplata);
+                    tabControls.TabPages.Remove(tabUsers);
+                    break;
+            }
             
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -423,6 +442,7 @@ namespace MensariumDesktop
                 KORSN_dgvUsers.Columns["LunchCount"].Visible = false;
                 KORSN_dgvUsers.Columns["DinnerCount"].Visible = false;
                 KORSN_dgvUsers.Columns["FullName"].Visible = false;
+                KORSN_dgvUsers.Columns["Password"].Visible = false;
             }
             catch (Exception e)
             {
@@ -611,7 +631,17 @@ namespace MensariumDesktop
         private void KORSN_btnAddNewUser_Click(object sender, EventArgs e)
         {
             UserForm uf = new UserForm();
-            uf.ShowDialog();
+            DialogResult dr = uf.ShowDialog();
+
+            if (dr != DialogResult.OK)
+                return;
+
+            User u = uf.user;
+            
+            bool ops = MainController.AddNewUser(u);
+            if (ops)
+                KORSN_RefreshUsersGrid(true);
+
         }
 
         private void KORSN_btnChangeUser_Click(object sender, EventArgs e)
@@ -624,9 +654,13 @@ namespace MensariumDesktop
 
             User u = KORSN_dgvUsers.SelectedRows[0].DataBoundItem as User;
             UserForm uf = new UserForm(u);
-            uf.ShowDialog();
+            if (uf.ShowDialog() == DialogResult.OK)
+            {
+                bool ops = MainController.UpdateUser(u);
+                if(ops) MUtility.ShowInformation("Korisnik uspesno azuriran");
+                KORSN_RefreshUsersGrid(true);
+            }
             
-            //MainController.AddUserMeal(u);
         }
     }
 }

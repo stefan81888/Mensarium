@@ -501,7 +501,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
         {
             ISession s = SesijeProvajder.Sesija;
 
-            string sifra = Guid.NewGuid().ToString().Substring(0, 10);
+            string sifra = Guid.NewGuid().ToString().Substring(0, 8);
             Korisnik k = new Korisnik()
             {
                 Ime = kkdto.Ime,
@@ -514,6 +514,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 BrojIndeksa = kkdto.BrojIndeksa,
                 AktivanNalog = false,
                 Obrisan = false,
+                BrojTelefona = kkdto.BrojTelefona,
                 TipNaloga = ProvajderPodatakaTipovaNaloga.VratiTipNaloga(kkdto.IdTipaNaloga)
             };
            

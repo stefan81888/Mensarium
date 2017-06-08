@@ -147,6 +147,11 @@ namespace MensariumDesktop.Forms
                 return;
             }
 
+            DialogResult dg = MessageBox.Show("Da li ste sigurni da zelite da obrisete " + selectedMensa.Name + "?", "Brisanje fakulteta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dg == DialogResult.No)
+                return;
+
             MainController.DeleteMensa(selectedMensa);
             RefreshList();
             RefreshData();
