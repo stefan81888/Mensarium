@@ -1114,6 +1114,7 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 p.IdPoziva = -1;
                 p.DatumPoziva = DateTime.MinValue;
                 p.VaziDo = DateTime.MinValue;
+                
             }
             else
             {
@@ -1121,12 +1122,13 @@ namespace MensariumAPI.Podaci.ProvajderiPodataka
                 p.IdPoziva = lista[lista.Count - 1].IdPoziva;
                 p.DatumPoziva = lista[lista.Count - 1].DatumPoziva;
                 p.VaziDo = lista[lista.Count - 1].VaziDo;
+                foreach (var v in lista[lista.Count - 1].Pozvani.ToList())
+                {
+                    p.Pozvani.Add(v.IdPozivanjaPozvani.IdPozvanog.IdKorisnika);
+                }
             }
 
-            foreach (var v in lista[lista.Count - 1].Pozvani.ToList())
-            {
-                p.Pozvani.Add(v.IdPozivanjaPozvani.IdPozvanog.IdKorisnika);
-            }
+            
 
             return p;
         }
