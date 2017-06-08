@@ -39,13 +39,15 @@ namespace Mensarium
 
                 dialogKraj = new AlertDialog.Builder(this).Create();
                 dialogKraj.SetTitle("Uspesno ste kreirali nalog!");
-                dialogKraj.SetMessage("Sada cete biti vraceni na stranicu za prijavljivanje.");
+                dialogKraj.SetMessage("Proverite mail radi verifikacije naloga.\nSada cete biti vraceni na stranicu za prijavljivanje.\nPrijavljivanje na Vas nalog je moguce posle verifikacije.");
                 dialogKraj.SetButton("U redu", OkDugme);
+                dialogKraj.SetCancelable(false);
                 //dialog.Show();
 
                 dialogCekaj = new AlertDialog.Builder(this).Create();
                 dialogCekaj.SetTitle("Provera podataka");
                 dialogCekaj.SetMessage("Molimo sacekajte!");
+                dialogCekaj.SetCancelable(false);
                 //dialogCekaj.Show();
             }
         }

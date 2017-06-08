@@ -26,8 +26,6 @@ namespace Mensarium
             var view = inflater.Inflate(Resource.Layout.NewsFragment, container, false);
 
             lista = new List<ObjavaReadDto>();
-            //lista.Add(new FeedItem() { feedIme = "Nikola Savic", feedVreme = "18h", status = "Pomfrit sada. Brzo!"});
-            //lista.Add(new FeedItem() { feedIme = "Petar Peric", feedVreme = "14h", status = "Pasulj njah!"});
 
             swipe = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swipeContainer);
             swipe.Refresh += Swipe_Refresh;

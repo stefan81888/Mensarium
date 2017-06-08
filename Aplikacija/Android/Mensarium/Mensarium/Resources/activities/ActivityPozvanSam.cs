@@ -43,10 +43,23 @@ namespace Mensarium.Resources.activities
 
         private void SetujPozanSamListu()
         {
+            try
+            {
+                lista = Api.Api.UserCalledBy();
+                if (lista.Count != 0)
+                    pozvanSam.Adapter = new PozvanSamAdapter(this, lista);
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this, "Niko Vas trenutno nije pozvao :(", ToastLength.Long).Show();
+            }
+
+
             //List<PozivanjaNewsFeedItemDto> lista = Api.Api.UserCalledBy();
             //pozvanSam.Adapter = new PozvanSamAdapter(this, lista);
-            Thread novaNit = new Thread(ApiFjaZaNit);
-            novaNit.Start();
+
+            //Thread novaNit = new Thread(ApiFjaZaNit);
+            //novaNit.Start();
         }
 
 
@@ -55,11 +68,16 @@ namespace Mensarium.Resources.activities
             try
             {
                 lista = Api.Api.UserCalledBy();
-                this.RunOnUiThread(() => pozvanSam.Adapter = new PozvanSamAdapter(this, lista));
+                if (lista.Count != 0)
+                {
+                    this.RunOnUiThread(() => pozvanSam.Adapter = new PozvanSamAdapter(this, lista));
+                    this.RunOnUiThread(() => swipe.Refreshing = false);
+                }
             }
             catch (Exception ex)
             {
-                this.RunOnUiThread(() => Toast.MakeText(this, ex.Message, ToastLength.Long).Show());
+                this.RunOnUiThread(() => Toast.MakeText(this, "Niko Vas trenutno nije pozvao :(", ToastLength.Long).Show());
+                this.RunOnUiThread(() => swipe.Refreshing = false);
             }
             finally
             {

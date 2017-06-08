@@ -81,6 +81,9 @@ namespace Mensarium.Resources.adapters
             dugmePozovi.Tag = korisnik.IdKorisnika;
             dugmePozovi.SetOnClickListener(new ButtonPozoviClickListener(this.Context));
 
+            view.FindViewById<Button>(Resource.Id.pozoviPrijateljaObrokDugme).Visibility = ViewStates.Gone;
+            view.FindViewById<LinearLayout>(Resource.Id.profilSlikaLayout).SetGravity(GravityFlags.NoGravity);
+
             return view;
   
         }

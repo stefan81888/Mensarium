@@ -9,6 +9,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using DE.Hdodenhof.Circleimageview;
+using Mensarium.Comp;
 using MensariumDesktop.Model.Components.DTOs;
 
 namespace Mensarium.Resources.adapters
@@ -50,6 +52,13 @@ namespace Mensarium.Resources.adapters
             dugmeZaprati.Tag = korisnik.IdKorisnika + " " + korisnik.Ime + " " + korisnik.Prezime;
             dugmeZaprati.SetOnClickListener(new DugmeZapratiClickListener(this.context));
 
+            //if(position == 2)
+              //  dugmeZaprati.Visibility = ViewStates.Gone;
+
+
+
+            view.FindViewById<CircleImageView>(Resource.Id.pretragaItemSlika).SetImageBitmap(ImageManager.Get(this.context, korisnik.IdKorisnika));
+
             return view;
         }
 
@@ -62,6 +71,7 @@ namespace Mensarium.Resources.adapters
 
         private AlertDialog alertObrada;
         private AlertDialog alertUspesno;
+        private AlertDialog vecPrati;
 
         public DugmeZapratiClickListener(Activity activity)
         {
@@ -85,6 +95,11 @@ namespace Mensarium.Resources.adapters
             alertObrada.SetMessage("Molimo sacekajte!");
             alertObrada.Show();
 
+            vecPrati = new AlertDialog.Builder(this.activity).Create();
+            vecPrati.SetTitle("Obavestenje!");
+            vecPrati.SetMessage("Izabranog korisnika vec pratite.");
+            vecPrati.SetButton("U redu", (sender, args) => vecPrati.Dispose());
+
             Thread novaNit = new Thread(() => FuncijaNoveNiti(split[0]));
             novaNit.Start();
         }
@@ -101,7 +116,7 @@ namespace Mensarium.Resources.adapters
             catch (Exception ex)
             {
                 this.activity.RunOnUiThread(() => alertObrada.Dismiss());
-                Toast.MakeText(this.activity, ex.Message, ToastLength.Short).Show();
+                this.activity.RunOnUiThread(() => vecPrati.Show());
             }
         }
     }

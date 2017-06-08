@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pozadinaAplikacije"
+    android:gravity="center">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:gravity="center"
+        android:id="@+id/profilLayout">
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/promeniSlika"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/user"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/SeparatorLine"
+            android:layout_marginRight="20dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1"
+            android:layout_marginLeft="20dp"
+            android:gravity="center">
+            <TextView
+                android:text="Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/urediImeIPrezime"
+                android:textSize="25dp" />
+            <TextView
+                android:text="Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/urediUsername"
+                android:textSize="15dp" />
+            <TextView
+                android:text="Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/urediBrIdexa"
+                android:textSize="15dp" />
+            <TextView
+                android:text="Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/urediMail"
+                android:textSize="15dp" />
+            <TextView
+                android:text="Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/urediBrojTelefona"
+                android:textSize="15dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:text="Promeni sifru"
+        android:textColor="@color/NaslovIImeButtona"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/PromeniSifruDugme"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/rounded_button"
+        android:textSize="18dp"
+        android:textAllCaps="false"
+        android:layout_marginTop="60dp" />
+    <Button
+        android:text="Promeni broj telefona"
+        android:textColor="@color/NaslovIImeButtona"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/PromeniTelefonDugme"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_button"
+        android:textSize="18dp"
+        android:textAllCaps="false" />
+    <Button
+        android:text="Promeni mail adresu"
+        android:textColor="@color/NaslovIImeButtona"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/PromeniMailDugme"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_button"
+        android:textSize="18dp"
+        android:textAllCaps="false" />
+</LinearLayout>

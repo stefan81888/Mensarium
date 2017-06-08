@@ -24,10 +24,9 @@ namespace Mensarium
     class EventsFragment : Android.Support.V4.App.Fragment
     {
         private PozivanjaFullDto poziv;
-
         private ViewHolderEvents holder;
-
         private View view = null;
+        private ListView listaPozvanih;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -52,7 +51,9 @@ namespace Mensarium
 
                 view.Tag = vh;
 
-                ObnoviPoziv();
+               ObnoviPoziv();
+               if(poziv != null && poziv.IdPoziva != -1)
+                    SetujNoviLayout();
             }
 
             holder = (ViewHolderEvents) view.Tag;
@@ -70,53 +71,69 @@ namespace Mensarium
             holder.Swipe.Refresh += SwipeOnRefresh;
 
             view.FindViewById<LinearLayout>(Resource.Id.ponistiPozivLayout).Click += PonistiPozivClick;
+            listaPozvanih = view.FindViewById<ListView>(Resource.Id.PozvaniListView);
 
             return view;
         }
 
         private void ObnoviPoziv()
         {
-            var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
-
-            int idpoziva = prefs.GetInt("idPoziva", -1);
-
-            if (idpoziva != -1)
+            try
             {
+                poziv = Api.Api.VratiPoslednjiPoziv();
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this.Context, ex.Message, ToastLength.Long).Show();
+            }
+        }
+
+        private void SetujListuPozvanih()
+        {
+            if (poziv.IdPoziva != -1)
+            {
+                //Thread nit = new Thread(NovaNit);
+                //nit.Start();
+
                 try
                 {
-                    poziv = Api.Api.PozivNaOsnovuIda(idpoziva);
-                    SetujNoviLayout();
+                    List<OgovorNaPozivDto> lista = new List<OgovorNaPozivDto>();
+                    lista = Api.Api.ObavestiOOdgovorima(poziv.IdPoziva);
+
+                    if (lista.Count != 0)
+                    {
+
+                        listaPozvanih.Adapter = new OdgovorListAdapter(this.Activity, lista);
+                        holder.Swipe.Refreshing = false;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Toast.MakeText(this.Context, ex.Message, ToastLength.Long).Show();
+                    Toast.MakeText(this.Context, "Poziv trenutno nema pozvanih korisnika!", ToastLength.Long).Show();
+                    holder.Swipe.Refreshing = false;
                 }
             }
         }
 
-        public override void OnPause()
+        private void NovaNit()
         {
-            base.OnPause();
-
-            if (poziv != null)
+            try
             {
-                var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
-                var prefEditor = prefs.Edit();
-                prefEditor.PutInt("idPoziva", poziv.IdPoziva);
-                prefEditor.Commit();
+                List<OgovorNaPozivDto> lista = new List<OgovorNaPozivDto>();
+                lista = Api.Api.ObavestiOOdgovorima(poziv.IdPoziva);
+
+                if (lista.Count != 0)
+                {
+
+                    this.Activity.RunOnUiThread(
+                        () => listaPozvanih.Adapter = new OdgovorListAdapter(this.Activity, lista));
+                    this.Activity.RunOnUiThread(() => holder.Swipe.Refreshing = false);
+                }
             }
-        }
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-
-            if (poziv != null)
+            catch (Exception ex)
             {
-                var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
-                var prefEditor = prefs.Edit();
-                prefEditor.PutInt("idPoziva", poziv.IdPoziva);
-                prefEditor.Commit();
+                this.Activity.RunOnUiThread(() => Toast.MakeText(this.Context, "Poziv trenutno nema pozvanih korisnika!", ToastLength.Long).Show());
+                this.Activity.RunOnUiThread(() => holder.Swipe.Refreshing = false);
             }
         }
 
@@ -133,11 +150,6 @@ namespace Mensarium
 
                 view.FindViewById<RelativeLayout>(Resource.Id.pozivJeKreiran).Visibility = ViewStates.Gone;
                 view.FindViewById<LinearLayout>(Resource.Id.pozivNijeKreiran).Visibility = ViewStates.Visible;
-
-                var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
-                var prefEditor = prefs.Edit();
-                prefEditor.PutInt("idPoziva", -1);
-                prefEditor.Commit();
             });
 
             alert.SetNegativeButton("Ne", (o, args) => alert.Dispose());
@@ -147,16 +159,19 @@ namespace Mensarium
 
         private void SwipeOnRefresh(object sender, EventArgs eventArgs)
         {
-            var lista = view.FindViewById<ListView>(Resource.Id.PozvaniListView);
+
             try
             {
-                List<OgovorNaPozivDto> listaOdgovora;
                 if (poziv != null)
                 {
-                    listaOdgovora = Api.Api.ObavestiOOdgovorima(poziv.IdPoziva);
-                    lista.Adapter = new OdgovorListAdapter(this, listaOdgovora);
+                    SetujNoviLayout();
+                    SetujListuPozvanih();
                 }
-                holder.Swipe.Refreshing = false;
+                else
+                {
+                    holder.Swipe.Refreshing = false;
+                }
+
             }
             catch (Exception ex)
             {
@@ -174,25 +189,27 @@ namespace Mensarium
         private void PozoviOnClick(object sender, EventArgs eventArgs)
         {
             //setujemo intent i startujemo activity
-            var intent = new Intent(this.Activity, typeof(PozoviPrijateljaActivity));
-            intent.PutExtra("IdPoziva", poziv.IdPoziva);
-            StartActivity(intent);
+            if (poziv.IdPoziva != -1)
+            {
+                var intent = new Intent(this.Activity, typeof(PozoviPrijateljaActivity));
+                intent.PutExtra("IdPoziva", poziv.IdPoziva);
+                StartActivity(intent);
+            }
+            else
+            {
+                Toast.MakeText(this.Context, "Ovaj poziv vise nije aktivan!", ToastLength.Long).Show();
+            }
         }
 
         private void KreirajPozivOnClick(object sender, EventArgs eventArgs)
         {
             NapuniPoziv();
             
-            if (true)//(poziv.VaziDo - DateTime.Now).Ticks > 0 && ValidnoVreme(poziv.VaziDo))
+            if ((poziv.VaziDo - DateTime.Now).Ticks > 0 && ValidnoVreme(poziv.VaziDo))
             {
                 try
                 {
                     poziv = Api.Api.KreirajPrazanPoziv(poziv);
-
-                    var prefs = Application.Context.GetSharedPreferences("Mensarium", FileCreationMode.Private);
-                    var prefEditor = prefs.Edit();
-                    prefEditor.PutInt("idPoziva", poziv.IdPoziva);
-                    prefEditor.Commit();
 
                     //setuje novi layout
                     SetujNoviLayout();
@@ -212,10 +229,10 @@ namespace Mensarium
         {
             poziv = new PozivanjaFullDto();
 
-            poziv.DatumPoziva = DateTime.Now.ToUniversalTime();
+            poziv.DatumPoziva = DateTime.Now;
             
             //poziv.VaziDo = DateTime.Now;
-            poziv.VaziDo = new DateTime(DateTime.Now.Year, DateTime.Now.Day, DateTime.Now.Month, holder.EvenTimePicker.CurrentHour.IntValue(), holder.EvenTimePicker.CurrentMinute.IntValue(), 0).ToUniversalTime();
+            poziv.VaziDo = new DateTime(DateTime.Now.Year, DateTime.Now.Day, DateTime.Now.Month, holder.EvenTimePicker.CurrentHour.IntValue(), holder.EvenTimePicker.CurrentMinute.IntValue(), 0);
 
             poziv.IdPozivaoca = MSettings.CurrentSession.LoggedUser.UserID;
         }

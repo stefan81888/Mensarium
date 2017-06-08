@@ -14,10 +14,13 @@
   <item android:id="@+id/prijatelji"
      android:title="@string/titlePrijatelji"
      app:showAsAction="never"/>
+  <item android:id="@+id/urediProfil"
+        android:title="@string/editujProfil"
+        app:showAsAction="never" />
   <item android:id="@+id/action_set"
       android:title="@string/action_settings"
       app:showAsAction="never"/>
-  <item android:id="@+id/action_set2"
+  <item android:id="@+id/odjavaMenu"
       android:title="@string/action_settings2"
       app:showAsAction="never"/>
 </menu>

@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using Mensarium.Comp;
@@ -20,6 +21,8 @@ namespace Mensarium
     {
         private ListaMenzi listaMenzi = ListaMenzi.InstancaListaMenzi;
         private ListView listaView;
+
+        private SwipeRefreshLayout swipe;
 
         private int pos = 0;
 
@@ -40,6 +43,16 @@ namespace Mensarium
 
             //event short click
             listaView.ItemClick += ListaViewOnItemClick;
+
+            swipe = FindViewById<SwipeRefreshLayout>(Resource.Id.swipeSveMenze);
+            swipe.Refresh += SwipeMenze;
+        }
+
+        private void SwipeMenze(object sender, EventArgs eventArgs)
+        {
+            listaMenzi.RefreshLista();
+            listaMenzi = ListaMenzi.InstancaListaMenzi;
+            swipe.Refreshing = false;
         }
 
         private void ListaViewOnItemClick(object sender, AdapterView.ItemClickEventArgs itemClickEventArgs)
@@ -50,10 +63,15 @@ namespace Mensarium
             alert.SetTitle("Informacije o menzi");
             alert.SetPositiveButton("U redu", (o, args) => { alert.Dispose(); });
 
-            alert.SetMessage("Ime menze: " + menza.MenzaFull.Naziv + 
-                             "\nLokacija menze: " + menza.MenzaFull.Lokacija +
-                             "\nRadno vreme menze: " + menza.MenzaFull.RadnoVreme);
+            string poruka = "Ime menze: " + menza.MenzaFull.Naziv +
+                            "\nLokacija menze: " + menza.MenzaFull.Lokacija +
+                            "\nRadno vreme menze: " + menza.MenzaFull.RadnoVreme;
 
+            if (menza.MenzaFull.VanrednoNeRadi)
+                poruka += "\nVanredno NE RADI!";
+
+            alert.SetMessage(poruka);
+            
             alert.Show();
 
         }

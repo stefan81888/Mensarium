@@ -23,4 +23,7 @@
 
 
   <color name="pozivAktivanBoja">#4ee07d</color>
+  <color name="pozivNeaktivanBoja">#ba1d1d</color>
+
+  <color name="pozadinaAplikacije">#243236</color>
 </resources>

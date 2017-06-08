@@ -90,6 +90,8 @@ namespace Mensarium
             var searchView = MenuItemCompat.GetActionView(searchItem);
             var _searchView = searchView.JavaCast<Android.Support.V7.Widget.SearchView>();
 
+            _searchView.QueryHint = "Pretrazi prijatelja..";
+
             _searchView.QueryTextChange += (s, e) =>
             {
                 if (e.NewText.Equals(String.Empty))
@@ -189,7 +191,7 @@ namespace Mensarium
                     return true;
 
                     //odjava
-                case Resource.Id.action_set2:
+                case Resource.Id.odjavaMenu:
                     Api.Api.LogoutUser(MSettings.CurrentSession.SessionID);
                     var intent = new Intent(this, typeof(MainActivity));
                     intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
@@ -202,6 +204,11 @@ namespace Mensarium
                     StartActivity(intent2);
                     return true;
 
+                case Resource.Id.urediProfil:
+                    var intentUredi = new Intent(this, typeof(UrediProfilActivity));
+                    StartActivity(intentUredi);
+                    return true;
+                
                 default:
                     return base.OnOptionsItemSelected(item);
             }

@@ -17,9 +17,9 @@ namespace Mensarium.Resources.adapters
     class OdgovorListAdapter : BaseAdapter<OgovorNaPozivDto>
     {
         private List<OgovorNaPozivDto> lista;
-        private EventsFragment context;
+        private Activity context;
 
-        public OdgovorListAdapter(EventsFragment c, List<OgovorNaPozivDto> l)
+        public OdgovorListAdapter(Activity c, List<OgovorNaPozivDto> l)
         {
             this.context = c;
             this.lista = l;
@@ -39,7 +39,7 @@ namespace Mensarium.Resources.adapters
             View view = convertView;
             if (view == null)
             {
-                view = context.Activity.LayoutInflater.Inflate(Resource.Layout.odgovorItem, parent, false);
+                view = context.LayoutInflater.Inflate(Resource.Layout.odgovorItem, parent, false);
 
                 var Ime = view.FindViewById<TextView>(Resource.Id.prihvatioIme);
                 var Username = view.FindViewById<TextView>(Resource.Id.prihvatioUsername);

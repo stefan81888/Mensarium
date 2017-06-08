@@ -45,10 +45,17 @@ namespace Mensarium
             MenzaItem item = this[position];
             view.FindViewById<TextView>(Resource.Id.ImeMenze).Text = item.MenzaFull.Naziv;
             view.FindViewById<TextView>(Resource.Id.LokacijaMenze).Text = item.MenzaFull.Lokacija;
+
+            var radili = view.FindViewById<TextView>(Resource.Id.DaLiRadiMenza);
             if (item.MenzaFull.VanrednoNeRadi)
-                view.FindViewById<TextView>(Resource.Id.DaLiRadiMenza).Text = "Trenutno otvorena!";
+            {
+                radili.Text = "Vanredno NE RADI!";
+                radili.SetTextColor(Android.Graphics.Color.ParseColor("#ba1d1d"));
+            }
             else
-                view.FindViewById<TextView>(Resource.Id.DaLiRadiMenza).Text = "Trenutno ne radi!";
+                view.FindViewById<TextView>(Resource.Id.DaLiRadiMenza).Text = "Radno vreme: " +
+                                                                              item.MenzaFull.RadnoVreme;
+
             view.FindViewById<TextView>(Resource.Id.GuzvaText).Text = "Guzva u menzi: " + item.GuzvaFull.TrenutnaGuzvaZaJelo.ToString() + "%";
             view.FindViewById<TextView>(Resource.Id.GuzvaNaSalteruText).Text = "Guzvna na salteru: " +
                                                                                item.GuzvaFull.TrenutnaGuzvaZaUplatu.ToString() + "%";

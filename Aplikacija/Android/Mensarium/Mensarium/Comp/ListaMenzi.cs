@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -26,10 +27,16 @@ namespace Mensarium.Comp
             //lista.Add(new MenzaItem() { Ime = "Kod pravni", Lokacija = "Neka ulica 23", Radi = true, Popunjenost = 67, latiCoo = 43.3171342, longCoo = 21.8898055, GuzvaNaSalteru = 43});
             //lista.Add(new MenzaItem() { Ime = "Kod medicinski", Lokacija = "Bolnicka BB", Radi = false, Popunjenost = 0, latiCoo = 43.3167453, longCoo = 21.9152952, GuzvaNaSalteru = 0});
 
+            RefreshLista();
+        }
+
+        public void RefreshLista()
+        {
+            lista = new List<MenzaItem>();
             List<MenzaFullDto> listaMenzeFull = Api.Api.GetAllMensas();
             for (int i = 0; i < listaMenzeFull.Count; ++i)
             {
-                lista.Add(new MenzaItem() {MenzaFull = listaMenzeFull[i]});
+                lista.Add(new MenzaItem() { MenzaFull = listaMenzeFull[i] });
 
                 lista[i].GuzvaFull = new MenzaGuzvaDto();
                 lista[i].GuzvaFull.TrenutnaGuzvaZaJelo = Api.Api.CrowdInMensa(lista[i].MenzaFull.IdMenze);
