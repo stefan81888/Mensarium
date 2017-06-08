@@ -5,7 +5,9 @@ using Android.Widget;
 using Android.OS;
 using Android.Graphics;
 using Android.Content;
+using Android.Views;
 using Mensarium.Api;
+using Mensarium.Comp.DTOs;
 using Mensarium.Components;
 using MensariumDesktop.Model.Components.DTOs;
 using RestSharp;
@@ -48,6 +50,7 @@ namespace Mensarium
 
         private void ForgotOnClick(object sender, EventArgs eventArgs)
         {
+            /*
             var alert = new AlertDialog.Builder(this);
             alert.SetTitle("Oh ne!");
             alert.SetPositiveButton("U redu", (o, args) => { alert.Dispose(); });
@@ -55,6 +58,106 @@ namespace Mensarium
             alert.SetMessage("Nista ne brinite!\n\nRadi resetovanja sifre, javite se nasem adminu na mail:\n\ndalibor.aleksic.dacha@gmail.com");
 
             alert.Show();
+            */
+
+            var inflater = LayoutInflater.From(this);
+            var view = inflater.Inflate(Resource.Layout.forgotDialog, null);
+
+            var dialogForgot = new AlertDialog.Builder(this);
+            var dialogPin = new AlertDialog.Builder(this);
+            var alertUspesno = new AlertDialog.Builder(this);
+
+            var username = view.FindViewById<TextView>(Resource.Id.forgotUsername);
+            string ime = "";
+
+            dialogForgot.SetView(view);
+
+            dialogForgot.SetPositiveButton("Resetuj", delegate(object o, DialogClickEventArgs args)
+            {
+                if (!username.Text.Equals(String.Empty))
+                {
+                    ime = username.Text;
+                    try
+                    {
+                        //Api.Api.ZaboravljenaSifra(ime);
+                        dialogForgot.Dispose();
+
+                        var alert = new AlertDialog.Builder(this);
+                        alert.SetTitle("Resetovanje!");
+                        alert.SetMessage("Proverite Vas mail kako bi ste dobili PIN za reset.\n" +
+                                         "Pin ukucajte na sledecoj formi.");
+                        alert.SetPositiveButton("U redu", (ooo, argsss) =>
+                        {
+                            alert.Dispose();
+                            dialogPin.Show();
+                        });
+
+                        alert.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(this, ex.Message, ToastLength.Long).Show();
+                        dialogForgot.Dispose();
+                    }
+                }
+                else
+                {
+                    Toast.MakeText(this, "Unesite korisnicko ime!", ToastLength.Short).Show();
+                }
+            });
+
+            dialogForgot.SetNegativeButton("Unesi PIN", delegate(object o, DialogClickEventArgs args)
+            {
+                dialogForgot.Dispose();
+                dialogPin.Show();
+            });
+
+
+            var view2 = inflater.Inflate(Resource.Layout.pinDialog, null);
+            
+            dialogPin.SetView(view2);
+
+            dialogPin.SetPositiveButton("Potvrdi", delegate(object o, DialogClickEventArgs args)
+            {
+                var pin = view2.FindViewById<TextView>(Resource.Id.pin);
+                var sifra = view2.FindViewById<TextView>(Resource.Id.pinNovaSifra);
+                var sifraOpet = view2.FindViewById<TextView>(Resource.Id.pinNovaSifraOpet);
+
+                if (sifra.Text.Equals(sifraOpet.Text) && !pin.Text.Equals(String.Empty))
+                {
+                    PassRecoveryDto noviPass = new PassRecoveryDto()
+                    {
+                        Pin = pin.Text,
+                        KorisnickoIme = ime,
+                        NovaSifra = sifra.Text
+                    };
+
+                    try
+                    {
+                       // Api.Api.OporavakSifre(noviPass);
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(this, ex.Message, ToastLength.Long).Show();
+                        dialogPin.Dispose();
+                    }
+                }
+                else
+                {
+                    if(!pin.Text.Equals(String.Empty))
+                    Toast.MakeText(this, "Unesite PIN!", ToastLength.Short).Show();
+                    else
+                    {
+                        Toast.MakeText(this, "Sifre se ne poklapaju!", ToastLength.Short).Show();
+                    }
+                }
+            });
+
+            alertUspesno.SetTitle("Obavestenje!");
+            alertUspesno.SetMessage("Uspesno ste resetovali Vasu sifru!");
+            alertUspesno.SetPositiveButton("U redu", (o, args) => alertUspesno.Dispose());
+
+            dialogForgot.Show();
         }
 
         private void ProbajDaUcitasKorisnika()

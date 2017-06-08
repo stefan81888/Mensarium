@@ -121,11 +121,17 @@ namespace Mensarium
 
         public void SetujOmiljenuMenzu(int indexOmiljene)
         {
+            listaMenzi.RefreshLista();
             MenzaItem item = listaMenzi.Lista[indexOmiljene];
             view.FindViewById<TextView>(Resource.Id.ImeMojeMenze).Text = item.MenzaFull.Naziv;
             view.FindViewById<TextView>(Resource.Id.LokacijaMojeMenze).Text = item.MenzaFull.Lokacija;
+
+            var radili = view.FindViewById<TextView>(Resource.Id.DaLiRadiMojaMenza);
             if (item.MenzaFull.VanrednoNeRadi)
-                view.FindViewById<TextView>(Resource.Id.DaLiRadiMojaMenza).Text = "Trenutno otvorena!";
+            {
+                radili.Text = "Vanredno NE RADI!";
+                radili.SetTextColor(Android.Graphics.Color.ParseColor("#ba1d1d"));
+            }
             else
                 view.FindViewById<TextView>(Resource.Id.DaLiRadiMojaMenza).Text = "Trenutno ne radi!";
 

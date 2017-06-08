@@ -13,6 +13,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Mensarium.Comp.DTOs;
 using Mensarium.Components;
 using Mensarium.Resources.adapters;
 using MensariumDesktop.Model.Components.DTOs;
@@ -304,6 +305,20 @@ namespace Mensarium.Api
             return response.ResponseObject;
         }
 
+        public static PozivanjaFullDto VratiPoslednjiPoziv()
+        {
+            RestRequest request = new RestRequest(Method.GET);
+            request.Resource = "korisnici/pozivi/poslednji";
+
+
+            ApiResponse<PozivanjaFullDto> response = Execute<PozivanjaFullDto>(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("GetPoziv: Neuspesno pribavljanje informacije o poslednjem pozivu" + "\nServerResponse: "
+                    + response.ErrorResponse + "\nHttpStatus: " + response.HttpStatusCode);
+
+            return response.ResponseObject;
+        }
+
         public static PozivanjaFullDto PozivNaOsnovuIda(int IdPoziva)
         {
             RestRequest request = new RestRequest(Method.GET);
@@ -392,6 +407,44 @@ namespace Mensarium.Api
                 throw new Exception("UpdateUser Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
                     + response.HttpStatusCode);
         }
+
+        public static void UpdateKorisnika(StudentAzuriranjeDto m)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "korisnici/update";
+            request.AddObject(m);
+
+            var response = Execute(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("UpdateUser Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
+                    + response.HttpStatusCode);
+        }
+
+        public static void ZaboravljenaSifra(string username)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "korisnici/sifra/zahtevaj";
+            request.AddParameter("korisnickoIme", username, ParameterType.QueryString);
+
+            var response = Execute(request, false);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("Zaboravljena sifra Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
+                    + response.HttpStatusCode);
+
+        }
+
+        public static void OporavakSifre(PassRecoveryDto m)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "korisnici/sifra/oporavi";
+            request.AddObject(m);
+
+            var response = Execute(request, false);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("Promena sifre Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
+                    + response.HttpStatusCode);
+        }
+
         public static void DeleteUser(int idUser)
         {
             RestRequest request = new RestRequest(Method.DELETE);
@@ -614,6 +667,7 @@ namespace Mensarium.Api
 
         #region OBROCI
 
+
         public static KorisnikStanjeDto KorisnikovoStanjeObroka(int id)
         {
             RestRequest request = new RestRequest(Method.GET);
@@ -656,7 +710,7 @@ namespace Mensarium.Api
             string rucak = odg.Substring(ir+1, lenr-1);
             string vecera = odg.Substring(il+1, lenl-1);
 
-            return new KorisnikStanjeDto() {BrojVecera = vecera, BrojRuckova = rucak, BrojDorucka = dorucak};
+            return new KorisnikStanjeDto() {BrojVecera = Int32.Parse(vecera), BrojRuckova = Int32.Parse(rucak), BrojDorucka = Int32.Parse(dorucak)};
         }
 
         public static ObrokFullDto GetMealInfo(int id)
@@ -753,6 +807,23 @@ namespace Mensarium.Api
                 throw new Exception("UndoAddMeals: Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
                     + response.HttpStatusCode);
         }
+
+        public static void PosaljiObrok(int idPrimaoca, KorisnikStanjeDto ksdto)
+        {
+            RestRequest request = new RestRequest(Method.PUT);
+            request.Resource = "korisnici/obroci/posalji";
+            request.AddParameter("idPrimaoca", idPrimaoca, ParameterType.QueryString);
+            request.AddParameter("D", ksdto.BrojDorucka, ParameterType.QueryString);
+            request.AddParameter("R", ksdto.BrojRuckova, ParameterType.QueryString);
+            request.AddParameter("V", ksdto.BrojVecera, ParameterType.QueryString);
+            //request.AddObject(ksdto);
+
+            var response = Execute(request);
+            if (!(response.HttpStatusCode == HttpStatusCode.OK || response.HttpStatusCode == HttpStatusCode.Redirect))
+                throw new Exception("UndoAddMeals: Error" + "\nServerResponse: " + response.ErrorResponse + "\nHttpStatus: "
+                    + response.HttpStatusCode);
+        }
+
         #endregion
 
         #region OBJAVE

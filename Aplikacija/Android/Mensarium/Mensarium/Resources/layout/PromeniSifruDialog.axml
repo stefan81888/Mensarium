@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/promeniSifruLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ukucajte novu sifru: "
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <EditText
+        android:id="@+id/promeniNovaSifra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nova sifra"
+        android:inputType="textPassword" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ukucajte novu sifru opet: "
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <EditText
+        android:id="@+id/promeniNovaSifraOpet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nova sifra opet"
+        android:inputType="textPassword" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Potvrdite starom sifrom: "
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <EditText
+        android:id="@+id/promeniSifruPotvrdaStarom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Stara sifra"
+        android:inputType="textPassword" />
+</LinearLayout>

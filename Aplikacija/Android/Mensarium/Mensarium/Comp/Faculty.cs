@@ -17,7 +17,8 @@ namespace Mensarium.Components
     {
         public static List<Faculty> Faculties { get; protected set; }
 
-        public static void UpdateFacultyList()
+        public static void 
+            FacultyList()
         {
             Faculties = MUtility.FacultyList_FromFakultetiFullDto(Api.Api.GetAllFaculties());
         }

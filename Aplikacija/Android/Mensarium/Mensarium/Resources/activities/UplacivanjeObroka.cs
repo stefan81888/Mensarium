@@ -101,6 +101,7 @@ namespace Mensarium.Resources.activities
         private void DugmeOnClick(object sender, EventArgs eventArgs)
         {
             string formatPoruke;
+            int broj = 0;
 
             if (this.brojDorucka != 0)
             {
@@ -108,7 +109,7 @@ namespace Mensarium.Resources.activities
                                this.brojDorucka.ToString();
 
                 SmsManager.Default.SendTextMessage("062719720", null, formatPoruke, null, null);
-                Toast.MakeText(this, formatPoruke, ToastLength.Long).Show();
+                broj++;
             }
 
             if (this.brojRucka != 0)
@@ -117,7 +118,7 @@ namespace Mensarium.Resources.activities
                                this.brojRucka.ToString();
 
                 SmsManager.Default.SendTextMessage("062719720", null, formatPoruke, null, null);
-                Toast.MakeText(this, formatPoruke, ToastLength.Long).Show();
+                broj++;
             }
 
             if (this.brojVecera != 0)
@@ -126,8 +127,13 @@ namespace Mensarium.Resources.activities
                                this.brojVecera.ToString();
 
                 SmsManager.Default.SendTextMessage("062719720", null, formatPoruke, null, null);
-                Toast.MakeText(this, formatPoruke, ToastLength.Long).Show();
+                broj++;
             }
+
+            if(broj != 0 && broj == 1)
+                Toast.MakeText(this, "SMS za upaltu je poslat. Ocekujte SMS potvrdu uplate!", ToastLength.Long).Show();
+            else if (broj != 0 && broj > 1)
+                Toast.MakeText(this, "SMS-i za upaltu su poslati. Ocekujte SMS-e radi potvrde uplata!", ToastLength.Long).Show();
         }
 
         //za back dugme gore
